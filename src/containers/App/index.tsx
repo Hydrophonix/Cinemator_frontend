@@ -10,7 +10,7 @@ import { client } from '../../apollo';
 
 // Containers
 import { Routes } from '../Routes';
-import { TopBar } from '../TopBar';
+// import { TopBar } from '../TopBar';
 
 // Hooks
 import { useLocalStorage } from '../../hooks';
@@ -27,7 +27,8 @@ const history = createBrowserHistory();
 
 export const App: FC = () => {
     const [ loading, setLoading ] = useState(true);
-    const [ isDefaultTheme, setIsDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
+    // const [ isDefaultTheme, setIsDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
+    const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
 
     useEffect(() => {
         fetch(TOKEN_URL, { credentials: 'include', method: 'POST' })
@@ -55,10 +56,10 @@ export const App: FC = () => {
                     <StylesReset />
                     <GlobalStyles />
                     <AppContainer>
-                        <TopBar
+                        {/* <TopBar
                             isDefaultTheme = { isDefaultTheme }
                             setIsDefaultTheme = { setIsDefaultTheme }
-                        />
+                        /> */}
                         <Routes />
                     </AppContainer>
                 </ThemeProvider>

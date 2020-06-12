@@ -9,43 +9,18 @@ import * as P from '../../pages';
 import { Spinner } from '../../elements';
 
 export const RoutesPath = {
-    Main:     '/',
-    Register: '/register',
-    Login:    '/login',
-    Me:       '/me',
-    Game:     '/game',
-    Todos:    '/todos',
+    Main: '/',
 };
 
 export const Routes: FC = () => {
     return (
         <Suspense fallback = { <Spinner/> }>
             <Switch>
-                <Route
+                {/* <Route
                     exact
-                    path = { RoutesPath.Register }>
-                    <P.Register />
-                </Route>
-                <Route
-                    exact
-                    path = { RoutesPath.Login }>
-                    <P.Login />
-                </Route>
-                <Route
-                    exact
-                    path = { RoutesPath.Me }>
-                    <P.Me />
-                </Route>
-                <Route
-                    exact
-                    path = { RoutesPath.Game }>
-                    <P.Game />
-                </Route>
-                <Route
-                    exact
-                    path = { RoutesPath.Todos }>
-                    <P.Todos />
-                </Route>
+                    path = { RoutesPath.PageName }>
+                    <P.PageName />
+                </Route> */}
                 <Route path = { RoutesPath.Main }>
                     <P.Main />
                 </Route>
