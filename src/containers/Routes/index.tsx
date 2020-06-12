@@ -8,21 +8,15 @@ import * as P from '../../pages';
 // Elements
 import { Spinner } from '../../elements';
 
-export const RoutesPath = {
-    Main: '/',
-};
-
 export const Routes: FC = () => {
     return (
         <Suspense fallback = { <Spinner/> }>
             <Switch>
-                {/* <Route
-                    exact
-                    path = { RoutesPath.PageName }>
-                    <P.PageName />
-                </Route> */}
-                <Route path = { RoutesPath.Main }>
-                    <P.Main />
+                <Route path = '/:projectId'>
+                    <P.Project />
+                </Route>
+                <Route path = '/'>
+                    <P.Projects />
                 </Route>
             </Switch>
         </Suspense>

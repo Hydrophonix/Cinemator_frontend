@@ -1,4 +1,5 @@
 // Core
 import { lazy } from 'react';
 
-export const Main = lazy(() => import(/* webpackChunkName: "Main" */ './Main'));
+export const Projects = lazy(() => import(/* webpackChunkName: "Projects" */ './Projects'));
+export const Project = lazy(() => import(/* webpackChunkName: "Project" */ './Project'));
