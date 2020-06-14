@@ -16,7 +16,7 @@ export const TopbarContainer = styled.header`
 `;
 
 export const Logo = styled.img`
-    width: 40px;
-    height: 40px;
-    background-color: green;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
 `;

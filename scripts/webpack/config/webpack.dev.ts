@@ -19,6 +19,7 @@ export const getDevConfig = () => {
             },
         },
         modules.loadImagesDev(),
+        modules.loadDevCss(),
         modules.connectHMR(),
         modules.connectFriendlyErrors(),
     );

@@ -20,7 +20,7 @@ import { useLocalStorage } from '../../hooks';
 // import { TOKEN_URL } from '../../constants';
 
 // Assets
-import { GlobalStyles, StylesReset, defaultLight, dark } from '../../assets';
+import { GlobalStyles, defaultLight, dark } from '../../assets';
 import { AppContainer } from './styles';
 
 const history = createBrowserHistory();
@@ -53,7 +53,6 @@ export const App: FC = () => {
         <ApolloProvider client = { client }>
             <Router history = { history }>
                 <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark } >
-                    <StylesReset />
                     <GlobalStyles />
                     <AppContainer>
                         <TopBar />

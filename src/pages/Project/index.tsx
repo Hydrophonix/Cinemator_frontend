@@ -9,6 +9,10 @@ import {
     useHistory,
 } from 'react-router-dom';
 
+// Containers
+import { Scenes } from '../../containers/Scenes';
+import { Requisite } from '../../containers/Requisite';
+
 // Components
 import { ErrorBoundary } from '../../components';
 
@@ -39,13 +43,12 @@ const Project: FC = () => {
                     Calendar
                 </Route>
                 <Route path = { '/:projectId/scenes' }>
-                    Scenes
+                    <Scenes />
                 </Route>
                 <Route path = { '/:projectId/requisite' }>
-                    Requisite
+                    <Requisite />
                 </Route>
-
-                <Redirect to = { '/:projectId/calendar' }/>
+                <Redirect to = { '/:projectId/scenes' }/>
             </Switch>
         </ProjectContainer>
     );

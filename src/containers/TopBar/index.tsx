@@ -9,6 +9,7 @@ import React, { FC } from 'react';
 import { UserMenu } from '../../components';
 
 // Images
+import logo from '../../assets/images/logo.png';
 
 // Styles
 import { TopbarContainer, Logo } from './styles';
@@ -21,7 +22,7 @@ import { TopbarContainer, Logo } from './styles';
 export const TopBar: FC = () => {
     return (
         <TopbarContainer>
-            <Logo />
+            <Logo src = { logo }/>
             <h1>Cinemator</h1>
             <UserMenu />
         </TopbarContainer>
