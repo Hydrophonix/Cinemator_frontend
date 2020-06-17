@@ -1,19 +1,17 @@
 // Core
 import React, { useState, FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'; // TODO !!!
 
 // Components
 import { SceneItem } from '../../components';
 
 // Styles
-import { ScenesContainer } from './styles';
+import { ScenesContainer, TableStyles } from './styles';
 
 const scenesMock = [
     {
@@ -77,45 +75,30 @@ export const Scenes: FC = () => {
 
                 <button>Add new scene</button>
             </header>
-            <main>
+            <TableStyles>
                 <Table>
                     <Thead>
                         <Tr>
-                            <Th>Event</Th>
-                            <Th>Date</Th>
+                            <Th>ID</Th>
+                            <Th>Scene name</Th>
                             <Th>Location</Th>
+                            <Th>Date</Th>
+                            <Th>Requisite</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td>Tablescon</Td>
-                            <Td>9 April 2019</Td>
-                            <Td>East Annex</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Capstone Data</Td>
-                            <Td>19 May 2019</Td>
-                            <Td>205 Gorgas</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Tuscaloosa D3</Td>
-                            <Td>29 June 2019</Td>
-                            <Td>Github</Td>
-                        </Tr>
+                        {
+                            scenesMock.map((scene) => (
+                                <SceneItem
+                                    key = { scene.id }
+                                    { ...scene }
+                                    sceneRedirectHandler = { sceneRedirectHandler }
+                                />
+                            ))
+                        }
                     </Tbody>
                 </Table>
-
-
-                {/* {
-                    scenesMock.map((scene) => (
-                        <SceneItem
-                            key = { scene.id }
-                            { ...scene }
-                            sceneRedirectHandler = { sceneRedirectHandler }
-                            />
-                            ))
-                        } */}
-            </main>
+            </TableStyles>
         </ScenesContainer>
     );
 };

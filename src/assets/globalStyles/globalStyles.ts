@@ -2,6 +2,9 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
+// Fonts
+import TerminatorFont from '../fonts/terminator.ttf';
+
 export const GlobalStyles = createGlobalStyle`
     ${reset}
 
@@ -24,4 +27,9 @@ export const GlobalStyles = createGlobalStyle`
       top: 0 !important;
       padding: 0 !important;
     } */
+
+    @font-face {
+      font-family: TerminatorFont;
+      src: url('${TerminatorFont}') format('opentype');
+    }
 `;

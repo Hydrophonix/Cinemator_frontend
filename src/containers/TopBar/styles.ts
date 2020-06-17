@@ -3,15 +3,17 @@ import styled from 'styled-components';
 
 export const TopbarContainer = styled.header`
     display: flex;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
     justify-content: space-between;
-    background-color: lightblue;
+    background-color: #216ba5;
 
     h1 {
-        color: #000;
-        font-size: 30px;
+        color: #fff;
+        font-size: 35px;
+        font-family: TerminatorFont;
     }
 `;
 

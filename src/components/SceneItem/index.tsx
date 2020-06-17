@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { Tr, Td } from 'react-super-responsive-table';
 
 // Types
 type PropTypes = {
@@ -13,7 +14,7 @@ type PropTypes = {
 };
 
 // Styles
-import { SceneItemContainer, Cell } from './styles';
+// import { SceneItemContainer, Cell } from './styles';
 
 export const SceneItem: FC<PropTypes> = ({
     id,
@@ -25,14 +26,12 @@ export const SceneItem: FC<PropTypes> = ({
     sceneRedirectHandler,
 }) => {
     return (
-        <SceneItemContainer onClick = { () => sceneRedirectHandler(id) }>
-            <section>
-                <Cell>{id}</Cell>
-                <Cell>{sceneName}</Cell>
-                <Cell>{location}</Cell>
-                <Cell>01/01/1010</Cell>
-                <Cell>Requisite: {requisiteIds.length}</Cell>
-            </section>
-        </SceneItemContainer>
+        <Tr onClick = { () => sceneRedirectHandler(id) }>
+            <Td>{id}</Td>
+            <Td>{sceneName}</Td>
+            <Td>{location}</Td>
+            <Td>01/01/1010</Td>
+            <Td>Items: {requisiteIds.length}</Td>
+        </Tr>
     );
 };
