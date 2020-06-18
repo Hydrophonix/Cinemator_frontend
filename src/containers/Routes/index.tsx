@@ -15,6 +15,12 @@ export const Routes: FC = () => {
                 <Route path = '/:projectId'>
                     <P.Project />
                 </Route>
+                <Route path = '/login'>
+                    <P.Login />
+                </Route>
+                <Route path = '/register'>
+                    <P.Register />
+                </Route>
                 <Route path = '/'>
                     <P.Projects />
                 </Route>
