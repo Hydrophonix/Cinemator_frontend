@@ -1,11 +1,7 @@
 // Core
 import styled from 'styled-components';
 
-export const ProjectContainer = styled.div`
-    display: flex;
-    height: 100%;
-
-    aside {
+export const SidebarContainer = styled.aside`
         min-width:200px;
         background-color: lightblue;
         border-right: 1px solid black;
@@ -28,5 +24,4 @@ export const ProjectContainer = styled.div`
                 }
             }
         }
-    }
 `;

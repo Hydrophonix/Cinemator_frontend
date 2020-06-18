@@ -6,7 +6,7 @@ import React, { FC } from 'react';
 // import { ThemesKeys } from '../../theme';
 
 // Components
-import { UserMenu } from '../../components';
+import { UserMenu } from './UserMenu';
 
 // Images
 import logo from '../../assets/images/logo.png';

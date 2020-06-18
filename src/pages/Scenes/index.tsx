@@ -8,7 +8,8 @@ import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'; // TODO !!!
 
 // Components
-import { SceneItem } from '../../components';
+import { SceneItem } from './SceneItem';
+import { ErrorBoundary } from '../../components';
 
 // Styles
 import { ScenesContainer, TableStyles } from './styles';
@@ -32,7 +33,12 @@ const scenesMock = [
     },
 ];
 
-export const Scenes: FC = () => {
+type PropTypes = {
+    props?: string
+}
+
+const Scenes: FC<PropTypes> = ({ props }) => {
+    console.log('props', props);
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
 
@@ -102,3 +108,10 @@ export const Scenes: FC = () => {
         </ScenesContainer>
     );
 };
+
+
+export default () => (
+    <ErrorBoundary>
+        <Scenes />
+    </ErrorBoundary>
+);
