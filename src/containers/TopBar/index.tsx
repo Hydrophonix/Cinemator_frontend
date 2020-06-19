@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 // import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Types
 // import { ThemesKeys } from '../../theme';
@@ -20,10 +21,14 @@ import { TopbarContainer, Logo } from './styles';
 // };
 
 export const TopBar: FC = () => {
+    const { push } = useHistory();
+
     return (
         <TopbarContainer>
             <Logo src = { logo }/>
             <h1>Cinemator</h1>
+            <button onClick = { () => push('/login') }>Login</button>
+            <button onClick = { () => push('/register') }>Register</button>
             <UserMenu />
         </TopbarContainer>
     );
