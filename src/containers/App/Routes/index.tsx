@@ -2,27 +2,30 @@
 import React, { FC, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+// Containers
+import { Project } from '../../Project';
+
 // Pages
-import * as P from '../../pages';
+import { Projects, Login, Register } from '../../../pages';
 
 // Elements
-import { Spinner } from '../../elements';
+import { Spinner } from '../../../elements';
 
 export const Routes: FC = () => {
     return (
-        <Suspense fallback = { <Spinner/> }>
+        <Suspense fallback = { <Spinner /> }>
             <Switch>
-                <Route path = '/:projectId'>
-                    <P.Project />
-                </Route>
                 <Route path = '/login'>
-                    <P.Login />
+                    <Login />
                 </Route>
                 <Route path = '/register'>
-                    <P.Register />
+                    <Register />
+                </Route>
+                <Route path = '/:projectId'>
+                    <Project />
                 </Route>
                 <Route path = '/'>
-                    <P.Projects />
+                    <Projects />
                 </Route>
             </Switch>
         </Suspense>

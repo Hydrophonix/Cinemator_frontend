@@ -1,5 +1,5 @@
 // Core
-import React, { useEffect, FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -10,7 +10,7 @@ import { client } from '../../apollo';
 
 // Containers
 import { TopBar } from '../TopBar';
-import { Routes } from '../Routes';
+import { Routes } from './Routes';
 
 // Hooks
 import { useLocalStorage } from '../../hooks';

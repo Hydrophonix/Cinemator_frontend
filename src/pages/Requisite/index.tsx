@@ -2,11 +2,11 @@
 import React, { FC } from 'react';
 // import { Link } from 'react-router-dom';
 
+// Components
+import { ErrorBoundary } from '../../components';
+
 // Types
 // import { ThemesKeys } from '../../theme';
-
-// Components
-// import { UserMenu } from '../../components';
 
 // Images
 
@@ -18,10 +18,17 @@ import { RequisiteContainer } from './styles';
 //     setThemeName: (value: ThemesKeys) => void;
 // };
 
-export const Requisite: FC = () => {
+const Requisite: FC = () => {
     return (
         <RequisiteContainer>
             RequisiteContainer
         </RequisiteContainer>
     );
 };
+
+
+export default () => (
+    <ErrorBoundary>
+        <Requisite />
+    </ErrorBoundary>
+);

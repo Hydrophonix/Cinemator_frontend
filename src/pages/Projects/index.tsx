@@ -3,7 +3,8 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Components
-import { ErrorBoundary, ProjectItem } from '../../components';
+import { ProjectItem } from './ProjectItem';
+import { ErrorBoundary } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
