@@ -1,7 +1,8 @@
 // Core
 import styled from 'styled-components';
 
-export const ScenesContainer = styled.section`
+// TODO: same styles as Scenes
+export const RequisiteContainer = styled.header`
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -24,4 +25,5 @@ export const ScenesContainer = styled.section`
         flex-direction: column;
         padding: 5px;
     } */
+
 `;

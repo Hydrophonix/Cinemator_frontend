@@ -7,46 +7,47 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 
 // Components
-import { SceneItem } from './SceneItem';
+import { RequisiteItem } from './RequisiteItem';
 import { ErrorBoundary } from '../../components';
 
 // Styles
 import { TableStyles } from '../../assets';
-import { ScenesContainer } from './styles';
+import { RequisiteContainer } from './styles';
 
-const scenesMock = [
+const requisitesMock = [
     {
-        id:           '1s',
-        sceneName:    'ZLP',
-        requisiteIds: [ '1r' ],
-        location:     'Kyiv',
-        scenarioDay:  1,
-        workdayIds:   [ '1wd' ],
+        id:              '234234234',
+        requisiteName:   'Mouse',
+        requisiteNumber: 1,
+        scenesIds:       [ '324423423', '3244dd23423' ],
+        isOrdered:       false,
+        photoUrl:        'https://cdn.mos.cms.futurecdn.net/2RD5zcvSuFmWTrTLqUNbmn-320-80.jpg',
+        description:     'nice mouse',
+        pricePerDay:     0,
     },
     {
-        id:           '2s',
-        sceneName:    'ZLP',
-        requisiteIds: [ '1r' ],
-        location:     'Kyiv',
-        scenarioDay:  2,
-        workdayIds:   [ '1wd' ],
+        id:              '234d234234',
+        requisiteName:   'Mouse',
+        requisiteNumber: 2,
+        scenesIds:       [ '324423423', '3244dd23423' ],
+        isOrdered:       false,
+        photoUrl:        'https://cdn.mos.cms.futurecdn.net/2RD5zcvSuFmWTrTLqUNbmn-320-80.jpg',
+        description:     'nice mouse',
+        pricePerDay:     0,
     },
 ];
 
-// Types
-type PropTypes = {}
-
-const Scenes: FC<PropTypes> = () => {
+const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
 
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
-    const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+    const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
 
     return (
-        <ScenesContainer>
+        <RequisiteContainer>
             <header>
                 <section>
                     <DatePicker
@@ -65,51 +66,47 @@ const Scenes: FC<PropTypes> = () => {
                         onChange = { (date) => date && setEndDate(date) }
                     />
                     <input
-                        placeholder = 'Scene name'
+                        placeholder = 'Requisite name'
                         type = 'text'
                     />
                     <input
                         type = 'number'
                     />
-                    <input
-                        placeholder = 'Scene location'
-                        type = 'text'
-                    />
                 </section>
 
-                <button>Add new scene</button>
+                <button>Add new requisite</button>
             </header>
             <TableStyles>
                 <Table>
                     <Thead>
                         <Tr>
                             <Th>ID</Th>
-                            <Th>Scene name</Th>
-                            <Th>Location</Th>
-                            <Th>Date</Th>
-                            <Th>Requisite</Th>
+                            <Th>Number</Th>
+                            <Th>Name</Th>
+                            <Th>Scenes</Th>
+                            <Th>isOrdered</Th>
+                            <Th>pricePerDay</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
                         {
-                            scenesMock.map((scene) => (
-                                <SceneItem
-                                    key = { scene.id }
-                                    { ...scene }
-                                    sceneRedirectHandler = { sceneRedirectHandler }
+                            requisitesMock.map((requisite) => (
+                                <RequisiteItem
+                                    key = { requisite.id }
+                                    { ...requisite }
+                                    requisiteRedirectHandler = { requisiteRedirectHandler }
                                 />
                             ))
                         }
                     </Tbody>
                 </Table>
             </TableStyles>
-        </ScenesContainer>
+        </RequisiteContainer>
     );
 };
 
-
 export default () => (
     <ErrorBoundary>
-        <Scenes />
+        <Requisites />
     </ErrorBoundary>
 );

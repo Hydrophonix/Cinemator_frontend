@@ -1,27 +1,40 @@
 // Core
 import React, { FC } from 'react';
-// import { Link } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Types
-// import { ThemesKeys } from '../../theme';
-
-// Images
+// Elements
+import { Button } from '../../elements';
 
 // Styles
 import { RequisiteContainer } from './styles';
 
-// type PropTypes = {
-//     themeName: ThemesKeys;
-//     setThemeName: (value: ThemesKeys) => void;
-// };
+// Types
+type Params = {
+    projectId?: string
+    requisiteId?: string
+}
 
-const Requisite: FC = () => {
+type PropTypes = {
+    requisiteName?: string
+}
+
+const Requisite: FC<PropTypes> = ({ requisiteName }) => {
+    const { goBack } = useHistory();
+    const { projectId, requisiteId } = useParams<Params>();
+
     return (
         <RequisiteContainer>
-            RequisiteContainer
+            <header>
+                <Button onClick = { () => goBack() }>Back</Button>
+                <h2>{requisiteName || 'TEST NAME'}</h2>
+                <Button>Edit</Button>
+            </header>
+            <main>
+                Some requisite data
+            </main>
         </RequisiteContainer>
     );
 };

@@ -1,35 +1,40 @@
 // Core
-import React, { useState, FC } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
-import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'; // TODO !!!
 
 // Components
-import { SceneItem } from './SceneItem';
 import { ErrorBoundary } from '../../components';
+
+// Elements
+import { Button } from '../../elements';
 
 // Styles
 import { SceneContainer } from './styles';
 
+// Types
+type Params = {
+    projectId?: string
+    sceneId?: string
+}
+
 type PropTypes = {
-    props?: string
+    sceneName?: string
 }
 
 const Scene: FC<PropTypes> = ({ sceneName }) => {
-    const { push } = useHistory();
-    const a = useParams<{ projectId: string }>();
-    console.log('a', a);
+    const { goBack } = useHistory();
+    const { projectId, sceneId } = useParams<Params>();
 
     return (
         <SceneContainer>
             <header>
-                <button onClick = { () => push('/') }>Back</button>
-                <h2>{sceneName}</h2>
+                <Button onClick = { () => goBack() }>Back</Button>
+                <h2>{sceneName || 'TEST NAME'}</h2>
+                <Button>Edit</Button>
             </header>
-
+            <main>
+                Some scene data
+            </main>
         </SceneContainer>
     );
 };
