@@ -6,9 +6,9 @@ import reset from 'styled-reset';
 import TerminatorFont from '../fonts/terminator.ttf';
 
 export const GlobalStyles = createGlobalStyle`
-    ${reset}
+    /* ${reset} */
 
-    input, select, button {
+    /* input, select, button {
       outline: none;
     }
 
@@ -16,7 +16,7 @@ export const GlobalStyles = createGlobalStyle`
       cursor:  pointer;
       border:  none;
       padding: 0px;
-    }
+    } */
 
     /* .Toastify__toast {
       min-height: auto !important;

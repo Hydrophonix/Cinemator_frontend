@@ -1,8 +1,9 @@
 // Core
 import React, { useState, FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 
@@ -16,7 +17,7 @@ import { ScenesContainer } from './styles';
 
 const scenesMock = [
     {
-        id:           '1s',
+        id:           '1',
         sceneName:    'ZLP',
         requisiteIds: [ '1r' ],
         location:     'Kyiv',
@@ -24,7 +25,7 @@ const scenesMock = [
         workdayIds:   [ '1wd' ],
     },
     {
-        id:           '2s',
+        id:           '2',
         sceneName:    'ZLP',
         requisiteIds: [ '1r' ],
         location:     'Kyiv',

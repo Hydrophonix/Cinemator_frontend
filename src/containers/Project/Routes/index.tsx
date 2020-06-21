@@ -3,7 +3,7 @@ import React, { FC, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Pages
-import { Scenes, Scene, Requisites, Requisite } from '../../../pages';
+import { Calendar, Scenes, Scene, Requisites, Requisite } from '../../../pages';
 
 // Elements
 import { Spinner } from '../../../elements';
@@ -19,7 +19,7 @@ export const Routes: FC = () => {
                     <Requisite />
                 </Route>
                 <Route path = { '/:projectId/calendar' }>
-                    Calendar
+                    <Calendar/>
                 </Route>
                 <Route path = { '/:projectId/scenes' }>
                     <Scenes />
@@ -28,7 +28,7 @@ export const Routes: FC = () => {
                     <Requisites />
                 </Route>
 
-                <Redirect to = { '/:projectId/scenes' } />
+                <Redirect to = { '/:projectId/calendar' } />
             </Switch>
         </Suspense>
     );

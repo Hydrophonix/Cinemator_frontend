@@ -6,6 +6,8 @@ export const Register = lazy(() => import(/* webpackChunkName: "Register" */ './
 
 export const Projects = lazy(() => import(/* webpackChunkName: "Projects" */ './Projects'));
 
+export const Calendar = lazy(() => import(/* webpackChunkName: "Calendar" */ './Calendar'));
+
 export const Scenes = lazy(() => import(/* webpackChunkName: "Scenes" */ './Scenes'));
 export const Scene = lazy(() => import(/* webpackChunkName: "Scene" */ './Scene'));
 
