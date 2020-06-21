@@ -11,6 +11,9 @@ import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 import { SceneItem } from './SceneItem';
 import { ErrorBoundary } from '../../components';
 
+// Redux
+import { useUiTest } from '../../redux/ui';
+
 // Styles
 import { TableStyles } from '../../assets';
 import { ScenesContainer } from './styles';
@@ -40,6 +43,10 @@ type PropTypes = {}
 const Scenes: FC<PropTypes> = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
+
+    // const { set, reset } = useUiTest();
+    // set();
+    // reset();
 
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());

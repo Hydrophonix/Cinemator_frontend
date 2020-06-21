@@ -4,9 +4,13 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
+import { Provider as ReduxProvider } from 'react-redux';
 
 // Data Store
 import { client } from '../../apollo';
+
+// App store
+import { store } from '../../init/store';
 
 // Containers
 import { TopBar } from '../TopBar';
@@ -53,11 +57,13 @@ export const App: FC = () => {
         <ApolloProvider client = { client }>
             <Router history = { history }>
                 <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark } >
-                    <GlobalStyles />
-                    <AppContainer>
-                        <TopBar />
-                        <Routes />
-                    </AppContainer>
+                    <ReduxProvider store = { store }>
+                        <AppContainer>
+                            <GlobalStyles />
+                            <TopBar />
+                            <Routes />
+                        </AppContainer>
+                    </ReduxProvider>
                 </ThemeProvider>
             </Router>
         </ApolloProvider>
