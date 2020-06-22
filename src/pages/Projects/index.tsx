@@ -43,7 +43,7 @@ const Projects: FC = () => {
     return (
         <ProjectsContainer>
             <nav>
-                <Button>
+                <Button onClick = { () => push('/create-project') }>
                     +
                 </Button>
             </nav>

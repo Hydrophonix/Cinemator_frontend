@@ -12,8 +12,6 @@ interface ButtonProps extends DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLB
 const Styled = styled.button<ButtonProps>`
     cursor: pointer;
     outline: none;
-    width: 75px;
-    height: 35px;
     border-width: 2px;
     border-radius: 8px;
     background-color: ${({ theme, active }) => active && theme.primaryVariant};

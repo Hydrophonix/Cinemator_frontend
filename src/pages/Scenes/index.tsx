@@ -12,7 +12,7 @@ import { SceneItem } from './SceneItem';
 import { ErrorBoundary } from '../../components';
 
 // Redux
-import { useUiTest } from '../../redux/ui';
+// import { useUiTest } from '../../redux/ui';
 
 // Styles
 import { TableStyles } from '../../assets';

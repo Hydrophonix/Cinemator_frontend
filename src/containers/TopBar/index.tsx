@@ -28,7 +28,6 @@ export const TopBar: FC = () => {
             <Logo src = { logo }/>
             <h1>Cinemator</h1>
             <button onClick = { () => push('/login') }>Login</button>
-            <button onClick = { () => push('/register') }>Register</button>
             <UserMenu />
         </TopbarContainer>
     );

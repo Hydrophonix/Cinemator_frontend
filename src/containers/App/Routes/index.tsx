@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Project } from '../../Project';
 
 // Pages
-import { Projects, Login, Register } from '../../../pages';
+import { Projects, CreateProject, Login, Register } from '../../../pages';
 
 // Elements
 import { Spinner } from '../../../elements';
@@ -15,11 +15,20 @@ export const Routes: FC = () => {
     return (
         <Suspense fallback = { <Spinner /> }>
             <Switch>
-                <Route path = '/login'>
+                <Route
+                    exact
+                    path = '/login'>
                     <Login />
                 </Route>
-                <Route path = '/register'>
+                <Route
+                    exact
+                    path = '/register'>
                     <Register />
+                </Route>
+                <Route
+                    exact
+                    path = '/create-project'>
+                    <CreateProject />
                 </Route>
                 <Route path = '/:projectId'>
                     <Project />

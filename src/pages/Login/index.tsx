@@ -1,54 +1,66 @@
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
+// Elements
+import { Button } from '../../elements';
+
 // Hooks
 import { useLoginMutation } from '../../bus';
+import { useForm } from '../../hooks';
 
 // Instruments
 import { setAccessToken } from '../../tokenStore';
 
-type LoginProps = {}
+// Styles
+import { LoginContainer, RegisterLink } from './styles';
 
-const Login:FC<LoginProps> = () => {
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('');
+const innitialForm = {
+    email:    '',
+    password: '',
+};
+
+const Login:FC = () => {
     const [ login ] = useLoginMutation();
+    const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
+
+    const onSubmit = async (event: any) => {
+        event.preventDefault();
+
+        const response = await login({
+            variables: { input: form },
+        });
+
+        if (response && response.data) {
+            setAccessToken(response.data.loginWeb.accessToken);
+        }
+    };
 
     return (
-        <div>
-            <div>KEK LOGIN</div>
-            <form onSubmit = { async (event) => {
-                event.preventDefault();
-                const response = await login({
-                    variables: { input: { email, password }},
-                });
+        <LoginContainer>
+            <h1>Enter Cinemator</h1>
 
-                if (response && response.data) {
-                    setAccessToken(response.data.loginWeb.accessToken);
-                }
-            } }>
-                <div>
-                    <input
-                        placeholder = 'enter email'
-                        value = { email }
-                        onChange = { (event) => setEmail(event.target.value) }
-                    />
-                </div>
-                <div>
-                    <input
-                        placeholder = 'enter password'
-                        value = { password }
-                        onChange = { (event) => setPassword(event.target.value) }
-                    />
-                </div>
-                <div>
-                    <button type = 'submit'>Login!1!</button>
-                </div>
+            <form onSubmit = { onSubmit }>
+                <input
+                    name = 'email'
+                    placeholder = 'enter email'
+                    value = { form.email }
+                    onChange = { setForm }
+                />
+
+                <input
+                    name = 'password'
+                    placeholder = 'enter password'
+                    value = { form.password }
+                    onChange = { setForm }
+                />
+
+                <Button type = 'submit'>Login</Button>
             </form>
-        </div>
+            <RegisterLink to = '/register'>Register here</RegisterLink>
+        </LoginContainer>
     );
 };
 

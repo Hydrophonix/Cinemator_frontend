@@ -12,6 +12,12 @@ export interface AuthInput {
   password: string;
 }
 
+export interface ProjectCreateInput {
+  title: string;
+  startDay: string;
+  endDay: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
