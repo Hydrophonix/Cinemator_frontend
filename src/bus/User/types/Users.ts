@@ -14,5 +14,5 @@ export interface Users_users {
 }
 
 export interface Users {
-  users: Users_users[] | null;
+  users: Users_users[];
 }

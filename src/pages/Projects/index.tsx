@@ -9,6 +9,9 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button } from '../../elements';
 
+// Hooks
+import { useOwnedProjectsQuery } from '../../bus/Project';
+
 // Assets
 import { ProjectsContainer } from './styles';
 
@@ -38,12 +41,16 @@ const projects = [
 
 const Projects: FC = () => {
     const { push } = useHistory();
+    const { data, loading } = useOwnedProjectsQuery();
+    console.log('Projects:FC -> loading', loading);
+    console.log('Projects:FC -> data', data);
+
     const projectRedirectHandler = (projectId: string) => push(`/${projectId}`);
 
     return (
         <ProjectsContainer>
             <nav>
-                <Button>
+                <Button onClick = { () => push('/create-project') }>
                     +
                 </Button>
             </nav>

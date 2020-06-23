@@ -21,14 +21,10 @@ import { TopbarContainer, Logo } from './styles';
 // };
 
 export const TopBar: FC = () => {
-    const { push } = useHistory();
-
     return (
         <TopbarContainer>
             <Logo src = { logo }/>
             <h1>Cinemator</h1>
-            <button onClick = { () => push('/login') }>Login</button>
-            <button onClick = { () => push('/register') }>Register</button>
             <UserMenu />
         </TopbarContainer>
     );

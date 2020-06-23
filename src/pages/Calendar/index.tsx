@@ -2,12 +2,13 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import createSlot from 'react-tackle-box/Slot';
 import moment from 'moment';
 
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+// import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 // Types
@@ -35,37 +36,59 @@ const Calendar: FC<PropTypes> = () => {
         {
             start: new Date(),
             end:   new Date(),
-            title: 'Scene 1',
+            title: '1 Сцена',
             url:   'http://google.com/',
             id:    '1',
         },
-        // {
-        //     start: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)),
-        //     end:   new Date(),
-        //     title: 'Scene 1',
-        //     url:   'http://google.com/',
-        //     id:    '1',
-        // },
         {
             start: new Date(),
             end:   new Date(),
-            title: 'Scene 2',
+            title: '2 Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена ',
             url:   'http://google.com/',
             id:    '2',
+            desc:  '24234',
         },
         {
             start: new Date(),
             end:   new Date(),
-            title: 'Scene 3',
+            title: '3 Сцена',
             url:   'http://google.com/',
             id:    '3',
         },
         {
             start: new Date(),
             end:   new Date(),
-            title: 'Scene 4',
+            title: '4 Сцена',
             url:   'http://google.com/',
             id:    '4',
+        },
+        {
+            start: new Date(),
+            end:   new Date(),
+            title: '5 Сцена',
+            url:   'http://google.com/',
+            id:    '5',
+        },
+        {
+            start: new Date(),
+            end:   new Date(),
+            title: '6 Сцена',
+            url:   'http://google.com/',
+            id:    '6',
+        },
+        {
+            start: new Date(),
+            end:   new Date(),
+            title: '7 сцена',
+            url:   'http://google.com/',
+            id:    '7',
+        },
+        {
+            start: new Date(),
+            end:   new Date(),
+            title: '8 Сцена',
+            url:   'http://google.com/',
+            id:    '8',
         },
     ]);
 
@@ -94,12 +117,14 @@ const Calendar: FC<PropTypes> = () => {
     return (
         <CalendarContainer>
             <DnDCalendar
+                popup
                 resizable
                 selectable
                 defaultDate = { new Date() }
                 defaultView = 'month'
                 events = { events }
                 localizer = { localizer }
+                views = {{ month: true }}
                 onEventDrop = { onEventHandler }
                 onEventResize = { onEventHandler }
                 onSelectEvent = { sceneRedirectHandler }

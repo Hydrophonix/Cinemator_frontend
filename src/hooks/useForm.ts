@@ -4,20 +4,20 @@ import { useState, ChangeEvent } from 'react';
 type HandleChange = (event: ChangeEvent<HTMLInputElement>  | null) => void;
 
 export const useForm = <InititalValue>(initialValue: InititalValue): [ InititalValue, HandleChange, Function ] => {
-    const [ value, setValue ] = useState(initialValue);
+    const [ form, setForm ] = useState(initialValue);
 
     const handleChange: HandleChange = (event) => {
         if (event === null) {
-            return setValue(initialValue);
+            return setForm(initialValue);
         }
 
-        return setValue({
-            ...value,
+        return setForm({
+            ...form,
             [ event.target.name ]: event.target.value,
         });
     };
 
-    const resetForm = () => setValue(initialValue);
+    const resetForm = () => setForm(initialValue);
 
-    return [ value, handleChange, resetForm ];
+    return [ form, handleChange, resetForm ];
 };

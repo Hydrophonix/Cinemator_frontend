@@ -1,33 +1,26 @@
 // Core
 import React, { FC, Suspense } from 'react';
-import { Switch, Route } from 'react-router-dom';
 
-// Containers
-import { Project } from '../../Project';
+// Routes
+import { Public } from './Public';
+import { Private } from './Private';
 
-// Pages
-import { Projects, Login, Register } from '../../../pages';
+// Hooks
+import { useCustomLocalQuery } from '../../../hooks';
 
 // Elements
 import { Spinner } from '../../../elements';
 
 export const Routes: FC = () => {
+    const { data } = useCustomLocalQuery('isLoggedIn');
+
     return (
         <Suspense fallback = { <Spinner /> }>
-            <Switch>
-                <Route path = '/login'>
-                    <Login />
-                </Route>
-                <Route path = '/register'>
-                    <Register />
-                </Route>
-                <Route path = '/:projectId'>
-                    <Project />
-                </Route>
-                <Route path = '/'>
-                    <Projects />
-                </Route>
-            </Switch>
+            {
+                data!.isLoggedIn
+                    ? <Private />
+                    : <Public />
+            }
         </Suspense>
     );
 };

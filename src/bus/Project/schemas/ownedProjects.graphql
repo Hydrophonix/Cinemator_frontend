@@ -1,0 +1,10 @@
+query OwnedProjects {
+    ownedProjects {
+        id
+        ownerId
+        title
+        startDay
+        endDay
+        description
+    }
+}

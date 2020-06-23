@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const RegisterContainer = styled.div`
+export const LoginContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +26,7 @@ export const RegisterContainer = styled.div`
     }
 `;
 
-export const LoginLink = styled(Link)`
+export const RegisterLink = styled(Link)`
     text-decoration: underline;
     padding-top: 10px;
 `;

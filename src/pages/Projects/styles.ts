@@ -9,7 +9,7 @@ export const ProjectsContainer = styled.div`
     
     nav {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
     }
 
     main {

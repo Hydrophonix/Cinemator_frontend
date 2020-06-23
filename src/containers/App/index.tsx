@@ -1,16 +1,7 @@
 // Core
-import React, { FC } from 'react';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import { ApolloProvider } from '@apollo/react-hooks';
+import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Provider as ReduxProvider } from 'react-redux';
-
-// Data Store
-import { client } from '../../apollo';
-
-// App store
-import { store } from '../../init/store';
+import { useApolloClient } from '@apollo/react-hooks';
 
 // Containers
 import { TopBar } from '../TopBar';
@@ -20,52 +11,46 @@ import { Routes } from './Routes';
 import { useLocalStorage } from '../../hooks';
 
 // Instruments
-// import { setAccessToken } from '../../tokenStore';
-// import { TOKEN_URL } from '../../constants';
+import { setAccessToken } from '../../@init/tokenStore';
+import { TOKEN_URL } from '../../@init/constants';
 
 // Assets
 import { GlobalStyles, defaultLight, dark } from '../../assets';
 import { AppContainer } from './styles';
 
-const history = createBrowserHistory();
-
 export const App: FC = () => {
-    // const [ loading, setLoading ] = useState(true);
+    const client = useApolloClient();
     // const [ isDefaultTheme, setIsDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
 
-    // useEffect(() => {
-    //     fetch(TOKEN_URL, { credentials: 'include', method: 'POST' })
-    //         .then(async (res) => {
-    //             const { accessToken, ok } = await res.json();
-    //             console.log('"|_(ʘ_ʘ)_/" =>: App:FC -> ok', ok);
-    //             setAccessToken(accessToken);
-    //             setLoading(false);
-    //         });
-    // }, []);
+    useEffect(() => {
+        fetch(TOKEN_URL, { credentials: 'include', method: 'POST' })
+            .then(async (res) => {
+                const { accessToken } = await res.json();
+
+                setAccessToken(accessToken);
+                client.writeData({ data: { isLoggedIn: true }});
+            })
+            .catch(() => {
+                client.writeData({ data: { isLoggedIn: false }});
+            });
+    }, []);
 
     // useEffect(() => {
-    //     console.log('app rerender');
     // });
 
     // if (loading) {
-    //     console.log('"|_(ʘ_ʘ)_/" =>: App:FC -> loading', loading);
+
     //     // return <div>Loading...</div>;
     // }
 
     return (
-        <ApolloProvider client = { client }>
-            <Router history = { history }>
-                <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark } >
-                    <ReduxProvider store = { store }>
-                        <AppContainer>
-                            <GlobalStyles />
-                            <TopBar />
-                            <Routes />
-                        </AppContainer>
-                    </ReduxProvider>
-                </ThemeProvider>
-            </Router>
-        </ApolloProvider>
+        <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark } >
+            <AppContainer>
+                <GlobalStyles />
+                <TopBar />
+                <Routes />
+            </AppContainer>
+        </ThemeProvider>
     );
 };

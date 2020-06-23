@@ -1,6 +1,6 @@
 // Core
 import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 
@@ -9,8 +9,20 @@ import { GRAPHQL_URL }      from '../constants';
 import { tokenRefreshLink } from './refreshTokenLink';
 import { errorLink }        from './errorLink';
 import { requestLink }      from './requestLink';
+// import gql from 'graphql-tag';
 
-export const client = new ApolloClient({
+// Innitial local cache
+import { innitialLocalCache } from './localCache';
+
+const cache = new InMemoryCache();
+
+// export const typeDefs = gql`
+//   extend type Query {
+//     isLoggedIn: Boolean!
+//   }
+// `;
+
+export const client = new ApolloClient<NormalizedCacheObject>({
     link: ApolloLink.from([
         tokenRefreshLink,
         errorLink,
@@ -20,8 +32,11 @@ export const client = new ApolloClient({
             credentials: 'include',
         }),
     ]),
-    cache: new InMemoryCache(),
+    cache,
+    resolvers: {},
 });
+
+cache.writeData({ data: innitialLocalCache });
 
 // ----------------------------------------------------------------------------
 // Templates
