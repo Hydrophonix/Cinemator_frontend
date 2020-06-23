@@ -1,6 +1,7 @@
 // Core
 import React, { FC, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
+import { useApolloClient } from '@apollo/react-hooks';
 
 // Containers
 import { TopBar } from '../TopBar';
@@ -8,7 +9,6 @@ import { Routes } from './Routes';
 
 // Hooks
 import { useLocalStorage } from '../../hooks';
-import { useReduxTogglers } from '../../redux/togglers';
 
 // Instruments
 import { setAccessToken } from '../../@init/tokenStore';
@@ -19,7 +19,7 @@ import { GlobalStyles, defaultLight, dark } from '../../assets';
 import { AppContainer } from './styles';
 
 export const App: FC = () => {
-    const { togglerCreator } = useReduxTogglers();
+    const client = useApolloClient();
     // const [ isDefaultTheme, setIsDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
 
@@ -27,20 +27,19 @@ export const App: FC = () => {
         fetch(TOKEN_URL, { credentials: 'include', method: 'POST' })
             .then(async (res) => {
                 const { accessToken } = await res.json();
+
                 setAccessToken(accessToken);
-                togglerCreator('isAuthenticated', true);
+                client.writeData({ data: { isLoggedIn: true }});
             })
             .catch(() => {
-                togglerCreator('isAuthenticated', false);
+                client.writeData({ data: { isLoggedIn: false }});
             });
     }, []);
 
     // useEffect(() => {
-    //     console.log('app rerender');
     // });
 
     // if (loading) {
-    //     console.log('"|_(ʘ_ʘ)_/" =>: App:FC -> loading', loading);
 
     //     // return <div>Loading...</div>;
     // }

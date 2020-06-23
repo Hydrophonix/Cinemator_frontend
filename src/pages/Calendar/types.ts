@@ -14,6 +14,7 @@ export type EventTypes = {
     backgroundColor?: string
     allDay?: boolean
     url: string
+    desc?: string
 }
 
 export type DataTypes = {

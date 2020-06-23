@@ -16,18 +16,15 @@ export const Private: FC = () => {
                 path = '/create-project'>
                 <CreateProject />
             </Route>
-
             <Route
                 path = '/:projectId'>
                 <Project />
             </Route>
-
             <Route
                 exact
                 path = '/'>
                 <Projects />
             </Route>
-
             <Redirect to = '/' />
         </Switch>
     );

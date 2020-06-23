@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useApolloClient } from '@apollo/react-hooks';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -9,7 +10,6 @@ import { Button } from '../../elements';
 
 // Hooks
 import { useLoginMutation } from '../../bus';
-import { useReduxTogglers } from '../../redux/togglers';
 import { useForm } from '../../hooks';
 
 // Instruments
@@ -24,8 +24,8 @@ const innitialForm = {
 };
 
 const Login: FC = () => {
+    const client = useApolloClient();
     const [ login ] = useLoginMutation();
-    const { togglerCreator } = useReduxTogglers();
     const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
 
     const onSubmit = async (event: any) => {
@@ -37,7 +37,7 @@ const Login: FC = () => {
 
         if (response && response.data) {
             setAccessToken(response.data.loginWeb.accessToken);
-            togglerCreator('isAuthenticated', true);
+            client.writeData({ data: { isLoggedIn: true }});
         }
     };
 

@@ -16,7 +16,10 @@ import { CreateProjectContainer } from './styles';
 
 // Hooks
 import { useForm } from '../../hooks';
-// import { useCreateProjectMutation } from '../../bus';
+import { useCreateProjectMutation } from '../../bus';
+
+// Utils
+import { transformDateToISO8601 } from '../../utils';
 
 const innitialForm = {
     title: '',
@@ -24,7 +27,7 @@ const innitialForm = {
 
 const CreateProject: FC = () => {
     const { goBack } = useHistory();
-    // const [ createProject ] = useCreateProjectMutation();
+    const [ createProject ] = useCreateProjectMutation();
     const [ form, setForm ] = useForm(innitialForm);
 
     const [ startDate, setStartDate ] = useState(new Date());
@@ -32,15 +35,20 @@ const CreateProject: FC = () => {
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
-        await console.log(event);
 
-        // const response = await login({
-        //     variables: { input: { email, password } },
-        // });
+        const response = await createProject({
+            variables: {
+                input: {
+                    title:    form.title,
+                    startDay: transformDateToISO8601(startDate),
+                    endDay:   transformDateToISO8601(endDate),
+                },
+            },
+        });
 
-        // if (response && response.data) {
-        //     setAccessToken(response.data.loginWeb.accessToken);
-        // }
+        if (response && response.data) {
+            console.log('onSubmit -> response.data', response.data);
+        }
     };
 
     return (
