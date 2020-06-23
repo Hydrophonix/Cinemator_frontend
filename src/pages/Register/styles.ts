@@ -1,5 +1,6 @@
 // Core
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const RegisterContainer = styled.div`
     display: flex;
@@ -23,4 +24,9 @@ export const RegisterContainer = styled.div`
             margin-bottom: 5px;
         }
     }
+`;
+
+export const LoginLink = styled(Link)`
+    text-decoration: underline;
+    padding-top: 10px;
 `;

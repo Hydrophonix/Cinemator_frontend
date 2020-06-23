@@ -16,6 +16,7 @@ export interface CreateProject_createProject {
   startDay: string;
   endDay: string;
   title: string;
+  description: string | null;
 }
 
 export interface CreateProject {

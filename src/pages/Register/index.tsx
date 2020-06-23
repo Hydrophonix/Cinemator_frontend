@@ -4,17 +4,20 @@ import React, { FC } from 'react';
 // Components
 import { ErrorBoundary } from '../../components';
 
+// Elements
+import { Button } from '../../elements';
+
 // Hooks
 import { useForm } from '../../hooks';
 
 // Instruments
-import { setAccessToken } from '../../tokenStore';
+import { setAccessToken } from '../../@init/tokenStore';
 
 // Types
 import { useRegisterMutation } from '../../bus';
 
 // Styles
-import { RegisterContainer } from './styles';
+import { RegisterContainer, LoginLink } from './styles';
 
 const innitialForm = {
     email:    '',
@@ -38,9 +41,9 @@ const Register: FC = () => {
 
     return (
         <RegisterContainer>
-            <h1>Register in Cinemator</h1>
-            <form onSubmit = { onSubmit }>
+            <h1>Register</h1>
 
+            <form onSubmit = { onSubmit }>
                 <input
                     name = 'email'
                     placeholder = 'enter email'
@@ -55,8 +58,9 @@ const Register: FC = () => {
                     onChange = { setForm }
                 />
 
-                <button type = 'submit'>Register</button>
+                <Button type = 'submit'>Submit</Button>
             </form>
+            <LoginLink to = '/login'>Login here</LoginLink>
         </RegisterContainer>
     );
 };

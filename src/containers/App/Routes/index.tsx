@@ -1,42 +1,26 @@
 // Core
 import React, { FC, Suspense } from 'react';
-import { Switch, Route } from 'react-router-dom';
 
-// Containers
-import { Project } from '../../Project';
+// Routes
+import { Public } from './Public';
+import { Private } from './Private';
 
-// Pages
-import { Projects, CreateProject, Login, Register } from '../../../pages';
+// Hooks
+import { useReduxTogglers } from '../../../redux/togglers';
 
 // Elements
 import { Spinner } from '../../../elements';
 
 export const Routes: FC = () => {
+    const { toggers } = useReduxTogglers();
+
     return (
         <Suspense fallback = { <Spinner /> }>
-            <Switch>
-                <Route
-                    exact
-                    path = '/login'>
-                    <Login />
-                </Route>
-                <Route
-                    exact
-                    path = '/register'>
-                    <Register />
-                </Route>
-                <Route
-                    exact
-                    path = '/create-project'>
-                    <CreateProject />
-                </Route>
-                <Route path = '/:projectId'>
-                    <Project />
-                </Route>
-                <Route path = '/'>
-                    <Projects />
-                </Route>
-            </Switch>
+            {
+                toggers.isAuthenticated
+                    ? <Private />
+                    : <Public />
+            }
         </Suspense>
     );
 };

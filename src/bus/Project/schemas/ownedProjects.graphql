@@ -2,8 +2,9 @@ query OwnedProjects {
     ownedProjects {
         id
         ownerId
+        title
         startDay
         endDay
-        title
+        description
     }
 }

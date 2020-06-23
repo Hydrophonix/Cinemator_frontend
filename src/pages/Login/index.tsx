@@ -9,10 +9,11 @@ import { Button } from '../../elements';
 
 // Hooks
 import { useLoginMutation } from '../../bus';
+import { useReduxTogglers } from '../../redux/togglers';
 import { useForm } from '../../hooks';
 
 // Instruments
-import { setAccessToken } from '../../tokenStore';
+import { setAccessToken } from '../../@init/tokenStore';
 
 // Styles
 import { LoginContainer, RegisterLink } from './styles';
@@ -22,8 +23,9 @@ const innitialForm = {
     password: '',
 };
 
-const Login:FC = () => {
+const Login: FC = () => {
     const [ login ] = useLoginMutation();
+    const { togglerCreator } = useReduxTogglers();
     const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
 
     const onSubmit = async (event: any) => {
@@ -35,12 +37,13 @@ const Login:FC = () => {
 
         if (response && response.data) {
             setAccessToken(response.data.loginWeb.accessToken);
+            togglerCreator('isAuthenticated', true);
         }
     };
 
     return (
         <LoginContainer>
-            <h1>Enter Cinemator</h1>
+            <h1>Login</h1>
 
             <form onSubmit = { onSubmit }>
                 <input
@@ -57,7 +60,7 @@ const Login:FC = () => {
                     onChange = { setForm }
                 />
 
-                <Button type = 'submit'>Login</Button>
+                <Button type = 'submit'>Submit</Button>
             </form>
             <RegisterLink to = '/register'>Register here</RegisterLink>
         </LoginContainer>

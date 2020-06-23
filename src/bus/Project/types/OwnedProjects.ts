@@ -11,9 +11,10 @@ export interface OwnedProjects_ownedProjects {
   __typename: "Project";
   id: string;
   ownerId: string;
+  title: string;
   startDay: string;
   endDay: string;
-  title: string;
+  description: string | null;
 }
 
 export interface OwnedProjects {
