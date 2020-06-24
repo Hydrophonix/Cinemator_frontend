@@ -2,13 +2,12 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import createSlot from 'react-tackle-box/Slot';
 import moment from 'moment';
 
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-// import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 // Types
@@ -17,12 +16,12 @@ import { PropTypes, Params, EventTypes, DataTypes } from './types';
 // Components
 import { ErrorBoundary } from '../../components';
 
-// // Elements
-// import { Button } from '../../elements';
+// Utils
+import { transformDateToISO8601 } from '../../utils';
+import { customEventView, customDayPropGetter } from './utils';
 
 // Styles
 import { CalendarContainer } from './styles';
-
 
 // Instruments
 const localizer = momentLocalizer(moment);
@@ -92,10 +91,14 @@ const Calendar: FC<PropTypes> = () => {
         },
     ]);
 
-    const scenesRedirectHandler = (event: any) => {
-        console.log('scenesRedirectHandler -> e', event);
+    const onSelectEventHandler = (event: any) => {
+        if (event.action === 'click') {
+            push(`/${projectId}/calendar/${transformDateToISO8601(event.start)}`);
+        }
 
-        // push(`/${projectId}/scenes/`);
+        if (event.action === 'select') {
+            console.log(event);
+        }
     };
 
     const sceneRedirectHandler = ({ id }: EventTypes) => push(`/${projectId}/scenes/${id}`);
@@ -114,42 +117,30 @@ const Calendar: FC<PropTypes> = () => {
         }));
     };
 
+
     return (
         <CalendarContainer>
             <DnDCalendar
                 popup
                 resizable
                 selectable
+                components = {{
+                    event: customEventView,
+                }}
+                dayPropGetter = { customDayPropGetter }
                 defaultDate = { new Date() }
                 defaultView = 'month'
                 events = { events }
                 localizer = { localizer }
-                views = {{ month: true }}
+                views = {{ month: true, agenda: true }}
                 onEventDrop = { onEventHandler }
                 onEventResize = { onEventHandler }
                 onSelectEvent = { sceneRedirectHandler }
-                onSelectSlot = { scenesRedirectHandler }
+                onSelectSlot = { onSelectEventHandler }
             />
         </CalendarContainer>
     );
 };
-
-// export interface withDragAndDropProps<TEvent extends object = Event> {
-//     onEventDrop?: (args: { event: TEvent, start: stringOrDate, end: stringOrDate, allDay: boolean }) => void;
-//     onEventResize?: (args: { event: TEvent, start: stringOrDate, end: stringOrDate, allDay: boolean }) => void;
-//     onDragStart?: (args: { event: TEvent, action: 'resize' | 'move', direction: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' }) => void;
-//     onDragOver?: (event: React.DragEvent) => void;
-//     onDropFromOutside?: (args: { start: stringOrDate, end: stringOrDate, allDay: boolean }) => void;
-//     dragFromOutsideItem?: () => keyof TEvent | ((event: TEvent) => Date);
-//     draggableAccessor?: keyof TEvent | ((event: TEvent) => boolean);
-//     resizableAccessor?: keyof TEvent | ((event: TEvent) => boolean);
-//     selectable?: true | false | 'ignoreEvents';
-//     resizable?: boolean;
-//     components?: Components<TEvent>;
-//     elementProps?: React.HTMLAttributes<HTMLElement>;
-//     step?: number;
-// }
-
 
 export default () => (
     <ErrorBoundary>

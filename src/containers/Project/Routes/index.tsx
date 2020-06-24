@@ -3,7 +3,7 @@ import React, { FC, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Pages
-import { Calendar, Scenes, Scene, Requisites, Requisite } from '../../../pages';
+import { Calendar, WorkDay,  Scenes, Scene, Requisites, Requisite } from '../../../pages';
 
 // Elements
 import { Spinner } from '../../../elements';
@@ -12,6 +12,9 @@ export const Routes: FC = () => {
     return (
         <Suspense fallback = { <Spinner /> }>
             <Switch>
+                <Route path = { '/:projectId/calendar/:workDayDate' }>
+                    <WorkDay/>
+                </Route>
                 <Route path = { '/:projectId/scenes/:sceneId' }>
                     <Scene />
                 </Route>
