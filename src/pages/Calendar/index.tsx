@@ -1,6 +1,6 @@
 
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 
@@ -17,11 +17,11 @@ import { ErrorBoundary } from '../../components';
 import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Types
-import { PropTypes, Params, EventTypes, DataTypes } from './types';
+import { PropTypes, Params, EventTypes } from './types';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
-import { customEventView, customDayPropGetter } from './utils';
+import { customEventView, workdaysDataTransformer } from './utils';
 
 // Styles
 import { CalendarContainer } from './styles';
@@ -33,75 +33,21 @@ const DnDCalendar = withDragAndDrop(ReactBigCalendar);
 const Calendar: FC<PropTypes> = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-
     const { data, loading } = useWorkdaysQuery({ variables: { input: projectId }});
 
-    console.log('loading', loading);
-    console.log('data', data);
+    if (loading || !data) {
+        return <div>Loading...</div>;
+    }
 
-    const [ events, setEvents ] = useState<EventTypes[]>([
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '1 Сцена',
-            url:   'http://google.com/',
-            id:    '1',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '2 Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена Сцена ',
-            url:   'http://google.com/',
-            id:    '2',
-            desc:  '24234',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '3 Сцена',
-            url:   'http://google.com/',
-            id:    '3',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '4 Сцена',
-            url:   'http://google.com/',
-            id:    '4',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '5 Сцена',
-            url:   'http://google.com/',
-            id:    '5',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '6 Сцена',
-            url:   'http://google.com/',
-            id:    '6',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '7 сцена',
-            url:   'http://google.com/',
-            id:    '7',
-        },
-        {
-            start: new Date(),
-            end:   new Date(),
-            title: '8 Сцена',
-            url:   'http://google.com/',
-            id:    '8',
-        },
-    ]);
+    const { workdaysDates, events } = workdaysDataTransformer(data);
 
     const onSelectEventHandler = (event: any) => {
         if (event.action === 'click') {
-            push(`/${projectId}/calendar/${transformDateToISO8601(event.start)}`);
+            const dateISO8601 = transformDateToISO8601(event.start);
+
+            workdaysDates.includes(dateISO8601)
+                ? push(`/${projectId}/calendar/${dateISO8601}`)
+                : push(`/${projectId}/create-workday/${dateISO8601}`);
         }
 
         if (event.action === 'select') {
@@ -109,26 +55,19 @@ const Calendar: FC<PropTypes> = () => {
         }
     };
 
-    const sceneRedirectHandler = ({ id }: EventTypes) => push(`/${projectId}/scenes/${id}`);
+    const customDayPropGetter = (date: Date) => {
+        if (workdaysDates.includes(transformDateToISO8601(date))) {
+            return { className: 'workday' };
+        }
 
-    const onEventHandler = ({ event, start, end }: DataTypes) => {
-        setEvents((prevEvents) => prevEvents.map((prevEvent) => {
-            if (prevEvent.id === event.id) {
-                return {
-                    ...prevEvent,
-                    start,
-                    end,
-                };
-            }
-
-            return prevEvent;
-        }));
+        return { className: 'emptyDay' };
     };
 
+    const sceneRedirectHandler = ({ id }: EventTypes) => push(`/${projectId}/scenes/${id}`);
 
     return (
         <CalendarContainer>
-            <DnDCalendar
+            <DnDCalendar<EventTypes>
                 popup
                 resizable
                 selectable
@@ -141,8 +80,8 @@ const Calendar: FC<PropTypes> = () => {
                 events = { events }
                 localizer = { localizer }
                 views = {{ month: true, agenda: true }}
-                onEventDrop = { onEventHandler }
-                onEventResize = { onEventHandler }
+                // onEventDrop = { onEventHandler }
+                // onEventResize = { onEventHandler }
                 onSelectEvent = { sceneRedirectHandler }
                 onSelectSlot = { onSelectEventHandler }
             />
@@ -155,3 +94,17 @@ export default () => (
         <Calendar />
     </ErrorBoundary>
 );
+
+// const onEventHandler = ({ event, start, end }: DataTypes) => {
+//     setEvents((prevEvents) => prevEvents.map((prevEvent) => {
+//         if (prevEvent.id === event.id) {
+//             return {
+//                 ...prevEvent,
+//                 start,
+//                 end,
+//             };
+//         }
+
+//         return prevEvent;
+//     }));
+// };

@@ -7,7 +7,20 @@ export const CalendarContainer = styled.section`
     padding-top: 10px;
     box-sizing: border-box;
 
-    .special-day {
-        background-color: red;
+    .workday {
+        background-color: honeydew;
+        cursor: pointer;
+
+        &:hover {
+            background-color: lightgreen;
+        }
+    }
+
+    .emptyDay {
+        cursor: pointer;
+
+        &:hover {
+            background-color: lightgray;
+        }
     }
 `;

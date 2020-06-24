@@ -16,7 +16,7 @@ import { CreateProjectContainer } from './styles';
 
 // Hooks
 import { useForm } from '../../hooks';
-import { useCreateProjectMutation } from '../../bus';
+import { useCreateProjectMutation } from '../../bus/Project';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';

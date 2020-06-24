@@ -1,4 +1,4 @@
-query ScenesQuery($input: String!) {
+query Scenes($input: String!) {
   scenes(projectId: $input) {
     id
     title

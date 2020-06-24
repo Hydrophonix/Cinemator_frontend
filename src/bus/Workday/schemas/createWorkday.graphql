@@ -3,5 +3,11 @@ mutation CreateWorkday($input: WorkdayCreateInput!, $projectId: String!) {
     id
     title
     date
+    scenes {
+      id
+      title
+      location
+      sceneNumber
+    }
   }
 }

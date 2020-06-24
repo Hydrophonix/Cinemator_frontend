@@ -1,2 +1,2 @@
-export * from './WorkdaysQuery';
+export * from './Workdays';
 export * from './CreateWorkday';

@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ScenesQuery
+// GraphQL query operation: Scenes
 // ====================================================
 
-export interface ScenesQuery_scenes {
+export interface Scenes_scenes {
   __typename: "Scene";
   id: string;
   title: string | null;
@@ -15,10 +15,10 @@ export interface ScenesQuery_scenes {
   sceneNumber: number;
 }
 
-export interface ScenesQuery {
-  scenes: ScenesQuery_scenes[];
+export interface Scenes {
+  scenes: Scenes_scenes[];
 }
 
-export interface ScenesQueryVariables {
+export interface ScenesVariables {
   input: string;
 }

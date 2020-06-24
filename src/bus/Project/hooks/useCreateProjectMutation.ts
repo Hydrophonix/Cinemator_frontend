@@ -14,7 +14,11 @@ const defaultOptions: MutationHookOptions<CreateProject, CreateProjectVariables>
 
         cache.writeQuery({
             query: OwnedProjectsSchema,
-            data:  { ownedProjects: ownedProjects.concat([ data!.createProject ]) },
+            data:  {
+                ownedProjects: data
+                    ? ownedProjects.concat([ data.createProject ])
+                    : ownedProjects,
+            },
         });
     },
 };

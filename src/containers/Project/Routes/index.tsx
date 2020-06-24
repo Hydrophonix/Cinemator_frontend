@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Pages
 import {
-    Calendar, Workday,
+    Calendar, Workday, CreateWorkday,
     Scenes, Scene, CreateScene,
     Requisites, Requisite,
 } from '../../../pages';
@@ -20,6 +20,13 @@ export const Routes: FC<PropTypes> = () => {
         <Suspense fallback = { <Spinner /> }>
             <Switch>
 
+                <Route path = { '/:projectId/create-workday/:workdayDate' }>
+                    <CreateWorkday/>
+                </Route>
+                <Route path = { '/:projectId/create-scene' }>
+                    <CreateScene/>
+                </Route>
+
                 <Route path = { '/:projectId/calendar/:workDayDate' }>
                     <Workday/>
                 </Route>
@@ -28,10 +35,6 @@ export const Routes: FC<PropTypes> = () => {
                 </Route>
                 <Route path = { '/:projectId/requisites/:requisiteId' }>
                     <Requisite />
-                </Route>
-
-                <Route path = { '/:projectId/create-scene' }>
-                    <CreateScene/>
                 </Route>
 
                 <Route path = { '/:projectId/calendar' }>

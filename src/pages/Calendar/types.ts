@@ -7,14 +7,12 @@ export type PropTypes = {}
 type stringOrDate = string | Date
 
 export type EventTypes = {
+    id: string
     start: stringOrDate
     end: stringOrDate
-    id: string
-    title: string
-    backgroundColor?: string
-    allDay?: boolean
-    url: string
-    desc?: string
+    title: string | null
+    location: string | null,
+    sceneNumber: number,
 }
 
 export type DataTypes = {

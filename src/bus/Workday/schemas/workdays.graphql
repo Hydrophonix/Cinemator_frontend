@@ -1,4 +1,4 @@
-query WorkdaysQuery ($input: String!) {
+query Workdays ($input: String!) {
   workdays(projectId: $input) {
     id
     title

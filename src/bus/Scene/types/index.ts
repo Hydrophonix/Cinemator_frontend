@@ -1,2 +1,2 @@
-export * from './ScenesQuery';
+export * from './Scenes';
 export * from './CreateScene';

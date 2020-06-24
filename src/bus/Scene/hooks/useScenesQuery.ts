@@ -5,11 +5,11 @@ import { MutationHookOptions } from '@apollo/react-hooks';
 import ScenesSchema from '../schemas/scenes.graphql';
 
 // Types
-import { ScenesQuery, ScenesQueryVariables } from '../types';
+import { Scenes, ScenesVariables } from '../types';
 
 // Hooks
 import { useCustomQuery } from '../../../hooks';
 
-export const useScenesQuery = (baseOptions?: MutationHookOptions<ScenesQuery, ScenesQueryVariables>) => {
-    return useCustomQuery<ScenesQuery, ScenesQueryVariables>(ScenesSchema, baseOptions);
+export const useScenesQuery = (baseOptions?: MutationHookOptions<Scenes, ScenesVariables>) => {
+    return useCustomQuery<Scenes, ScenesVariables>(ScenesSchema, baseOptions);
 };

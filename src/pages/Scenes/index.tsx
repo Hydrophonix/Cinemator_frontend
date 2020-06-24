@@ -93,7 +93,7 @@ const Scenes: FC<PropTypes> = () => {
                 <Table>
                     <Thead>
                         <Tr>
-                            <Th>ID</Th>
+                            <Th>#</Th>
                             <Th>Scene name</Th>
                             <Th>Location</Th>
                             <Th>Date</Th>

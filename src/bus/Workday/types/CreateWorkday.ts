@@ -9,11 +9,20 @@ import { WorkdayCreateInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: CreateWorkday
 // ====================================================
 
+export interface CreateWorkday_createWorkday_scenes {
+  __typename: "Scene";
+  id: string;
+  title: string | null;
+  location: string | null;
+  sceneNumber: number;
+}
+
 export interface CreateWorkday_createWorkday {
   __typename: "Workday";
   id: string;
   title: string | null;
   date: string;
+  scenes: CreateWorkday_createWorkday_scenes[];
 }
 
 export interface CreateWorkday {
