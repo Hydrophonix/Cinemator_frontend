@@ -26,7 +26,7 @@ const innitialForm = {
 };
 
 const CreateProject: FC = () => {
-    const { goBack } = useHistory();
+    const { push, goBack } = useHistory();
     const [ createProject ] = useCreateProjectMutation();
     const [ form, setForm ] = useForm(innitialForm);
 
@@ -47,6 +47,7 @@ const CreateProject: FC = () => {
         });
 
         if (response && response.data) {
+            push('/');
             console.log('onSubmit -> response.data', response.data);
         }
     };

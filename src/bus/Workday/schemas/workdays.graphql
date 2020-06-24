@@ -1,0 +1,13 @@
+query WorkdaysQuery ($input: String!) {
+  workdays(projectId: $input) {
+    id
+    title
+    date
+    scenes {
+      id
+      title
+      location
+      sceneNumber
+    }
+  }
+}

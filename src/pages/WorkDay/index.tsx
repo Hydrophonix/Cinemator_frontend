@@ -9,7 +9,7 @@ import { ErrorBoundary } from '../../components';
 import { Button } from '../../elements';
 
 // Styles
-import { WorkDayContainer } from './styles';
+import { WorkdayContainer } from './styles';
 
 // Types
 type Params = {
@@ -19,27 +19,27 @@ type Params = {
 
 type PropTypes = {}
 
-const WorkDay: FC<PropTypes> = () => {
+const Workday: FC<PropTypes> = () => {
     const { goBack } = useHistory();
     const { projectId, workDayDate } = useParams<Params>();
 
     return (
-        <WorkDayContainer>
+        <WorkdayContainer>
             <header>
                 <Button onClick = { () => goBack() }>Back</Button>
                 <h2>{workDayDate}</h2>
                 <Button>Edit</Button>
             </header>
             <main>
-                Some WorkDay data
+                Some Workday data
             </main>
-        </WorkDayContainer>
+        </WorkdayContainer>
     );
 };
 
 
 export default () => (
     <ErrorBoundary>
-        <WorkDay />
+        <Workday />
     </ErrorBoundary>
 );

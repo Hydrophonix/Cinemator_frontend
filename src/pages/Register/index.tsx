@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/react-hooks';
 
 // Components
@@ -26,6 +27,7 @@ const innitialForm = {
 };
 
 const Register: FC = () => {
+    const { push } = useHistory();
     const client = useApolloClient();
     const [ register ] = useRegisterMutation();
     const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
@@ -39,6 +41,7 @@ const Register: FC = () => {
         if (response && response.data) {
             setAccessToken(response.data.registerWeb.accessToken);
             client.writeData({ data: { isLoggedIn: true }});
+            push('/');
         }
     };
 

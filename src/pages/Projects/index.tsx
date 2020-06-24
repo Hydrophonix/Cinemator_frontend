@@ -47,6 +47,11 @@ const Projects: FC = () => {
 
     const projectRedirectHandler = (projectId: string) => push(`/${projectId}`);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+
     return (
         <ProjectsContainer>
             <nav>
@@ -56,7 +61,7 @@ const Projects: FC = () => {
             </nav>
             <main>
                 {
-                    projects.map((project) => (
+                    data && data.ownedProjects.map((project) => (
                         <ProjectItem
                             key = { project.id }
                             { ...project }

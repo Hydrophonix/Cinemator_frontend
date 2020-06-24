@@ -8,10 +8,11 @@ export const Projects = lazy(() => import(/* webpackChunkName: "Projects" */ './
 export const CreateProject = lazy(() => import(/* webpackChunkName: "CreateProject" */ './CreateProject'));
 
 export const Calendar = lazy(() => import(/* webpackChunkName: "Calendar" */ './Calendar'));
-export const WorkDay = lazy(() => import(/* webpackChunkName: "WorkDay" */ './WorkDay'));
+export const Workday = lazy(() => import(/* webpackChunkName: "Workday" */ './Workday'));
 
 export const Scenes = lazy(() => import(/* webpackChunkName: "Scenes" */ './Scenes'));
 export const Scene = lazy(() => import(/* webpackChunkName: "Scene" */ './Scene'));
+export const CreateScene = lazy(() => import(/* webpackChunkName: "CreateScene" */ './CreateScene'));
 
 export const Requisites = lazy(() => import(/* webpackChunkName: "Requisites" */ './Requisites'));
 export const Requisite = lazy(() => import(/* webpackChunkName: "Requisite" */ './Requisite'));

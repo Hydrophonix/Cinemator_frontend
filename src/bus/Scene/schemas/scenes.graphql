@@ -1,0 +1,14 @@
+query ScenesQuery($input: String!) {
+  scenes(projectId: $input) {
+    id
+    title
+    location
+    sceneNumber
+    # workdays {
+    #   id
+    # }
+    # requisites {
+    #   id
+    # }
+  }
+}

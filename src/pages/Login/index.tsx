@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/react-hooks';
 
 // Components
@@ -24,6 +25,7 @@ const innitialForm = {
 };
 
 const Login: FC = () => {
+    const { push } = useHistory();
     const client = useApolloClient();
     const [ login ] = useLoginMutation();
     const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
@@ -38,6 +40,7 @@ const Login: FC = () => {
         if (response && response.data) {
             setAccessToken(response.data.loginWeb.accessToken);
             client.writeData({ data: { isLoggedIn: true }});
+            push('/');
         }
     };
 

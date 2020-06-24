@@ -1,5 +1,6 @@
 // Core
 import React, { FC, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useApolloClient } from '@apollo/react-hooks';
 
@@ -19,6 +20,7 @@ import { GlobalStyles, defaultLight, dark } from '../../assets';
 import { AppContainer } from './styles';
 
 export const App: FC = () => {
+    const { push } = useHistory();
     const client = useApolloClient();
     // const [ isDefaultTheme, setIsDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
@@ -30,6 +32,7 @@ export const App: FC = () => {
 
                 setAccessToken(accessToken);
                 client.writeData({ data: { isLoggedIn: true }});
+                push('/');
             })
             .catch(() => {
                 client.writeData({ data: { isLoggedIn: false }});

@@ -1,7 +1,7 @@
 // Core
 import styled from 'styled-components';
 
-export const WorkDayContainer = styled.section`
+export const WorkdayContainer = styled.section`
     width: 100%;
     padding: 10px;
 

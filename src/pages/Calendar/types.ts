@@ -1,5 +1,5 @@
 export type Params = {
-    projectId?: string
+    projectId: string
 }
 
 export type PropTypes = {}

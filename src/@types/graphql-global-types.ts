@@ -18,6 +18,17 @@ export interface ProjectCreateInput {
   endDay: string;
 }
 
+export interface SceneCreateInput {
+  title?: string | null;
+  location?: string | null;
+  sceneNumber: number;
+}
+
+export interface WorkdayCreateInput {
+  title?: string | null;
+  date: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

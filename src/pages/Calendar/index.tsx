@@ -10,11 +10,14 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-// Types
-import { PropTypes, Params, EventTypes, DataTypes } from './types';
-
 // Components
 import { ErrorBoundary } from '../../components';
+
+// Apollo hooks
+import { useWorkdaysQuery } from '../../bus/Workday';
+
+// Types
+import { PropTypes, Params, EventTypes, DataTypes } from './types';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
@@ -30,6 +33,11 @@ const DnDCalendar = withDragAndDrop(ReactBigCalendar);
 const Calendar: FC<PropTypes> = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
+
+    const { data, loading } = useWorkdaysQuery({ variables: { input: projectId }});
+
+    console.log('loading', loading);
+    console.log('data', data);
 
     const [ events, setEvents ] = useState<EventTypes[]>([
         {

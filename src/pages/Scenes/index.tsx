@@ -1,18 +1,19 @@
 // Core
 import React, { useState, FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
 import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 
 // Components
 import { SceneItem } from './SceneItem';
 import { ErrorBoundary } from '../../components';
 
-// Redux
-// import { useUiTest } from '../../redux/ui';
+// Elements
+import { Button } from '../../elements';
+
+// Apollo Hooks
+import { useScenesQuery } from '../../bus/Scene';
 
 // Styles
 import { TableStyles } from '../../assets';
@@ -44,9 +45,10 @@ const Scenes: FC<PropTypes> = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
 
-    // const { set, reset } = useUiTest();
-    // set();
-    // reset();
+    const { data, loading } = useScenesQuery({ variables: { input: projectId }});
+
+    console.log('loading', loading);
+    console.log('data', data);
 
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
@@ -85,7 +87,7 @@ const Scenes: FC<PropTypes> = () => {
                     />
                 </section>
 
-                <button>Add new scene</button>
+                <Button onClick = { () => push(`/${projectId}/create-scene`) }>Add new scene</Button>
             </header>
             <TableStyles>
                 <Table>
