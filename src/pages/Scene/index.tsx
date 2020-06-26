@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Components
@@ -23,6 +23,7 @@ type PropTypes = {
 
 const Scene: FC<PropTypes> = ({ sceneName }) => {
     const { goBack } = useHistory();
+    const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, sceneId } = useParams<Params>();
 
     return (
@@ -30,7 +31,9 @@ const Scene: FC<PropTypes> = ({ sceneName }) => {
             <header>
                 <Button onClick = { () => goBack() }>Back</Button>
                 <h2>{sceneName || 'TEST NAME'}</h2>
-                <Button>Edit</Button>
+                <Button onClick = { () => setIsEdit(!isEdit) }>
+                    {isEdit ? 'Save' : 'Edit'}
+                </Button>
             </header>
             <main>
                 Some scene data

@@ -9,5 +9,6 @@ query Workdays ($input: String!) {
       location
       sceneNumber
     }
+    projectId
   }
 }

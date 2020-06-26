@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useApolloClient } from '@apollo/react-hooks';
@@ -20,9 +20,8 @@ import { GlobalStyles, defaultLight, dark } from '../../assets';
 import { AppContainer } from './styles';
 
 export const App: FC = () => {
-    const { push } = useHistory();
     const client = useApolloClient();
-    // const [ isDefaultTheme, setIsDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
+    const [ isInitialized, setIsInitialized ] = useState(false);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
 
     useEffect(() => {
@@ -32,23 +31,20 @@ export const App: FC = () => {
 
                 setAccessToken(accessToken);
                 client.writeData({ data: { isLoggedIn: true }});
-                push('/');
+                setIsInitialized(true);
             })
             .catch(() => {
                 client.writeData({ data: { isLoggedIn: false }});
+                setIsInitialized(true);
             });
     }, []);
 
-    // useEffect(() => {
-    // });
-
-    // if (loading) {
-
-    //     // return <div>Loading...</div>;
-    // }
+    if (!isInitialized) {
+        return <div>Loading...</div>;
+    }
 
     return (
-        <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark } >
+        <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark }>
             <AppContainer>
                 <GlobalStyles />
                 <TopBar />

@@ -3,11 +3,10 @@ import React, { useState, FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
+import { Table, Tbody } from 'react-super-responsive-table';
 
 // Components
-import { SceneItem } from './SceneItem';
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, TableHead, SceneTableItem } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -40,6 +39,8 @@ const scenesMock = [
 
 // Types
 type PropTypes = {}
+
+const scenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite' ];
 
 const Scenes: FC<PropTypes> = () => {
     const { push } = useHistory();
@@ -91,19 +92,11 @@ const Scenes: FC<PropTypes> = () => {
             </header>
             <TableStyles>
                 <Table>
-                    <Thead>
-                        <Tr>
-                            <Th>#</Th>
-                            <Th>Scene name</Th>
-                            <Th>Location</Th>
-                            <Th>Date</Th>
-                            <Th>Requisite</Th>
-                        </Tr>
-                    </Thead>
+                    <TableHead ThNames = { scenesThNames } />
                     <Tbody>
                         {
                             scenesMock.map((scene) => (
-                                <SceneItem
+                                <SceneTableItem
                                     key = { scene.id }
                                     { ...scene }
                                     sceneRedirectHandler = { sceneRedirectHandler }

@@ -4,11 +4,12 @@ mutation CreateScene ($input: SceneCreateInput!, $projectId: String!, $workdayId
     title
     location
     sceneNumber
-    workdays {
-      id
-    }
-    requisites {
-      id
-    }
+    # workdays {
+    #   id
+    # }
+    # requisites {
+    #   id
+    # }
+    projectId
   }
 }

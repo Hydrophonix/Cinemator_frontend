@@ -13,7 +13,7 @@ type PropTypes = {
     requisiteRedirectHandler: (requisiteId: string) => void
 };
 
-export const RequisiteItem: FC<PropTypes> = ({
+export const RequisiteTableItem: FC<PropTypes> = ({
     id,
     requisiteNumber,
     requisiteName,

@@ -32,7 +32,8 @@ export type Params = {
 const CreateWorkday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, workdayDate } = useParams<Params>();
-    const [ createWorkday ] = useCreateWorkdayMutation();
+    const [ createWorkday, { loading }] = useCreateWorkdayMutation();
+    console.log('CreateWorkday:FC -> a', loading);
 
     const [ form, setForm ] = useForm(innitialForm);
     const [ startDate, setStartDate ] = useState(new Date(workdayDate));
@@ -51,7 +52,6 @@ const CreateWorkday: FC = () => {
         });
 
         if (response && response.data) {
-            console.log('onSubmit -> response.data', response.data);
             push(`/${projectId}/calendar`);
         }
     };

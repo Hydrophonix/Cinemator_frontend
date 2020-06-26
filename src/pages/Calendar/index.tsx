@@ -42,16 +42,19 @@ const Calendar: FC<PropTypes> = () => {
     const { workdaysDates, events } = workdaysDataTransformer(data);
 
     const onSelectEventHandler = (event: any) => {
-        if (event.action === 'click') {
-            const dateISO8601 = transformDateToISO8601(event.start);
+        const dateISO8601 = transformDateToISO8601(event.start);
 
+        if (event.action === 'click') {
             workdaysDates.includes(dateISO8601)
                 ? push(`/${projectId}/calendar/${dateISO8601}`)
                 : push(`/${projectId}/create-workday/${dateISO8601}`);
         }
 
         if (event.action === 'select') {
-            console.log(event);
+            // TODO: fix on desctop
+            workdaysDates.includes(dateISO8601)
+                ? push(`/${projectId}/calendar/${dateISO8601}`)
+                : push(`/${projectId}/create-workday/${dateISO8601}`);
         }
     };
 

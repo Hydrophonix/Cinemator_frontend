@@ -1,6 +1,6 @@
 // Core
-import React, { FC, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { FC } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -10,7 +10,7 @@ import { Button } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
-// import { useCreateProjectMutation } from '../../bus/Project';
+import { useCreateSceneMutation } from '../../bus/Scene';
 
 // Styles
 import { CreateSceneContainer } from './styles';
@@ -21,28 +21,35 @@ const innitialForm = {
     location:    '',
 };
 
+export type Params = {
+    projectId: string
+}
+
 const CreateScene: FC = () => {
     const { push, goBack } = useHistory();
-    // const [ createProject ] = useCreateProjectMutation();
+    const { projectId } = useParams<Params>();
+    const [ createScene ] = useCreateSceneMutation();
     const [ form, setForm ] = useForm(innitialForm);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
 
-        // const response = await createProject({
-        //     variables: {
-        //         input: {
-        //             title:    form.title,
-        //             startDay: transformDateToISO8601(startDate),
-        //             endDay:   transformDateToISO8601(endDate),
-        //         },
-        //     },
-        // });
+        const response = await createScene({ // TODO: DO NOT TESTED, ONLY WRITED
+            variables: {
+                input: {
+                    title:       form.title,
+                    sceneNumber: form.sceneNumber,
+                    location:    form.location,
+                },
+                projectId,
+                workdayId: '', // TODO: ???
+            },
+        });
 
-        // if (response && response.data) {
-        //     push('/');
-        //     console.log('onSubmit -> response.data', response.data);
-        // }
+        if (response && response.data) {
+            push(`/${projectId}/scenes`);
+            console.log('onSubmit -> response.data', response.data);
+        }
     };
 
     return (

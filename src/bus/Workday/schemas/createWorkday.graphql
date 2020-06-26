@@ -9,5 +9,6 @@ mutation CreateWorkday($input: WorkdayCreateInput!, $projectId: String!) {
       location
       sceneNumber
     }
+    projectId
   }
 }

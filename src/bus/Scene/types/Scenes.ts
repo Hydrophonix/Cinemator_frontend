@@ -13,6 +13,7 @@ export interface Scenes_scenes {
   title: string | null;
   location: string | null;
   sceneNumber: number;
+  projectId: string;
 }
 
 export interface Scenes {

@@ -5,11 +5,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
+import { Table, Tbody } from 'react-super-responsive-table';
 
 // Components
-import { RequisiteItem } from './RequisiteItem';
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, TableHead, RequisiteTableItem } from '../../components';
 
 // Styles
 import { TableStyles } from '../../assets';
@@ -37,6 +36,8 @@ const requisitesMock = [
         pricePerDay:     0,
     },
 ];
+
+const requisitesThNames = [ 'ID', 'Name', 'Scenes', 'isOrdered', 'pricePerDay' ];
 
 const Requisites: FC = () => {
     const { push } = useHistory();
@@ -79,20 +80,11 @@ const Requisites: FC = () => {
             </header>
             <TableStyles>
                 <Table>
-                    <Thead>
-                        <Tr>
-                            <Th>ID</Th>
-                            <Th>Number</Th>
-                            <Th>Name</Th>
-                            <Th>Scenes</Th>
-                            <Th>isOrdered</Th>
-                            <Th>pricePerDay</Th>
-                        </Tr>
-                    </Thead>
+                    <TableHead ThNames = { requisitesThNames } />
                     <Tbody>
                         {
                             requisitesMock.map((requisite) => (
-                                <RequisiteItem
+                                <RequisiteTableItem
                                     key = { requisite.id }
                                     { ...requisite }
                                     requisiteRedirectHandler = { requisiteRedirectHandler }

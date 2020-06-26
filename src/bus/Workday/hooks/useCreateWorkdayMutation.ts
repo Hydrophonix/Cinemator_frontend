@@ -10,14 +10,16 @@ import { CreateWorkday, CreateWorkdayVariables, Workdays } from '../types';
 
 const defaultOptions: MutationHookOptions<CreateWorkday, CreateWorkdayVariables> = {
     update(cache, { data }) {
-        const { workdays } = cache.readQuery<Workdays>({ query: WorkdaysSchema })!;
+        const { workdays } = cache.readQuery<Workdays>({
+            query:     WorkdaysSchema,
+            variables: { input: data!.createWorkday.projectId },
+        })!;
 
         cache.writeQuery({
-            query: WorkdaysSchema,
-            data:  {
-                workdays: data
-                    ? workdays.concat([ data.createWorkday ])
-                    : workdays,
+            query:     WorkdaysSchema,
+            variables: { input: data!.createWorkday.projectId }, // TODO: think
+            data:      {
+                workdays: workdays.concat([ data!.createWorkday ]),
             },
         });
     },

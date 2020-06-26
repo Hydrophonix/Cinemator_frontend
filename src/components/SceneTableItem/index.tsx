@@ -13,10 +13,7 @@ type PropTypes = {
     sceneRedirectHandler: (sceneId: string) => void
 };
 
-// Styles
-// import { SceneItemContainer, Cell } from './styles';
-
-export const SceneItem: FC<PropTypes> = ({
+export const SceneTableItem: FC<PropTypes> = ({
     id,
     sceneName,
     location,

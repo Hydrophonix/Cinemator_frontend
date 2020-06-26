@@ -9,24 +9,13 @@ import { SceneCreateInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: CreateScene
 // ====================================================
 
-export interface CreateScene_createScene_workdays {
-  __typename: "Workday";
-  id: string;
-}
-
-export interface CreateScene_createScene_requisites {
-  __typename: "Requisite";
-  id: string;
-}
-
 export interface CreateScene_createScene {
   __typename: "Scene";
   id: string;
   title: string | null;
   location: string | null;
   sceneNumber: number;
-  workdays: CreateScene_createScene_workdays[];
-  requisites: CreateScene_createScene_requisites[];
+  projectId: string;
 }
 
 export interface CreateScene {

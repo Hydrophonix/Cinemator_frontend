@@ -10,5 +10,6 @@ query Scenes($input: String!) {
     # requisites {
     #   id
     # }
+    projectId
   }
 }

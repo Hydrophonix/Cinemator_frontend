@@ -21,6 +21,7 @@ export interface Workdays_workdays {
   title: string | null;
   date: string;
   scenes: Workdays_workdays_scenes[];
+  projectId: string;
 }
 
 export interface Workdays {
