@@ -2,33 +2,28 @@
 import React, { FC } from 'react';
 import { Tr, Td } from 'react-super-responsive-table';
 
+// Type
+import { Scenes_scenes } from '../../bus/Scene';
+
 // Types
 type PropTypes = {
-    id: string
-    sceneName: string
-    location: string
-    workdayIds: Array<string>
-    scenarioDay: number // TODO ?
-    requisiteIds: Array<string>
     sceneRedirectHandler: (sceneId: string) => void
-};
+} & Omit<Scenes_scenes, 'projectId'>
 
 export const SceneTableItem: FC<PropTypes> = ({
     id,
-    sceneName,
+    title,
     location,
-    // workdayIds,
-    // scenarioDay, // TODO ?
-    requisiteIds,
+    sceneNumber,
     sceneRedirectHandler,
 }) => {
     return (
         <Tr onClick = { () => sceneRedirectHandler(id) }>
-            <Td>{id}</Td>
-            <Td>{sceneName}</Td>
+            <Td>{sceneNumber}</Td>
+            <Td>{title}</Td>
             <Td>{location}</Td>
             <Td>01/01/1010</Td>
-            <Td>Items: {requisiteIds.length}</Td>
+            <Td>Items: {5}</Td>
         </Tr>
     );
 };

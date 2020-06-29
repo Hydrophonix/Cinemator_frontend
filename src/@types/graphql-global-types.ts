@@ -18,6 +18,13 @@ export interface ProjectCreateInput {
   endDay: string;
 }
 
+export interface RequisiteCreateInput {
+  title?: string | null;
+  description?: string | null;
+  isOrdered?: boolean | null;
+  pricePerDay?: number | null;
+}
+
 export interface SceneCreateInput {
   title?: string | null;
   location?: string | null;

@@ -19,20 +19,22 @@ export const Routes: FC<PropTypes> = () => {
     return (
         <Suspense fallback = { <Spinner /> }>
             <Switch>
-
-                <Route path = { '/:projectId/create-workday/:workdayDate' }>
-                    <CreateWorkday/>
+                <Route path = { '/:projectId/create-workday/:date' }>
+                    <CreateWorkday />
                 </Route>
+
                 <Route path = { '/:projectId/create-scene' }>
-                    <CreateScene/>
+                    <CreateScene />
                 </Route>
 
-                <Route path = { '/:projectId/calendar/:workDayDate' }>
-                    <Workday/>
+                <Route path = { '/:projectId/calendar/:workdayId' }>
+                    <Workday />
                 </Route>
+
                 <Route path = { '/:projectId/scenes/:sceneId' }>
                     <Scene />
                 </Route>
+
                 <Route path = { '/:projectId/requisites/:requisiteId' }>
                     <Requisite />
                 </Route>
@@ -40,9 +42,11 @@ export const Routes: FC<PropTypes> = () => {
                 <Route path = { '/:projectId/calendar' }>
                     <Calendar/>
                 </Route>
+
                 <Route path = { '/:projectId/scenes' }>
                     <Scenes />
                 </Route>
+
                 <Route path = { '/:projectId/requisites' }>
                     <Requisites />
                 </Route>

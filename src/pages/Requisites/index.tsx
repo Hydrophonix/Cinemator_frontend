@@ -7,6 +7,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { Table, Tbody } from 'react-super-responsive-table';
 
+// Apollo Hooks
+import { useRequisitesQuery } from '../../bus/Requisite';
+
 // Components
 import { ErrorBoundary, TableHead, RequisiteTableItem } from '../../components';
 
@@ -42,11 +45,17 @@ const requisitesThNames = [ 'ID', 'Name', 'Scenes', 'isOrdered', 'pricePerDay' ]
 const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
+    const { data, loading } = useRequisitesQuery({ variables: { input: projectId }});
+    console.log('Requisites', data);
 
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
     const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
+
+    if (loading || !data) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <RequisiteContainer>

@@ -39,27 +39,30 @@ const Calendar: FC<PropTypes> = () => {
         return <div>Loading...</div>;
     }
 
-    const { workdaysDates, events } = workdaysDataTransformer(data);
+    const events = workdaysDataTransformer(data);
 
     const onSelectEventHandler = (event: any) => {
         const dateISO8601 = transformDateToISO8601(event.start);
+        const workday = data.workdays.find((workday) => workday.date === dateISO8601);
 
         if (event.action === 'click') {
-            workdaysDates.includes(dateISO8601)
-                ? push(`/${projectId}/calendar/${dateISO8601}`)
+            workday
+                ? push(`/${projectId}/calendar/${workday.id}`)
                 : push(`/${projectId}/create-workday/${dateISO8601}`);
         }
 
         if (event.action === 'select') {
             // TODO: fix on desctop
-            workdaysDates.includes(dateISO8601)
+            workday
                 ? push(`/${projectId}/calendar/${dateISO8601}`)
                 : push(`/${projectId}/create-workday/${dateISO8601}`);
         }
     };
 
     const customDayPropGetter = (date: Date) => {
-        if (workdaysDates.includes(transformDateToISO8601(date))) {
+        const workday = data.workdays.find((workday) => workday.date === transformDateToISO8601(date));
+
+        if (workday) {
             return { className: 'workday' };
         }
 

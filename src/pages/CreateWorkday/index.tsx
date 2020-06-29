@@ -26,17 +26,17 @@ const innitialForm = {
 
 export type Params = {
     projectId: string
-    workdayDate: string
+    date: string
 }
 
 const CreateWorkday: FC = () => {
     const { push, goBack } = useHistory();
-    const { projectId, workdayDate } = useParams<Params>();
+    const { projectId, date } = useParams<Params>();
     const [ createWorkday, { loading }] = useCreateWorkdayMutation();
     console.log('CreateWorkday:FC -> a', loading);
 
     const [ form, setForm ] = useForm(innitialForm);
-    const [ startDate, setStartDate ] = useState(new Date(workdayDate));
+    const [ startDate, setStartDate ] = useState(new Date(date));
 
     const onSubmit = async (event: any) => {
         event.preventDefault();

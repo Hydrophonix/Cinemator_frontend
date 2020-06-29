@@ -1,10 +1,19 @@
+#import "./projectFields.graphql"
+
 query OwnedProjects {
     ownedProjects {
-        id
-        ownerId
-        title
-        startDay
-        endDay
-        description
+        ...projectFields
+        workdays {
+            id
+            title
+            date
+            scenes {
+                id
+                title
+                location
+                sceneNumber
+            }
+            projectId 
+        }
     }
 }

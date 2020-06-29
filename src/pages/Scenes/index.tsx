@@ -5,56 +5,36 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Table, Tbody } from 'react-super-responsive-table';
 
+// Apollo Hooks
+import { useScenesQuery } from '../../bus/Scene';
+
 // Components
 import { ErrorBoundary, TableHead, SceneTableItem } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
 
-// Apollo Hooks
-import { useScenesQuery } from '../../bus/Scene';
-
 // Styles
 import { TableStyles } from '../../assets';
 import { ScenesContainer } from './styles';
 
-const scenesMock = [
-    {
-        id:           '1',
-        sceneName:    'ZLP',
-        requisiteIds: [ '1r' ],
-        location:     'Kyiv',
-        scenarioDay:  1,
-        workdayIds:   [ '1wd' ],
-    },
-    {
-        id:           '2',
-        sceneName:    'ZLP',
-        requisiteIds: [ '1r' ],
-        location:     'Kyiv',
-        scenarioDay:  2,
-        workdayIds:   [ '1wd' ],
-    },
-];
+const scenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite', 'Actions' ];
 
-// Types
-type PropTypes = {}
-
-const scenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite' ];
-
-const Scenes: FC<PropTypes> = () => {
+const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
 
     const { data, loading } = useScenesQuery({ variables: { input: projectId }});
-
-    console.log('loading', loading);
-    console.log('data', data);
+    console.log('Scenes', data);
 
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
     const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+
+    if (loading || !data) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <ScenesContainer>
@@ -95,7 +75,7 @@ const Scenes: FC<PropTypes> = () => {
                     <TableHead ThNames = { scenesThNames } />
                     <Tbody>
                         {
-                            scenesMock.map((scene) => (
+                            data.scenes.map((scene) => (
                                 <SceneTableItem
                                     key = { scene.id }
                                     { ...scene }

@@ -6,6 +6,9 @@ import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
 // Components
 import { ErrorBoundary, TableHead, SceneTableItem } from '../../components';
 
+// Apollo hooks
+import { useWorkdayQuery } from '../../bus/Workday';
+
 // Elements
 import { Button } from '../../elements';
 
@@ -15,45 +18,32 @@ import { TableStyles } from '../../assets';
 
 // Types
 type Params = {
-    projectId?: string
-    workDayDate?: string
+    projectId: string
+    workdayId: string
 }
-
-type PropTypes = {}
-
-const scenes = [
-    {
-        id:           '1',
-        sceneName:    'ZLP',
-        requisiteIds: [ '1r' ],
-        location:     'Kyiv',
-        scenarioDay:  1,
-        workdayIds:   [ '1wd' ],
-    },
-    {
-        id:           '2',
-        sceneName:    'ZLP',
-        requisiteIds: [ '1r' ],
-        location:     'Kyiv',
-        scenarioDay:  2,
-        workdayIds:   [ '1wd' ],
-    },
-];
 
 const ScenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite' ];
 
-const Workday: FC<PropTypes> = () => {
+const Workday: FC = () => {
     const { push, goBack } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
-    const { projectId, workDayDate } = useParams<Params>();
+    const { projectId, workdayId } = useParams<Params>();
+
+    const { data, loading } = useWorkdayQuery({ variables: { id: workdayId }});
 
     const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+
+    if (loading || !data) {
+        return <div>Loading...</div>;
+    }
+
+    console.log('Workday:FC -> data', data);
 
     return (
         <WorkdayContainer>
             <header>
                 <Button onClick = { () => goBack() }>Back</Button>
-                <h2>{workDayDate}</h2>
+                <h2>{data.workday.date}</h2>
                 <Button onClick = { () => setIsEdit(!isEdit) }>
                     {isEdit ? 'Save' : 'Edit'}
                 </Button>
@@ -62,22 +52,30 @@ const Workday: FC<PropTypes> = () => {
 
 
             </main>
-            <TableStyles>
-                <Table>
-                    <TableHead ThNames = { ScenesThNames }/>
-                    <Tbody>
-                        {
-                            scenes.map((scene) => (
-                                <SceneTableItem
-                                    key = { scene.id }
-                                    { ...scene }
-                                    sceneRedirectHandler = { sceneRedirectHandler }
-                                />
-                            ))
-                        }
-                    </Tbody>
-                </Table>
-            </TableStyles>
+            {
+                data.workday.scenes.length !== 0
+                    ? (
+                        <TableStyles>
+                            <Table>
+                                <TableHead ThNames = { ScenesThNames }/>
+                                <Tbody>
+                                    {
+                                        data.workday.scenes.map((scene) => (
+                                            <SceneTableItem
+                                                key = { scene.id }
+                                                { ...scene }
+                                                sceneRedirectHandler = { sceneRedirectHandler }
+                                            />
+                                        ))
+                                    }
+                                </Tbody>
+                            </Table>
+                        </TableStyles>
+                    )
+                    : (
+                        <Button>Add new scenes</Button>
+                    )
+            }
         </WorkdayContainer>
     );
 };

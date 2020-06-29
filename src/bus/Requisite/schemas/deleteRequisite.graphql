@@ -1,0 +1,3 @@
+mutation DeleteRequisite ($input: String!) {
+  deleteRequisite(id: $input)
+}

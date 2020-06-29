@@ -11,7 +11,7 @@ export const TableHead: FC<PropTypes> = ({ ThNames }) => {
         <Thead>
             <Tr>
                 {
-                    ThNames.map((ThName) => <Th>{ThName}</Th>)
+                    ThNames.map((ThName, index) => <Th key = { index }>{ThName}</Th>)
                 }
             </Tr>
         </Thead>

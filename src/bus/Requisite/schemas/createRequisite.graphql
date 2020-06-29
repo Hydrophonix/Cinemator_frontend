@@ -1,0 +1,10 @@
+mutation CreateRequisite($input: RequisiteCreateInput!, $projectId: String!) {
+  createRequisite(input: $input, projectId: $projectId) {
+    id
+    title
+    description
+    isOrdered
+    pricePerDay
+    projectId
+  }
+}
