@@ -1,7 +1,7 @@
 // Core
 import React, { FC } from 'react';
 // import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 // Types
 // import { ThemesKeys } from '../../theme';

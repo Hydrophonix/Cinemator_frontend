@@ -27,7 +27,7 @@ type PropTypes = {
 const Scene: FC<PropTypes> = ({ sceneName }) => {
     const { goBack } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
-    const { projectId, sceneId } = useParams<Params>();
+    const { sceneId } = useParams<Params>();
     const [ deleteScene ] = useDeleteSceneMutation();
 
     const deleteSceneHandler = async (sceneId: string) => {

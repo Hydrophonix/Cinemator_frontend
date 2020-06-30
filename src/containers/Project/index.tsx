@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 // Components
 import { Sidebar } from './Sidebar';

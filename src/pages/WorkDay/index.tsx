@@ -1,7 +1,7 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table';
+import { Table,  Tbody } from 'react-super-responsive-table';
 
 // Components
 import { ErrorBoundary, TableHead, SceneTableItem } from '../../components';

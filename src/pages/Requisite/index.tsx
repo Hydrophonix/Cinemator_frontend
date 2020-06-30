@@ -24,6 +24,8 @@ type PropTypes = {
 const Requisite: FC<PropTypes> = ({ requisiteName }) => {
     const { goBack } = useHistory();
     const { projectId, requisiteId } = useParams<Params>();
+    console.log('"|_(ʘ_ʘ)_/" =>: requisiteId', requisiteId);
+    console.log('"|_(ʘ_ʘ)_/" =>: projectId', projectId);
 
     return (
         <RequisiteContainer>

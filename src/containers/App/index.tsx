@@ -1,6 +1,5 @@
 // Core
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useApolloClient } from '@apollo/react-hooks';
 

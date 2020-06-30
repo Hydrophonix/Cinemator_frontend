@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 // Core
 // import * as ApolloReactHooks from '@apollo/react-hooks';
 
@@ -11,3 +10,4 @@
 // export const useLogoutMutation = (baseOptions?: ApolloReactHooks.MutationHookOptions<Logout, {}>) => {
 //     return ApolloReactHooks.useMutation<Logout, {}>(LogoutSchema, baseOptions);
 // };
+export const zagluska = 1;
