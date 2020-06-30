@@ -26,14 +26,15 @@ export const App: FC = () => {
     useEffect(() => {
         fetch(TOKEN_URL, { credentials: 'include', method: 'POST' })
             .then(async (res) => {
-                const { accessToken } = await res.json();
+                const { accessToken  } = await res.json();
 
-                setAccessToken(accessToken);
-                client.writeData({ data: { isLoggedIn: true }});
+                if (accessToken) {
+                    setAccessToken(accessToken);
+                    client.writeData({ data: { isLoggedIn: true }});
+                }
                 setIsInitialized(true);
             })
             .catch(() => {
-                client.writeData({ data: { isLoggedIn: false }});
                 setIsInitialized(true);
             });
     }, []);
