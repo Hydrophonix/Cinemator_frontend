@@ -10,7 +10,7 @@ type PropTypes = {
     sceneRedirectHandler: (sceneId: string) => void
 } & Omit<Scenes_scenes, 'projectId'>
 
-export const SceneTableItem: FC<PropTypes> = ({
+export const SceneTableItem: FC<any> = ({
     id,
     title,
     location,

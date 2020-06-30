@@ -8,5 +8,6 @@ export const RequisiteContainer = styled.section`
     header {
         display: flex;
         justify-content: space-between;
+        padding-bottom: 10px;
     }
 `;

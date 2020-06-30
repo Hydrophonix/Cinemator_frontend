@@ -8,5 +8,6 @@ export const SceneContainer = styled.section`
     header {
         display: flex;
         justify-content: space-between;
+        padding-bottom: 10px;
     }
 `;

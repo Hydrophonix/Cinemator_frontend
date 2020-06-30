@@ -4,30 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Workdays
+// GraphQL query operation: Scene
 // ====================================================
 
-export interface Workdays_workdays_scenes {
+export interface Scene_scene {
   __typename: "Scene";
   id: string;
   title: string | null;
   location: string | null;
   sceneNumber: number;
-}
-
-export interface Workdays_workdays {
-  __typename: "Workday";
-  id: string;
-  title: string | null;
-  date: string;
   projectId: string;
-  scenes: Workdays_workdays_scenes[];
 }
 
-export interface Workdays {
-  workdays: Workdays_workdays[];
+export interface Scene {
+  scene: Scene_scene;
 }
 
-export interface WorkdaysVariables {
-  input: string;
+export interface SceneVariables {
+  id: string;
 }

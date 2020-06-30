@@ -1,0 +1,11 @@
+fragment requisiteFields on Requisite {
+    id
+    title
+    description
+    isOrdered
+    pricePerDay
+    # scenes {
+    #   id
+    # }
+    projectId
+}

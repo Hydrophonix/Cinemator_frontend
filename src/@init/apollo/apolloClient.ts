@@ -9,18 +9,19 @@ import { GRAPHQL_URL }      from '../constants';
 import { tokenRefreshLink } from './refreshTokenLink';
 import { errorLink }        from './errorLink';
 import { requestLink }      from './requestLink';
-// import gql from 'graphql-tag';
 
 // Innitial local cache
 import { innitialLocalCache } from './localCache';
 
-const cache = new InMemoryCache();
-
-// export const typeDefs = gql`
-//   extend type Query {
-//     isLoggedIn: Boolean!
-//   }
-// `;
+const cache = new InMemoryCache({
+    cacheRedirects: {
+        Query: {
+            workday: (_, args, { getCacheKey }) => {
+                getCacheKey({ __typename: 'Workday', id: args.id });
+            },
+        },
+    },
+});
 
 export const client = new ApolloClient<NormalizedCacheObject>({
     link: ApolloLink.from([

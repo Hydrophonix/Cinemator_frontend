@@ -10,7 +10,6 @@ import { DeleteScene, DeleteSceneVariables, Scenes } from '../types';
 
 const defaultOptions: MutationHookOptions<DeleteScene, DeleteSceneVariables> = {
     update(cache, { data }) {
-        console.log('update -> data', data);
         const { scenes } = cache.readQuery<Scenes>({
             query:     ScenesSchema,
             variables: { input: data!.deleteScene.projectId },

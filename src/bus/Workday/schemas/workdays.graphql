@@ -1,8 +1,8 @@
+#import "./workdayFields.graphql"
+
 query Workdays ($input: String!) {
   workdays(projectId: $input) {
-    id
-    title
-    date
+    ...workdayFields
     scenes {
       id
       title

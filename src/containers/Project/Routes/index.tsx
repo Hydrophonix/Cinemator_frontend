@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import {
     Calendar, Workday, CreateWorkday,
     Scenes, Scene, CreateScene,
-    Requisites, Requisite,
+    Requisites, Requisite, CreateRequisite,
 } from '../../../pages';
 
 // Elements
@@ -25,6 +25,10 @@ export const Routes: FC<PropTypes> = () => {
 
                 <Route path = { '/:projectId/create-scene' }>
                     <CreateScene />
+                </Route>
+
+                <Route path = { '/:projectId/create-requisite' }>
+                    <CreateRequisite />
                 </Route>
 
                 <Route path = { '/:projectId/calendar/:workdayId' }>

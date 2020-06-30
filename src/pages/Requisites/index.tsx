@@ -17,36 +17,12 @@ import { ErrorBoundary, TableHead, RequisiteTableItem } from '../../components';
 import { TableStyles } from '../../assets';
 import { RequisiteContainer } from './styles';
 
-const requisitesMock = [
-    {
-        id:              '234234234',
-        requisiteName:   'Mouse',
-        requisiteNumber: 1,
-        scenesIds:       [ '324423423', '3244dd23423' ],
-        isOrdered:       false,
-        photoUrl:        'https://cdn.mos.cms.futurecdn.net/2RD5zcvSuFmWTrTLqUNbmn-320-80.jpg',
-        description:     'nice mouse',
-        pricePerDay:     0,
-    },
-    {
-        id:              '234d234234',
-        requisiteName:   'Mouse',
-        requisiteNumber: 2,
-        scenesIds:       [ '324423423', '3244dd23423' ],
-        isOrdered:       false,
-        photoUrl:        'https://cdn.mos.cms.futurecdn.net/2RD5zcvSuFmWTrTLqUNbmn-320-80.jpg',
-        description:     'nice mouse',
-        pricePerDay:     0,
-    },
-];
-
-const requisitesThNames = [ 'ID', 'Name', 'Scenes', 'isOrdered', 'pricePerDay' ];
+const requisitesThNames = [ 'ID', 'Title', 'Description', 'isOrdered', 'pricePerDay' ];
 
 const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
     const { data, loading } = useRequisitesQuery({ variables: { input: projectId }});
-    console.log('Requisites', data);
 
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
@@ -56,6 +32,7 @@ const Requisites: FC = () => {
     if (loading || !data) {
         return <div>Loading...</div>;
     }
+    console.log('Requisites:FC -> data', data);
 
     return (
         <RequisiteContainer>
@@ -85,14 +62,14 @@ const Requisites: FC = () => {
                     />
                 </section>
 
-                <button>Add new requisite</button>
+                <button onClick = { () => push(`/${projectId}/create-requisite`) }>Add new requisite</button>
             </header>
             <TableStyles>
                 <Table>
                     <TableHead ThNames = { requisitesThNames } />
                     <Tbody>
                         {
-                            requisitesMock.map((requisite) => (
+                            data.requisites.map((requisite) => (
                                 <RequisiteTableItem
                                     key = { requisite.id }
                                     { ...requisite }

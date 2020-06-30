@@ -10,51 +10,51 @@ import { Button } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
-import { useCreateSceneMutation } from '../../bus/Scene';
+import { useCreateRequisiteMutation } from '../../bus/Requisite';
 
 // Styles
-import { CreateSceneContainer } from './styles';
+import { CreateRequisiteContainer } from './styles';
 
 const innitialForm = {
-    sceneNumber: 0,
     title:       '',
-    location:    '',
+    description: '',
+    pricePerDay: 0,
 };
 
 export type Params = {
     projectId: string
 }
 
-const CreateScene: FC = () => {
+const CreateRequisite: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId } = useParams<Params>();
-    const [ createScene ] = useCreateSceneMutation();
+    const [ createRequisite ] = useCreateRequisiteMutation();
     const [ form, setForm ] = useForm(innitialForm);
-    console.log('CreateScene:FC -> form', form);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
 
-        const response = await createScene({
+        const response = await createRequisite({ // TODO: DO NOT TESTED, ONLY WRITED
             variables: {
                 input: {
                     title:       form.title,
-                    sceneNumber: form.sceneNumber,
-                    location:    form.location,
+                    description: form.description,
+                    isOrdered:   false,
+                    pricePerDay: form.pricePerDay,
                 },
                 projectId,
-                workdayId: '', // TODO: ???
+                // workdayId: '', // TODO: ???
             },
         });
 
         if (response && response.data) {
-            push(`/${projectId}/scenes`);
+            push(`/${projectId}/requisites`);
             console.log('onSubmit -> response.data', response.data);
         }
     };
 
     return (
-        <CreateSceneContainer>
+        <CreateRequisiteContainer>
             <nav>
                 <Button onClick = { () => goBack() }>
                     Back
@@ -62,37 +62,37 @@ const CreateScene: FC = () => {
             </nav>
             <main>
                 <form onSubmit = { (event) => onSubmit(event) }>
-                    <h2>Scene number:</h2>
-                    <input
-                        name = 'sceneNumber'
-                        type = 'number'
-                        value = { form.sceneNumber }
-                        onChange = { (event) => setForm(event, true) }
-                    />
-                    <h2>Scene title:</h2>
+                    <h2>Requisite title:</h2>
                     <input
                         name = 'title'
-                        placeholder = 'Scene title'
+                        placeholder = 'Requisite title'
                         value = { form.title }
                         onChange = { setForm }
                     />
-                    <h2>Scene location:</h2>
+                    <h2>Requisite description:</h2>
                     <input
-                        name = 'location'
-                        placeholder = 'Scene location'
-                        value = { form.location }
+                        name = 'description'
+                        value = { form.description }
                         onChange = { setForm }
+                    />
+                    <h2>Requisite pricePerDay:</h2>
+                    <input
+                        name = 'pricePerDay'
+                        placeholder = 'Requisite pricePerDay'
+                        type = 'number'
+                        value = { form.pricePerDay }
+                        onChange = { (event) => setForm(event, true) }
                     />
 
                     <button type = 'submit'>Submit</button>
                 </form>
             </main>
-        </CreateSceneContainer>
+        </CreateRequisiteContainer>
     );
 };
 
 export default () => (
     <ErrorBoundary>
-        <CreateScene />
+        <CreateRequisite />
     </ErrorBoundary>
 );

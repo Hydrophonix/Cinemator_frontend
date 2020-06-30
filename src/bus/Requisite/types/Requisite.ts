@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteRequisite
+// GraphQL query operation: Requisite
 // ====================================================
 
-export interface DeleteRequisite_deleteRequisite {
+export interface Requisite_requisite {
   __typename: "Requisite";
   id: string;
   title: string;
@@ -17,10 +17,10 @@ export interface DeleteRequisite_deleteRequisite {
   projectId: string;
 }
 
-export interface DeleteRequisite {
-  deleteRequisite: DeleteRequisite_deleteRequisite;
+export interface Requisite {
+  requisite: Requisite_requisite;
 }
 
-export interface DeleteRequisiteVariables {
+export interface RequisiteVariables {
   id: string;
 }

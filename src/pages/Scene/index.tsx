@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Apollo hooks
-import { useDeleteSceneMutation } from '../../bus/Scene';
+import { useSceneQuery, useDeleteSceneMutation } from '../../bus/Scene';
 
 // Elements
 import { Button } from '../../elements';
@@ -25,15 +25,23 @@ type PropTypes = {
 }
 
 const Scene: FC<PropTypes> = ({ sceneName }) => {
-    const { goBack } = useHistory();
+    const { goBack, push } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
-    const { sceneId } = useParams<Params>();
+    const { projectId, sceneId } = useParams<Params>();
+
+    const { data, loading } = useSceneQuery({ variables: { id: sceneId }});
     const [ deleteScene ] = useDeleteSceneMutation();
 
-    const deleteSceneHandler = async (sceneId: string) => {
-        console.log('deleteSceneHandler -> sceneId', sceneId);
-        const response = await deleteScene({ variables: { input: 'asd' }});
-        console.log('deleteSceneHandler -> response', response);
+    if (loading || !data) {
+        return <div>Loading...</div>;
+    }
+
+    const deleteSceneHandler = async () => {
+        const response = await deleteScene({ variables: { input: data.scene.id }});
+
+        if (response && response.data) {
+            push(`/${projectId}/scenes`);
+        }
     };
 
     return (
@@ -41,12 +49,14 @@ const Scene: FC<PropTypes> = ({ sceneName }) => {
             <header>
                 <Button onClick = { () => goBack() }>Back</Button>
                 <h2>{sceneName || 'TEST NAME'}</h2>
-                <Button onClick = { () => setIsEdit(!isEdit) }>
-                    {isEdit ? 'Save' : 'Edit'}
-                </Button>
-                <Button onClick = { () => deleteSceneHandler(sceneId) }>
-                    Delete
-                </Button>
+                <div>
+                    <Button onClick = { () => setIsEdit(!isEdit) }>
+                        {isEdit ? 'Save' : 'Edit'}
+                    </Button>
+                    <Button onClick = { deleteSceneHandler }>
+                        Delete
+                    </Button>
+                </div>
             </header>
             <main>
                 Some scene data

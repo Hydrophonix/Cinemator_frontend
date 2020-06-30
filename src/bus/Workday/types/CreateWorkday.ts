@@ -22,8 +22,8 @@ export interface CreateWorkday_createWorkday {
   id: string;
   title: string | null;
   date: string;
-  scenes: CreateWorkday_createWorkday_scenes[];
   projectId: string;
+  scenes: CreateWorkday_createWorkday_scenes[];
 }
 
 export interface CreateWorkday {

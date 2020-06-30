@@ -33,7 +33,7 @@ const CreateWorkday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, date } = useParams<Params>();
     const [ createWorkday, { loading }] = useCreateWorkdayMutation();
-    console.log('CreateWorkday:FC -> a', loading);
+    // console.log('CreateWorkday:FC -> a', loading);
 
     const [ form, setForm ] = useForm(innitialForm);
     const [ startDate, setStartDate ] = useState(new Date(date));

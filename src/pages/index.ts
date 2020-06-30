@@ -17,3 +17,4 @@ export const CreateScene = lazy(() => import(/* webpackChunkName: "CreateScene" 
 
 export const Requisites = lazy(() => import(/* webpackChunkName: "Requisites" */ './Requisites'));
 export const Requisite = lazy(() => import(/* webpackChunkName: "Requisite" */ './Requisite'));
+export const CreateRequisite = lazy(() => import(/* webpackChunkName: "CreateRequisite" */ './CreateRequisite'));

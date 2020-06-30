@@ -19,7 +19,7 @@ export interface ProjectCreateInput {
 }
 
 export interface RequisiteCreateInput {
-  title?: string | null;
+  title: string;
   description?: string | null;
   isOrdered?: boolean | null;
   pricePerDay?: number | null;

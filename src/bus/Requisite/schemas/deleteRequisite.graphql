@@ -1,3 +1,7 @@
-mutation DeleteRequisite ($input: String!) {
-  deleteRequisite(id: $input)
+#import "./requisiteFields.graphql"
+
+mutation DeleteRequisite ($id: String!) {
+  deleteRequisite(id: $id) {
+    ...requisiteFields
+  }
 }

@@ -1,8 +1,8 @@
+#import "./workdayFields.graphql"
+
 mutation CreateWorkday($input: WorkdayCreateInput!, $projectId: String!) {
   createWorkday(input: $input, projectId: $projectId) {
-    id
-    title
-    date
+    ...workdayFields
     scenes {
       id
       title

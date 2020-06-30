@@ -1,10 +1,7 @@
+#import "./requisiteFields.graphql"
+
 query Requisites($input: String!) {
   requisites(projectId: $input) {
-    id
-    title
-    description
-    isOrdered
-    pricePerDay
-    projectId
+    ...requisiteFields
   }
 }

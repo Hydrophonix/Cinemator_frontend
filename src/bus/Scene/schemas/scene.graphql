@@ -1,0 +1,7 @@
+#import "./sceneFields.graphql"
+
+query Scene($id: String!) {
+  scene(id: $id) {
+    ...sceneFields
+  }
+}

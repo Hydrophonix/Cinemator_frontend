@@ -1,15 +1,7 @@
+#import "./sceneFields.graphql"
+
 mutation CreateScene ($input: SceneCreateInput!, $projectId: String!, $workdayId: String!) {
   createScene(input: $input, projectId: $projectId, workdayId: $workdayId) {
-    id
-    title
-    location
-    sceneNumber
-    # workdays {
-    #   id
-    # }
-    # requisites {
-    #   id
-    # }
-    projectId
+    ...sceneFields
   }
 }

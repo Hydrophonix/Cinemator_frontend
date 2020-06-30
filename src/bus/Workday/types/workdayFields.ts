@@ -4,22 +4,13 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteScene
+// GraphQL fragment: workdayFields
 // ====================================================
 
-export interface DeleteScene_deleteScene {
-  __typename: "Scene";
+export interface workdayFields {
+  __typename: "Workday";
   id: string;
   title: string | null;
-  location: string | null;
-  sceneNumber: number;
+  date: string;
   projectId: string;
-}
-
-export interface DeleteScene {
-  deleteScene: DeleteScene_deleteScene;
-}
-
-export interface DeleteSceneVariables {
-  input: string;
 }

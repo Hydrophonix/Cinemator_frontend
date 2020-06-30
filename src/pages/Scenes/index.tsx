@@ -18,7 +18,7 @@ import { Button } from '../../elements';
 import { TableStyles } from '../../assets';
 import { ScenesContainer } from './styles';
 
-const scenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite', 'Actions' ];
+const scenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite' ];
 
 const Scenes: FC = () => {
     const { push } = useHistory();

@@ -3,21 +3,14 @@ import React, { FC } from 'react';
 import { Tr, Td } from 'react-super-responsive-table';
 
 // Types
-type PropTypes = {
-    id: string
-    requisiteNumber: number
-    requisiteName: string
-    scenesIds: Array<string>
-    isOrdered: boolean
-    pricePerDay: number
-    requisiteRedirectHandler: (requisiteId: string) => void
-};
+import { Requisite_requisite } from '../../bus/Requisite';
+
+type PropTypes = Requisite_requisite & { requisiteRedirectHandler: (requisiteId: string) => void };
 
 export const RequisiteTableItem: FC<PropTypes> = ({
     id,
-    requisiteNumber,
-    requisiteName,
-    scenesIds,
+    title,
+    description,
     isOrdered,
     pricePerDay,
     requisiteRedirectHandler,
@@ -25,9 +18,8 @@ export const RequisiteTableItem: FC<PropTypes> = ({
     return (
         <Tr onClick = { () => requisiteRedirectHandler(id) }>
             <Td>{id}</Td>
-            <Td>{requisiteNumber}</Td>
-            <Td>{requisiteName}</Td>
-            <Td>Items: {scenesIds.length}</Td>
+            <Td>{title}</Td>
+            <Td>{description}</Td>
             <Td>{isOrdered ? 'Yes' : 'No'}</Td>
             <Td>{`${pricePerDay}`}</Td>
         </Tr>

@@ -1,22 +1,7 @@
+#import "./projectFields.graphql"
+
 mutation CreateProject($input: ProjectCreateInput!) {
     createProject(input: $input) {
-        id
-        ownerId
-        startDay
-        endDay
-        title
-        description
-        workdays {
-            id
-            title
-            date
-            scenes {
-                id
-                title
-                location
-                sceneNumber
-            }
-            projectId 
-        }
+        ...projectFields
     }
 }
