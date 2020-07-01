@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions } from '@apollo/react-hooks';
+import { QueryHookOptions } from '@apollo/react-hooks';
 
 // GraphQL
 import OwnedProjectsSchema from '../schemas/ownedProjects.graphql';
@@ -10,6 +10,6 @@ import { OwnedProjects } from '../types';
 // Hooks
 import { useCustomQuery } from '../../../hooks';
 
-export const useOwnedProjectsQuery = (baseOptions?: MutationHookOptions<OwnedProjects>) => {
+export const useOwnedProjectsQuery = (baseOptions?: QueryHookOptions<OwnedProjects>) => {
     return useCustomQuery<OwnedProjects, {}>(OwnedProjectsSchema, baseOptions);
 };

@@ -22,5 +22,5 @@ export interface Requisites {
 }
 
 export interface RequisitesVariables {
-  input: string;
+  projectId: string;
 }

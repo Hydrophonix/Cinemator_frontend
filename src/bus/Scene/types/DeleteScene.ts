@@ -21,5 +21,5 @@ export interface DeleteScene {
 }
 
 export interface DeleteSceneVariables {
-  input: string;
+  id: string;
 }

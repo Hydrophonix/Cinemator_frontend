@@ -1,7 +1,7 @@
 #import "./sceneFields.graphql"
 
-query Scenes($input: String!) {
-  scenes(projectId: $input) {
+query Scenes($projectId: String!) {
+  scenes(projectId: $projectId) {
     ...sceneFields
   }
 }

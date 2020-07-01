@@ -29,5 +29,5 @@ export interface Workdays {
 }
 
 export interface WorkdaysVariables {
-  input: string;
+  projectId: string;
 }

@@ -1,7 +1,7 @@
 
 // Core
 import React, { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
@@ -33,7 +33,7 @@ const DnDCalendar = withDragAndDrop(ReactBigCalendar);
 const Calendar: FC<PropTypes> = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { data, loading } = useWorkdaysQuery({ variables: { input: projectId }});
+    const { data, loading } = useWorkdaysQuery({ variables: { projectId }});
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -54,7 +54,7 @@ const Calendar: FC<PropTypes> = () => {
         if (event.action === 'select') {
             // TODO: fix on desctop
             workday
-                ? push(`/${projectId}/calendar/${dateISO8601}`)
+                ? push(`/${projectId}/calendar/${workday.id}`)
                 : push(`/${projectId}/create-workday/${dateISO8601}`);
         }
     };

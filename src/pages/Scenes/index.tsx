@@ -18,15 +18,13 @@ import { Button } from '../../elements';
 import { TableStyles } from '../../assets';
 import { ScenesContainer } from './styles';
 
-const scenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite' ];
+// Constants
+import { scenesThNames } from '../../@init/constants';
 
 const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
-
-    const { data, loading } = useScenesQuery({ variables: { input: projectId }});
-    console.log('Scenes', data);
-
+    const { data, loading } = useScenesQuery({ variables: { projectId }});
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 

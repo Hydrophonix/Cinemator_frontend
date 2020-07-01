@@ -1,13 +1,13 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Table,  Tbody } from 'react-super-responsive-table';
+import { Table, Tbody } from 'react-super-responsive-table';
 
 // Components
-import { ErrorBoundary, TableHead, SceneTableItem } from '../../components';
+import { ErrorBoundary, TableHead, SceneTableItem, AddScenesModal } from '../../components';
 
 // Apollo hooks
-import { useWorkdayQuery, useDeleteWorkdayMutation  } from '../../bus/Workday';
+import { useDeleteWorkdayMutation, useWorkdaysQuery  } from '../../bus/Workday';
 
 // Elements
 import { Button } from '../../elements';
@@ -16,20 +16,22 @@ import { Button } from '../../elements';
 import { WorkdayContainer } from './styles';
 import { TableStyles } from '../../assets';
 
+// Constants
+import { scenesThNames } from '../../@init/constants';
+
 // Types
 type Params = {
     projectId: string
     workdayId: string
 }
 
-const ScenesThNames = [ '#', 'Scene name', 'Location', 'Date', 'Requisite' ];
 
 const Workday: FC = () => {
     const { push, goBack } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, workdayId } = useParams<Params>();
 
-    const { data, loading } = useWorkdayQuery({ variables: { id: workdayId }});
+    const { data, loading } = useWorkdaysQuery({ variables: { projectId }});
     const [ deleteWorkday ] = useDeleteWorkdayMutation();
 
     const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
@@ -38,12 +40,14 @@ const Workday: FC = () => {
         return <div>Loading...</div>;
     }
 
+    const workday = data.workdays.find((workday) => workday.id === workdayId);
+
+    if (!workday) {
+        return <div>No workday exist</div>;
+    }
+
     const deleteWorkdayHandler = async () => {
-        const response = await deleteWorkday({
-            variables: {
-                id: data.workday.id,
-            },
-        });
+        const response = await deleteWorkday({ variables: { id: workday.id }});
 
         if (response && response.data) {
             push(`/${projectId}/calendar`);
@@ -52,11 +56,12 @@ const Workday: FC = () => {
 
     return (
         <WorkdayContainer>
+            <AddScenesModal />
             <header>
                 <Button onClick = { () => goBack() }>Back</Button>
-                <h2>{data.workday.date}</h2>
+                <h2>{workday.date}</h2>
                 <div>
-                    <Button>Add new scenes</Button>
+                    <Button>Add scene</Button>
                     <Button onClick = { () => setIsEdit(!isEdit) }>
                         {isEdit ? 'Save' : 'Edit'}
                     </Button>
@@ -69,10 +74,10 @@ const Workday: FC = () => {
             {
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { ScenesThNames }/>
+                        <TableHead ThNames = { scenesThNames }/>
                         <Tbody>
                             {
-                                data.workday.scenes.map((scene) => (
+                                workday.scenes.map((scene) => (
                                     <SceneTableItem
                                         key = { scene.id }
                                         { ...scene }

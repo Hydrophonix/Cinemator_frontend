@@ -1,5 +1,4 @@
 fragment workdayFields on Workday {
-    __typename
     id
     title
     date

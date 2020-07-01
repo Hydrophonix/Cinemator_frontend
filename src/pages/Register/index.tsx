@@ -6,17 +6,20 @@ import { useApolloClient } from '@apollo/react-hooks';
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Elements
-import { Button } from '../../elements';
+// Apollo hooks
+import { useRegisterMutation } from '../../bus';
 
 // Hooks
 import { useForm } from '../../hooks';
+
+// Elements
+import { Button } from '../../elements';
 
 // Instruments
 import { setAccessToken } from '../../@init/tokenStore';
 
 // Types
-import { useRegisterMutation } from '../../bus';
+import { AuthInput } from '../../@types/graphql-global-types';
 
 // Styles
 import { RegisterContainer, LoginLink } from './styles';
@@ -30,13 +33,11 @@ const Register: FC = () => {
     const { push } = useHistory();
     const client = useApolloClient();
     const [ register ] = useRegisterMutation();
-    const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
+    const [ form, setForm ] = useForm<AuthInput>(innitialForm);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
-        const response = await register({
-            variables: { input: form },
-        });
+        const response = await register({ variables: { input: form }});
 
         if (response && response.data) {
             setAccessToken(response.data.registerWeb.accessToken);

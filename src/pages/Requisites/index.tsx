@@ -1,10 +1,8 @@
 // Core
 import React, { useState, FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
 import { Table, Tbody } from 'react-super-responsive-table';
 
 // Apollo Hooks
@@ -17,13 +15,13 @@ import { ErrorBoundary, TableHead, RequisiteTableItem } from '../../components';
 import { TableStyles } from '../../assets';
 import { RequisiteContainer } from './styles';
 
-const requisitesThNames = [ 'ID', 'Title', 'Description', 'isOrdered', 'pricePerDay' ];
+// Constants
+import { requisitesThNames } from '../../@init/constants';
 
 const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
-    const { data, loading } = useRequisitesQuery({ variables: { input: projectId }});
-
+    const { data, loading } = useRequisitesQuery({ variables: { projectId }});
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
@@ -32,7 +30,6 @@ const Requisites: FC = () => {
     if (loading || !data) {
         return <div>Loading...</div>;
     }
-    console.log('Requisites:FC -> data', data);
 
     return (
         <RequisiteContainer>

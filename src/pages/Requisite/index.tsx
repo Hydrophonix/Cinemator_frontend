@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Apollo hooks
-import { useRequisiteQuery, useDeleteRequisiteMutation } from '../../bus/Requisite';
+import { useRequisitesQuery, useDeleteRequisiteMutation } from '../../bus/Requisite';
 
 // Elements
 import { Button } from '../../elements';
@@ -20,24 +20,26 @@ type Params = {
     requisiteId: string
 }
 
-type PropTypes = {
-    requisiteName?: string
-}
-
-const Requisite: FC<PropTypes> = ({ requisiteName }) => {
+const Requisite: FC = () => {
     const { goBack, push } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, requisiteId } = useParams<Params>();
 
-    const { data, loading } = useRequisiteQuery({ variables: { id: requisiteId }});
+    const { data, loading } = useRequisitesQuery({ variables: { projectId }});
     const [ deleteRequisite ] = useDeleteRequisiteMutation();
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
+    const requisite = data.requisites.find((requisite) => requisite.id === requisiteId);
+
+    if (!requisite) {
+        return <div>No requisite exist</div>;
+    }
+
     const deleteRequisiteHandler = async () => {
-        const response = await deleteRequisite({ variables: { id: data.requisite.id }});
+        const response = await deleteRequisite({ variables: { id: requisite.id }});
 
         if (response && response.data) {
             push(`/${projectId}/requisites`);
@@ -48,7 +50,7 @@ const Requisite: FC<PropTypes> = ({ requisiteName }) => {
         <RequisiteContainer>
             <header>
                 <Button onClick = { () => goBack() }>Back</Button>
-                <h2>{requisiteName || 'TEST NAME'}</h2>
+                <h2>{requisite.title}</h2>
                 <div>
                     <Button onClick = { () => setIsEdit(!isEdit) }>Edit</Button>
                     <Button onClick = { deleteRequisiteHandler }>Delete</Button>

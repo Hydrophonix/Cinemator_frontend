@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions } from '@apollo/react-hooks';
+import { QueryHookOptions } from '@apollo/react-hooks';
 
 // GraphQL
 import RequisitesSchema from '../schemas/requisites.graphql';
@@ -10,6 +10,6 @@ import { Requisites, RequisitesVariables } from '../types';
 // Hooks
 import { useCustomQuery } from '../../../hooks';
 
-export const useRequisitesQuery = (baseOptions?: MutationHookOptions<Requisites, RequisitesVariables>) => {
+export const useRequisitesQuery = (baseOptions?: QueryHookOptions<Requisites, RequisitesVariables>) => {
     return useCustomQuery<Requisites, RequisitesVariables>(RequisitesSchema, baseOptions);
 };

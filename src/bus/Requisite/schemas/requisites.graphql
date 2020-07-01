@@ -1,7 +1,7 @@
 #import "./requisiteFields.graphql"
 
-query Requisites($input: String!) {
-  requisites(projectId: $input) {
+query Requisites($projectId: String!) {
+  requisites(projectId: $projectId) {
     ...requisiteFields
   }
 }

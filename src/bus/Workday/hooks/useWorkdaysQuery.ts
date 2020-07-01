@@ -10,6 +10,6 @@ import { Workdays, WorkdaysVariables } from '../types';
 // Hooks
 import { useCustomQuery } from '../../../hooks';
 
-export const useWorkdaysQuery = (baseOptions?: MutationHookOptions<Workdays, WorkdaysVariables>) => {
+export const useWorkdaysQuery = (baseOptions: MutationHookOptions<Workdays, WorkdaysVariables>) => {
     return useCustomQuery<Workdays, WorkdaysVariables>(WorkdaysSchema, baseOptions);
 };

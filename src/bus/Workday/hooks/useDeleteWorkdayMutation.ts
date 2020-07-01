@@ -12,12 +12,12 @@ const defaultOptions: MutationHookOptions<DeleteWorkday, DeleteWorkdayVariables>
     update(cache, { data }) {
         const { workdays } = cache.readQuery<Workdays>({
             query:     WorkdaysSchema,
-            variables: { input: data!.deleteWorkday.projectId },
+            variables: { projectId: data!.deleteWorkday.projectId },
         })!;
 
         cache.writeQuery({
             query:     WorkdaysSchema,
-            variables: { input: data!.deleteWorkday.projectId },
+            variables: { projectId: data!.deleteWorkday.projectId },
             data:      {
                 workdays: workdays.filter(({ id }) => id !== data!.deleteWorkday.id),
             },

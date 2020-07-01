@@ -10,4 +10,4 @@
 // export const useLogoutMutation = (baseOptions?: ApolloReactHooks.MutationHookOptions<Logout, {}>) => {
 //     return ApolloReactHooks.useMutation<Logout, {}>(LogoutSchema, baseOptions);
 // };
-export const zagluska = 1;
+export const zaglushka = 1;

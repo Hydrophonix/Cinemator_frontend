@@ -21,5 +21,5 @@ export interface Scenes {
 }
 
 export interface ScenesVariables {
-  input: string;
+  projectId: string;
 }

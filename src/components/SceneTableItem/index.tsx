@@ -6,9 +6,9 @@ import { Tr, Td } from 'react-super-responsive-table';
 import { Scenes_scenes } from '../../bus/Scene';
 
 // Types
-type PropTypes = {
+type PropTypes = Omit<Scenes_scenes, 'projectId'> & {
     sceneRedirectHandler: (sceneId: string) => void
-} & Omit<Scenes_scenes, 'projectId'>
+}
 
 export const SceneTableItem: FC<any> = ({
     id,
@@ -19,7 +19,7 @@ export const SceneTableItem: FC<any> = ({
 }) => {
     return (
         <Tr onClick = { () => sceneRedirectHandler(id) }>
-            <Td>{sceneNumber}</Td>
+            <Td>{`${sceneNumber}`}</Td>
             <Td>{title}</Td>
             <Td>{location}</Td>
             <Td>01/01/1010</Td>

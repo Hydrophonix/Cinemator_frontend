@@ -12,12 +12,12 @@ const defaultOptions: MutationHookOptions<DeleteScene, DeleteSceneVariables> = {
     update(cache, { data }) {
         const { scenes } = cache.readQuery<Scenes>({
             query:     ScenesSchema,
-            variables: { input: data!.deleteScene.projectId },
+            variables: { projectId: data!.deleteScene.projectId },
         })!;
 
         cache.writeQuery({
             query:     ScenesSchema,
-            variables: { input: data!.deleteScene.projectId },
+            variables: { projectId: data!.deleteScene.projectId },
             data:      {
                 scenes: scenes.filter(({ id }) => id !== data!.deleteScene.id),
             },

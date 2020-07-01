@@ -13,6 +13,9 @@ import { Button } from '../../elements';
 import { useLoginMutation } from '../../bus';
 import { useForm } from '../../hooks';
 
+// Types
+import { AuthInput } from '../../@types/graphql-global-types';
+
 // Instruments
 import { setAccessToken } from '../../@init/tokenStore';
 
@@ -28,7 +31,7 @@ const Login: FC = () => {
     const { push } = useHistory();
     const client = useApolloClient();
     const [ login ] = useLoginMutation();
-    const [ form, setForm ] = useForm(innitialForm); // TODO: TYPES
+    const [ form, setForm ] = useForm<AuthInput>(innitialForm);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();

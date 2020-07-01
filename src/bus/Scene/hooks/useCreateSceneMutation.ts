@@ -12,12 +12,12 @@ const defaultOptions: MutationHookOptions<CreateScene, CreateSceneVariables> = {
     update(cache, { data }) {
         const { scenes } = cache.readQuery<Scenes>({
             query:     ScenesSchema,
-            variables: { input: data!.createScene.projectId },
+            variables: { projectId: data!.createScene.projectId },
         })!;
 
         cache.writeQuery({
             query:     ScenesSchema,
-            variables: { input: data!.createScene.projectId }, // TODO: think
+            variables: { projectId: data!.createScene.projectId }, // TODO: think
             data:      {
                 scenes: scenes.concat([ data!.createScene ]),
             },

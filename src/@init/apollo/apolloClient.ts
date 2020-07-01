@@ -1,6 +1,6 @@
 // Core
 import { ApolloClient } from 'apollo-client';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { InMemoryCache, NormalizedCacheObject, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 
@@ -14,13 +14,22 @@ import { requestLink }      from './requestLink';
 import { innitialLocalCache } from './localCache';
 
 const cache = new InMemoryCache({
-    cacheRedirects: {
-        Query: {
-            workday: (_, args, { getCacheKey }) => {
-                getCacheKey({ __typename: 'Workday', id: args.id });
-            },
-        },
-    },
+    // cacheRedirects: {
+    //     Query: {
+    //         workday: (_, args, { getCacheKey }) => {
+    //             // console.log('args', args);
+
+    //             getCacheKey({ __typename: 'Workday', projectId: args.id });
+    //         },
+    //     },
+    // },
+    // dataIdFromObject: (object) => {
+    //     switch (object.__typename) {
+    //         case 'Workday': return object.id;
+
+    //         default: return defaultDataIdFromObject(object);
+    //     }
+    // },
 });
 
 export const client = new ApolloClient<NormalizedCacheObject>({
