@@ -1,13 +1,13 @@
 // Core
 import React, { FC, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Route, Switch } from 'react-router-dom';
 import { Table, Tbody } from 'react-super-responsive-table';
 
 // Components
-import { ErrorBoundary, TableHead, SceneTableItem, AddScenesModal } from '../../components';
+import { ErrorBoundary, TableHead, SceneTableItem, ScenesModal } from '../../components';
 
 // Apollo hooks
-import { useDeleteWorkdayMutation, useWorkdaysQuery  } from '../../bus/Workday';
+import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
 
 // Elements
 import { Button } from '../../elements';
@@ -25,16 +25,12 @@ type Params = {
     workdayId: string
 }
 
-
 const Workday: FC = () => {
-    const { push, goBack } = useHistory();
-    const [ isEdit, setIsEdit ] = useState(false);
+    const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
-
+    const [ isEdit, setIsEdit ] = useState(false);
     const { data, loading } = useWorkdaysQuery({ variables: { projectId }});
-    const [ deleteWorkday ] = useDeleteWorkdayMutation();
-
-    const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+    const [ deleteWorkday ] = useDeleteWorkdayMutation(projectId, workdayId);
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -46,22 +42,31 @@ const Workday: FC = () => {
         return <div>No workday exist</div>;
     }
 
+    const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+
     const deleteWorkdayHandler = async () => {
-        const response = await deleteWorkday({ variables: { id: workday.id }});
+        const response = await deleteWorkday();
 
         if (response && response.data) {
             push(`/${projectId}/calendar`);
         }
     };
 
+    const scenesIds = workday.scenes.map((scene) => scene.id);
+
     return (
         <WorkdayContainer>
-            <AddScenesModal />
+            <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
+                <ScenesModal
+                    closeHandler = { () => push(`/${projectId}/calendar/${workdayId}`) }
+                    scenesIds = { scenesIds }
+                />
+            </Route>
             <header>
-                <Button onClick = { () => goBack() }>Back</Button>
+                <Button onClick = { () => push(`/${projectId}/calendar`) }>Back</Button>
                 <h2>{workday.date}</h2>
                 <div>
-                    <Button>Add scene</Button>
+                    <Button onClick = { () => push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>Add scene</Button>
                     <Button onClick = { () => setIsEdit(!isEdit) }>
                         {isEdit ? 'Save' : 'Edit'}
                     </Button>
@@ -81,7 +86,7 @@ const Workday: FC = () => {
                                     <SceneTableItem
                                         key = { scene.id }
                                         { ...scene }
-                                        sceneRedirectHandler = { sceneRedirectHandler }
+                                        handler = { () => sceneRedirectHandler(scene.id) }
                                     />
                                 ))
                             }

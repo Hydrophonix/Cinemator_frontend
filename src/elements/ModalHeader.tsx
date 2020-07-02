@@ -8,6 +8,7 @@ const HeaderContainer = styled.header`
     height: 50px;
     display: flex;
     align-items: center;
+    box-sizing: border-box;
 
     background-color: blue;
 

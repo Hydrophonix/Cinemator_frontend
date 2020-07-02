@@ -37,6 +37,7 @@ export const GlobalStyles = createGlobalStyle`
 export const TableStyles = styled.div`
     .responsiveTable {
         width: 100%;
+        background-color: #fff;
     }
 
     .responsiveTable td .tdBefore {
@@ -45,6 +46,7 @@ export const TableStyles = styled.div`
 
     .responsiveTable tbody tr {
         cursor: pointer;
+        background-color: #fff;
 
         &:hover {
             background-color: lightblue;
@@ -82,6 +84,10 @@ export const TableStyles = styled.div`
                     border-bottom: 1px solid #216ba5;
                 }
             }
+        }
+
+        .tr_active {
+            background-color: red !important;
         }
 
         .responsiveTable td.pivoted {

@@ -7,16 +7,8 @@
 // GraphQL mutation operation: DeleteWorkday
 // ====================================================
 
-export interface DeleteWorkday_deleteWorkday {
-  __typename: "Workday";
-  id: string;
-  title: string | null;
-  date: string;
-  projectId: string;
-}
-
 export interface DeleteWorkday {
-  deleteWorkday: DeleteWorkday_deleteWorkday;
+  deleteWorkday: boolean;
 }
 
 export interface DeleteWorkdayVariables {

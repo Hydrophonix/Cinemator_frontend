@@ -8,23 +8,30 @@ import ScenesSchema from '../schemas/scenes.graphql';
 // Types
 import { DeleteScene, DeleteSceneVariables, Scenes } from '../types';
 
-const defaultOptions: MutationHookOptions<DeleteScene, DeleteSceneVariables> = {
-    update(cache, { data }) {
-        const { scenes } = cache.readQuery<Scenes>({
-            query:     ScenesSchema,
-            variables: { projectId: data!.deleteScene.projectId },
-        })!;
+export const useDeleteSceneMutation = (projectId: string, sceneId: string) => {
+    const baseOptions: MutationHookOptions<DeleteScene, DeleteSceneVariables> = {
+        update(cache, { data }) {
+            const { deleteScene } = data!;
 
-        cache.writeQuery({
-            query:     ScenesSchema,
-            variables: { projectId: data!.deleteScene.projectId },
-            data:      {
-                scenes: scenes.filter(({ id }) => id !== data!.deleteScene.id),
-            },
-        });
-    },
-};
+            if (!deleteScene) {
+                throw new Error('Scene has not been deleted');
+            }
 
-export const useDeleteSceneMutation = (baseOptions = defaultOptions) => {
+            const { scenes } = cache.readQuery<Scenes>({
+                query:     ScenesSchema,
+                variables: { projectId },
+            })!;
+
+            cache.writeQuery({
+                query:     ScenesSchema,
+                variables: { projectId },
+                data:      {
+                    scenes: scenes.filter((scene) => scene.id !== sceneId),
+                },
+            });
+        },
+        variables: { id: sceneId },
+    };
+
     return useMutation<DeleteScene, DeleteSceneVariables>(DeleteSceneSchema, baseOptions);
 };

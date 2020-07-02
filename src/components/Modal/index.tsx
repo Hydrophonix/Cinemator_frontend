@@ -11,14 +11,14 @@ type PropTypes = {
 }
 
 export const Modal: FC<PropTypes> = ({ children, closeHandler }) => {
-    const { push } = useHistory();
+    const { goBack } = useHistory();
 
     const stopPropagation = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         event.stopPropagation();
         event.nativeEvent.stopImmediatePropagation();
     };
 
-    const hideModal = () => void push('/');
+    const hideModal = () => void goBack();
 
     return (
         <S.ModalWrapper>

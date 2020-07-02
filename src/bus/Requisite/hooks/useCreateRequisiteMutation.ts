@@ -12,12 +12,12 @@ const defaultOptions: MutationHookOptions<CreateRequisite, CreateRequisiteVariab
     update(cache, { data }) {
         const { requisites } = cache.readQuery<Requisites>({
             query:     RequisitesSchema,
-            variables: { input: data!.createRequisite.projectId },
+            variables: { projectId: data!.createRequisite.projectId },
         })!;
 
         cache.writeQuery({
             query:     RequisitesSchema,
-            variables: { input: data!.createRequisite.projectId }, // TODO: think
+            variables: { projectId: data!.createRequisite.projectId }, // TODO: think
             data:      {
                 requisites: requisites.concat([ data!.createRequisite ]),
             },

@@ -30,7 +30,7 @@ const Scene: FC = () => {
     const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, sceneId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ variables: { projectId }});
-    const [ deleteScene ] = useDeleteSceneMutation();
+    const [ deleteScene ] = useDeleteSceneMutation(projectId, sceneId);
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -43,7 +43,7 @@ const Scene: FC = () => {
     }
 
     const deleteSceneHandler = async () => {
-        const response = await deleteScene({ variables: { id: scene.id }});
+        const response = await deleteScene();
 
         if (response && response.data) {
             push(`/${projectId}/scenes`);

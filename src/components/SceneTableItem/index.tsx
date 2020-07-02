@@ -7,18 +7,21 @@ import { Scenes_scenes } from '../../bus/Scene';
 
 // Types
 type PropTypes = Omit<Scenes_scenes, 'projectId'> & {
-    sceneRedirectHandler: (sceneId: string) => void
+    handler?: Function
+    isActive?: boolean
 }
 
 export const SceneTableItem: FC<any> = ({
-    id,
     title,
     location,
     sceneNumber,
-    sceneRedirectHandler,
+    handler,
+    isActive,
 }) => {
     return (
-        <Tr onClick = { () => sceneRedirectHandler(id) }>
+        <Tr
+            style = { isActive ? { backgroundColor: 'lightgreen' } : {} }
+            onClick = { handler ? handler : () => void 0 }>
             <Td>{`${sceneNumber}`}</Td>
             <Td>{title}</Td>
             <Td>{location}</Td>

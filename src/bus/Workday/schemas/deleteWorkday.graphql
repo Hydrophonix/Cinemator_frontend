@@ -1,7 +1,3 @@
-#import "./workdayFields.graphql"
-
 mutation DeleteWorkday ($id: String!) {
-  deleteWorkday(id: $id) {
-    ...workdayFields
-  }
+  deleteWorkday(id: $id)
 }

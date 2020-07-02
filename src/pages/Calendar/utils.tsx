@@ -7,10 +7,10 @@ import { Workdays } from '../../bus/Workday';
 
 export const customEventView = ({ event }: { event: EventTypes }) => {
     return (
-        <span>
-            <strong>{ event.id } сцена </strong>
+        <div style = {{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <strong>{event.sceneNumber}</strong>
             {/* { event.desc && ':  ' + event.desc } */}
-        </span>
+        </div>
     );
 };
 

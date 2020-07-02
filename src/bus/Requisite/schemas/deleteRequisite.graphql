@@ -1,7 +1,3 @@
-#import "./requisiteFields.graphql"
-
 mutation DeleteRequisite ($id: String!) {
-  deleteRequisite(id: $id) {
-    ...requisiteFields
-  }
+  deleteRequisite(id: $id)
 }

@@ -77,7 +77,7 @@ const Scenes: FC = () => {
                                 <SceneTableItem
                                     key = { scene.id }
                                     { ...scene }
-                                    sceneRedirectHandler = { sceneRedirectHandler }
+                                    handler = { () => sceneRedirectHandler(scene.id) }
                                 />
                             ))
                         }

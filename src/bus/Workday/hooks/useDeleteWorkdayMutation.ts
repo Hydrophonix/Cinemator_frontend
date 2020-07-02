@@ -1,30 +1,37 @@
-// // Core
+// Core
 import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
 
-// // GraphQL
+// GraphQL
 import DeleteWorkdaySchema from '../schemas/deleteWorkday.graphql';
 import WorkdaysSchema from '../schemas/workdays.graphql';
 
-// // Types
+// Types
 import { DeleteWorkday, DeleteWorkdayVariables, Workdays } from '../types';
 
-const defaultOptions: MutationHookOptions<DeleteWorkday, DeleteWorkdayVariables> = {
-    update(cache, { data }) {
-        const { workdays } = cache.readQuery<Workdays>({
-            query:     WorkdaysSchema,
-            variables: { projectId: data!.deleteWorkday.projectId },
-        })!;
+export const useDeleteWorkdayMutation = (projectId: string, workdayId: string) => {
+    const baseOptions: MutationHookOptions<DeleteWorkday, DeleteWorkdayVariables> = {
+        update(cache, { data }) {
+            const { deleteWorkday } = data!;
 
-        cache.writeQuery({
-            query:     WorkdaysSchema,
-            variables: { projectId: data!.deleteWorkday.projectId },
-            data:      {
-                workdays: workdays.filter(({ id }) => id !== data!.deleteWorkday.id),
-            },
-        });
-    },
-};
+            if (!deleteWorkday) {
+                throw new Error('Workday has not been deleted');
+            }
 
-export const useDeleteWorkdayMutation = (baseOptions = defaultOptions) => {
+            const { workdays } = cache.readQuery<Workdays>({
+                query:     WorkdaysSchema,
+                variables: { projectId },
+            })!;
+
+            cache.writeQuery({
+                query:     WorkdaysSchema,
+                variables: { projectId },
+                data:      {
+                    workdays: workdays.filter((workday) => workday.id !== workdayId),
+                },
+            });
+        },
+        variables: { id: workdayId },
+    };
+
     return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, baseOptions);
 };

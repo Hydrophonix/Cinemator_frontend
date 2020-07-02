@@ -1,7 +1,3 @@
-#import "./sceneFields.graphql"
-
 mutation DeleteScene($id: String!) {
-  deleteScene(id: $id) {
-    ...sceneFields
-  }
+  deleteScene(id: $id)
 }

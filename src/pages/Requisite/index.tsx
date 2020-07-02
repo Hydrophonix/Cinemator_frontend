@@ -24,9 +24,8 @@ const Requisite: FC = () => {
     const { goBack, push } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, requisiteId } = useParams<Params>();
-
     const { data, loading } = useRequisitesQuery({ variables: { projectId }});
-    const [ deleteRequisite ] = useDeleteRequisiteMutation();
+    const [ deleteRequisite ] = useDeleteRequisiteMutation(projectId, requisiteId);
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -39,7 +38,7 @@ const Requisite: FC = () => {
     }
 
     const deleteRequisiteHandler = async () => {
-        const response = await deleteRequisite({ variables: { id: requisite.id }});
+        const response = await deleteRequisite();
 
         if (response && response.data) {
             push(`/${projectId}/requisites`);

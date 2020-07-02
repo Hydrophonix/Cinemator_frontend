@@ -8,23 +8,30 @@ import RequisitesSchema from '../schemas/requisites.graphql';
 // Types
 import { DeleteRequisite, DeleteRequisiteVariables, Requisites } from '../types';
 
-const defaultOptions: MutationHookOptions<DeleteRequisite, DeleteRequisiteVariables> = {
-    update(cache, { data }) {
-        const { requisites } = cache.readQuery<Requisites>({
-            query:     RequisitesSchema,
-            variables: { input: data!.deleteRequisite.projectId },
-        })!;
+export const useDeleteRequisiteMutation = (projectId: string, requisiteId: string) => {
+    const baseOptions: MutationHookOptions<DeleteRequisite, DeleteRequisiteVariables> = {
+        update(cache, { data }) {
+            const { deleteRequisite } = data!;
 
-        cache.writeQuery({
-            query:     RequisitesSchema,
-            variables: { input: data!.deleteRequisite.projectId },
-            data:      {
-                requisites: requisites.filter(({ id }) => id !== data!.deleteRequisite.id),
-            },
-        });
-    },
-};
+            if (!deleteRequisite) {
+                throw new Error('Requisite has not been deleted');
+            }
 
-export const useDeleteRequisiteMutation = (baseOptions = defaultOptions) => {
+            const { requisites } = cache.readQuery<Requisites>({
+                query:     RequisitesSchema,
+                variables: { projectId },
+            })!;
+
+            cache.writeQuery({
+                query:     RequisitesSchema,
+                variables: { projectId },
+                data:      {
+                    requisites: requisites.filter((requisite) => requisite.id !== requisiteId),
+                },
+            });
+        },
+        variables: { id: requisiteId },
+    };
+
     return useMutation<DeleteRequisite, DeleteRequisiteVariables>(DeleteRequisiteSchema, baseOptions);
 };

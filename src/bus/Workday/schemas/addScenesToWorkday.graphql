@@ -1,0 +1,14 @@
+#import "./workdayFields.graphql"
+
+mutation AddScenesToWorkday($sceneIds: [String!]!, $workdayId: String!) {
+  addScenesToWorkday(sceneIds: $sceneIds, workdayId: $workdayId) {
+    ...workdayFields
+    scenes {
+      id
+      title
+      location
+      sceneNumber
+    }
+    projectId
+  }
+}

@@ -5,9 +5,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+// import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+// import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 // Components
@@ -28,7 +28,7 @@ import { CalendarContainer } from './styles';
 
 // Instruments
 const localizer = momentLocalizer(moment);
-const DnDCalendar = withDragAndDrop(ReactBigCalendar);
+// const DnDCalendar = withDragAndDrop(ReactBigCalendar);
 
 const Calendar: FC<PropTypes> = () => {
     const { push } = useHistory();
@@ -73,9 +73,8 @@ const Calendar: FC<PropTypes> = () => {
 
     return (
         <CalendarContainer>
-            <DnDCalendar<EventTypes>
+            <ReactBigCalendar<EventTypes>
                 popup
-                resizable
                 selectable
                 components = {{
                     event: customEventView,
@@ -86,10 +85,11 @@ const Calendar: FC<PropTypes> = () => {
                 events = { events }
                 localizer = { localizer }
                 views = {{ month: true, agenda: true }}
-                // onEventDrop = { onEventHandler }
-                // onEventResize = { onEventHandler }
                 onSelectEvent = { sceneRedirectHandler }
                 onSelectSlot = { onSelectEventHandler }
+                // resizable
+                // onEventDrop = { onEventHandler }
+                // onEventResize = { onEventHandler }
             />
         </CalendarContainer>
     );
