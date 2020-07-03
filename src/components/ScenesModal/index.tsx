@@ -9,7 +9,7 @@ import { Modal, TableHead, SceneTableItem } from '..';
 
 // Apllo hooks
 import { useScenesQuery } from '../../bus/Scene';
-import { useAddScenesToWorkdayMutation } from '../../bus/Workday';
+import { useAddScenesToWorkdayMutation, useUpdateWorkdayScenesMutation } from '../../bus/Workday';
 
 // Hooks
 import { useArrayOfStringsForm } from '../../hooks';
@@ -39,6 +39,7 @@ export const ScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ variables: { projectId }});
     const [ addScenesToWorkday ] = useAddScenesToWorkdayMutation();
+    const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation();
     const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(scenesIds);
 
     if (loading || !data) {
@@ -46,7 +47,8 @@ export const ScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) => {
     }
 
     const addScenesToWorkdayHandler = async () => {
-        const response = await addScenesToWorkday({ variables: { workdayId, sceneIds: scenesIdsArray }});
+        // const response = await addScenesToWorkday({ variables: { workdayId, sceneIds: scenesIdsArray }});
+        const response = await updateWorkdayScenes({ variables: { workdayId, sceneIds: scenesIdsArray }});
 
         if (response && response.data) {
             closeHandler();
