@@ -48,7 +48,10 @@ const Requisite: FC = () => {
     return (
         <RequisiteContainer>
             <header>
-                <Button onClick = { () => goBack() }>Back</Button>
+                <div>
+                    <Button onClick = { () => push(`/${projectId}/requisites`) }>To requisites</Button>
+                    <Button onClick = { () => goBack() }>Go back</Button>
+                </div>
                 <h2>{requisite.title}</h2>
                 <div>
                     <Button onClick = { () => setIsEdit(!isEdit) }>Edit</Button>

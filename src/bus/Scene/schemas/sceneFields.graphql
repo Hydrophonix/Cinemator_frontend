@@ -3,11 +3,16 @@ fragment sceneFields on Scene {
     title
     location
     sceneNumber
-    # workdays {
-    #   id
-    # }
-    # requisites {
-    #   id
-    # }
+    workdays {
+      id
+      date
+    }
+    requisites {
+      id
+      description
+      isOrdered
+      pricePerDay
+      title
+    }
     projectId
 }

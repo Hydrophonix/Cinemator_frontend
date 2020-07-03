@@ -70,7 +70,7 @@ const Requisites: FC = () => {
                                 <RequisiteTableItem
                                     key = { requisite.id }
                                     { ...requisite }
-                                    requisiteRedirectHandler = { requisiteRedirectHandler }
+                                    onClickHandler = { () => requisiteRedirectHandler(requisite.id) }
                                 />
                             ))
                         }

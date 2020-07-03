@@ -1,10 +1,10 @@
 // Core
 import React, { FC, useState } from 'react';
-import { useHistory, useParams, Route, Switch } from 'react-router-dom';
+import { useHistory, useParams, Route } from 'react-router-dom';
 import { Table, Tbody } from 'react-super-responsive-table';
 
 // Components
-import { ErrorBoundary, TableHead, SceneTableItem, ScenesModal } from '../../components';
+import { ErrorBoundary, TableHead, SceneTableItem, WorkdayScenesModal } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
@@ -26,7 +26,7 @@ type Params = {
 }
 
 const Workday: FC = () => {
-    const { push } = useHistory();
+    const { push, goBack } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const [ isEdit, setIsEdit ] = useState(false);
     const { data, loading } = useWorkdaysQuery({ variables: { projectId }});
@@ -57,13 +57,16 @@ const Workday: FC = () => {
     return (
         <WorkdayContainer>
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
-                <ScenesModal
+                <WorkdayScenesModal
                     closeHandler = { () => push(`/${projectId}/calendar/${workdayId}`) }
                     scenesIds = { scenesIds }
                 />
             </Route>
             <header>
-                <Button onClick = { () => push(`/${projectId}/calendar`) }>Back</Button>
+                <div>
+                    <Button onClick = { () => push(`/${projectId}/calendar`) }>To calendar</Button>
+                    <Button onClick = { () => goBack() }>Go back</Button>
+                </div>
                 <h2>{workday.date}</h2>
                 <div>
                     <Button onClick = { () => push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>Add scene</Button>

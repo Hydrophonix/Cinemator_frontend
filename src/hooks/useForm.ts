@@ -25,20 +25,20 @@ export const useForm = <InititalValue>(initialValue: InititalValue): [ InititalV
 };
 
 export const useArrayOfStringsForm = (initialValues: Array<string>): [Array<string>, Function, Function] => {
-    const [ form, setForm ] = useState<Array<string>>(initialValues);
+    const [ arrayOfStrings, setArrayOfStrings ] = useState<Array<string>>(initialValues);
 
-    const formHandle = (newString: string) => {
-        if (form.includes(newString)) {
-            setForm((prevState) => prevState.filter((string) => string !== newString));
+    const arrayOfStringsHandle = (newString: string) => {
+        if (arrayOfStrings.includes(newString)) {
+            setArrayOfStrings((prevState) => prevState.filter((string) => string !== newString));
         } else {
-            setForm((prevState) => [ ...prevState, newString ]);
+            setArrayOfStrings((prevState) => [ ...prevState, newString ]);
         }
     };
 
 
     const setNewInnitialValues = (newInnitialValues: Array<string>) => {
-        setForm(newInnitialValues);
+        setArrayOfStrings(newInnitialValues);
     };
 
-    return [ form, formHandle, setNewInnitialValues ];
+    return [ arrayOfStrings, arrayOfStringsHandle, setNewInnitialValues ];
 };

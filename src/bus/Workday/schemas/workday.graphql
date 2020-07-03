@@ -3,11 +3,5 @@
 query Workday ($id: String!) {
   workday(id: $id) {
     ...workdayFields
-    scenes {
-      id
-      title
-      location
-      sceneNumber
-    }
   }
 }

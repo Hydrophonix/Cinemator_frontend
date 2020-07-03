@@ -7,7 +7,7 @@
 // GraphQL mutation operation: UpdateWorkdayScenes
 // ====================================================
 
-export interface UpdateWorkdayScenes_updateWorkdayScenes_workday_scenes {
+export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedWorkday_scenes {
   __typename: "Scene";
   id: string;
   title: string | null;
@@ -15,30 +15,45 @@ export interface UpdateWorkdayScenes_updateWorkdayScenes_workday_scenes {
   sceneNumber: number;
 }
 
-export interface UpdateWorkdayScenes_updateWorkdayScenes_workday {
+export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedWorkday {
   __typename: "Workday";
   id: string;
   title: string | null;
   date: string;
   projectId: string;
-  scenes: UpdateWorkdayScenes_updateWorkdayScenes_workday_scenes[];
+  scenes: UpdateWorkdayScenes_updateWorkdayScenes_updatedWorkday_scenes[];
 }
 
-export interface UpdateWorkdayScenes_updateWorkdayScenes_scenes_workdays {
+export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes_workdays {
   __typename: "Workday";
   id: string;
+  date: string;
 }
 
-export interface UpdateWorkdayScenes_updateWorkdayScenes_scenes {
+export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes_requisites {
+  __typename: "Requisite";
+  id: string;
+  description: string | null;
+  isOrdered: boolean;
+  pricePerDay: number;
+  title: string;
+}
+
+export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes {
   __typename: "Scene";
   id: string;
-  workdays: UpdateWorkdayScenes_updateWorkdayScenes_scenes_workdays[];
+  title: string | null;
+  location: string | null;
+  sceneNumber: number;
+  workdays: UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes_workdays[];
+  requisites: UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes_requisites[];
+  projectId: string;
 }
 
 export interface UpdateWorkdayScenes_updateWorkdayScenes {
-  __typename: "WorkdayUpdateScenesResponce";
-  workday: UpdateWorkdayScenes_updateWorkdayScenes_workday;
-  scenes: UpdateWorkdayScenes_updateWorkdayScenes_scenes[];
+  __typename: "WorkdayUpdateScenesResponse";
+  updatedWorkday: UpdateWorkdayScenes_updateWorkdayScenes_updatedWorkday;
+  updatedScenes: UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes[];
 }
 
 export interface UpdateWorkdayScenes {

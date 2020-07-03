@@ -1,10 +1,10 @@
 // Core
 import React, { FC, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Route } from 'react-router-dom';
 import { Table, Tbody } from 'react-super-responsive-table';
 
 // Components
-import { ErrorBoundary, TableHead/* , RequisiteTableItem */ } from '../../components';
+import { ErrorBoundary, TableHead, RequisiteTableItem, SceneRequisitesModal } from '../../components';
 
 // Apollo hooks
 import { useScenesQuery, useDeleteSceneMutation } from '../../bus/Scene';
@@ -42,6 +42,10 @@ const Scene: FC = () => {
         return <div>No scene exist</div>;
     }
 
+    const requisiteIds = scene.requisites.map((requisite) => requisite.id);
+
+    const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
+
     const deleteSceneHandler = async () => {
         const response = await deleteScene();
 
@@ -52,11 +56,20 @@ const Scene: FC = () => {
 
     return (
         <SceneContainer>
+            <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
+                <SceneRequisitesModal
+                    closeHandler = { () => push(`/${projectId}/scenes/${sceneId}`) }
+                    requisiteIds = { requisiteIds }
+                />
+            </Route>
             <header>
-                <Button onClick = { () => goBack() }>Back</Button>
+                <div>
+                    <Button onClick = { () => push(`/${projectId}/scenes`) }>To scenes</Button>
+                    <Button onClick = { () => goBack() }>Go back</Button>
+                </div>
                 <h2>{`# ${scene.sceneNumber}`}: {scene.title}</h2>
                 <div>
-                    <Button>Add requisite</Button>
+                    <Button onClick = { () => push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>Add requisite</Button>
                     <Button onClick = { () => setIsEdit(!isEdit) }>
                         {isEdit ? 'Save' : 'Edit'}
                     </Button>
@@ -73,15 +86,15 @@ const Scene: FC = () => {
                     <Table>
                         <TableHead ThNames = { requisitesThNames } />
                         <Tbody>
-                            {/* {
-                                data.scene.requisites.map((requisite) => (
+                            {
+                                scene.requisites.map((requisite) => (
                                     <RequisiteTableItem
-                                        key={requisite.id}
-                                        {...requisite}
-                                        // sceneRedirectHandler={sceneRedirectHandler}
+                                        key = { requisite.id }
+                                        { ...requisite }
+                                        onClickHandler = { () => requisiteRedirectHandler(requisite.id) }
                                     />
                                 ))
-                            } */}
+                            }
                         </Tbody>
                     </Table>
                 </TableStyles>

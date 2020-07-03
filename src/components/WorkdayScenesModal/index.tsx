@@ -7,9 +7,9 @@ import { Table, Tbody } from 'react-super-responsive-table';
 // Components
 import { Modal, TableHead, SceneTableItem } from '..';
 
-// Apllo hooks
+// Apollo hooks
 import { useScenesQuery } from '../../bus/Scene';
-import { useAddScenesToWorkdayMutation, useUpdateWorkdayScenesMutation } from '../../bus/Workday';
+import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
 
 // Hooks
 import { useArrayOfStringsForm } from '../../hooks';
@@ -35,11 +35,10 @@ type PropTypes = {
     scenesIds: Array<string>
 }
 
-export const ScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) => {
+export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ variables: { projectId }});
-    const [ addScenesToWorkday ] = useAddScenesToWorkdayMutation();
-    const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation();
+    const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
     const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(scenesIds);
 
     if (loading || !data) {
@@ -47,7 +46,6 @@ export const ScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) => {
     }
 
     const addScenesToWorkdayHandler = async () => {
-        // const response = await addScenesToWorkday({ variables: { workdayId, sceneIds: scenesIdsArray }});
         const response = await updateWorkdayScenes({ variables: { workdayId, sceneIds: scenesIdsArray }});
 
         if (response && response.data) {

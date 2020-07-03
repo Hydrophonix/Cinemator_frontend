@@ -3,12 +3,5 @@
 query Workdays ($projectId: String!) {
   workdays(projectId: $projectId) {
     ...workdayFields
-    scenes {
-      id
-      title
-      location
-      sceneNumber
-    }
-    projectId
   }
 }

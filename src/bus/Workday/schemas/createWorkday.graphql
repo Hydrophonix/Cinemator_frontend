@@ -3,12 +3,5 @@
 mutation CreateWorkday($input: WorkdayCreateInput!, $projectId: String!) {
   createWorkday(input: $input, projectId: $projectId) {
     ...workdayFields
-    scenes {
-      id
-      title
-      location
-      sceneNumber
-    }
-    projectId
   }
 }

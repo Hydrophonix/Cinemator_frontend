@@ -4,35 +4,60 @@ import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
 // GraphQL
 import UpdateWorkdayScenesSchema from '../schemas/updateWorkdayScenes.graphql';
 import WorkdaysSchema from '../schemas/workdays.graphql';
+import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 
 // Types
 import { UpdateWorkdayScenes, UpdateWorkdayScenesVariables, Workdays } from '../types';
 
-const defaultOptions: MutationHookOptions<UpdateWorkdayScenes, UpdateWorkdayScenesVariables> = {
-    update(cache, { data }) {
-        console.log('"|_(ʘ_ʘ)_/" =>: update -> cache', cache);
-        console.log('"|_(ʘ_ʘ)_/" =>: update -> data', data);
-        // const { workdays } = cache.readQuery<Workdays>({
-        //     query:     WorkdaysSchema,
-        //     variables: { projectId: data!.addScenesToWorkday.projectId },
-        // })!;
+import { Scenes } from '../../Scene';
 
-        // cache.writeQuery({
-        //     query:     WorkdaysSchema,
-        //     variables: { projectId: data!.addScenesToWorkday.projectId },
-        //     data:      {
-        //         workdays: workdays.map((workday) => {
-        //             if (workday.id === data!.addScenesToWorkday.id) {
-        //                 return data!.addScenesToWorkday;
-        //             }
+type OptionsTypes = {
+    projectId: string
+}
 
-        //             return workday;
-        //         }),
-        //     },
-        // });
-    },
-};
+export const useUpdateWorkdayScenesMutation = ({ projectId }: OptionsTypes) => {
+    return useMutation<UpdateWorkdayScenes, UpdateWorkdayScenesVariables>(UpdateWorkdayScenesSchema, {
+        update(cache, { data, errors }) {
+            if (errors) {
+                throw new Error('Workday has not been deleted');
+            }
 
-export const useUpdateWorkdayScenesMutation = (baseOptions = defaultOptions) => {
-    return useMutation<UpdateWorkdayScenes, UpdateWorkdayScenesVariables>(UpdateWorkdayScenesSchema, baseOptions);
+            const { updatedWorkday, updatedScenes } = data!.updateWorkdayScenes;
+
+            const { workdays } = cache.readQuery<Workdays>({ query: WorkdaysSchema, variables: { projectId }})!;
+            const { scenes } = cache.readQuery<Scenes>({ query: ScenesSchema, variables: { projectId }})!;
+
+            cache.writeQuery({
+                query:     WorkdaysSchema,
+                variables: { projectId },
+                data:      {
+                    workdays: workdays.map((workday) => {
+                        if (updatedWorkday.id === workday.id) {
+                            return updatedWorkday;
+                        }
+
+                        return workday;
+                    }),
+                },
+            });
+
+            cache.writeQuery({
+                query:     ScenesSchema,
+                variables: { projectId },
+                data:      {
+                    scenes: scenes.map((scene) => {
+                        const updatedScene = updatedScenes.find(
+                            (updatedScene) => updatedScene.id === scene.id,
+                        );
+
+                        if (updatedScene) {
+                            return updatedScene;
+                        }
+
+                        return scene;
+                    }),
+                },
+            });
+        },
+    });
 };

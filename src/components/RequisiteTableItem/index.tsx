@@ -5,7 +5,10 @@ import { Tr, Td } from 'react-super-responsive-table';
 // Types
 import { Requisite_requisite } from '../../bus/Requisite';
 
-type PropTypes = Requisite_requisite & { requisiteRedirectHandler: (requisiteId: string) => void };
+type PropTypes = Omit<Requisite_requisite, 'projectId'> & {
+    onClickHandler?: Function
+    isActive?: boolean
+};
 
 export const RequisiteTableItem: FC<PropTypes> = ({
     id,
@@ -13,10 +16,13 @@ export const RequisiteTableItem: FC<PropTypes> = ({
     description,
     isOrdered,
     pricePerDay,
-    requisiteRedirectHandler,
+    onClickHandler,
+    isActive,
 }) => {
     return (
-        <Tr onClick = { () => requisiteRedirectHandler(id) }>
+        <Tr
+            style = { isActive ? { backgroundColor: 'lightgreen' } : {} }
+            onClick = { onClickHandler ? onClickHandler : () => void 0 }>
             <Td>{id}</Td>
             <Td>{title}</Td>
             <Td>{description}</Td>
