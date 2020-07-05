@@ -10,8 +10,6 @@ export type EventTypes = {
     id: string
     start: stringOrDate
     end: stringOrDate
-    title: string | null
-    location: string | null,
     sceneNumber: number,
 }
 

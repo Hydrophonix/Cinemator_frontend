@@ -7,6 +7,12 @@
 // GraphQL fragment: requisiteFields
 // ====================================================
 
+export interface requisiteFields_scenes {
+  __typename: "Scene";
+  id: string;
+  sceneNumber: number;
+}
+
 export interface requisiteFields {
   __typename: "Requisite";
   id: string;
@@ -14,5 +20,5 @@ export interface requisiteFields {
   description: string | null;
   isOrdered: boolean;
   pricePerDay: number;
-  projectId: string;
+  scenes: requisiteFields_scenes[];
 }

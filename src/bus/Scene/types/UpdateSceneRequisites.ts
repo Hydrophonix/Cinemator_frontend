@@ -16,9 +16,6 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene_workda
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene_requisites {
   __typename: "Requisite";
   id: string;
-  description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   title: string;
 }
 
@@ -30,7 +27,12 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene {
   sceneNumber: number;
   workdays: UpdateSceneRequisites_updateSceneRequisites_updatedScene_workdays[];
   requisites: UpdateSceneRequisites_updateSceneRequisites_updatedScene_requisites[];
-  projectId: string;
+}
+
+export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes {
+  __typename: "Scene";
+  id: string;
+  sceneNumber: number;
 }
 
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites {
@@ -40,7 +42,7 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites {
   description: string | null;
   isOrdered: boolean;
   pricePerDay: number;
-  projectId: string;
+  scenes: UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes[];
 }
 
 export interface UpdateSceneRequisites_updateSceneRequisites {

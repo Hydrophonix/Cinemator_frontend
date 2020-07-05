@@ -4,8 +4,8 @@ fragment requisiteFields on Requisite {
     description
     isOrdered
     pricePerDay
-    # scenes {
-    #   id
-    # }
-    projectId
+    scenes {
+      id
+      sceneNumber
+    }
 }

@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 // GraphQL
 import UpdateWorkdayScenesSchema from '../schemas/updateWorkdayScenes.graphql';
@@ -8,7 +8,6 @@ import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 
 // Types
 import { UpdateWorkdayScenes, UpdateWorkdayScenesVariables, Workdays } from '../types';
-
 import { Scenes } from '../../Scene';
 
 type OptionsTypes = {

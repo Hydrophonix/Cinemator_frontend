@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 // GraphQL
 import DeleteRequisiteSchema from '../schemas/deleteRequisite.graphql';
@@ -8,8 +8,13 @@ import RequisitesSchema from '../schemas/requisites.graphql';
 // Types
 import { DeleteRequisite, DeleteRequisiteVariables, Requisites } from '../types';
 
-export const useDeleteRequisiteMutation = (projectId: string, requisiteId: string) => {
-    const baseOptions: MutationHookOptions<DeleteRequisite, DeleteRequisiteVariables> = {
+type OptionsTypes = {
+    projectId: string
+    requisiteId: string
+}
+
+export const useDeleteRequisiteMutation = ({ projectId, requisiteId }: OptionsTypes) => {
+    return useMutation<DeleteRequisite, DeleteRequisiteVariables>(DeleteRequisiteSchema, {
         update(cache, { data }) {
             const { deleteRequisite } = data!;
 
@@ -30,8 +35,6 @@ export const useDeleteRequisiteMutation = (projectId: string, requisiteId: strin
                 },
             });
         },
-        variables: { id: requisiteId },
-    };
-
-    return useMutation<DeleteRequisite, DeleteRequisiteVariables>(DeleteRequisiteSchema, baseOptions);
+        variables: { requisiteId },
+    });
 };

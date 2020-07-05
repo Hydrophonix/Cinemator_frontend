@@ -1,15 +1,18 @@
-// Core
-import { QueryHookOptions } from '@apollo/react-hooks';
-
 // GraphQL
 import WorkdaySchema from '../schemas/workday.graphql';
-
-// Types
-import { Workday, WorkdayVariables } from '../types';
 
 // Hooks
 import { useCustomQuery } from '../../../hooks';
 
-export const useWorkdayQuery = (baseOptions: QueryHookOptions<Workday, WorkdayVariables>) => {
-    return useCustomQuery<Workday, WorkdayVariables>(WorkdaySchema, baseOptions);
+// Types
+import { Workday, WorkdayVariables } from '../types';
+
+type OptionsTypes = {
+    workdayId: string
+}
+
+export const useWorkdayQuery = ({ workdayId }: OptionsTypes) => {
+    return useCustomQuery<Workday, WorkdayVariables>(WorkdaySchema, {
+        variables: { workdayId },
+    });
 };

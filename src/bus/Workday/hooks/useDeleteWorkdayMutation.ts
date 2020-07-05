@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 // GraphQL
 import DeleteWorkdaySchema from '../schemas/deleteWorkday.graphql';
@@ -8,8 +8,13 @@ import WorkdaysSchema from '../schemas/workdays.graphql';
 // Types
 import { DeleteWorkday, DeleteWorkdayVariables, Workdays } from '../types';
 
-export const useDeleteWorkdayMutation = (projectId: string, workdayId: string) => {
-    const baseOptions: MutationHookOptions<DeleteWorkday, DeleteWorkdayVariables> = {
+type OptionsTypes = {
+    projectId: string
+    workdayId: string
+}
+
+export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsTypes) => {
+    return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, {
         update(cache, { data }) {
             const { deleteWorkday } = data!;
 
@@ -30,8 +35,6 @@ export const useDeleteWorkdayMutation = (projectId: string, workdayId: string) =
                 },
             });
         },
-        variables: { id: workdayId },
-    };
-
-    return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, baseOptions);
+        variables: { workdayId },
+    });
 };

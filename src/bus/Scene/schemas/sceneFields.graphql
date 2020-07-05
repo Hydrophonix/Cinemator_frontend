@@ -9,10 +9,6 @@ fragment sceneFields on Scene {
     }
     requisites {
       id
-      description
-      isOrdered
-      pricePerDay
       title
     }
-    projectId
 }

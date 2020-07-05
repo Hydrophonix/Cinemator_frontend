@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 // GraphQL
 import DeleteSceneSchema from '../schemas/deleteScene.graphql';
@@ -8,8 +8,13 @@ import ScenesSchema from '../schemas/scenes.graphql';
 // Types
 import { DeleteScene, DeleteSceneVariables, Scenes } from '../types';
 
-export const useDeleteSceneMutation = (projectId: string, sceneId: string) => {
-    const baseOptions: MutationHookOptions<DeleteScene, DeleteSceneVariables> = {
+type OptionsTypes = {
+    projectId: string
+    sceneId: string
+}
+
+export const useDeleteSceneMutation = ({ projectId, sceneId }: OptionsTypes) => {
+    return useMutation<DeleteScene, DeleteSceneVariables>(DeleteSceneSchema, {
         update(cache, { data }) {
             const { deleteScene } = data!;
 
@@ -30,8 +35,6 @@ export const useDeleteSceneMutation = (projectId: string, sceneId: string) => {
                 },
             });
         },
-        variables: { id: sceneId },
-    };
-
-    return useMutation<DeleteScene, DeleteSceneVariables>(DeleteSceneSchema, baseOptions);
+        variables: { sceneId },
+    });
 };

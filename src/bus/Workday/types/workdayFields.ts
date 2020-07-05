@@ -10,8 +10,6 @@
 export interface workdayFields_scenes {
   __typename: "Scene";
   id: string;
-  title: string | null;
-  location: string | null;
   sceneNumber: number;
 }
 
@@ -20,6 +18,5 @@ export interface workdayFields {
   id: string;
   title: string | null;
   date: string;
-  projectId: string;
   scenes: workdayFields_scenes[];
 }

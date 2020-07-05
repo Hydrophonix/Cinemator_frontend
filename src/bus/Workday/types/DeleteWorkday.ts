@@ -12,5 +12,5 @@ export interface DeleteWorkday {
 }
 
 export interface DeleteWorkdayVariables {
-  id: string;
+  workdayId: string;
 }

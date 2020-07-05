@@ -28,9 +28,8 @@ export type Params = {
 const CreateScene: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId } = useParams<Params>();
-    const [ createScene ] = useCreateSceneMutation();
+    const [ createScene ] = useCreateSceneMutation({ projectId });
     const [ form, setForm ] = useForm(innitialForm);
-    console.log('CreateScene:FC -> form', form);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
@@ -49,7 +48,6 @@ const CreateScene: FC = () => {
 
         if (response && response.data) {
             push(`/${projectId}/scenes`);
-            console.log('onSubmit -> response.data', response.data);
         }
     };
 

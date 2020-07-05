@@ -2,10 +2,10 @@
 // Core
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { Table, Tbody } from 'react-super-responsive-table';
+import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 
 // Components
-import { Modal, TableHead, SceneTableItem } from '..';
+import { Modal, TableHead } from '..';
 
 // Apollo hooks
 import { useScenesQuery } from '../../bus/Scene';
@@ -21,9 +21,6 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 import { TableStyles } from '../../assets';
 
-// Constants
-import { scenesThNames } from '../../@init/constants';
-
 // Types
 type Params = {
     projectId: string
@@ -32,12 +29,12 @@ type Params = {
 
 type PropTypes = {
     closeHandler: () => void
-    scenesIds: Array<string>
+    sceneIds: Array<string>
 }
 
-export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) => {
+export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scenesIds }) => {
     const { projectId, workdayId } = useParams<Params>();
-    const { data, loading } = useScenesQuery({ variables: { projectId }});
+    const { data, loading } = useScenesQuery({ projectId });
     const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
     const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(scenesIds);
 
@@ -59,16 +56,20 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, scenesIds }) =
             <Main>
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { scenesThNames } />
+                        <TableHead ThNames = { [ '#', 'Location' ] } />
                         <Tbody>
                             {
-                                data.scenes.map((scene) => (
-                                    <SceneTableItem
-                                        key = { scene.id }
-                                        { ...scene }
-                                        handler = { () => setScenesIdsArray(scene.id) }
-                                        isActive = { scenesIdsArray.includes(scene.id) }
-                                    />
+                                data.scenes.map(({ id, sceneNumber, location }) => (
+                                    <Tr
+                                        key = { id }
+                                        style = { scenesIdsArray.includes(id)
+                                            ? { backgroundColor: 'lightgreen' }
+                                            : {}
+                                        }
+                                        onClick = { () => setScenesIdsArray(id) }>
+                                        <Td>{`${sceneNumber}`}</Td>
+                                        <Td>{location}</Td>
+                                    </Tr>
                                 ))
                             }
                         </Tbody>

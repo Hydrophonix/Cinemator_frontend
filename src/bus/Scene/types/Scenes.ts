@@ -16,9 +16,6 @@ export interface Scenes_scenes_workdays {
 export interface Scenes_scenes_requisites {
   __typename: "Requisite";
   id: string;
-  description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   title: string;
 }
 
@@ -30,7 +27,6 @@ export interface Scenes_scenes {
   sceneNumber: number;
   workdays: Scenes_scenes_workdays[];
   requisites: Scenes_scenes_requisites[];
-  projectId: string;
 }
 
 export interface Scenes {

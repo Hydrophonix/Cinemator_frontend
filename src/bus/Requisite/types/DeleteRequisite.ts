@@ -12,5 +12,5 @@ export interface DeleteRequisite {
 }
 
 export interface DeleteRequisiteVariables {
-  id: string;
+  requisiteId: string;
 }

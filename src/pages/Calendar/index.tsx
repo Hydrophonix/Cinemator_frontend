@@ -33,7 +33,7 @@ const localizer = momentLocalizer(moment);
 const Calendar: FC<PropTypes> = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { data, loading } = useWorkdaysQuery({ variables: { projectId }});
+    const { data, loading } = useWorkdaysQuery({ projectId });
 
     if (loading || !data) {
         return <div>Loading...</div>;

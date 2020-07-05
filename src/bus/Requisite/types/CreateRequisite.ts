@@ -9,6 +9,12 @@ import { RequisiteCreateInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: CreateRequisite
 // ====================================================
 
+export interface CreateRequisite_createRequisite_scenes {
+  __typename: "Scene";
+  id: string;
+  sceneNumber: number;
+}
+
 export interface CreateRequisite_createRequisite {
   __typename: "Requisite";
   id: string;
@@ -16,7 +22,7 @@ export interface CreateRequisite_createRequisite {
   description: string | null;
   isOrdered: boolean;
   pricePerDay: number;
-  projectId: string;
+  scenes: CreateRequisite_createRequisite_scenes[];
 }
 
 export interface CreateRequisite {

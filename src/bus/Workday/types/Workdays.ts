@@ -10,8 +10,6 @@
 export interface Workdays_workdays_scenes {
   __typename: "Scene";
   id: string;
-  title: string | null;
-  location: string | null;
   sceneNumber: number;
 }
 
@@ -20,7 +18,6 @@ export interface Workdays_workdays {
   id: string;
   title: string | null;
   date: string;
-  projectId: string;
   scenes: Workdays_workdays_scenes[];
 }
 

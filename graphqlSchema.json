@@ -57,7 +57,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "workdayId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -127,7 +127,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "requisiteId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -197,7 +197,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "sceneId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1081,7 +1081,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "workdayId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1126,7 +1126,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "workdayId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1361,7 +1361,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "requisiteId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1447,7 +1447,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "sceneId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

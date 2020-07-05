@@ -2,10 +2,10 @@
 // Core
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { Table, Tbody } from 'react-super-responsive-table';
+import { Table, Tbody, Tr, Td  } from 'react-super-responsive-table';
 
 // Components
-import { Modal, TableHead, RequisiteTableItem } from '..';
+import { Modal, TableHead } from '..';
 
 // Apollo hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
@@ -21,9 +21,6 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 import { TableStyles } from '../../assets';
 
-// Constants
-import { scenesThNames } from '../../@init/constants';
-
 // Types
 type Params = {
     projectId: string
@@ -37,7 +34,7 @@ type PropTypes = {
 
 export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds }) => {
     const { projectId, sceneId } = useParams<Params>();
-    const { data, loading } = useRequisitesQuery({ variables: { projectId }});
+    const { data, loading } = useRequisitesQuery({ projectId });
     const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
     const [ requisitesIdsArray, setRequisitesIdsArray ] = useArrayOfStringsForm(requisiteIds);
 
@@ -59,16 +56,20 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
             <Main>
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { scenesThNames } />
+                        <TableHead ThNames = { [ '#', 'Title' ] } />
                         <Tbody>
                             {
                                 data.requisites.map((requisite) => (
-                                    <RequisiteTableItem
+                                    <Tr
                                         key = { requisite.id }
-                                        { ...requisite }
-                                        isActive = { requisitesIdsArray.includes(requisite.id) }
-                                        onClickHandler = { () => setRequisitesIdsArray(requisite.id) }
-                                    />
+                                        style = {
+                                            requisitesIdsArray.includes(requisite.id)
+                                                ? { backgroundColor: 'lightgreen' } : {}
+                                        }
+                                        onClick = { () => setRequisitesIdsArray(requisite.id) }>
+                                        <Td>{requisite.id}</Td>
+                                        <Td>{requisite.title}</Td>
+                                    </Tr>
                                 ))
                             }
                         </Tbody>

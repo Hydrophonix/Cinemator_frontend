@@ -12,5 +12,5 @@ export interface DeleteScene {
 }
 
 export interface DeleteSceneVariables {
-  id: string;
+  sceneId: string;
 }

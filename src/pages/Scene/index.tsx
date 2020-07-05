@@ -1,10 +1,10 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
-import { Table, Tbody } from 'react-super-responsive-table';
+import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 
 // Components
-import { ErrorBoundary, TableHead, RequisiteTableItem, SceneRequisitesModal } from '../../components';
+import { ErrorBoundary, TableHead, SceneRequisitesModal } from '../../components';
 
 // Apollo hooks
 import { useScenesQuery, useDeleteSceneMutation } from '../../bus/Scene';
@@ -16,21 +16,17 @@ import { Button } from '../../elements';
 import { SceneContainer } from './styles';
 import { TableStyles } from '../../assets';
 
-// Constants
-import { requisitesThNames } from '../../@init/constants';
-
 // Types
 type Params = {
     projectId: string
     sceneId: string
 }
-
 const Scene: FC = () => {
     const { goBack, push } = useHistory();
     const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, sceneId } = useParams<Params>();
-    const { data, loading } = useScenesQuery({ variables: { projectId }});
-    const [ deleteScene ] = useDeleteSceneMutation(projectId, sceneId);
+    const { data, loading } = useScenesQuery({ projectId });
+    const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -84,15 +80,16 @@ const Scene: FC = () => {
             {
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { requisitesThNames } />
+                        <TableHead ThNames = { [ '#', 'Title' ] } />
                         <Tbody>
                             {
                                 scene.requisites.map((requisite) => (
-                                    <RequisiteTableItem
+                                    <Tr
                                         key = { requisite.id }
-                                        { ...requisite }
-                                        onClickHandler = { () => requisiteRedirectHandler(requisite.id) }
-                                    />
+                                        onClick = { () => requisiteRedirectHandler(requisite.id) }>
+                                        <Td>{requisite.id}</Td>
+                                        <Td>{requisite.title}</Td>
+                                    </Tr>
                                 ))
                             }
                         </Tbody>

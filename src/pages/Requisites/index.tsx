@@ -3,25 +3,22 @@ import React, { useState, FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Table, Tbody } from 'react-super-responsive-table';
+import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 
 // Apollo Hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Components
-import { ErrorBoundary, TableHead, RequisiteTableItem } from '../../components';
+import { ErrorBoundary, TableHead } from '../../components';
 
 // Styles
 import { TableStyles } from '../../assets';
 import { RequisiteContainer } from './styles';
 
-// Constants
-import { requisitesThNames } from '../../@init/constants';
-
 const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
-    const { data, loading } = useRequisitesQuery({ variables: { projectId }});
+    const { data, loading } = useRequisitesQuery({ projectId });
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
@@ -63,15 +60,19 @@ const Requisites: FC = () => {
             </header>
             <TableStyles>
                 <Table>
-                    <TableHead ThNames = { requisitesThNames } />
+                    <TableHead ThNames = { [ '#', 'Title', 'Description', 'isOrdered', 'pricePerDay' ] } />
                     <Tbody>
                         {
-                            data.requisites.map((requisite) => (
-                                <RequisiteTableItem
-                                    key = { requisite.id }
-                                    { ...requisite }
-                                    onClickHandler = { () => requisiteRedirectHandler(requisite.id) }
-                                />
+                            data.requisites.map(({ id, title, description, isOrdered, pricePerDay }) => (
+                                <Tr
+                                    key = { id }
+                                    onClick = { () => requisiteRedirectHandler(id) }>
+                                    <Td>{1}</Td>
+                                    <Td>{title}</Td>
+                                    <Td>{description || 'No desc.'}</Td>
+                                    <Td>{isOrdered ? 'Yes' : 'No'}</Td>
+                                    <Td>{pricePerDay || ' Free'}</Td>
+                                </Tr>
                             ))
                         }
                     </Tbody>

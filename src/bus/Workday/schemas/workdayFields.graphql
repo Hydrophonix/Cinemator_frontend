@@ -2,11 +2,8 @@ fragment workdayFields on Workday {
     id
     title
     date
-    projectId
     scenes {
       id
-      title
-      location
       sceneNumber
     }
 }

@@ -7,6 +7,12 @@
 // GraphQL query operation: Requisite
 // ====================================================
 
+export interface Requisite_requisite_scenes {
+  __typename: "Scene";
+  id: string;
+  sceneNumber: number;
+}
+
 export interface Requisite_requisite {
   __typename: "Requisite";
   id: string;
@@ -14,7 +20,7 @@ export interface Requisite_requisite {
   description: string | null;
   isOrdered: boolean;
   pricePerDay: number;
-  projectId: string;
+  scenes: Requisite_requisite_scenes[];
 }
 
 export interface Requisite {
@@ -22,5 +28,5 @@ export interface Requisite {
 }
 
 export interface RequisiteVariables {
-  id: string;
+  requisiteId: string;
 }

@@ -28,13 +28,13 @@ export type Params = {
 const CreateRequisite: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId } = useParams<Params>();
-    const [ createRequisite ] = useCreateRequisiteMutation();
+    const [ createRequisite ] = useCreateRequisiteMutation({ projectId });
     const [ form, setForm ] = useForm(innitialForm);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
 
-        const response = await createRequisite({ // TODO: DO NOT TESTED, ONLY WRITED
+        const response = await createRequisite({
             variables: {
                 input: {
                     title:       form.title,
@@ -43,13 +43,11 @@ const CreateRequisite: FC = () => {
                     pricePerDay: form.pricePerDay,
                 },
                 projectId,
-                // workdayId: '', // TODO: ???
             },
         });
 
         if (response && response.data) {
             push(`/${projectId}/requisites`);
-            console.log('onSubmit -> response.data', response.data);
         }
     };
 

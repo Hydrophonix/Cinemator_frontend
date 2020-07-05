@@ -18,9 +18,6 @@ export interface CreateScene_createScene_workdays {
 export interface CreateScene_createScene_requisites {
   __typename: "Requisite";
   id: string;
-  description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   title: string;
 }
 
@@ -32,7 +29,6 @@ export interface CreateScene_createScene {
   sceneNumber: number;
   workdays: CreateScene_createScene_workdays[];
   requisites: CreateScene_createScene_requisites[];
-  projectId: string;
 }
 
 export interface CreateScene {

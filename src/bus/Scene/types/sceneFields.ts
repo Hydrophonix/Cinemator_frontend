@@ -16,9 +16,6 @@ export interface sceneFields_workdays {
 export interface sceneFields_requisites {
   __typename: "Requisite";
   id: string;
-  description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   title: string;
 }
 
@@ -30,5 +27,4 @@ export interface sceneFields {
   sceneNumber: number;
   workdays: sceneFields_workdays[];
   requisites: sceneFields_requisites[];
-  projectId: string;
 }

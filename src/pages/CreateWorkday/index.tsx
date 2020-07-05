@@ -32,7 +32,7 @@ export type Params = {
 const CreateWorkday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, date } = useParams<Params>();
-    const [ createWorkday, { loading }] = useCreateWorkdayMutation();
+    const [ createWorkday, { loading }] = useCreateWorkdayMutation({ projectId });
     // console.log('CreateWorkday:FC -> a', loading);
 
     const [ form, setForm ] = useForm(innitialForm);

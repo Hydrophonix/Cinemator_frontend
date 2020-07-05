@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 // GraphQL
 import CreateSceneSchema from '../schemas/createScene.graphql';
@@ -8,23 +8,25 @@ import ScenesSchema from '../schemas/scenes.graphql';
 // Types
 import { CreateScene, CreateSceneVariables, Scenes } from '../types';
 
-const defaultOptions: MutationHookOptions<CreateScene, CreateSceneVariables> = {
-    update(cache, { data }) {
-        const { scenes } = cache.readQuery<Scenes>({
-            query:     ScenesSchema,
-            variables: { projectId: data!.createScene.projectId },
-        })!;
+type OptionsTypes = {
+    projectId: string
+}
 
-        cache.writeQuery({
-            query:     ScenesSchema,
-            variables: { projectId: data!.createScene.projectId }, // TODO: think
-            data:      {
-                scenes: scenes.concat([ data!.createScene ]),
-            },
-        });
-    },
-};
+export const useCreateSceneMutation = ({ projectId }: OptionsTypes) => {
+    return useMutation<CreateScene, CreateSceneVariables>(CreateSceneSchema, {
+        update(cache, { data }) {
+            const { scenes } = cache.readQuery<Scenes>({
+                query:     ScenesSchema,
+                variables: { projectId },
+            })!;
 
-export const useCreateSceneMutation = (baseOptions = defaultOptions) => {
-    return useMutation<CreateScene, CreateSceneVariables>(CreateSceneSchema, baseOptions);
+            cache.writeQuery({
+                query:     ScenesSchema,
+                variables: { projectId },
+                data:      {
+                    scenes: scenes.concat([ data!.createScene ]),
+                },
+            });
+        },
+    });
 };

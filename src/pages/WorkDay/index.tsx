@@ -1,13 +1,15 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
-import { Table, Tbody } from 'react-super-responsive-table';
+import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import _ from 'lodash';
 
 // Components
-import { ErrorBoundary, TableHead, SceneTableItem, WorkdayScenesModal } from '../../components';
+import { ErrorBoundary, TableHead, WorkdayScenesModal } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
+import { useScenesQuery } from '../../bus/Scene';
 
 // Elements
 import { Button } from '../../elements';
@@ -15,9 +17,6 @@ import { Button } from '../../elements';
 // Styles
 import { WorkdayContainer } from './styles';
 import { TableStyles } from '../../assets';
-
-// Constants
-import { scenesThNames } from '../../@init/constants';
 
 // Types
 type Params = {
@@ -29,10 +28,11 @@ const Workday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const [ isEdit, setIsEdit ] = useState(false);
-    const { data, loading } = useWorkdaysQuery({ variables: { projectId }});
-    const [ deleteWorkday ] = useDeleteWorkdayMutation(projectId, workdayId);
+    const { data, loading } = useWorkdaysQuery({ projectId });
+    const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
+    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId });
 
-    if (loading || !data) {
+    if (loading || !data || scenesLoading || !scenesData) {
         return <div>Loading...</div>;
     }
 
@@ -42,7 +42,20 @@ const Workday: FC = () => {
         return <div>No workday exist</div>;
     }
 
+    const sceneIds = workday.scenes.map((scene) => scene.id);
+    const workdayScenes = _.intersectionWith(
+        scenesData.scenes, workday.scenes, (value, other) => value.id === other.id,
+    );
+
     const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+    const workdayRedirectHandler = (event: any, workdayId: string) => {
+        event.stopPropagation();
+        push(`/${projectId}/calendar/${workdayId}`);
+    };
+    const requisiteRedirectHandler = (event: any, requisiteId: string) => {
+        event.stopPropagation();
+        push(`/${projectId}/requisites/${requisiteId}`);
+    };
 
     const deleteWorkdayHandler = async () => {
         const response = await deleteWorkday();
@@ -52,14 +65,12 @@ const Workday: FC = () => {
         }
     };
 
-    const scenesIds = workday.scenes.map((scene) => scene.id);
-
     return (
         <WorkdayContainer>
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
                 <WorkdayScenesModal
                     closeHandler = { () => push(`/${projectId}/calendar/${workdayId}`) }
-                    scenesIds = { scenesIds }
+                    sceneIds = { sceneIds }
                 />
             </Route>
             <header>
@@ -82,15 +93,42 @@ const Workday: FC = () => {
             {
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { scenesThNames }/>
+                        <TableHead ThNames = { [ '#', 'Location', 'Workdays', 'Requisites' ] }/>
                         <Tbody>
                             {
-                                workday.scenes.map((scene) => (
-                                    <SceneTableItem
-                                        key = { scene.id }
-                                        { ...scene }
-                                        handler = { () => sceneRedirectHandler(scene.id) }
-                                    />
+                                workdayScenes.map(({ id, sceneNumber, location, workdays, requisites }) => (
+                                    <Tr
+                                        key = { id }
+                                        onClick = { () => sceneRedirectHandler(id) }>
+                                        <Td>{`${sceneNumber}`}</Td>
+                                        <Td>{location}</Td>
+                                        <Td>
+                                            {
+                                                workdays.map((workday, index) => (
+                                                    <div
+                                                        key = { index }
+                                                        onClick = { (event) => workdayRedirectHandler(
+                                                            event, workday.id,
+                                                        ) }>
+                                                        {workday.date}
+                                                    </div>
+                                                ))
+                                            }
+                                        </Td>
+                                        <Td>
+                                            {
+                                                requisites.map((requisite, index) => (
+                                                    <div
+                                                        key = { index }
+                                                        onClick = { (event) => requisiteRedirectHandler(
+                                                            event, requisite.id,
+                                                        ) }>
+                                                        {`#:${index}`}
+                                                    </div>
+                                                ))
+                                            }
+                                        </Td>
+                                    </Tr>
                                 ))
                             }
                         </Tbody>

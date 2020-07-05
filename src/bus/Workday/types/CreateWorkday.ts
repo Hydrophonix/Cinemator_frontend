@@ -12,8 +12,6 @@ import { WorkdayCreateInput } from "./../../../@types/graphql-global-types";
 export interface CreateWorkday_createWorkday_scenes {
   __typename: "Scene";
   id: string;
-  title: string | null;
-  location: string | null;
   sceneNumber: number;
 }
 
@@ -22,7 +20,6 @@ export interface CreateWorkday_createWorkday {
   id: string;
   title: string | null;
   date: string;
-  projectId: string;
   scenes: CreateWorkday_createWorkday_scenes[];
 }
 
