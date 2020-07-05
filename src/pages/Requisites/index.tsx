@@ -22,11 +22,15 @@ const Requisites: FC = () => {
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
-    const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
-
     if (loading || !data) {
         return <div>Loading...</div>;
     }
+
+    const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
+    const sceneRedirectHandler = (event: any, sceneId: string) => {
+        event.stopPropagation();
+        push(`/${projectId}/scenes/${sceneId}`);
+    };
 
     return (
         <RequisiteContainer>
@@ -60,16 +64,28 @@ const Requisites: FC = () => {
             </header>
             <TableStyles>
                 <Table>
-                    <TableHead ThNames = { [ '#', 'Title', 'Description', 'isOrdered', 'pricePerDay' ] } />
+                    <TableHead ThNames = { [ '#', 'Title', 'Scenes', 'isOrdered', 'pricePerDay' ] } />
                     <Tbody>
                         {
-                            data.requisites.map(({ id, title, description, isOrdered, pricePerDay }) => (
+                            data.requisites.map(({ id, title, scenes, isOrdered, pricePerDay }) => (
                                 <Tr
                                     key = { id }
                                     onClick = { () => requisiteRedirectHandler(id) }>
                                     <Td>{1}</Td>
                                     <Td>{title}</Td>
-                                    <Td>{description || 'No desc.'}</Td>
+                                    <Td>
+                                        {
+                                            scenes.map((scene, index) => (
+                                                <div
+                                                    key = { index }
+                                                    onClick = {
+                                                        (event) => sceneRedirectHandler(event, scene.id)
+                                                    }>
+                                                    #: {`${scene.sceneNumber}`}
+                                                </div>
+                                            ))
+                                        }
+                                    </Td>
                                     <Td>{isOrdered ? 'Yes' : 'No'}</Td>
                                     <Td>{pricePerDay || ' Free'}</Td>
                                 </Tr>
