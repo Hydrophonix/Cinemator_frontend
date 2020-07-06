@@ -1,7 +1,9 @@
 // Core
 import styled from 'styled-components';
 
-// TODO: same styles as Scenes
+// Instruments
+import { ORANGE } from '../../assets/globalStyles';
+
 export const RequisiteContainer = styled.header`
     display: flex;
     flex-direction: column;
@@ -10,8 +12,9 @@ export const RequisiteContainer = styled.header`
     header {
         display: flex;
         justify-content: space-between;
-        padding:  5px 10px;
+        padding: 5px;
         box-sizing: border-box;
+        background-color: ${ORANGE.secondary};
 
         section {
             display: flex;
@@ -19,11 +22,4 @@ export const RequisiteContainer = styled.header`
             flex-wrap: wrap;
         }
     }
-
-    /* main {
-        display: flex;
-        flex-direction: column;
-        padding: 5px;
-    } */
-
 `;

@@ -1,19 +1,26 @@
 // Core
 import React, { FC } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 
 // Elements
 import { Button } from '../../../elements';
 
-// Types
-type PropTypes = {};
-
 // Styles
-import { SidebarContainer } from './styles';
+import { SidebarContainer, SidebarLi } from './styles';
 
-export const Sidebar: FC<PropTypes> = () => {
+// Type
+type Params = { projectId: string };
+
+const asideLinks = [
+    { url: 'calendar', name: 'Calendar' },
+    { url: 'scenes', name: 'Scenes' },
+    { url: 'requisites', name: 'Requisite' },
+];
+
+export const Sidebar: FC = () => {
     const { push } = useHistory();
-    const { projectId } = useParams<{ projectId: string }>();
+    const { projectId } = useParams<Params>();
+    const { pathname } = useLocation();
 
     return (
         <SidebarContainer>
@@ -21,9 +28,16 @@ export const Sidebar: FC<PropTypes> = () => {
                 Back
             </Button>
             <ul>
-                <li><Link to = { `/${projectId}/calendar` }>Calendar</Link></li>
-                <li><Link to = { `/${projectId}/scenes` }>Scenes</Link></li>
-                <li><Link to = { `/${projectId}/requisites` }>Requisite</Link></li>
+                {
+                    asideLinks.map((link, index) => (
+                        <SidebarLi
+                            isActive = { pathname.includes(link.url) }
+                            key = { index }
+                            onClick = { () => push(`/${projectId}/${link.url}`) }>
+                            {link.name}
+                        </SidebarLi>
+                    ))
+                }
             </ul>
         </SidebarContainer>
     );

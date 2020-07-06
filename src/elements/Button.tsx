@@ -17,6 +17,7 @@ const Styled = styled.button<ButtonProps>`
     background-color: ${({ theme, active }) => active && theme.primaryVariant};
     border-color: ${({ theme, active }) => active && theme.secondaryVariant};
     border-style: ${({ active }) => active && 'inset'};
+    font-family: sans-serif;
 
     &:hover, &:focus {
         background-color: ${({ theme }) => theme.primaryVariant};

@@ -58,7 +58,7 @@ export const loadFonts = (): Configuration => ({
     module: {
         rules: [
             {
-                test: /\.(woff|woff2|ttf|eot)$/,
+                test: /\.(woff|woff2|ttf|eot|otf)$/,
                 use:  [
                     {
                         loader:  'file-loader',

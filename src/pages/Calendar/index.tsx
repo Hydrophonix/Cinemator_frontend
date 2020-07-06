@@ -5,9 +5,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
-// import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
-
-// import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 // Components
@@ -21,14 +18,13 @@ import { PropTypes, Params, EventTypes } from './types';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
-import { customEventView, workdaysDataTransformer } from './utils';
+import { customEventView, customToolbarView, workdaysDataTransformer } from './utils';
 
 // Styles
 import { CalendarContainer } from './styles';
 
 // Instruments
 const localizer = momentLocalizer(moment);
-// const DnDCalendar = withDragAndDrop(ReactBigCalendar);
 
 const Calendar: FC<PropTypes> = () => {
     const { push } = useHistory();
@@ -61,12 +57,13 @@ const Calendar: FC<PropTypes> = () => {
 
     const customDayPropGetter = (date: Date) => {
         const workday = data.workdays.find((workday) => workday.date === transformDateToISO8601(date));
+        const className = `${transformDateToISO8601(date) === transformDateToISO8601(new Date()) && 'todayInsetShadow'}`;
 
-        if (workday) {
-            return { className: 'workday' };
+        if (!workday) {
+            return { className: className + ' emptyDay' };
         }
 
-        return { className: 'emptyDay' };
+        return { className: className + ' workday' };
     };
 
     const sceneRedirectHandler = ({ id }: EventTypes) => push(`/${projectId}/scenes/${id}`);
@@ -77,7 +74,8 @@ const Calendar: FC<PropTypes> = () => {
                 popup
                 selectable
                 components = {{
-                    event: customEventView,
+                    event:   customEventView,
+                    toolbar: customToolbarView,
                 }}
                 dayPropGetter = { customDayPropGetter }
                 defaultDate = { new Date() }
@@ -87,9 +85,6 @@ const Calendar: FC<PropTypes> = () => {
                 views = {{ month: true, agenda: true }}
                 onSelectEvent = { sceneRedirectHandler }
                 onSelectSlot = { onSelectEventHandler }
-                // resizable
-                // onEventDrop = { onEventHandler }
-                // onEventResize = { onEventHandler }
             />
         </CalendarContainer>
     );
@@ -100,17 +95,3 @@ export default () => (
         <Calendar />
     </ErrorBoundary>
 );
-
-// const onEventHandler = ({ event, start, end }: DataTypes) => {
-//     setEvents((prevEvents) => prevEvents.map((prevEvent) => {
-//         if (prevEvent.id === event.id) {
-//             return {
-//                 ...prevEvent,
-//                 start,
-//                 end,
-//             };
-//         }
-
-//         return prevEvent;
-//     }));
-// };

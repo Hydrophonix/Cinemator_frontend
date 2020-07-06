@@ -1,6 +1,9 @@
 // Core
 import styled from 'styled-components';
 
+// Instruments
+import { BLUE } from '../../assets';
+
 export const ScenesContainer = styled.section`
     display: flex;
     flex-direction: column;
@@ -9,8 +12,9 @@ export const ScenesContainer = styled.section`
     header {
         display: flex;
         justify-content: space-between;
-        padding:  5px 10px;
+        padding:  5px;
         box-sizing: border-box;
+        background-color: ${BLUE.secondary};
 
         section {
             display: flex;
@@ -18,10 +22,4 @@ export const ScenesContainer = styled.section`
             flex-wrap: wrap;
         }
     }
-
-    /* main {
-        display: flex;
-        flex-direction: column;
-        padding: 5px;
-    } */
 `;

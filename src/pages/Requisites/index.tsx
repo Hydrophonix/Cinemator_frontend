@@ -11,9 +11,15 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 // Components
 import { ErrorBoundary, TableHead } from '../../components';
 
+// Elements
+import { Button } from '../../elements';
+
 // Styles
 import { TableStyles } from '../../assets';
 import { RequisiteContainer } from './styles';
+
+// Instruments
+import { BLUE } from '../../assets/globalStyles';
 
 const Requisites: FC = () => {
     const { push } = useHistory();
@@ -64,11 +70,15 @@ const Requisites: FC = () => {
             </header>
             <TableStyles>
                 <Table>
-                    <TableHead ThNames = { [ '#', 'Title', 'Scenes', 'isOrdered', 'pricePerDay' ] } />
+                    <TableHead
+                        className = 'requisitesTableHead'
+                        ThNames = { [ '#', 'Title', 'Scenes', 'isOrdered', 'pricePerDay' ] }
+                    />
                     <Tbody>
                         {
                             data.requisites.map(({ id, title, scenes, isOrdered, pricePerDay }) => (
                                 <Tr
+                                    className = 'requisitesTableRow'
                                     key = { id }
                                     onClick = { () => requisiteRedirectHandler(id) }>
                                     <Td>{1}</Td>
@@ -76,13 +86,17 @@ const Requisites: FC = () => {
                                     <Td>
                                         {
                                             scenes.map((scene, index) => (
-                                                <div
+                                                <Button
                                                     key = { index }
+                                                    style = {{
+                                                        backgroundColor: BLUE.secondary,
+                                                        color:           '#fff',
+                                                    }}
                                                     onClick = {
                                                         (event) => sceneRedirectHandler(event, scene.id)
                                                     }>
-                                                    #: {`${scene.sceneNumber}`}
-                                                </div>
+                                                    S:{`${scene.sceneNumber}`}
+                                                </Button>
                                             ))
                                         }
                                     </Td>

@@ -12,7 +12,7 @@ import { useRequisitesQuery, useDeleteRequisiteMutation } from '../../bus/Requis
 import { Button } from '../../elements';
 
 // Styles
-import { RequisiteContainer } from './styles';
+import { RequisiteContainer, RequisiteHeader } from './styles';
 
 // Types
 type Params = {
@@ -47,7 +47,7 @@ const Requisite: FC = () => {
 
     return (
         <RequisiteContainer>
-            <header>
+            <RequisiteHeader>
                 <div>
                     <Button onClick = { () => push(`/${projectId}/requisites`) }>To requisites</Button>
                     <Button onClick = { () => goBack() }>Go back</Button>
@@ -57,14 +57,13 @@ const Requisite: FC = () => {
                     <Button onClick = { () => setIsEdit(!isEdit) }>Edit</Button>
                     <Button onClick = { deleteRequisiteHandler }>Delete</Button>
                 </div>
-            </header>
+            </RequisiteHeader>
             <main>
                 Some requisite data
             </main>
         </RequisiteContainer>
     );
 };
-
 
 export default () => (
     <ErrorBoundary>

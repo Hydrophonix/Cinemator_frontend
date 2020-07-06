@@ -4,12 +4,13 @@ import { Thead, Tr, Th } from 'react-super-responsive-table';
 
 type PropTypes = {
     ThNames: String[]
+    className: string
 }
 
-export const TableHead: FC<PropTypes> = ({ ThNames }) => {
+export const TableHead: FC<PropTypes> = ({ ThNames, className }) => {
     return (
         <Thead>
-            <Tr>
+            <Tr className = { className }>
                 {
                     ThNames.map((ThName, index) => <Th key = { index }>{ThName}</Th>)
                 }

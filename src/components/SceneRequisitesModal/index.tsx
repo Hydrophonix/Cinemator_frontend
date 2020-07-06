@@ -56,11 +56,15 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
             <Main>
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { [ '#', 'Title' ] } />
+                        <TableHead
+                            className = 'requisitesTableHead'
+                            ThNames = { [ '#', 'Title' ] }
+                        />
                         <Tbody>
                             {
                                 data.requisites.map((requisite) => (
                                     <Tr
+                                        className = 'requisitesTableRow'
                                         key = { requisite.id }
                                         style = {
                                             requisitesIdsArray.includes(requisite.id)

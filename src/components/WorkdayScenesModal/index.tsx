@@ -56,15 +56,18 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
             <Main>
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { [ '#', 'Location' ] } />
+                        <TableHead
+                            className = 'scenesTableHead'
+                            ThNames = { [ '#', 'Location' ] }
+                        />
                         <Tbody>
                             {
                                 data.scenes.map(({ id, sceneNumber, location }) => (
                                     <Tr
+                                        className = 'scenesTableRow'
                                         key = { id }
                                         style = { scenesIdsArray.includes(id)
-                                            ? { backgroundColor: 'lightgreen' }
-                                            : {}
+                                            ? { backgroundColor: 'lightgreen' } : {}
                                         }
                                         onClick = { () => setScenesIdsArray(id) }>
                                         <Td>{`${sceneNumber}`}</Td>

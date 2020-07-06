@@ -4,3 +4,8 @@ declare module '*.ttf' {
 
     export = File
 }
+declare module '*.otf' {
+    const File: any;
+
+    export = File
+}

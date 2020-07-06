@@ -4,3 +4,9 @@ declare module '*.png' {
 
     export = File
 }
+
+declare module '*.jpg' {
+    const File: string;
+
+    export = File
+}

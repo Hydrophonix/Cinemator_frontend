@@ -15,8 +15,11 @@ import { useScenesQuery } from '../../bus/Scene';
 import { Button } from '../../elements';
 
 // Styles
-import { WorkdayContainer } from './styles';
+import { WorkdayContainer, WorkdayHeader } from './styles';
 import { TableStyles } from '../../assets';
+
+// Instrumnets
+import { GREEN, ORANGE } from '../../assets/globalStyles';
 
 // Types
 type Params = {
@@ -44,7 +47,7 @@ const Workday: FC = () => {
 
     const sceneIds = workday.scenes.map((scene) => scene.id);
     const workdayScenes = _.intersectionWith(
-        scenesData.scenes, workday.scenes, (value, other) => value.id === other.id,
+        scenesData.scenes, sceneIds, (value, other) => value.id === other,
     );
 
     const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
@@ -73,7 +76,7 @@ const Workday: FC = () => {
                     sceneIds = { sceneIds }
                 />
             </Route>
-            <header>
+            <WorkdayHeader>
                 <div>
                     <Button onClick = { () => push(`/${projectId}/calendar`) }>To calendar</Button>
                     <Button onClick = { () => goBack() }>Go back</Button>
@@ -86,45 +89,60 @@ const Workday: FC = () => {
                     </Button>
                     <Button onClick = { deleteWorkdayHandler }>Delete</Button>
                 </div>
-            </header>
-            <main>
-                {/* content */}
-            </main>
+            </WorkdayHeader>
             {
                 <TableStyles>
                     <Table>
-                        <TableHead ThNames = { [ '#', 'Location', 'Workdays', 'Requisites' ] }/>
+                        <TableHead
+                            className = 'scenesTableHead'
+                            ThNames = { [ '#', 'Location', 'Workdays', 'Requisites' ] }
+                        />
                         <Tbody>
                             {
                                 workdayScenes.map(({ id, sceneNumber, location, workdays, requisites }) => (
                                     <Tr
+                                        className = 'scenesTableRow'
                                         key = { id }
                                         onClick = { () => sceneRedirectHandler(id) }>
                                         <Td>{`${sceneNumber}`}</Td>
                                         <Td>{location}</Td>
                                         <Td>
                                             {
-                                                workdays.map((workday, index) => (
-                                                    <div
-                                                        key = { index }
-                                                        onClick = { (event) => workdayRedirectHandler(
-                                                            event, workday.id,
-                                                        ) }>
-                                                        {workday.date}
-                                                    </div>
-                                                ))
+                                                workdays.map((mappedWorkday, index) => {
+                                                    if (workday.date === mappedWorkday.date) {
+                                                        return null;
+                                                    }
+
+                                                    return (
+                                                        <Button
+                                                            key = { index }
+                                                            style = {{
+                                                                backgroundColor: GREEN.main,
+                                                                color:           '#fff',
+                                                            }}
+                                                            onClick = { (event) => workdayRedirectHandler(
+                                                                event, mappedWorkday.id,
+                                                            ) }>
+                                                            {mappedWorkday.date}
+                                                        </Button>
+                                                    );
+                                                })
                                             }
                                         </Td>
                                         <Td>
                                             {
                                                 requisites.map((requisite, index) => (
-                                                    <div
+                                                    <Button
                                                         key = { index }
+                                                        style = {{
+                                                            backgroundColor: ORANGE.secondary,
+                                                            color:           '#fff',
+                                                        }}
                                                         onClick = { (event) => requisiteRedirectHandler(
                                                             event, requisite.id,
                                                         ) }>
                                                         {`#:${index}`}
-                                                    </div>
+                                                    </Button>
                                                 ))
                                             }
                                         </Td>

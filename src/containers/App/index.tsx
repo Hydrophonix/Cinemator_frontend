@@ -45,8 +45,8 @@ export const App: FC = () => {
 
     return (
         <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark }>
+            <GlobalStyles />
             <AppContainer>
-                <GlobalStyles />
                 <TopBar />
                 <Routes />
             </AppContainer>
