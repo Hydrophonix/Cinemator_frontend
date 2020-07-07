@@ -10,12 +10,12 @@ import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 import { DeleteRequisite, DeleteRequisiteVariables, Requisites } from '../types';
 import { Scenes } from '../../Scene';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
     requisiteId: string
 }
 
-export const useDeleteRequisiteMutation = ({ projectId, requisiteId }: OptionsTypes) => {
+export const useDeleteRequisiteMutation = ({ projectId, requisiteId }: OptionsType) => {
     return useMutation<DeleteRequisite, DeleteRequisiteVariables>(DeleteRequisiteSchema, {
         update(cache, { data }) {
             const { deleteRequisite } = data!;

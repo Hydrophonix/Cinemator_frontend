@@ -12,12 +12,12 @@ import { DeleteScene, DeleteSceneVariables, Scenes } from '../types';
 import { Workdays } from '../../Workday';
 import { Requisites } from '../../Requisite';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
     sceneId: string
 }
 
-export const useDeleteSceneMutation = ({ projectId, sceneId }: OptionsTypes) => {
+export const useDeleteSceneMutation = ({ projectId, sceneId }: OptionsType) => {
     return useMutation<DeleteScene, DeleteSceneVariables>(DeleteSceneSchema, {
         update(cache, { data }) {
             const { deleteScene } = data!;

@@ -8,11 +8,11 @@ import ScenesSchema from '../schemas/scenes.graphql';
 // Types
 import { CreateScene, CreateSceneVariables, Scenes } from '../types';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
 }
 
-export const useCreateSceneMutation = ({ projectId }: OptionsTypes) => {
+export const useCreateSceneMutation = ({ projectId }: OptionsType) => {
     return useMutation<CreateScene, CreateSceneVariables>(CreateSceneSchema, {
         update(cache, { data }) {
             const { scenes } = cache.readQuery<Scenes>({

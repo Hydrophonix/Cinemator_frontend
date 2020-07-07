@@ -8,11 +8,11 @@ import RequisitesSchema from '../schemas/requisites.graphql';
 // Types
 import { CreateRequisite, CreateRequisiteVariables, Requisites } from '../types';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
 }
 
-export const useCreateRequisiteMutation = ({ projectId }: OptionsTypes) => {
+export const useCreateRequisiteMutation = ({ projectId }: OptionsType) => {
     return useMutation<CreateRequisite, CreateRequisiteVariables>(CreateRequisiteSchema, {
         update(cache, { data }) {
             const { requisites } = cache.readQuery<Requisites>({
