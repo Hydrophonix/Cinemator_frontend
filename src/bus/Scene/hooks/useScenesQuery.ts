@@ -7,11 +7,11 @@ import { useCustomQuery } from '../../../hooks';
 // Types
 import { Scenes, ScenesVariables } from '../types';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
 }
 
-export const useScenesQuery = ({ projectId }: OptionsTypes) => {
+export const useScenesQuery = ({ projectId }: OptionsType) => {
     return useCustomQuery<Scenes, ScenesVariables>(ScenesSchema, {
         variables: { projectId },
     });

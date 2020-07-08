@@ -10,12 +10,12 @@ import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 import { DeleteWorkday, DeleteWorkdayVariables, Workdays } from '../types';
 import { Scenes } from '../../Scene';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
     workdayId: string
 }
 
-export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsTypes) => {
+export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsType) => {
     return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, {
         update(cache, { data }) {
             const { deleteWorkday } = data!;

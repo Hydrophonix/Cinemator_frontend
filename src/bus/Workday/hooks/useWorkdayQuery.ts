@@ -7,11 +7,11 @@ import { useCustomQuery } from '../../../hooks';
 // Types
 import { Workday, WorkdayVariables } from '../types';
 
-type OptionsTypes = {
+type OptionsType = {
     workdayId: string
 }
 
-export const useWorkdayQuery = ({ workdayId }: OptionsTypes) => {
+export const useWorkdayQuery = ({ workdayId }: OptionsType) => {
     return useCustomQuery<Workday, WorkdayVariables>(WorkdaySchema, {
         variables: { workdayId },
     });

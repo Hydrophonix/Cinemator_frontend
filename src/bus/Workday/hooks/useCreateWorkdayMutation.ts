@@ -8,11 +8,11 @@ import WorkdaysSchema from '../schemas/workdays.graphql';
 // Types
 import { CreateWorkday, CreateWorkdayVariables, Workdays } from '../types';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
 }
 
-export const useCreateWorkdayMutation = ({ projectId }: OptionsTypes) => {
+export const useCreateWorkdayMutation = ({ projectId }: OptionsType) => {
     return useMutation<CreateWorkday, CreateWorkdayVariables>(CreateWorkdaySchema, {
         update(cache, { data }) {
             const { workdays } = cache.readQuery<Workdays>({

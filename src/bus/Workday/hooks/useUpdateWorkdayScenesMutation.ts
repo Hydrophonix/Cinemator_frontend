@@ -10,11 +10,11 @@ import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 import { UpdateWorkdayScenes, UpdateWorkdayScenesVariables, Workdays } from '../types';
 import { Scenes } from '../../Scene';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
 }
 
-export const useUpdateWorkdayScenesMutation = ({ projectId }: OptionsTypes) => {
+export const useUpdateWorkdayScenesMutation = ({ projectId }: OptionsType) => {
     return useMutation<UpdateWorkdayScenes, UpdateWorkdayScenesVariables>(UpdateWorkdayScenesSchema, {
         update(cache, { data, errors }) {
             if (errors) {

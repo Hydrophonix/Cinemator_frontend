@@ -7,11 +7,11 @@ import { useCustomQuery } from '../../../hooks';
 // Types
 import { Requisites, RequisitesVariables } from '../types';
 
-type OptionsTypes = {
+type OptionsType = {
     projectId: string
 }
 
-export const useRequisitesQuery = ({ projectId }: OptionsTypes) => {
+export const useRequisitesQuery = ({ projectId }: OptionsType) => {
     return useCustomQuery<Requisites, RequisitesVariables>(RequisitesSchema, {
         variables: { projectId },
     });
