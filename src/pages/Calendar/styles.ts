@@ -14,7 +14,7 @@ export const CalendarContainer = styled.section`
     }
 
     .todayInsetShadow {
-        box-shadow: inset 0px 0px 0px 3px ${ORANGE.secondary};
+        box-shadow: inset 0px 0px 0px 3px ${ORANGE.hoverSecondary};
     }
 
     .workday {

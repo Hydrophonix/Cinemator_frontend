@@ -1,0 +1,7 @@
+#import "./requisiteFields.graphql"
+
+mutation UpdateRequisite ($input: RequisiteUpdateInput!, $requisiteId: String!) {
+    updateRequisite(input: $input, requisiteId: $requisiteId) {
+        ...requisiteFields
+    }
+}

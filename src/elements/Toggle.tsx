@@ -2,24 +2,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-interface ToggleButtonProps {
-    active: boolean;
-}
-
-interface ToggleProps extends ToggleButtonProps {
-    onChange: (value: boolean) => void;
-}
-
-export const Toggle: FC<ToggleProps> = ({ active, onChange }) => {
-    return (
-        <ToggleContainer onClick = { () => onChange(!active) }>
-            <ToggleBar>
-                < ToggleButton active = { active }/>
-            </ToggleBar>
-        </ToggleContainer>
-    );
-};
-
 // Styles
 const ToggleContainer = styled.div`
     background: none;
@@ -52,3 +34,21 @@ const ToggleButton = styled.div<ToggleButtonProps>`
     transition: .2s;
 `;
 
+// Types
+interface ToggleButtonProps {
+    active: boolean;
+}
+
+interface ToggleProps extends ToggleButtonProps {
+    onChange: (value: boolean) => void;
+}
+
+export const Toggle: FC<ToggleProps> = ({ active, onChange }) => {
+    return (
+        <ToggleContainer onClick = { () => void onChange(!active) }>
+            <ToggleBar>
+                < ToggleButton active = { active }/>
+            </ToggleBar>
+        </ToggleContainer>
+    );
+};

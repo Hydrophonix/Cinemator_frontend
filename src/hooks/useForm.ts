@@ -3,15 +3,15 @@ import { useState, ChangeEvent } from 'react';
 
 type HandleChange = (event: ChangeEvent<HTMLInputElement>  | null, isNumber?: boolean) => void;
 
-export const useForm = <InititalValue>(initialValue: InititalValue): [ InititalValue, HandleChange, Function ] => {
+export const useForm = <T>(initialValue: T): [T, HandleChange, (newInitialValue: T) => void, Function] => {
     const [ form, setForm ] = useState(initialValue);
 
     const handleChange: HandleChange = (event, isNumber) => {
         if (event === null) {
-            return setForm(initialValue);
+            return void setForm(initialValue);
         }
 
-        return setForm({
+        return void setForm({
             ...form,
             [ event.target.name ]: isNumber
                 ? parseInt(event.target.value, 10)
@@ -19,12 +19,20 @@ export const useForm = <InititalValue>(initialValue: InititalValue): [ InititalV
         });
     };
 
-    const resetForm = () => setForm(initialValue);
+    const setInitialForm = (newInitialValue: T) => void setForm(newInitialValue);
 
-    return [ form, handleChange, resetForm ];
+    const resetForm = () => void setForm(initialValue);
+
+    return [ form, handleChange, setInitialForm, resetForm ];
 };
 
-export const useArrayOfStringsForm = (initialValues: Array<string>): [Array<string>, Function, Function] => {
+type ArrayOfStringsForm = (initialValues: Array<string>) => [
+    Array<string>,
+    (newString: string) => void,
+    (newInnitialValues: Array<string>) => void
+];
+
+export const useArrayOfStringsForm: ArrayOfStringsForm = (initialValues)  => {
     const [ arrayOfStrings, setArrayOfStrings ] = useState<Array<string>>(initialValues);
 
     const arrayOfStringsHandle = (newString: string) => {
@@ -34,7 +42,6 @@ export const useArrayOfStringsForm = (initialValues: Array<string>): [Array<stri
             setArrayOfStrings((prevState) => [ ...prevState, newString ]);
         }
     };
-
 
     const setNewInnitialValues = (newInnitialValues: Array<string>) => {
         setArrayOfStrings(newInnitialValues);

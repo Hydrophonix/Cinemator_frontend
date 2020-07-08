@@ -25,15 +25,32 @@ export interface RequisiteCreateInput {
   pricePerDay?: number | null;
 }
 
+export interface RequisiteUpdateInput {
+  title?: string | null;
+  description?: string | null;
+  isOrdered?: boolean | null;
+  pricePerDay?: number | null;
+}
+
 export interface SceneCreateInput {
   title?: string | null;
   location?: string | null;
   sceneNumber: number;
 }
 
+export interface SceneUpdateInput {
+  title?: string | null;
+  location?: string | null;
+  sceneNumber?: number | null;
+}
+
 export interface WorkdayCreateInput {
   title?: string | null;
   date: string;
+}
+
+export interface WorkdayUpdateInput {
+  title?: string | null;
 }
 
 //==============================================================

@@ -19,16 +19,16 @@ const Projects: FC = () => {
     const { push } = useHistory();
     const { data, loading } = useOwnedProjectsQuery();
 
-    const projectRedirectHandler = (projectId: string) => push(`/${projectId}`);
-
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
+    const projectRedirectHandler = (projectId: string) => void push(`/${projectId}`);
+
     return (
         <ProjectsContainer>
             <nav>
-                <Button onClick = { () => push('/create-project') }>
+                <Button onClick = { () => void push('/create-project') }>
                     Create new project
                 </Button>
             </nav>

@@ -1,6 +1,6 @@
 // Core
 import React, { FC } from 'react';
-import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 
 // Elements
 import { Button } from '../../../elements';
@@ -24,16 +24,14 @@ export const Sidebar: FC = () => {
 
     return (
         <SidebarContainer>
-            <Button onClick = { () => push('/') }>
-                Back
-            </Button>
+            <Button onClick = { () => void push('/') }>Back</Button>
             <ul>
                 {
                     asideLinks.map((link, index) => (
                         <SidebarLi
                             isActive = { pathname.includes(link.url) }
                             key = { index }
-                            onClick = { () => push(`/${projectId}/${link.url}`) }>
+                            onClick = { () => void push(`/${projectId}/${link.url}`) }>
                             {link.name}
                         </SidebarLi>
                     ))

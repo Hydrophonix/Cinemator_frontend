@@ -13,53 +13,42 @@ import { useForm } from '../../hooks';
 import { useCreateSceneMutation } from '../../bus/Scene';
 
 // Styles
-import { CreateSceneContainer } from './styles';
+import { CreateSceneContainer, Header } from './styles';
 
-const innitialForm = {
-    sceneNumber: 0,
-    title:       '',
-    location:    '',
-};
+// Types
+import { SceneCreateInput } from '../../@types/graphql-global-types';
 
 export type Params = {
     projectId: string
 }
 
+const innitialForm = {
+    title:       '',
+    location:    '',
+    sceneNumber: 0,
+};
+
 const CreateScene: FC = () => {
-    const { push, goBack } = useHistory();
+    const { goBack } = useHistory();
     const { projectId } = useParams<Params>();
     const [ createScene ] = useCreateSceneMutation({ projectId });
-    const [ form, setForm ] = useForm(innitialForm);
+    const [ form, setForm ] = useForm<SceneCreateInput>(innitialForm);
 
-    const onSubmit = async (event: any) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        const response = await createScene({
-            variables: {
-                input: {
-                    title:       form.title,
-                    sceneNumber: form.sceneNumber,
-                    location:    form.location,
-                },
-                projectId,
-                workdayId: '', // TODO: ???
-            },
-        });
-
-        if (response && response.data) {
-            push(`/${projectId}/scenes`);
-        }
+        const response = await createScene({ variables: { input: form, projectId, workdayId: '' }}); // TODO ???
+        response && response.data && void goBack();
     };
 
     return (
         <CreateSceneContainer>
-            <nav>
-                <Button onClick = { () => goBack() }>
-                    Back
-                </Button>
-            </nav>
+            <Header>
+                <Button onClick = { goBack }>Back</Button>
+                <h2>Create scene</h2>
+                <div />
+            </Header>
             <main>
-                <form onSubmit = { (event) => onSubmit(event) }>
+                <form onSubmit = { onSubmit }>
                     <h2>Scene number:</h2>
                     <input
                         name = 'sceneNumber'
@@ -71,18 +60,18 @@ const CreateScene: FC = () => {
                     <input
                         name = 'title'
                         placeholder = 'Scene title'
-                        value = { form.title }
+                        value = { form.title ?? '' }
                         onChange = { setForm }
                     />
                     <h2>Scene location:</h2>
                     <input
                         name = 'location'
                         placeholder = 'Scene location'
-                        value = { form.location }
+                        value = { form.location ?? '' }
                         onChange = { setForm }
                     />
 
-                    <button type = 'submit'>Submit</button>
+                    <Button type = 'submit'>Submit</Button>
                 </form>
             </main>
         </CreateSceneContainer>

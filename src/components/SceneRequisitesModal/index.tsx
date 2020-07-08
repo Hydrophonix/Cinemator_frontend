@@ -21,6 +21,9 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 import { TableStyles } from '../../assets';
 
+// Instrunments
+import { ORANGE } from '../../assets/globalStyles';
+
 // Types
 type Params = {
     projectId: string
@@ -44,15 +47,12 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
 
     const addRequsitesToSceneHandler = async () => {
         const response = await updateSceneRequisites({ variables: { sceneId, requisiteIds: requisitesIdsArray }});
-
-        if (response && response.data) {
-            closeHandler();
-        }
+        response && response.data && void closeHandler();
     };
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader>Add requisites</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: ORANGE.secondary }}>Add requisites</ModalHeader>
             <Main>
                 <TableStyles>
                     <Table>
@@ -70,7 +70,7 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
                                             requisitesIdsArray.includes(requisite.id)
                                                 ? { backgroundColor: 'lightgreen' } : {}
                                         }
-                                        onClick = { () => setRequisitesIdsArray(requisite.id) }>
+                                        onClick = { () => void setRequisitesIdsArray(requisite.id) }>
                                         <Td>{requisite.id}</Td>
                                         <Td>{requisite.title}</Td>
                                     </Tr>
@@ -80,7 +80,7 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
                     </Table>
                 </TableStyles>
             </Main>
-            <Footer>
+            <Footer style = {{ backgroundColor: ORANGE.main }}>
                 <Button onClick = { addRequsitesToSceneHandler }>Save</Button>
             </Footer>
         </Modal>

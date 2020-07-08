@@ -1,0 +1,7 @@
+#import "./workdayFields.graphql"
+
+mutation UpdateWorkday($input: WorkdayUpdateInput!, $workdayId: String!) {
+  updateWorkday(input: $input, workdayId: $workdayId) {
+    ...workdayFields
+  }
+}

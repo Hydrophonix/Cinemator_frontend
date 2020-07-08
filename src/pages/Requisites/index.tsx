@@ -16,7 +16,7 @@ import { Button } from '../../elements';
 
 // Styles
 import { TableStyles } from '../../assets';
-import { RequisiteContainer } from './styles';
+import { RequisiteContainer, Header } from './styles';
 
 // Instruments
 import { BLUE } from '../../assets/globalStyles';
@@ -32,7 +32,7 @@ const Requisites: FC = () => {
         return <div>Loading...</div>;
     }
 
-    const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
+    const requisiteRedirectHandler = (requisiteId: string) => void push(`/${projectId}/requisites/${requisiteId}`);
     const sceneRedirectHandler = (event: any, sceneId: string) => {
         event.stopPropagation();
         push(`/${projectId}/scenes/${sceneId}`);
@@ -40,34 +40,39 @@ const Requisites: FC = () => {
 
     return (
         <RequisiteContainer>
-            <header>
+            <Header>
                 <section>
-                    <DatePicker
-                        selectsStart
-                        endDate = { endDate }
-                        selected = { startDate }
-                        startDate = { startDate }
-                        onChange = { (date) => date && setStartDate(date) }
-                    />
-                    <DatePicker
-                        selectsEnd
-                        endDate = { endDate }
-                        minDate = { startDate }
-                        selected = { endDate }
-                        startDate = { startDate }
-                        onChange = { (date) => date && setEndDate(date) }
-                    />
-                    <input
-                        placeholder = 'Requisite name'
-                        type = 'text'
-                    />
-                    <input
-                        type = 'number'
-                    />
+                    <nav>
+                        <DatePicker
+                            selectsStart
+                            endDate = { endDate }
+                            selected = { startDate }
+                            startDate = { startDate }
+                            onChange = { (date) => date && void setStartDate(date) }
+                        />
+                        <DatePicker
+                            selectsEnd
+                            endDate = { endDate }
+                            minDate = { startDate }
+                            selected = { endDate }
+                            startDate = { startDate }
+                            onChange = { (date) => date && void setEndDate(date) }
+                        />
+                    </nav>
+                    <nav>
+                        <input
+                            type = 'number'
+                            value = { 0 }
+                        />
+                        <input
+                            placeholder = 'Title'
+                            type = 'text'
+                        />
+                    </nav>
                 </section>
-
-                <button onClick = { () => push(`/${projectId}/create-requisite`) }>Add new requisite</button>
-            </header>
+                <h2>Requisites</h2>
+                <button onClick = { () => void push(`/${projectId}/create-requisite`) }>Add new requisite</button>
+            </Header>
             <TableStyles>
                 <Table>
                     <TableHead
@@ -80,7 +85,7 @@ const Requisites: FC = () => {
                                 <Tr
                                     className = 'requisitesTableRow'
                                     key = { id }
-                                    onClick = { () => requisiteRedirectHandler(id) }>
+                                    onClick = { () => void requisiteRedirectHandler(id) }>
                                     <Td>{1}</Td>
                                     <Td>{title}</Td>
                                     <Td>
@@ -93,7 +98,7 @@ const Requisites: FC = () => {
                                                         color:           '#fff',
                                                     }}
                                                     onClick = {
-                                                        (event) => sceneRedirectHandler(event, scene.id)
+                                                        (event) => void sceneRedirectHandler(event, scene.id)
                                                     }>
                                                     S:{`${scene.sceneNumber}`}
                                                 </Button>

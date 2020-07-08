@@ -16,7 +16,7 @@ import { Button } from '../../elements';
 
 // Styles
 import { TableStyles } from '../../assets';
-import { ScenesContainer } from './styles';
+import { ScenesContainer, Header } from './styles';
 
 // Instruments
 import { GREEN, ORANGE } from '../../assets/globalStyles';
@@ -28,7 +28,7 @@ const Scenes: FC = () => {
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
-    const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+    const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
     const workdayRedirectHandler = (event: any, workdayId: string) => {
         event.stopPropagation();
         push(`/${projectId}/calendar/${workdayId}`);
@@ -44,38 +44,39 @@ const Scenes: FC = () => {
 
     return (
         <ScenesContainer>
-            <header>
+            <Header>
                 <section>
-                    <DatePicker
-                        selectsStart
-                        endDate = { endDate }
-                        selected = { startDate }
-                        startDate = { startDate }
-                        onChange = { (date) => date && setStartDate(date) }
-                    />
-                    <DatePicker
-                        selectsEnd
-                        endDate = { endDate }
-                        minDate = { startDate }
-                        selected = { endDate }
-                        startDate = { startDate }
-                        onChange = { (date) => date && setEndDate(date) }
-                    />
-                    <input
-                        placeholder = 'Scene name'
-                        type = 'text'
-                    />
-                    <input
-                        type = 'number'
-                    />
-                    <input
-                        placeholder = 'Scene location'
-                        type = 'text'
-                    />
+                    <nav>
+                        <DatePicker
+                            selectsStart
+                            endDate = { endDate }
+                            selected = { startDate }
+                            startDate = { startDate }
+                            onChange = { (date) => date && void setStartDate(date) }
+                        />
+                        <DatePicker
+                            selectsEnd
+                            endDate = { endDate }
+                            minDate = { startDate }
+                            selected = { endDate }
+                            startDate = { startDate }
+                            onChange = { (date) => date && void setEndDate(date) }
+                        />
+                    </nav>
+                    <nav>
+                        <input
+                            type = 'number'
+                            value = { 0 }
+                        />
+                        <input
+                            placeholder = 'Location'
+                            type = 'text'
+                        />
+                    </nav>
                 </section>
-
-                <Button onClick = { () => push(`/${projectId}/create-scene`) }>Add new scene</Button>
-            </header>
+                <h2>Scenes</h2>
+                <Button onClick = { () => void push(`/${projectId}/create-scene`) }>Add new scene</Button>
+            </Header>
             <TableStyles>
                 <Table>
                     <TableHead
@@ -88,7 +89,7 @@ const Scenes: FC = () => {
                                 <Tr
                                     className = 'scenesTableRow'
                                     key = { id }
-                                    onClick = { () => sceneRedirectHandler(id) }>
+                                    onClick = { () => void sceneRedirectHandler(id) }>
                                     <Td>{`${sceneNumber}`}</Td>
                                     <Td>{location}</Td>
                                     <Td>
@@ -100,7 +101,7 @@ const Scenes: FC = () => {
                                                         backgroundColor: GREEN.main,
                                                         color:           '#fff',
                                                     }}
-                                                    onClick = { (event) => workdayRedirectHandler(
+                                                    onClick = { (event) => void workdayRedirectHandler(
                                                         event, workday.id,
                                                     ) }>
                                                     {workday.date}
@@ -117,7 +118,7 @@ const Scenes: FC = () => {
                                                         backgroundColor: ORANGE.secondary,
                                                         color:           '#fff',
                                                     }}
-                                                    onClick = { (event) => requisiteRedirectHandler(
+                                                    onClick = { (event) => void requisiteRedirectHandler(
                                                         event, requisite.id,
                                                     ) }>
                                                     {`#:${index}`}

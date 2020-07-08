@@ -1,0 +1,7 @@
+#import "./sceneFields.graphql"
+
+mutation UpdateScene($input: SceneUpdateInput!, $sceneId: String!) {
+    updateScene(input: $input, sceneId: $sceneId) {
+        ...sceneFields
+    }
+}

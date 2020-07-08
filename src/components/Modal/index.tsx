@@ -22,7 +22,7 @@ export const Modal: FC<PropTypes> = ({ children, closeHandler }) => {
 
     return (
         <S.ModalWrapper>
-            <S.ModalContainer onClick = { (event) => stopPropagation(event) }>
+            <S.ModalContainer onClick = { (event) => void stopPropagation(event) }>
                 <S.Cross onClick = { closeHandler ? closeHandler : hideModal } />
                 {children}
             </S.ModalContainer>

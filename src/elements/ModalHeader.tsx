@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, Ref, DetailedHTMLProps } from 'react';
 import styled from 'styled-components';
 
 // Styles
@@ -10,8 +10,6 @@ const HeaderContainer = styled.header`
     align-items: center;
     box-sizing: border-box;
 
-    background-color: blue;
-
     h1 {
         padding-left: 15px;
         font-family: PacificoRegular;
@@ -21,11 +19,12 @@ const HeaderContainer = styled.header`
 `;
 
 type PropTypes = {
-    children: string;
-}
+    children: string
+    ref?: Ref<HTMLElement>;
+} & DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
-export const ModalHeader: FC<PropTypes> = ({ children = '' }) => (
-    <HeaderContainer>
+export const ModalHeader: FC<PropTypes> = ({ children = '', ...otherProps }) => (
+    <HeaderContainer { ...otherProps }>
         <h1>{children}</h1>
     </HeaderContainer>
 );

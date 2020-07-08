@@ -26,14 +26,13 @@ const innitialForm = {
 };
 
 const CreateProject: FC = () => {
-    const { push, goBack } = useHistory();
+    const { goBack } = useHistory();
     const [ createProject ] = useCreateProjectMutation();
-    const [ form, setForm ] = useForm(innitialForm);
-
+    const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
 
-    const onSubmit = async (event: any) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const response = await createProject({
@@ -46,21 +45,16 @@ const CreateProject: FC = () => {
             },
         });
 
-        if (response && response.data) {
-            push('/');
-            console.log('onSubmit -> response.data', response.data);
-        }
+        response && response.data && void goBack();
     };
 
     return (
         <CreateProjectContainer>
             <nav>
-                <Button onClick = { () => goBack() }>
-                    Back
-                </Button>
+                <Button onClick = { goBack }>Back</Button>
             </nav>
             <main>
-                <form onSubmit = { (event) => onSubmit(event) }>
+                <form onSubmit = { onSubmit }>
                     <h2>Project title:</h2>
                     <input
                         name = 'title'
@@ -73,7 +67,7 @@ const CreateProject: FC = () => {
                         endDate = { endDate }
                         selected = { startDate }
                         startDate = { startDate }
-                        onChange = { (date) => date && setStartDate(date) }
+                        onChange = { (date) => date && void setStartDate(date) }
                     />
                     <h2>Project end:</h2>
                     <DatePicker
@@ -82,9 +76,9 @@ const CreateProject: FC = () => {
                         minDate = { startDate }
                         selected = { endDate }
                         startDate = { startDate }
-                        onChange = { (date) => date && setEndDate(date) }
+                        onChange = { (date) => date && void setEndDate(date) }
                     />
-                    <button type = 'submit'>Submit</button>
+                    <Button type = 'submit'>Submit</Button>
                 </form>
             </main>
         </CreateProjectContainer>

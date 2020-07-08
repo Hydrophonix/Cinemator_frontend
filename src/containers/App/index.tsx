@@ -32,6 +32,7 @@ export const App: FC = () => {
                     setAccessToken(accessToken);
                     client.writeData({ data: { isLoggedIn: true }});
                 }
+
                 setIsInitialized(true);
             })
             .catch(() => {

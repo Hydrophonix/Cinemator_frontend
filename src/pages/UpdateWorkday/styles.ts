@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import { GREEN } from '../../assets/globalStyles';
 
-export const CreateWorkdayContainer = styled.div`
+export const UpdateWorkdayContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;

@@ -13,53 +13,43 @@ import { useForm } from '../../hooks';
 import { useCreateRequisiteMutation } from '../../bus/Requisite';
 
 // Styles
-import { CreateRequisiteContainer } from './styles';
+import { CreateRequisiteContainer, Header } from './styles';
 
-const innitialForm = {
-    title:       '',
-    description: '',
-    pricePerDay: 0,
-};
+// Types
+import { RequisiteCreateInput } from '../../@types/graphql-global-types';
 
 export type Params = {
     projectId: string
 }
 
+const innitialForm = {
+    title:       '',
+    description: '',
+    isOrdered:   false,
+    pricePerDay: 0,
+};
+
 const CreateRequisite: FC = () => {
-    const { push, goBack } = useHistory();
+    const { goBack } = useHistory();
     const { projectId } = useParams<Params>();
     const [ createRequisite ] = useCreateRequisiteMutation({ projectId });
-    const [ form, setForm ] = useForm(innitialForm);
+    const [ form, setForm ] = useForm<RequisiteCreateInput>(innitialForm);
 
-    const onSubmit = async (event: any) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        const response = await createRequisite({
-            variables: {
-                input: {
-                    title:       form.title,
-                    description: form.description,
-                    isOrdered:   false,
-                    pricePerDay: form.pricePerDay,
-                },
-                projectId,
-            },
-        });
-
-        if (response && response.data) {
-            push(`/${projectId}/requisites`);
-        }
+        const response = await createRequisite({ variables: { input: form, projectId }});
+        response && response.data && void goBack();
     };
 
     return (
         <CreateRequisiteContainer>
-            <nav>
-                <Button onClick = { () => goBack() }>
-                    Back
-                </Button>
-            </nav>
+            <Header>
+                <Button onClick = { goBack }>Back</Button>
+                <h2>Create requisite</h2>
+                <div />
+            </Header>
             <main>
-                <form onSubmit = { (event) => onSubmit(event) }>
+                <form onSubmit = { onSubmit }>
                     <h2>Requisite title:</h2>
                     <input
                         name = 'title'
@@ -70,7 +60,7 @@ const CreateRequisite: FC = () => {
                     <h2>Requisite description:</h2>
                     <input
                         name = 'description'
-                        value = { form.description }
+                        value = { form.description ?? '' }
                         onChange = { setForm }
                     />
                     <h2>Requisite pricePerDay:</h2>
@@ -78,11 +68,10 @@ const CreateRequisite: FC = () => {
                         name = 'pricePerDay'
                         placeholder = 'Requisite pricePerDay'
                         type = 'number'
-                        value = { form.pricePerDay }
+                        value = { form.pricePerDay ?? '' }
                         onChange = { (event) => setForm(event, true) }
                     />
-
-                    <button type = 'submit'>Submit</button>
+                    <Button type = 'submit'>Submit</Button>
                 </form>
             </main>
         </CreateRequisiteContainer>

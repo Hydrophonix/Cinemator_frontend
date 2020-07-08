@@ -18,7 +18,7 @@ import { useCreateWorkdayMutation } from '../../bus/Workday';
 import { transformDateToISO8601 } from '../../utils';
 
 // Styles
-import { CreateWorkdayContainer } from './styles';
+import { CreateWorkdayContainer, Header } from './styles';
 
 const innitialForm = {
     title: '',
@@ -30,15 +30,13 @@ export type Params = {
 }
 
 const CreateWorkday: FC = () => {
-    const { push, goBack } = useHistory();
+    const { goBack } = useHistory();
     const { projectId, date } = useParams<Params>();
-    const [ createWorkday, { loading }] = useCreateWorkdayMutation({ projectId });
-    // console.log('CreateWorkday:FC -> a', loading);
-
-    const [ form, setForm ] = useForm(innitialForm);
+    const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
     const [ startDate, setStartDate ] = useState(new Date(date));
+    const [ createWorkday ] = useCreateWorkdayMutation({ projectId });
 
-    const onSubmit = async (event: any) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const response = await createWorkday({
@@ -51,20 +49,18 @@ const CreateWorkday: FC = () => {
             },
         });
 
-        if (response && response.data) {
-            push(`/${projectId}/calendar`);
-        }
+        response && response.data && void goBack();
     };
 
     return (
         <CreateWorkdayContainer>
-            <nav>
-                <Button onClick = { () => goBack() }>
-                    Back
-                </Button>
-            </nav>
+            <Header>
+                <Button onClick = { goBack }>Back</Button>
+                <h2>Create workday {date}</h2>
+                <div/>
+            </Header>
             <main>
-                <form onSubmit = { (event) => onSubmit(event) }>
+                <form onSubmit = { onSubmit }>
                     <h2>Workday title:</h2>
                     <input
                         name = 'title'
@@ -75,9 +71,9 @@ const CreateWorkday: FC = () => {
                     <DatePicker
                         disabled
                         selected = { startDate }
-                        onChange = { (date) => date && setStartDate(date) }
+                        onChange = { (date) => date && void setStartDate(date) }
                     />
-                    <button type = 'submit'>Submit</button>
+                    <Button type = 'submit'>Submit</Button>
                 </form>
             </main>
         </CreateWorkdayContainer>

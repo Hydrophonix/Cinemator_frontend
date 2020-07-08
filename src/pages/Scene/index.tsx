@@ -28,7 +28,6 @@ type Params = {
 }
 const Scene: FC = () => {
     const { goBack, push } = useHistory();
-    const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, sceneId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
@@ -49,41 +48,40 @@ const Scene: FC = () => {
         requisiteData.requisites, requisiteIds, (value, other) => value.id === other,
     );
 
-    const requisiteRedirectHandler = (requisiteId: string) => push(`/${projectId}/requisites/${requisiteId}`);
+    const requisiteRedirectHandler = (requisiteId: string) => void push(`/${projectId}/requisites/${requisiteId}`);
     const sceneRedirectHandler = (event: any, sceneId: string) => {
         event.stopPropagation();
         push(`/${projectId}/scenes/${sceneId}`);
     };
     const deleteSceneHandler = async () => {
         const response = await deleteScene();
-
-        if (response && response.data) {
-            push(`/${projectId}/scenes`);
-        }
+        response && response.data && void push(`/${projectId}/scenes`);
     };
 
     return (
         <SceneContainer>
             <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
                 <SceneRequisitesModal
-                    closeHandler = { () => push(`/${projectId}/scenes/${sceneId}`) }
+                    closeHandler = { () => void push(`/${projectId}/scenes/${sceneId}`) }
                     requisiteIds = { requisiteIds }
                 />
             </Route>
             <SceneHeader>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/scenes`) }>To scenes</Button>
-                    <Button onClick = { () => goBack() }>Go back</Button>
+                    <Button onClick = { () => void push(`/${projectId}/scenes`) }>To scenes</Button>
+                    <Button onClick = { goBack }>Go back</Button>
                 </div>
                 <h2>{`Scene: ${scene.sceneNumber}`}</h2>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>Add requisite</Button>
-                    <Button onClick = { () => setIsEdit(!isEdit) }>
-                        {isEdit ? 'Save' : 'Edit'}
+                    <Button onClick = { () => void push(
+                        `/${projectId}/scenes/${sceneId}/add-requisites`,
+                    ) }>
+                        Add requisite
                     </Button>
-                    <Button onClick = { deleteSceneHandler }>
-                        Delete
+                    <Button onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
+                        Update
                     </Button>
+                    <Button onClick = { deleteSceneHandler }>Delete</Button>
                 </div>
             </SceneHeader>
             {
@@ -99,7 +97,7 @@ const Scene: FC = () => {
                                     <Tr
                                         className = 'requisitesTableRow'
                                         key = { id }
-                                        onClick = { () => requisiteRedirectHandler(id) }>
+                                        onClick = { () => void requisiteRedirectHandler(id) }>
                                         <Td>{1}</Td>
                                         <Td>{title}</Td>
                                         <Td>
@@ -111,9 +109,9 @@ const Scene: FC = () => {
                                                             backgroundColor: BLUE.secondary,
                                                             color:           '#fff',
                                                         }}
-                                                        onClick = {
-                                                            (event) => sceneRedirectHandler(event, scene.id)
-                                                        }>
+                                                        onClick = { (event) => void sceneRedirectHandler(
+                                                            event, scene.id,
+                                                        ) }>
                                                         S:{`${scene.sceneNumber}`}
                                                     </Button>
                                                 ))

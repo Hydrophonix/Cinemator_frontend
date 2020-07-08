@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 import _ from 'lodash';
@@ -30,7 +30,6 @@ type Params = {
 const Workday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
-    const [ isEdit, setIsEdit ] = useState(false);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
     const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId });
@@ -50,7 +49,7 @@ const Workday: FC = () => {
         scenesData.scenes, sceneIds, (value, other) => value.id === other,
     );
 
-    const sceneRedirectHandler = (sceneId: string) => push(`/${projectId}/scenes/${sceneId}`);
+    const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
     const workdayRedirectHandler = (event: any, workdayId: string) => {
         event.stopPropagation();
         push(`/${projectId}/calendar/${workdayId}`);
@@ -62,30 +61,31 @@ const Workday: FC = () => {
 
     const deleteWorkdayHandler = async () => {
         const response = await deleteWorkday();
-
-        if (response && response.data) {
-            push(`/${projectId}/calendar`);
-        }
+        response && response.data && void push(`/${projectId}/calendar`);
     };
 
     return (
         <WorkdayContainer>
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
                 <WorkdayScenesModal
-                    closeHandler = { () => push(`/${projectId}/calendar/${workdayId}`) }
+                    closeHandler = { () => void push(`/${projectId}/calendar/${workdayId}`) }
                     sceneIds = { sceneIds }
                 />
             </Route>
             <WorkdayHeader>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/calendar`) }>To calendar</Button>
-                    <Button onClick = { () => goBack() }>Go back</Button>
+                    <Button onClick = { () => void push(`/${projectId}/calendar`) }>To calendar</Button>
+                    <Button onClick = { goBack }>Go back</Button>
                 </div>
-                <h2>{workday.date}</h2>
+                <h2>Workday: {workday.date}</h2>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>Add scene</Button>
-                    <Button onClick = { () => setIsEdit(!isEdit) }>
-                        {isEdit ? 'Save' : 'Edit'}
+                    <Button onClick = { () => void push(
+                        `/${projectId}/calendar/${workdayId}/add-scenes`,
+                    ) }>
+                        Add scene
+                    </Button>
+                    <Button onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
+                        Update
                     </Button>
                     <Button onClick = { deleteWorkdayHandler }>Delete</Button>
                 </div>
@@ -103,7 +103,7 @@ const Workday: FC = () => {
                                     <Tr
                                         className = 'scenesTableRow'
                                         key = { id }
-                                        onClick = { () => sceneRedirectHandler(id) }>
+                                        onClick = { () => void sceneRedirectHandler(id) }>
                                         <Td>{`${sceneNumber}`}</Td>
                                         <Td>{location}</Td>
                                         <Td>
@@ -120,7 +120,7 @@ const Workday: FC = () => {
                                                                 backgroundColor: GREEN.main,
                                                                 color:           '#fff',
                                                             }}
-                                                            onClick = { (event) => workdayRedirectHandler(
+                                                            onClick = { (event) => void workdayRedirectHandler(
                                                                 event, mappedWorkday.id,
                                                             ) }>
                                                             {mappedWorkday.date}
@@ -138,7 +138,7 @@ const Workday: FC = () => {
                                                             backgroundColor: ORANGE.secondary,
                                                             color:           '#fff',
                                                         }}
-                                                        onClick = { (event) => requisiteRedirectHandler(
+                                                        onClick = { (event) => void requisiteRedirectHandler(
                                                             event, requisite.id,
                                                         ) }>
                                                         {`#:${index}`}

@@ -39,22 +39,21 @@ const Requisite: FC = () => {
 
     const deleteRequisiteHandler = async () => {
         const response = await deleteRequisite();
-
-        if (response && response.data) {
-            push(`/${projectId}/requisites`);
-        }
+        response && response.data && void push(`/${projectId}/requisites`);
     };
 
     return (
         <RequisiteContainer>
             <RequisiteHeader>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/requisites`) }>To requisites</Button>
-                    <Button onClick = { () => goBack() }>Go back</Button>
+                    <Button onClick = { () => void push(`/${projectId}/requisites`) }>To requisites</Button>
+                    <Button onClick = { goBack }>Go back</Button>
                 </div>
-                <h2>{requisite.title}</h2>
+                <h2>Requisite: {1}</h2>
                 <div>
-                    <Button onClick = { () => setIsEdit(!isEdit) }>Edit</Button>
+                    <Button onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
+                        Update
+                    </Button>
                     <Button onClick = { deleteRequisiteHandler }>Delete</Button>
                 </div>
             </RequisiteHeader>

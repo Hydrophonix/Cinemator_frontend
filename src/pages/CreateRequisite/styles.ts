@@ -1,15 +1,12 @@
 // Core
 import styled from 'styled-components';
+import { ORANGE } from '../../assets/globalStyles';
 
 export const CreateRequisiteContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 10px;
-    
-    nav {
-        display: flex;
-    }
+    background-color: ${ORANGE.containerBg};
 
     main {
         display: flex;
@@ -29,5 +26,18 @@ export const CreateRequisiteContainer = styled.div`
                 margin-top: 5px;
             }
         }
+    }
+`;
+
+export const Header = styled.header`
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: ${ORANGE.secondary};
+
+    h2 {
+        font-size: 24px;
+        font-family: sans-serif;
+        color: #fff;
     }
 `;

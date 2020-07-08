@@ -6,12 +6,13 @@ import { ORANGE } from '../../assets/globalStyles';
 
 export const RequisiteContainer = styled.section`
     width: 100%;
+    background-color: ${ORANGE.containerBg};
 `;
 
 export const RequisiteHeader = styled.header`
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 5px;
     background-color: ${ORANGE.secondary};
 
     h2 {

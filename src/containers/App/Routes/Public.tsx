@@ -13,13 +13,11 @@ export const Public: FC = () => {
                 path = '/login'>
                 <Login />
             </Route>
-
             <Route
                 exact
                 path = '/register'>
                 <Register />
             </Route>
-
             <Redirect to = '/login' />
         </Switch>
     );

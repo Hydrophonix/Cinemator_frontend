@@ -6,6 +6,7 @@ import { GREEN } from '../../assets/globalStyles';
 
 export const WorkdayContainer = styled.section`
     width: 100%;
+    background-color: ${GREEN.containerBg};
 `;
 
 export const WorkdayHeader = styled.header`

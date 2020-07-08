@@ -6,6 +6,7 @@ import { BLUE } from '../../assets/globalStyles';
 
 export const SceneContainer = styled.section`
     width: 100%;
+    background-color: ${BLUE.containerBg};
 `;
 
 export const SceneHeader = styled.header`

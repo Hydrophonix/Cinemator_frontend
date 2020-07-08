@@ -21,6 +21,9 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 import { TableStyles } from '../../assets';
 
+// Instrunments
+import { BLUE } from '../../assets/globalStyles';
+
 // Types
 type Params = {
     projectId: string
@@ -44,15 +47,12 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
 
     const addScenesToWorkdayHandler = async () => {
         const response = await updateWorkdayScenes({ variables: { workdayId, sceneIds: scenesIdsArray }});
-
-        if (response && response.data) {
-            closeHandler();
-        }
+        response && response.data && void closeHandler();
     };
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader>Add scenes</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: BLUE.secondary }}>Add scenes</ModalHeader>
             <Main>
                 <TableStyles>
                     <Table>
@@ -69,7 +69,7 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
                                         style = { scenesIdsArray.includes(id)
                                             ? { backgroundColor: 'lightgreen' } : {}
                                         }
-                                        onClick = { () => setScenesIdsArray(id) }>
+                                        onClick = { () => void setScenesIdsArray(id) }>
                                         <Td>{`${sceneNumber}`}</Td>
                                         <Td>{location}</Td>
                                     </Tr>
@@ -79,7 +79,7 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
                     </Table>
                 </TableStyles>
             </Main>
-            <Footer>
+            <Footer style = {{ backgroundColor: BLUE.main }}>
                 <Button onClick = { addScenesToWorkdayHandler }>Save</Button>
             </Footer>
         </Modal>
