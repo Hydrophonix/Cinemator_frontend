@@ -66,7 +66,6 @@ const Scenes: FC = () => {
                     <nav>
                         <input
                             type = 'number'
-                            value = { 0 }
                         />
                         <input
                             placeholder = 'Location'
@@ -121,7 +120,7 @@ const Scenes: FC = () => {
                                                     onClick = { (event) => void requisiteRedirectHandler(
                                                         event, requisite.id,
                                                     ) }>
-                                                    {`#:${index}`}
+                                                    {requisite.title}
                                                 </Button>
                                             ))
                                         }

@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 import _ from 'lodash';

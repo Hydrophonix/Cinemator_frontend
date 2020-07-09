@@ -3,6 +3,7 @@ import { lazy } from 'react';
 
 export const Login = lazy(() => import(/* webpackChunkName: "Login" */ './Login'));
 export const Register = lazy(() => import(/* webpackChunkName: "Register" */ './Register'));
+export const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ './Profile'));
 
 export const Projects = lazy(() => import(/* webpackChunkName: "Projects" */ './Projects'));
 export const CreateProject = lazy(() => import(/* webpackChunkName: "CreateProject" */ './CreateProject'));

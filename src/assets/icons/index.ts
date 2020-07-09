@@ -1,14 +1,18 @@
 // Core
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-    faSun,
-    faMoon,
     faCompactDisc,
     faEdit,
     faTrashAlt,
+    faUserAstronaut,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const initIconsLibrary = () => library.add(faSun, faMoon, faCompactDisc, faEdit, faTrashAlt);
+export const initIconsLibrary = () => library.add(
+    faCompactDisc,
+    faEdit,
+    faTrashAlt,
+    faUserAstronaut,
+);
 
 // Add icon objects to library to use in components like that:
 // import React from 'react'

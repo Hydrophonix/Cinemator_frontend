@@ -62,7 +62,6 @@ const Requisites: FC = () => {
                     <nav>
                         <input
                             type = 'number'
-                            value = { 0 }
                         />
                         <input
                             placeholder = 'Title'

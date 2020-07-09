@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Components
@@ -22,7 +22,6 @@ type Params = {
 
 const Requisite: FC = () => {
     const { goBack, push } = useHistory();
-    const [ isEdit, setIsEdit ] = useState(false);
     const { projectId, requisiteId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ deleteRequisite ] = useDeleteRequisiteMutation({ projectId, requisiteId });

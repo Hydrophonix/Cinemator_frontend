@@ -6,7 +6,7 @@ import { Switch, Route, Redirect, useHistory, useLocation } from 'react-router-d
 import { Project } from '../../Project';
 
 // Pages
-import { Projects, CreateProject } from '../../../pages';
+import { Projects, CreateProject, Profile } from '../../../pages';
 
 export const Private: FC = () => {
     const { push } = useHistory();
@@ -20,6 +20,11 @@ export const Private: FC = () => {
 
     return (
         <Switch>
+            <Route
+                exact
+                path = '/profile'>
+                <Profile />
+            </Route>
             <Route
                 exact
                 path = '/create-project'>

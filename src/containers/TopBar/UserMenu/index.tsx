@@ -1,26 +1,27 @@
 // Core
 import React, { FC } from 'react';
-// import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHistory } from 'react-router-dom';
 
-// Types
-// import { ThemesKeys } from '../../theme';
-
-// Components
-
-// Images
+// Hooks
+import { useCustomLocalQuery } from '../../../hooks';
 
 // Styles
-import { UserMenuContainer } from './styles';
-
-// type PropTypes = {
-//     themeName: ThemesKeys;
-//     setThemeName: (value: ThemesKeys) => void;
-// };
+import { Container } from './styles';
 
 export const UserMenu: FC = () => {
+    const { push } = useHistory();
+    const { data } = useCustomLocalQuery('isLoggedIn');
+
     return (
-        <UserMenuContainer>
-            UserIcon
-        </UserMenuContainer>
+        <Container
+            isActive = { data!.isLoggedIn }
+            onClick = { () => data!.isLoggedIn && void push('/profile') }>
+            <FontAwesomeIcon
+                icon = 'user-astronaut'
+                size = { '3x' }
+                title = { data!.isLoggedIn ? 'Enter profile' : 'Login before use profile.' }
+            />
+        </Container>
     );
 };

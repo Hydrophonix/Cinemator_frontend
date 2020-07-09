@@ -141,7 +141,7 @@ const Workday: FC = () => {
                                                         onClick = { (event) => void requisiteRedirectHandler(
                                                             event, requisite.id,
                                                         ) }>
-                                                        {`#:${index}`}
+                                                        {requisite.title}
                                                     </Button>
                                                 ))
                                             }

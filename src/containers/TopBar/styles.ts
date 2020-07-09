@@ -24,7 +24,12 @@ export const TopbarContainer = styled.header`
 `;
 
 export const Logo = styled.img`
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.9;
+    } 
 `;
