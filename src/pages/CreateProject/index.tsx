@@ -12,7 +12,7 @@ import { ErrorBoundary } from '../../components';
 import { Button } from '../../elements';
 
 // Assets
-import { CreateProjectContainer } from './styles';
+import { Container, Header } from './styles';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -49,10 +49,13 @@ const CreateProject: FC = () => {
     };
 
     return (
-        <CreateProjectContainer>
-            <nav>
-                <Button onClick = { goBack }>Back</Button>
-            </nav>
+        <Container>
+            <Header>
+                <div>
+                    <Button onClick = { goBack }>Back</Button>
+                </div>
+                <h2>Create project</h2>
+            </Header>
             <main>
                 <form onSubmit = { onSubmit }>
                     <h2>Project title:</h2>
@@ -81,7 +84,7 @@ const CreateProject: FC = () => {
                     <Button type = 'submit'>Submit</Button>
                 </form>
             </main>
-        </CreateProjectContainer>
+        </Container>
     );
 };
 

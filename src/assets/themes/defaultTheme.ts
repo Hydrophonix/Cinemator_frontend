@@ -20,11 +20,11 @@ export const defaultTheme = {
         secondary: '#FFEE58',
         error:     'red',
     },
-    profile: {
-        primary:        '#629460',
-        secondary:      '#96be8c',
-        hoverSecondary: null,
-        containerBg:    '#d8f3dc',
+    project: {
+        primary:        '#5f00a8',
+        secondary:      '#7526a6',
+        hoverSecondary: '#9338d9',
+        containerBg:    '#e3caf5',
     },
     workday: {
         primary:        '#629460',

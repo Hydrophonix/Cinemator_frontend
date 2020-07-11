@@ -1,6 +1,5 @@
 fragment projectFields on Project {
     id
-    ownerId
     startDay
     endDay
     title

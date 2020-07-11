@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div<{ isActive: boolean }>`
     display: flex;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 100%;
     background-color: #fff;
     overflow: hidden;
@@ -12,15 +12,15 @@ export const Container = styled.div<{ isActive: boolean }>`
     justify-content: center;
     align-items: center;
 
-    ${({ isActive }) => isActive ? {
+    ${({ isActive, theme }) => isActive ? {
         cursor:       'pointer',
         'svg > path': {
-            fill:       'dodgerblue',
+            fill:       theme.project.secondary,
             transition: 'fill 0.5s',
         },
         '&:hover': {
             'svg > path': {
-                fill: 'blue',
+                fill: theme.project.hoverSecondary,
             },
         },
     } : {

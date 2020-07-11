@@ -5,6 +5,7 @@ import {
     faEdit,
     faTrashAlt,
     faUserAstronaut,
+    faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const initIconsLibrary = () => library.add(
@@ -12,6 +13,7 @@ export const initIconsLibrary = () => library.add(
     faEdit,
     faTrashAlt,
     faUserAstronaut,
+    faArrowRight,
 );
 
 // Add icon objects to library to use in components like that:
