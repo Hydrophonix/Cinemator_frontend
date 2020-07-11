@@ -1,7 +1,8 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { ThemeContext } from 'styled-components';
 import _ from 'lodash';
 
 // Components
@@ -18,9 +19,6 @@ import { Button } from '../../elements';
 import { SceneContainer, SceneHeader } from './styles';
 import { TableStyles } from '../../assets';
 
-// Instruments
-import { BLUE } from '../../assets/globalStyles';
-
 // Types
 type Params = {
     projectId: string
@@ -29,6 +27,7 @@ type Params = {
 const Scene: FC = () => {
     const { goBack, push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
     const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
@@ -89,11 +88,11 @@ const Scene: FC = () => {
                     <Table>
                         <TableHead
                             className = 'requisitesTableHead'
-                            ThNames = { [ '#', 'Title', 'Scenes', 'isOrdered', 'pricePerDay' ] }
+                            ThNames = { [ '#', 'Title', 'Another scenes' ] }
                         />
                         <Tbody>
                             {
-                                sceneRequisites.map(({ id, title, scenes, isOrdered, pricePerDay }) => (
+                                sceneRequisites.map(({ id, title, scenes }) => (
                                     <Tr
                                         className = 'requisitesTableRow'
                                         key = { id }
@@ -102,23 +101,27 @@ const Scene: FC = () => {
                                         <Td>{title}</Td>
                                         <Td>
                                             {
-                                                scenes.map((scene, index) => (
-                                                    <Button
-                                                        key = { index }
-                                                        style = {{
-                                                            backgroundColor: BLUE.secondary,
-                                                            color:           '#fff',
-                                                        }}
-                                                        onClick = { (event) => void sceneRedirectHandler(
-                                                            event, scene.id,
-                                                        ) }>
-                                                        S:{`${scene.sceneNumber}`}
-                                                    </Button>
-                                                ))
+                                                scenes.map((mappedScene, index) => {
+                                                    if (mappedScene.sceneNumber === scene.sceneNumber) {
+                                                        return null;
+                                                    }
+
+                                                    return (
+                                                        <Button
+                                                            key = { index }
+                                                            style = {{
+                                                                backgroundColor: theme.scene.secondary,
+                                                                color:           '#fff',
+                                                            }}
+                                                            onClick = { (event) => void sceneRedirectHandler(
+                                                                event, mappedScene.id,
+                                                            ) }>
+                                                            S:{`${mappedScene.sceneNumber}`}
+                                                        </Button>
+                                                    );
+                                                })
                                             }
                                         </Td>
-                                        <Td>{isOrdered ? 'Yes' : 'No'}</Td>
-                                        <Td>{pricePerDay || ' Free'}</Td>
                                     </Tr>
                                 ))
                             }

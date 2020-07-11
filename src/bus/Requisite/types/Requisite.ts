@@ -18,8 +18,6 @@ export interface Requisite_requisite {
   id: string;
   title: string;
   description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   scenes: Requisite_requisite_scenes[];
 }
 

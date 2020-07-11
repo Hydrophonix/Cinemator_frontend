@@ -1,8 +1,9 @@
 
 // Core
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table, Tbody, Tr, Td  } from 'react-super-responsive-table';
+import { ThemeContext } from 'styled-components';
 
 // Components
 import { Modal, TableHead } from '..';
@@ -21,22 +22,19 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 import { TableStyles } from '../../assets';
 
-// Instrunments
-import { ORANGE } from '../../assets/globalStyles';
-
 // Types
+type PropTypes = {
+    closeHandler: () => void
+    requisiteIds: Array<string>
+}
 type Params = {
     projectId: string
     sceneId: string
 }
 
-type PropTypes = {
-    closeHandler: () => void
-    requisiteIds: Array<string>
-}
-
 export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds }) => {
     const { projectId, sceneId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
     const [ requisitesIdsArray, setRequisitesIdsArray ] = useArrayOfStringsForm(requisiteIds);
@@ -52,7 +50,7 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader style = {{ backgroundColor: ORANGE.secondary }}>Add requisites</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Add requisites</ModalHeader>
             <Main>
                 <TableStyles>
                     <Table>
@@ -80,7 +78,7 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
                     </Table>
                 </TableStyles>
             </Main>
-            <Footer style = {{ backgroundColor: ORANGE.main }}>
+            <Footer style = {{ backgroundColor: theme.requisite.primary }}>
                 <Button onClick = { addRequsitesToSceneHandler }>Save</Button>
             </Footer>
         </Modal>

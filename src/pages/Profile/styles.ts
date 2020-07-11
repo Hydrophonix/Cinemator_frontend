@@ -1,12 +1,9 @@
 // Core
 import styled from 'styled-components';
 
-// Instrumnets
-import { BLUE } from '../../assets/globalStyles';
-
 export const Container = styled.section`
     width: 100%;
-    background-color: ${BLUE.containerBg};
+    background-color: ${({ theme }) => theme.scene.containerBg};
     flex: 1;
 
     main {
@@ -33,7 +30,7 @@ export const Container = styled.section`
 export const Header = styled.header`
     display: grid;
     box-sizing: border-box;
-    background-color: ${BLUE.secondary};
+    background-color: ${({ theme }) => theme.scene.secondary};
     grid-template-columns:  15% 70% 15%;
     padding: 10px;
 

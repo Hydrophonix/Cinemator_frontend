@@ -1,12 +1,11 @@
 // Core
 import styled from 'styled-components';
-import { ORANGE } from '../../assets/globalStyles';
 
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-color: ${ORANGE.containerBg};
+    background-color: ${({ theme }) => theme.requisite.containerBg};
 
     main {
         display: flex;
@@ -33,7 +32,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    background-color: ${ORANGE.secondary};
+    background-color: ${({ theme }) => theme.requisite.secondary};
 
     h2 {
         font-size: 24px;

@@ -24,7 +24,7 @@ type Params = {
 }
 
 const initialForm = {
-    title:       '',
+    // description:       '', // TODO: ADD field description to scene entity
     location:    '',
     sceneNumber: 0,
 };
@@ -39,7 +39,7 @@ const UpdateScene: FC = () => {
 
     useEffect(() => {
         scene && void setInitialForm({
-            title:       scene.title ?? '',
+            // title:       scene.description ?? '',
             location:    scene.location ?? '',
             sceneNumber: scene.sceneNumber,
         });
@@ -64,13 +64,13 @@ const UpdateScene: FC = () => {
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
-                    <h2>Title:</h2>
-                    <input
-                        name = 'title'
-                        placeholder = 'Title'
-                        value = { form.title ?? '' }
+                    {/* <h2>Description:</h2>
+                    <textarea
+                        name = 'description'
+                        placeholder = 'Description'
+                        value = { form.description ?? '' }
                         onChange = { setForm }
-                    />
+                    /> */}
                     <h2>Location:</h2>
                     <input
                         name = 'location'

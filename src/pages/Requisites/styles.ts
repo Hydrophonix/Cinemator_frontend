@@ -1,14 +1,11 @@
 // Core
 import styled from 'styled-components';
 
-// Instruments
-import { ORANGE } from '../../assets/globalStyles';
-
 export const RequisiteContainer = styled.header`
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: ${ORANGE.containerBg};
+    background-color: ${({ theme }) => theme.requisite.containerBg};
 `;
 
 export const Header = styled.header`
@@ -17,7 +14,7 @@ export const Header = styled.header`
     align-items: center;
     padding:  5px;
     box-sizing: border-box;
-    background-color: ${ORANGE.secondary};
+    background-color: ${({ theme }) => theme.requisite.secondary};
 
     section {
         display: flex;

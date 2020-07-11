@@ -42,16 +42,16 @@ const StyledInput = styled.input<StyledInputProps>`
     padding: 5px;
     font-size: 16px;
     border-radius: 10px;
-    background-color: ${({ theme }) => theme.primaryVariant};
-    border-color: ${({ theme, error }) => error ? theme.error : theme.surface};
+    background-color: ${({ theme }) => theme.input.primary};
+    border-color: ${({ theme, error }) => error ? theme.input.error : theme.input.secondary};
 
     &::placeholder {
-        color: ${({ theme }) => theme.primary};
+        color: ${({ theme }) => theme.input.primary};
     }
 
     &:focus {
         outline: none;
-        border-color: ${({ theme, error }) => error ? theme.errorVariant : theme.secondaryVariant};
+        border-color: ${({ theme, error }) => error ? theme.input.error : theme.input.secondary};
     }
 `;
 
@@ -65,5 +65,5 @@ const ErrorMessage = styled.span`
     font-size: 14px;
     padding-left: 6px;
     padding-top: 2px;
-    color: ${({ theme }) => theme.error};
+    color: ${({ theme }) => theme.input.error};
 `;

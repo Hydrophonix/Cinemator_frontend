@@ -36,7 +36,6 @@ export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes_requisite
 export interface UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes {
   __typename: "Scene";
   id: string;
-  title: string | null;
   location: string | null;
   sceneNumber: number;
   workdays: UpdateWorkdayScenes_updateWorkdayScenes_updatedScenes_workdays[];

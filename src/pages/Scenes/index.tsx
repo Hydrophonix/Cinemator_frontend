@@ -1,9 +1,10 @@
 // Core
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { ThemeContext } from 'styled-components';
 
 // Apollo Hooks
 import { useScenesQuery } from '../../bus/Scene';
@@ -18,12 +19,12 @@ import { Button } from '../../elements';
 import { TableStyles } from '../../assets';
 import { ScenesContainer, Header } from './styles';
 
-// Instruments
-import { GREEN, ORANGE } from '../../assets/globalStyles';
+type Params = { projectId: string };
 
 const Scenes: FC = () => {
     const { push } = useHistory();
-    const { projectId } = useParams<{ projectId: string }>();
+    const { projectId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
@@ -97,7 +98,7 @@ const Scenes: FC = () => {
                                                 <Button
                                                     key = { index }
                                                     style = {{
-                                                        backgroundColor: GREEN.main,
+                                                        backgroundColor: theme.workday.primary,
                                                         color:           '#fff',
                                                     }}
                                                     onClick = { (event) => void workdayRedirectHandler(
@@ -114,7 +115,7 @@ const Scenes: FC = () => {
                                                 <Button
                                                     key = { index }
                                                     style = {{
-                                                        backgroundColor: ORANGE.secondary,
+                                                        backgroundColor: theme.requisite.secondary,
                                                         color:           '#fff',
                                                     }}
                                                     onClick = { (event) => void requisiteRedirectHandler(

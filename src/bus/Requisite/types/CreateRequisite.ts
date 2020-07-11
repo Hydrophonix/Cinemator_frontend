@@ -20,8 +20,6 @@ export interface CreateRequisite_createRequisite {
   id: string;
   title: string;
   description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   scenes: CreateRequisite_createRequisite_scenes[];
 }
 

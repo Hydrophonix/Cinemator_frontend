@@ -1,9 +1,10 @@
 // Core
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { ThemeContext } from 'styled-components';
 
 // Apollo Hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
@@ -18,12 +19,10 @@ import { Button } from '../../elements';
 import { TableStyles } from '../../assets';
 import { RequisiteContainer, Header } from './styles';
 
-// Instruments
-import { BLUE } from '../../assets/globalStyles';
-
 const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<{ projectId: string }>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
@@ -76,11 +75,11 @@ const Requisites: FC = () => {
                 <Table>
                     <TableHead
                         className = 'requisitesTableHead'
-                        ThNames = { [ '#', 'Title', 'Scenes', 'isOrdered', 'pricePerDay' ] }
+                        ThNames = { [ '#', 'Title', 'Scenes' ] }
                     />
                     <Tbody>
                         {
-                            data.requisites.map(({ id, title, scenes, isOrdered, pricePerDay }) => (
+                            data.requisites.map(({ id, title, scenes }) => (
                                 <Tr
                                     className = 'requisitesTableRow'
                                     key = { id }
@@ -93,7 +92,7 @@ const Requisites: FC = () => {
                                                 <Button
                                                     key = { index }
                                                     style = {{
-                                                        backgroundColor: BLUE.secondary,
+                                                        backgroundColor: theme.scene.secondary,
                                                         color:           '#fff',
                                                     }}
                                                     onClick = {
@@ -104,8 +103,6 @@ const Requisites: FC = () => {
                                             ))
                                         }
                                     </Td>
-                                    <Td>{isOrdered ? 'Yes' : 'No'}</Td>
-                                    <Td>{pricePerDay || ' Free'}</Td>
                                 </Tr>
                             ))
                         }

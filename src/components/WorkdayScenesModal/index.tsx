@@ -1,8 +1,9 @@
 
 // Core
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { ThemeContext } from 'styled-components';
 
 // Components
 import { Modal, TableHead } from '..';
@@ -21,9 +22,6 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 import { TableStyles } from '../../assets';
 
-// Instrunments
-import { BLUE } from '../../assets/globalStyles';
-
 // Types
 type Params = {
     projectId: string
@@ -37,6 +35,7 @@ type PropTypes = {
 
 export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scenesIds }) => {
     const { projectId, workdayId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
     const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(scenesIds);
@@ -52,7 +51,7 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader style = {{ backgroundColor: BLUE.secondary }}>Add scenes</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Add scenes</ModalHeader>
             <Main>
                 <TableStyles>
                     <Table>
@@ -79,7 +78,7 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
                     </Table>
                 </TableStyles>
             </Main>
-            <Footer style = {{ backgroundColor: BLUE.main }}>
+            <Footer style = {{ backgroundColor: theme.scene.primary }}>
                 <Button onClick = { addScenesToWorkdayHandler }>Save</Button>
             </Footer>
         </Modal>

@@ -9,12 +9,12 @@ interface SpinnerProps {
 }
 
 export const Spinner: FC<SpinnerProps> = ({ size = '2x' }) => {
-    const { primary } = useContext(ThemeContext);
+    const { icon } = useContext(ThemeContext);
 
     return (
         <FontAwesomeIcon
             spin
-            color = { primary }
+            color = { icon.primary }
             cursor = 'pointer'
             icon = 'compact-disc'
             size = { size }

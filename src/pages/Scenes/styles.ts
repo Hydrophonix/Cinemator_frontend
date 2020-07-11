@@ -1,14 +1,11 @@
 // Core
 import styled from 'styled-components';
 
-// Instruments
-import { BLUE } from '../../assets';
-
 export const ScenesContainer = styled.section`
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: ${BLUE.containerBg};
+    background-color: ${({ theme }) => theme.scene.containerBg};
 `;
 
 export const Header = styled.header`
@@ -17,7 +14,7 @@ export const Header = styled.header`
     align-items: center;
     padding:  5px;
     box-sizing: border-box;
-    background-color: ${BLUE.secondary};
+    background-color: ${({ theme }) => theme.scene.secondary};
 
     section {
         display: flex;

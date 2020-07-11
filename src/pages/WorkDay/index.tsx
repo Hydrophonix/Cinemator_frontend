@@ -1,7 +1,8 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { ThemeContext } from 'styled-components';
 import _ from 'lodash';
 
 // Components
@@ -18,9 +19,6 @@ import { Button } from '../../elements';
 import { WorkdayContainer, WorkdayHeader } from './styles';
 import { TableStyles } from '../../assets';
 
-// Instrumnets
-import { GREEN, ORANGE } from '../../assets/globalStyles';
-
 // Types
 type Params = {
     projectId: string
@@ -30,6 +28,7 @@ type Params = {
 const Workday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
     const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId });
@@ -95,7 +94,7 @@ const Workday: FC = () => {
                     <Table>
                         <TableHead
                             className = 'scenesTableHead'
-                            ThNames = { [ '#', 'Location', 'Workdays', 'Requisites' ] }
+                            ThNames = { [ '#', 'Location', 'Another workdays', 'Requisites' ] }
                         />
                         <Tbody>
                             {
@@ -117,7 +116,7 @@ const Workday: FC = () => {
                                                         <Button
                                                             key = { index }
                                                             style = {{
-                                                                backgroundColor: GREEN.main,
+                                                                backgroundColor: theme.workday.primary,
                                                                 color:           '#fff',
                                                             }}
                                                             onClick = { (event) => void workdayRedirectHandler(
@@ -135,7 +134,7 @@ const Workday: FC = () => {
                                                     <Button
                                                         key = { index }
                                                         style = {{
-                                                            backgroundColor: ORANGE.secondary,
+                                                            backgroundColor: theme.requisite.secondary,
                                                             color:           '#fff',
                                                         }}
                                                         onClick = { (event) => void requisiteRedirectHandler(

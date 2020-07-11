@@ -1,9 +1,6 @@
 // Core
 import styled from 'styled-components';
 
-// Instruments
-import { GREEN, BLUE, ORANGE } from '../../assets/globalStyles';
-
 export const CalendarContainer = styled.section`
     width: 100%;
     height: 100%;
@@ -14,19 +11,19 @@ export const CalendarContainer = styled.section`
     }
 
     .todayInsetShadow {
-        box-shadow: inset 0px 0px 0px 3px ${ORANGE.hoverSecondary};
+        box-shadow: inset 0px 0px 0px 3px orange;
     }
 
     .workday {
-        background-color: ${GREEN.secondary};
+        background-color: ${({ theme }) => theme.workday.secondary};
         cursor: pointer;
     }
 
     .rbc-event {
-        background-color: ${BLUE.secondary};
+        background-color: ${({ theme }) => theme.scene.secondary};
 
         &:hover {
-            background-color: ${BLUE.hoverSecondary};
+            background-color: ${({ theme }) => theme.scene.hoverSecondary};
         }
     }
 `;
@@ -37,7 +34,7 @@ export const CustomToolbarContainer = styled.header`
     align-items: center;
     font-size: 24px;
     font-family: sans-serif;
-    background-color: ${GREEN.main};
+    background-color: ${({ theme }) => theme.workday.primary};
     color: white;
     padding: 5px;
 `;

@@ -26,8 +26,6 @@ type Params = {
 const initialForm = {
     title:       '',
     description: '',
-    isOrdered:   false,
-    pricePerDay: 0,
 };
 
 const UpdateRequisite: FC = () => {
@@ -42,8 +40,6 @@ const UpdateRequisite: FC = () => {
         requisite && void setInitialForm({
             title:       requisite.title,
             description: requisite.description ?? '',
-            isOrdered:   requisite.isOrdered,
-            pricePerDay: requisite.pricePerDay,
         });
     }, [ requisite ]);
 
@@ -79,13 +75,6 @@ const UpdateRequisite: FC = () => {
                         placeholder = 'Description'
                         value = { form.description ?? '' }
                         onChange = { setForm }
-                    />
-                    <h2>Price per day:</h2>
-                    <input
-                        name = 'pricePerDay'
-                        type = 'number'
-                        value = { form.pricePerDay ?? '' }
-                        onChange = { (event) => void setForm(event, true) }
                     />
                     <Button type = 'submit'>Update</Button>
                 </form>

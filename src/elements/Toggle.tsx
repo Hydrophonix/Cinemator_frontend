@@ -18,14 +18,14 @@ const ToggleBar = styled.div`
     width: 30px;
     height: 14px;
     border-radius: 8px;
-    background-color: ${({ theme: { primaryVariant }}) => primaryVariant}; 
+    background-color: ${({ theme }) => theme.toggle.primary}; 
 `;
 
 const ToggleButton = styled.div<ToggleButtonProps>`
     position: absolute;
     width: 20px;
     height: 20px;
-    background-color: ${({ theme: { error }}) => error};
+    background-color: ${({ theme }) => theme.toggle.error};
     border-radius: 10px;
     top: 0;
     left: 0;

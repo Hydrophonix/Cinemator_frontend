@@ -22,7 +22,6 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene_requis
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene {
   __typename: "Scene";
   id: string;
-  title: string | null;
   location: string | null;
   sceneNumber: number;
   workdays: UpdateSceneRequisites_updateSceneRequisites_updatedScene_workdays[];
@@ -40,8 +39,6 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites {
   id: string;
   title: string;
   description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   scenes: UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes[];
 }
 

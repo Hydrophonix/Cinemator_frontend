@@ -1,12 +1,11 @@
 // Core
 import styled from 'styled-components';
-import { BLUE } from '../../assets';
 
 export const CreateSceneContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-color: ${BLUE.containerBg};
+    background-color: ${({ theme }) => theme.scene.containerBg};
 
     main {
         display: flex;
@@ -33,7 +32,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    background-color: ${BLUE.secondary};
+    background-color: ${({ theme }) => theme.scene.secondary};
 
     h2 {
         font-size: 24px;

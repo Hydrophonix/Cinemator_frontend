@@ -15,7 +15,7 @@ import { setAccessToken } from '../../@init/tokenStore';
 import { TOKEN_URL } from '../../@init/constants';
 
 // Assets
-import { GlobalStyles, defaultLight, dark } from '../../assets';
+import { GlobalStyles, defaultTheme } from '../../assets';
 import { AppContainer } from './styles';
 
 export const App: FC = () => {
@@ -45,7 +45,7 @@ export const App: FC = () => {
     }
 
     return (
-        <ThemeProvider theme = { isDefaultTheme ? defaultLight : dark }>
+        <ThemeProvider theme = { isDefaultTheme ? defaultTheme : defaultTheme }>
             <GlobalStyles />
             <AppContainer>
                 <TopBar />

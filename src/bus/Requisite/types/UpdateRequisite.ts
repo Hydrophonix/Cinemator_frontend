@@ -20,8 +20,6 @@ export interface UpdateRequisite_updateRequisite {
   id: string;
   title: string;
   description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   scenes: UpdateRequisite_updateRequisite_scenes[];
 }
 

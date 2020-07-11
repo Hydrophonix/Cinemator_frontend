@@ -24,7 +24,6 @@ export interface CreateScene_createScene_requisites {
 export interface CreateScene_createScene {
   __typename: "Scene";
   id: string;
-  title: string | null;
   location: string | null;
   sceneNumber: number;
   workdays: CreateScene_createScene_workdays[];

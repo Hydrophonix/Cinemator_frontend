@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-// Instruments
-import { BLUE, ORANGE } from './colors';
-
 export const TableStyles = styled.div`
     .responsiveTable {
         width: 100%;
@@ -31,36 +28,36 @@ export const TableStyles = styled.div`
     }
 
     .scenesTableHead {
-      background-color: ${BLUE.main};
+      background-color: ${({ theme }) => theme.scene.primary};
       color: #fff;
     }
 
     .scenesTableRow {
-      background-color: ${BLUE.secondary};
+      background-color: ${({ theme }) => theme.scene.secondary};
       font-family: sans-serif;
       font-size: 14px;
       color: #fff;
-      border-bottom: 1px solid ${BLUE.main};
+      border-bottom: 1px solid ${({ theme }) => theme.scene.primary};
 
       &:hover {
-        background-color: ${BLUE.hoverSecondary};
+        background-color: ${({ theme }) => theme.scene.hoverSecondary};
       }
     }
 
     .requisitesTableHead {
-      background-color: ${ORANGE.main};
+      background-color: ${({ theme }) => theme.requisite.primary};
       color: #fff;
     }
 
     .requisitesTableRow {
-      background-color: ${ORANGE.secondary};
+      background-color: ${({ theme }) => theme.requisite.secondary};
       font-family: sans-serif;
       font-size: 14px;
       color: #fff;
-      border-bottom: 1px solid ${ORANGE.main};
+      border-bottom: 1px solid ${({ theme }) => theme.requisite.primary};
 
       &:hover {
-        background-color: ${ORANGE.hoverSecondary};
+        background-color: ${({ theme }) => theme.requisite.hoverSecondary};
       }
     }
 `;

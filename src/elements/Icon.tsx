@@ -3,16 +3,12 @@ import React, { FC, useState, useContext } from 'react';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
-// Types
-import { Theme } from '../assets';
-
 interface IconProps extends FontAwesomeIconProps {
     active?: boolean;
     onHoverSpin?: boolean;
-    onHoverColor?: keyof Omit<Theme, 'name'>;
 }
 
-export const Icon: FC<IconProps> = ({ active, onHoverSpin, spin, onHoverColor, color, ...otherProps }) => {
+export const Icon: FC<IconProps> = ({ active, onHoverSpin, spin, color, ...otherProps }) => {
     const theme = useContext(ThemeContext);
     const [ isIconHovered, setIsIconHovered ] = useState(false);
 
@@ -20,8 +16,8 @@ export const Icon: FC<IconProps> = ({ active, onHoverSpin, spin, onHoverColor, c
         <FontAwesomeIcon
             color = {
                 isIconHovered || active
-                    ? (onHoverColor && theme[ onHoverColor ]) || theme.secondary
-                    :  color || theme.primaryVariant
+                    ? theme.icon.secondary
+                    :  color || theme.icon.primary
             }
             cursor = 'pointer'
             spin = { spin || (onHoverSpin && isIconHovered) }

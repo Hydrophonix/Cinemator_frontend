@@ -24,7 +24,6 @@ export interface UpdateScene_updateScene_requisites {
 export interface UpdateScene_updateScene {
   __typename: "Scene";
   id: string;
-  title: string | null;
   location: string | null;
   sceneNumber: number;
   workdays: UpdateScene_updateScene_workdays[];

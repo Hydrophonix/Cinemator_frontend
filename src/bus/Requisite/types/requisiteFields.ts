@@ -18,7 +18,5 @@ export interface requisiteFields {
   id: string;
   title: string;
   description: string | null;
-  isOrdered: boolean;
-  pricePerDay: number;
   scenes: requisiteFields_scenes[];
 }
