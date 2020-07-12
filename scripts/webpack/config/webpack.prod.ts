@@ -15,6 +15,7 @@ export const getProdConfig = () => {
             devtool: false,
         },
         modules.loadImagesProd(),
+        modules.loadProdCss(),
         modules.cleanDirectories(),
         modules.connectBuildProgressIndicator(),
         modules.optimizeBuild(),
