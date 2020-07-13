@@ -20,6 +20,10 @@ export const defaultTheme = {
         secondary: '#FFEE58',
         error:     'red',
     },
+    app: {
+        topBar:  '#006d77',
+        sideBar: '#83c5be',
+    },
     project: {
         primary:        '#5f00a8',
         secondary:      '#7526a6',

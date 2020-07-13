@@ -1,8 +1,6 @@
 // Core
 import styled from 'styled-components';
 
-import topBarBg from '../../assets/images/topBarBg.png';
-
 export const TopbarContainer = styled.header`
     display: flex;
     align-items: center;
@@ -10,7 +8,7 @@ export const TopbarContainer = styled.header`
     box-sizing: border-box;
     padding: 5px;
     justify-content: space-between;
-    background-image: url(${topBarBg});
+    background-color: ${({ theme }) => theme.app.topBar};
     background-size: cover;
 
     h1 {

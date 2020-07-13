@@ -7,10 +7,11 @@ export type PropTypes = {}
 type stringOrDate = string | Date
 
 export type EventTypes = {
-    id: string
+    workdayId: string
     start: stringOrDate
     end: stringOrDate
-    sceneNumber: number,
+    sceneNumbers: string
+    requisitesCount: number
 }
 
 export type DataTypes = {

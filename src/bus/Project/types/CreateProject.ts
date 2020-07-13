@@ -12,7 +12,6 @@ import { ProjectCreateInput } from "./../../../@types/graphql-global-types";
 export interface CreateProject_createProject {
   __typename: "Project";
   id: string;
-  ownerId: string;
   startDay: string;
   endDay: string;
   title: string;

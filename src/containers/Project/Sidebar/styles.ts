@@ -1,22 +1,20 @@
 // Core
 import styled from 'styled-components';
 
-import asideBg from '../../../assets/images/asideBg.png';
-
-const sidebarWidth = 250;
+const sideBarWidth = 250;
 
 export const Container = styled.aside<{ isActive: boolean }>`
-    min-width: ${`${sidebarWidth}px`};
-    max-width: ${`${sidebarWidth}px`};
+    min-width: ${`${sideBarWidth}px`};
+    max-width: ${`${sideBarWidth}px`};
     border-right: 1px solid black;
     padding: 15px;
     box-sizing: border-box;
-    background-image: url(${asideBg});
+    background-color: ${({ theme }) => theme.app.sideBar};
     background-size: cover;
 
     @media (max-width: 1024px) {
         position: fixed;
-        left: ${({ isActive }) => isActive ? '0px' : `-${sidebarWidth}px`};
+        left: ${({ isActive }) => isActive ? '0px' : `-${sideBarWidth}px`};
         top: 0px;
         bottom: 0px;
         z-index: 10;

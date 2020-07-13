@@ -18,6 +18,7 @@ export const getDevConfig = () => {
                 hot: true,
             },
         },
+        modules.defineEnvVariables(),
         modules.loadImagesDev(),
         modules.loadDevCss(),
         modules.connectHMR(),

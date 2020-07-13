@@ -10,7 +10,6 @@
 export interface OwnedProjects_ownedProjects {
   __typename: "Project";
   id: string;
-  ownerId: string;
   startDay: string;
   endDay: string;
   title: string;

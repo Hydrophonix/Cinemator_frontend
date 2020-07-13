@@ -1,32 +1,58 @@
 // Core
 import React from 'react';
+import _ from 'lodash';
 
 // Elements
 import { Button } from '../../elements';
 
 // Styles
-import { CustomToolbarContainer } from './styles';
+import { CustomToolbarContainer, ScenesCount, RequisitesCount } from './styles';
 
 // Types
 import { EventTypes } from './types';
 import { Workdays } from '../../bus/Workday';
 
 export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventTypes> => {
-    return workdays.reduce<Array<EventTypes>>((acc, workday) => [
-        ...acc, ...workday.scenes.map((scene) => ({
-            id:          scene.id,
-            start:       new Date(workday.date),
-            end:         new Date(workday.date),
-            sceneNumber: scene.sceneNumber,
-        })),
-    ], []);
+    return workdays.map((workday) => {
+        const eventDate = new Date(workday.date);
+
+        const requisitesCount = workday.scenes.reduce<Array<string>>((acc, scene) => {
+            const requisiteIds = scene.requisites.map((requisite) => requisite.id); // TODO  => differenceBy
+            const difference = _.difference(requisiteIds, acc);
+
+            return [ ...acc, ...difference ];
+        }, []).length;
+
+        const sceneNumbers = workday.scenes.reduce<string>((acc, scene, index) => {
+            if (index === 0) {
+                return `${scene.sceneNumber}`;
+            }
+
+            return `${acc}, ${scene.sceneNumber}`;
+        }, '');
+
+        return {
+            workdayId: workday.id,
+            start:     eventDate,
+            end:       eventDate,
+            sceneNumbers,
+            requisitesCount,
+        };
+    });
 };
 
-export const customEventView = ({ event }: { event: EventTypes }) => {
+export const customEventView = ({ event: { sceneNumbers, requisitesCount }}: { event: EventTypes }) => {
     return (
-        <div style = {{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-            S:{event.sceneNumber}
-        </div>
+        <section>
+            {
+                sceneNumbers.length !== 0 && (
+                    <>
+                        <ScenesCount>{`S: ${sceneNumbers}`}</ScenesCount>
+                        <RequisitesCount>{`R: ${requisitesCount}`}</RequisitesCount>
+                    </>
+                )
+            }
+        </section>
     );
 };
 

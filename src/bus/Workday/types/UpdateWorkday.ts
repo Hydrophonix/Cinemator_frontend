@@ -9,10 +9,16 @@ import { WorkdayUpdateInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: UpdateWorkday
 // ====================================================
 
+export interface UpdateWorkday_updateWorkday_scenes_requisites {
+  __typename: "Requisite";
+  id: string;
+}
+
 export interface UpdateWorkday_updateWorkday_scenes {
   __typename: "Scene";
   id: string;
   sceneNumber: number;
+  requisites: UpdateWorkday_updateWorkday_scenes_requisites[];
 }
 
 export interface UpdateWorkday_updateWorkday {

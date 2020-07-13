@@ -28,7 +28,6 @@ export const getCommonConfig = () => {
                 extensions: [ '.tsx', '.ts', '.js', '.jsx' ],
             },
         },
-        modules.defineEnvVariables(),
         modules.loadTypeScript(),
         modules.loadGraphQL(),
         modules.loadFonts(),

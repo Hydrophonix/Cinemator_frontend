@@ -41,14 +41,7 @@ const Calendar: FC<PropTypes> = () => {
         const dateISO8601 = transformDateToISO8601(event.start);
         const workday = data.workdays.find((workday) => workday.date === dateISO8601);
 
-        if (event.action === 'click') {
-            workday
-                ? push(`/${projectId}/calendar/${workday.id}`)
-                : push(`/${projectId}/create-workday/${dateISO8601}`);
-        }
-
-        if (event.action === 'select') {
-            // TODO: fix on desctop
+        if (event.action === 'click' || event.action === 'select') {
             workday
                 ? push(`/${projectId}/calendar/${workday.id}`)
                 : push(`/${projectId}/create-workday/${dateISO8601}`);
@@ -66,8 +59,6 @@ const Calendar: FC<PropTypes> = () => {
         return { className: className + ' workday' };
     };
 
-    const sceneRedirectHandler = ({ id }: EventTypes) => push(`/${projectId}/scenes/${id}`);
-
     return (
         <CalendarContainer>
             <ReactBigCalendar<EventTypes>
@@ -83,7 +74,7 @@ const Calendar: FC<PropTypes> = () => {
                 events = { events }
                 localizer = { localizer }
                 views = {{ month: true, agenda: true }}
-                onSelectEvent = { sceneRedirectHandler }
+                onSelectEvent = { ({ workdayId }) => void push(`/${projectId}/calendar/${workdayId}`) }
                 onSelectSlot = { onSelectEventHandler }
             />
         </CalendarContainer>
