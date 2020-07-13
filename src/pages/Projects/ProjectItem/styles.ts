@@ -6,20 +6,27 @@ export const ProjectItemContainer = styled.div`
     height: 100px;
     margin: 10px;
     padding: 10px;
+    border-radius: 10px;
     
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    border: 1px solid black;
     cursor: pointer;
-    
-    background-color: #fff;
-    color: #216ba5;
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    background-color: ${({ theme }) => theme.project.secondary};
+    color: #fff;
+    font-family: sans-serif;
     
     &:hover {
-        background-color: #216ba5;
-        color: #fff;
+        background-color: ${({ theme }) => theme.project.hoverSecondary};
+    }
+
+    &:active {
+        position: relative;
+        top: 2px;
+        left: 2px;
+        box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
     }
 
     header {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.section`
     width: 100%;
-    background-color: ${({ theme }) => theme.scene.containerBg};
+    background-color: ${({ theme }) => theme.project.containerBg};
     flex: 1;
 
     main {
@@ -30,15 +30,16 @@ export const Container = styled.section`
 export const Header = styled.header`
     display: grid;
     box-sizing: border-box;
-    background-color: ${({ theme }) => theme.scene.secondary};
-    grid-template-columns:  15% 70% 15%;
-    padding: 10px;
+    background-color: ${({ theme }) => theme.project.primary};
+    grid-template-columns: 15% 70% 15%;
+    padding: 5px;
+    align-items: center;
 
     div {
         display: flex;
         flex-wrap: wrap;
     }
-        align-items: center;
+    
     
     h2 {
         font-size: 24px;

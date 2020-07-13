@@ -13,7 +13,7 @@ import { Button } from '../../elements';
 import { useOwnedProjectsQuery } from '../../bus/Project';
 
 // Assets
-import { ProjectsContainer } from './styles';
+import { Container, Header } from './styles';
 
 const Projects: FC = () => {
     const { push } = useHistory();
@@ -26,12 +26,16 @@ const Projects: FC = () => {
     const projectRedirectHandler = (projectId: string) => void push(`/${projectId}`);
 
     return (
-        <ProjectsContainer>
-            <nav>
-                <Button onClick = { () => void push('/create-project') }>
-                    Create new project
-                </Button>
-            </nav>
+        <Container>
+            <Header>
+                <div />
+                <h2>Projects</h2>
+                <div style = {{ alignContent: 'flex-end' }}>
+                    <Button onClick = { () => void push('/create-project') }>
+                        Create new project
+                    </Button>
+                </div>
+            </Header>
             <main>
                 {
                     data.ownedProjects.map((project) => (
@@ -43,7 +47,7 @@ const Projects: FC = () => {
                     ))
                 }
             </main>
-        </ProjectsContainer>
+        </Container>
     );
 };
 

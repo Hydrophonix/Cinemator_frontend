@@ -19,7 +19,7 @@ export const UserMenu: FC = () => {
             onClick = { () => data!.isLoggedIn && void push('/profile') }>
             <FontAwesomeIcon
                 icon = 'user-astronaut'
-                size = { '3x' }
+                style = {{ width: 40, height: 40 }}
                 title = { data!.isLoggedIn ? 'Enter profile' : 'Login before use profile.' }
             />
         </Container>

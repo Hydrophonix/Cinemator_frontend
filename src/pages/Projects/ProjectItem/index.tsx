@@ -13,7 +13,6 @@ type PropTypes = OwnedProjects_ownedProjects & {
 
 export const ProjectItem: FC<PropTypes> = ({
     id,
-    // ownerId,
     title,
     startDay,
     endDay,
