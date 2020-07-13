@@ -11,6 +11,17 @@ import { CustomToolbarContainer } from './styles';
 import { EventTypes } from './types';
 import { Workdays } from '../../bus/Workday';
 
+export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventTypes> => {
+    return workdays.reduce<Array<EventTypes>>((acc, workday) => [
+        ...acc, ...workday.scenes.map((scene) => ({
+            id:          scene.id,
+            start:       new Date(workday.date),
+            end:         new Date(workday.date),
+            sceneNumber: scene.sceneNumber,
+        })),
+    ], []);
+};
+
 export const customEventView = ({ event }: { event: EventTypes }) => {
     return (
         <div style = {{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -39,15 +50,4 @@ export const customToolbarView = (toolbar: any) => {
             <Button onClick = { goToNext }>next</Button>
         </CustomToolbarContainer>
     );
-};
-
-export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventTypes> => {
-    return workdays.reduce<Array<EventTypes>>((acc, workday) => [
-        ...acc, ...workday.scenes.map((scene) => ({
-            id:          scene.id,
-            start:       new Date(workday.date),
-            end:         new Date(workday.date),
-            sceneNumber: scene.sceneNumber,
-        })),
-    ], []);
 };

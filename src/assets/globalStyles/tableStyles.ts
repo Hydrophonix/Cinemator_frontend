@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const TableStyles = styled.div`
+    width: 100%;
+
     .responsiveTable {
         width: 100%;
         background-color: #fff;

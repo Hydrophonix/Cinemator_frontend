@@ -1,6 +1,6 @@
 // Core
 import React, { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // Components
 import { Sidebar } from './Sidebar';
@@ -8,21 +8,17 @@ import { Sidebar } from './Sidebar';
 // Routes
 import { Routes } from './Routes';
 
-// Elements
-import { Button } from '../../elements';
-
 // Apollo hooks
 import { useOwnedProjectsQuery } from '../../bus/Project';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container } from './styles';
 
 type Params = {
     projectId: string
 }
 
 export const Project: FC = () => {
-    const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useOwnedProjectsQuery();
 
@@ -38,19 +34,8 @@ export const Project: FC = () => {
 
     return (
         <Container>
-            <Header>
-                <nav>
-                    <Button onClick = { () => void push('/') }>To projects</Button>
-                </nav>
-                <h2>{project.title}</h2>
-                <nav style = {{ justifyContent: 'flex-end' }}>
-                    <Button>Update</Button>
-                </nav>
-            </Header>
-            <main>
-                <Sidebar />
-                <Routes />
-            </main>
+            <Sidebar { ...project }/>
+            <Routes />
         </Container>
     );
 };

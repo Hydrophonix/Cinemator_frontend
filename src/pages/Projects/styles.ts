@@ -17,6 +17,7 @@ export const Container = styled.div`
         display: flex;
         flex-wrap: wrap;
         padding: 0px 5%;
+        justify-content: center;
     }
 `;
 
