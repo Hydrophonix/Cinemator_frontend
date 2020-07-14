@@ -1,46 +1,44 @@
 // Core
-import React, { FC, useContext, useState } from 'react';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ThemeContext } from 'styled-components';
+import { useSpring, animated as a } from 'react-spring';
 
-// Elements
-import { Button } from '../../../elements';
+// Components
+import { ProjectNav } from './ProjectNav';
+import { ProjectSettings } from './ProjectSettings';
 
 // Styles
-import { Container, Header, Footer, Ul, Li, Toogler } from './styles';
+import { Container, Toogler } from './styles';
 
 // Type
 import { projectFields } from '../../../bus/Project';
-type Params = {
-    projectId: string
-};
 
-const asideLinks = [
-    { url: 'calendar', name: 'Calendar' },
-    { url: 'scenes', name: 'Scenes' },
-    { url: 'requisites', name: 'Requisites' },
-];
-
-export const Sidebar: FC<projectFields> = ({ title, startDay, endDay, description }) => {
-    const { push } = useHistory();
-    const { projectId } = useParams<Params>();
-    const { pathname } = useLocation();
-    const theme = useContext(ThemeContext);
+export const Sidebar: FC<projectFields> = (props) => {
     const [ isSidebarActive, setSidebarStatus ] = useState(false);
+    const [ flipped, setFlipped ] = useState(false);
+    const { transform, opacity } = useSpring({
+        opacity:   flipped ? 1 : 0,
+        transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
+        config:    { mass: 5, tension: 500, friction: 80 },
+    });
 
-    const customHoverColorHandler = (key: number) => {
-        switch (key) {
-            case 0: return theme.workday.secondary;
-            case 1: return theme.scene.hoverSecondary;
-            case 2: return theme.requisite.hoverSecondary;
+    const sideBarEl: any = useRef(null);
 
-            default: return '#fff';
+    const handleDropDownMenuClose = (event: MouseEvent) => {
+        if (sideBarEl.current && !sideBarEl.current.contains(event.target)) {
+            setSidebarStatus(false);
+            setFlipped(false);
         }
     };
 
+    useEffect(() => {
+        document.addEventListener('mousedown', handleDropDownMenuClose);
+    }, []);
+
     return (
-        <Container isActive = { isSidebarActive }>
+        <Container
+            isActive = { isSidebarActive }
+            ref = { sideBarEl }>
             <Toogler
                 isActive = { isSidebarActive }
                 onClick = { () => void setSidebarStatus(!isSidebarActive) }>
@@ -55,41 +53,31 @@ export const Sidebar: FC<projectFields> = ({ title, startDay, endDay, descriptio
                     }}
                 />
             </Toogler>
-            <section>
-                <div>
-                    <Header>
-                        <nav>
-                            <Button onClick = { () => void push('/') }>To projects</Button>
-                        </nav>
-                    </Header>
-                    <Ul>
-                        {
-                            asideLinks.map((link, index) => (
-                                <Li
-                                    color = { customHoverColorHandler(index) }
-                                    isActive = { pathname.includes(link.url) }
-                                    key = { index }
-                                    onClick = { () => {
-                                        push(`/${projectId}/${link.url}`);
-                                        setSidebarStatus(false);
-                                    } }>
-                                    {link.name}
-                                </Li>
-                            ))
-                        }
-                    </Ul>
-                </div>
-                <Footer>
-                    <div>
-                        <h2>{title}</h2>
-                        <h3>{startDay} → {endDay}</h3>
-                        {description && <p>Description: {description}</p>}
-                    </div>
-                    <nav>
-                        <Button>Settings</Button>
-                    </nav>
-                </Footer>
-            </section>
+            <div style = {{ overflow: 'hidden', position: 'relative', height: '100%' }}>
+                <a.div
+                    className = 'animatedDiv'
+                    style = {{
+                        zIndex:  flipped ? 0 : 1,
+                        opacity: opacity.interpolate((o: any) => 1 - o), transform,
+                    }}>
+                    <ProjectNav
+                        { ...props }
+                        setFlipped = { () => setFlipped(true) }
+                        setSidebarStatus = { () => setSidebarStatus(!isSidebarActive) }
+                    />
+                </a.div>
+                <a.div
+                    className = 'animatedDiv'
+                    style = {{
+                        zIndex:    flipped ? 1 : 0,
+                        opacity, transform: transform.interpolate((t) => `${t} rotateY(180deg)`),
+                    }}>
+                    <ProjectSettings
+                        { ...props }
+                        setFlipped = { () => setFlipped(false) }
+                    />
+                </a.div>
+            </div>
         </Container>
     );
 };

@@ -17,9 +17,6 @@ import { App } from './containers/App';
 // Assets
 import { initIconsLibrary } from './assets';
 
-// // Init
-// import { initIconsLibrary } from './assets';
-
 initIconsLibrary();
 
 render(

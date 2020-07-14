@@ -23,8 +23,6 @@ const Projects: FC = () => {
         return <div>Loading...</div>;
     }
 
-    const projectRedirectHandler = (projectId: string) => void push(`/${projectId}`);
-
     return (
         <Container>
             <Header>
@@ -42,7 +40,7 @@ const Projects: FC = () => {
                         <ProjectItem
                             key = { project.id }
                             { ...project }
-                            projectRedirectHandler = { projectRedirectHandler }
+                            projectRedirectHandler = { () => void push(`/${project.id}`) }
                         />
                     ))
                 }

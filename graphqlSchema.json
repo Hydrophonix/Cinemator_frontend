@@ -1666,7 +1666,7 @@
                 "defaultValue": null
               },
               {
-                "name": "id",
+                "name": "projectId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1697,7 +1697,7 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "projectId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

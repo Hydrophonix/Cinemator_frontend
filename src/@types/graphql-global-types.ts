@@ -18,6 +18,12 @@ export interface ProjectCreateInput {
   endDay: string;
 }
 
+export interface ProjectUpdateInput {
+  title?: string | null;
+  startDay?: string | null;
+  endDay?: string | null;
+}
+
 export interface RequisiteCreateInput {
   title: string;
   description?: string | null;

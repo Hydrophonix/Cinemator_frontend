@@ -1,0 +1,7 @@
+#import "./projectFields.graphql"
+
+mutation UpdateProject ($projectId: String!, $input: ProjectUpdateInput!) {
+    updateProject(projectId: $projectId, input: $input) {
+        ...projectFields
+    }
+}

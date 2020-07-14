@@ -1,7 +1,6 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -29,8 +28,8 @@ const CreateProject: FC = () => {
     const { goBack } = useHistory();
     const [ createProject ] = useCreateProjectMutation();
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
-    const [ startDate, setStartDate ] = useState(new Date());
-    const [ endDate, setEndDate ] = useState(new Date());
+    const [ startDay, setStartDay ] = useState(new Date());
+    const [ endDay, setEndDay ] = useState(new Date());
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -39,8 +38,8 @@ const CreateProject: FC = () => {
             variables: {
                 input: {
                     title:    form.title,
-                    startDay: transformDateToISO8601(startDate),
-                    endDay:   transformDateToISO8601(endDate),
+                    startDay: transformDateToISO8601(startDay),
+                    endDay:   transformDateToISO8601(endDay),
                 },
             },
         });
@@ -67,19 +66,19 @@ const CreateProject: FC = () => {
                     <h2>Project start:</h2>
                     <DatePicker
                         selectsStart
-                        endDate = { endDate }
-                        selected = { startDate }
-                        startDate = { startDate }
-                        onChange = { (date) => date && void setStartDate(date) }
+                        endDate = { endDay }
+                        selected = { startDay }
+                        startDate = { startDay }
+                        onChange = { (date) => date && void setStartDay(date) }
                     />
                     <h2>Project end:</h2>
                     <DatePicker
                         selectsEnd
-                        endDate = { endDate }
-                        minDate = { startDate }
-                        selected = { endDate }
-                        startDate = { startDate }
-                        onChange = { (date) => date && void setEndDate(date) }
+                        endDate = { endDay }
+                        minDate = { startDay }
+                        selected = { endDay }
+                        startDate = { startDay }
+                        onChange = { (date) => date && void setEndDay(date) }
                     />
                     <Button type = 'submit'>Submit</Button>
                 </form>

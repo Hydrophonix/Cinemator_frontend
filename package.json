@@ -38,8 +38,10 @@
         "react-dom": "^16.13.0",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.1.2",
+        "react-spring": "^8.0.27",
         "react-super-responsive-table": "^5.1.1",
         "redux": "^4.0.5",
+        "resize-observer-polyfill": "^1.5.1",
         "store": "^2.0.12",
         "styled-components": "^5.0.1"
     },
