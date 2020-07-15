@@ -3,15 +3,13 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 // Reducers
-import { uiReducer as ui } from '../../redux/ui/reducer';
-import { togglersReducer as togglers } from '../../redux/togglers';
+import { inputsReducer as inputs } from './inputs/reducer';
 
 // Middlewares
 import { middlewares } from './middlewares';
 
 export const rootReducer = combineReducers({
-    ui,
-    togglers,
+    inputs,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

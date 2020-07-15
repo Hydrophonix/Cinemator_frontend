@@ -3,3 +3,4 @@ export * from './TableHead';
 export * from './Modal';
 export * from './WorkdayScenesModal';
 export * from './SceneRequisitesModal';
+export * from './DatePicker';

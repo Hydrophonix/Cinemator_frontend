@@ -16,24 +16,13 @@ export const Header = styled.header`
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.scene.secondary};
 
-    section {
-        display: flex;
-        flex-direction: column;
-        
-        nav {
-            display: flex;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-
-            input {
-                max-width: 80px;
-            }
-        }
-    }
-
     h2 {
         font-size: 24px;
         font-family: sans-serif;
         color: #fff;
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
     }
 `;

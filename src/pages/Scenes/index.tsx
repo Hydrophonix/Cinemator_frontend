@@ -1,16 +1,17 @@
 // Core
-import React, { useState, FC, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
 
 // Apollo Hooks
 import { useScenesQuery } from '../../bus/Scene';
 
+// Redux
+import { useReduxInputs } from '../../@init/redux/inputs';
+
 // Components
-import { ErrorBoundary, TableHead } from '../../components';
+import { ErrorBoundary, TableHead, DatePicker } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -19,6 +20,7 @@ import { Button } from '../../elements';
 import { TableStyles } from '../../assets';
 import { ScenesContainer, Header } from './styles';
 
+// Types
 type Params = { projectId: string };
 
 const Scenes: FC = () => {
@@ -26,8 +28,7 @@ const Scenes: FC = () => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
-    const [ startDate, setStartDate ] = useState(new Date());
-    const [ endDate, setEndDate ] = useState(new Date());
+    const { inputs: { scenesDateRange }, setDateRange } = useReduxInputs();
 
     const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
     const workdayRedirectHandler = (event: any, workdayId: string) => {
@@ -46,34 +47,13 @@ const Scenes: FC = () => {
     return (
         <ScenesContainer>
             <Header>
-                <section>
-                    <nav>
-                        <DatePicker
-                            selectsStart
-                            endDate = { endDate }
-                            selected = { startDate }
-                            startDate = { startDate }
-                            onChange = { (date) => date && void setStartDate(date) }
-                        />
-                        <DatePicker
-                            selectsEnd
-                            endDate = { endDate }
-                            minDate = { startDate }
-                            selected = { endDate }
-                            startDate = { startDate }
-                            onChange = { (date) => date && void setEndDate(date) }
-                        />
-                    </nav>
-                    <nav>
-                        <input
-                            type = 'number'
-                        />
-                        <input
-                            placeholder = 'Location'
-                            type = 'text'
-                        />
-                    </nav>
-                </section>
+                <DatePicker
+                    endDay = { scenesDateRange.endDay }
+                    inputType = 'scenesDateRange'
+                    projectId = { projectId }
+                    setDateRange = { setDateRange }
+                    startDay = { scenesDateRange.startDay }
+                />
                 <h2>Scenes</h2>
                 <Button onClick = { () => void push(`/${projectId}/create-scene`) }>Add new scene</Button>
             </Header>
@@ -85,16 +65,16 @@ const Scenes: FC = () => {
                     />
                     <Tbody>
                         {
-                            data.scenes.map(({ id, sceneNumber, location, workdays, requisites }) => (
+                            data.scenes.map((scene) => (
                                 <Tr
                                     className = 'scenesTableRow'
-                                    key = { id }
-                                    onClick = { () => void sceneRedirectHandler(id) }>
-                                    <Td>{`${sceneNumber}`}</Td>
-                                    <Td>{location}</Td>
+                                    key = { scene.id }
+                                    onClick = { () => void sceneRedirectHandler(scene.id) }>
+                                    <Td>{`${scene.sceneNumber}`}</Td>
+                                    <Td>{scene.location}</Td>
                                     <Td>
                                         {
-                                            workdays.map((workday, index) => (
+                                            scene.workdays.map((workday, index) => (
                                                 <Button
                                                     key = { index }
                                                     style = {{
@@ -111,7 +91,7 @@ const Scenes: FC = () => {
                                     </Td>
                                     <Td>
                                         {
-                                            requisites.map((requisite, index) => (
+                                            scene.requisites.map((requisite, index) => (
                                                 <Button
                                                     key = { index }
                                                     style = {{

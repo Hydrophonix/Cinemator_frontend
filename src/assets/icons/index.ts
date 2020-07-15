@@ -2,18 +2,18 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faCompactDisc,
-    faEdit,
-    faTrashAlt,
     faUserAstronaut,
     faArrowRight,
+    faRedo,
+    faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const initIconsLibrary = () => library.add(
     faCompactDisc,
-    faEdit,
-    faTrashAlt,
     faUserAstronaut,
     faArrowRight,
+    faRedo,
+    faLongArrowAltRight,
 );
 
 // Add icon objects to library to use in components like that:

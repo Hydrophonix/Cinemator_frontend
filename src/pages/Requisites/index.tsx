@@ -1,16 +1,17 @@
 // Core
-import React, { useState, FC, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
 
 // Apollo Hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
 
+// Redux
+import { useReduxInputs } from '../../@init/redux/inputs';
+
 // Components
-import { ErrorBoundary, TableHead } from '../../components';
+import { ErrorBoundary, TableHead, DatePicker } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -19,13 +20,17 @@ import { Button } from '../../elements';
 import { TableStyles } from '../../assets';
 import { RequisiteContainer, Header } from './styles';
 
+// Types
+type Params = {
+    projectId: string
+}
+
 const Requisites: FC = () => {
     const { push } = useHistory();
-    const { projectId } = useParams<{ projectId: string }>();
+    const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
-    const [ startDate, setStartDate ] = useState(new Date());
-    const [ endDate, setEndDate ] = useState(new Date());
+    const { inputs: { requisitesDateRange }, setDateRange } = useReduxInputs();
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -40,34 +45,13 @@ const Requisites: FC = () => {
     return (
         <RequisiteContainer>
             <Header>
-                <section>
-                    <nav>
-                        <DatePicker
-                            selectsStart
-                            endDate = { endDate }
-                            selected = { startDate }
-                            startDate = { startDate }
-                            onChange = { (date) => date && void setStartDate(date) }
-                        />
-                        <DatePicker
-                            selectsEnd
-                            endDate = { endDate }
-                            minDate = { startDate }
-                            selected = { endDate }
-                            startDate = { startDate }
-                            onChange = { (date) => date && void setEndDate(date) }
-                        />
-                    </nav>
-                    <nav>
-                        <input
-                            type = 'number'
-                        />
-                        <input
-                            placeholder = 'Title'
-                            type = 'text'
-                        />
-                    </nav>
-                </section>
+                <DatePicker
+                    endDay = { requisitesDateRange.endDay }
+                    inputType = 'requisitesDateRange'
+                    projectId = { projectId }
+                    setDateRange = { setDateRange }
+                    startDay = { requisitesDateRange.startDay }
+                />
                 <h2>Requisites</h2>
                 <button onClick = { () => void push(`/${projectId}/create-requisite`) }>Add new requisite</button>
             </Header>
