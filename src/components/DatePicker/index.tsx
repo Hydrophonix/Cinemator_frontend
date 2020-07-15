@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import DatePickerLibrary from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +24,9 @@ type PropTypes = {
     setDateRange: (DateRangeOptions: DateRangeOptions) => void,
 }
 
+// eslint-disable-next-line init-declarations
+let timeOutId: number | undefined;
+
 export const DatePicker: FC<PropTypes> = ({
     startDay,
     endDay,
@@ -31,6 +34,7 @@ export const DatePicker: FC<PropTypes> = ({
     inputType,
     projectId,
 }) => {
+    const [ isRotate, setRotateState ] = useState(false);
     const { data } = useOwnedProjectsQuery();
 
     const setProjectDateRange = () => {
@@ -50,6 +54,19 @@ export const DatePicker: FC<PropTypes> = ({
     useEffect(() => {
         !(startDay && endDay) && void setProjectDateRange();
     }, [ data ]);
+
+
+    const resetToProjectDateRange = () => {
+        if (!timeOutId) {
+            setProjectDateRange();
+            setRotateState(true);
+            timeOutId = setTimeout(() => {
+                setRotateState(false);
+                clearTimeout(timeOutId);
+                timeOutId = void 0;
+            }, 500);
+        }
+    };
 
     return (
         <Container>
@@ -81,7 +98,9 @@ export const DatePicker: FC<PropTypes> = ({
                 startDate = { startDay }
                 onChange = { (date) => date && void setDateRange({ dateRange: { endDay: date }, inputType }) }
             />
-            <RedoContainer onClick = { setProjectDateRange }>
+            <RedoContainer
+                isRotate = { isRotate }
+                onClick = { resetToProjectDateRange }>
                 <FontAwesomeIcon
                     icon = 'redo'
                     style = {{

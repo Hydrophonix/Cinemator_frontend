@@ -1,5 +1,10 @@
 // Core
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+
+const rotateAnimation = keyframes`
+  from { transform:rotate(0deg); }
+  to { transform:rotate(360deg); }
+`;
 
 export const Container = styled.section`
     display: flex;
@@ -24,14 +29,14 @@ export const CustomDatePickerInput = styled.button`
     background-color: #fff;
     font-family: sans-serif;
     color: #000;
-
+    
     &:hover {
         color: #fff;
         background-color: ${({ theme }) => theme.workday.primary};
     }
 `;
 
-export const RedoContainer = styled.div`
+export const RedoContainer = styled.div<{isRotate?: boolean}>`
     display: flex;
     align-items: center;
     padding: 0px 2px;
@@ -40,6 +45,8 @@ export const RedoContainer = styled.div`
     &:hover {
         svg > path {
             fill: orange;
-        }
-    }
+        };
+    };
+
+    ${({ isRotate }) => isRotate && css`animation: ${rotateAnimation} 0.5s`}
 `;
