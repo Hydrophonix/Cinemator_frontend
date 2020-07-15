@@ -66,8 +66,8 @@ export const DatePicker: FC<PropTypes> = ({
                 color = '#000'
                 icon = 'long-arrow-alt-right'
                 style = {{
-                    width:   15,
-                    height:  15,
+                    width:   14,
+                    height:  14,
                     padding: '0px 2px',
                 }}
             />
@@ -81,15 +81,14 @@ export const DatePicker: FC<PropTypes> = ({
                 startDate = { startDay }
                 onChange = { (date) => date && void setDateRange({ dateRange: { endDay: date }, inputType }) }
             />
-            <RedoContainer>
+            <RedoContainer onClick = { setProjectDateRange }>
                 <FontAwesomeIcon
                     icon = 'redo'
                     style = {{
                         color:  '#000',
-                        width:  12,
-                        height: 12,
+                        width:  14,
+                        height: 14,
                     }}
-                    onClick = { setProjectDateRange }
                 />
             </RedoContainer>
         </Container>
