@@ -14,6 +14,7 @@ export const getProdConfig = () => {
             mode:    'none', // none to remove bundle chunk size warning
             devtool: false,
         },
+        modules.defineEnvVariables(true),
         modules.loadImagesProd(),
         modules.loadProdCss(),
         modules.cleanDirectories(),
