@@ -41,11 +41,11 @@ export const connectBundleAnalyzer = (): Configuration => ({
     ],
 });
 
-export const defineEnvVariables = (): Configuration => ({
+export const defineEnvVariables = (isProd: boolean): Configuration => ({
     plugins: [
         new DefinePlugin({
             'process.env': JSON.stringify({
-                ...dotenv.config().parsed,
+                ...dotenv.config({ path: isProd ? 'prod.env' : '.env' }).parsed,
             }),
         }),
     ],
