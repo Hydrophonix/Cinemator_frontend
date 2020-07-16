@@ -4,21 +4,32 @@ export type DateRange = {
 };
 
 export type InputsState = {
-    scenesDateRange: DateRange
-    requisitesDateRange: DateRange
+    scenesInputs: {
+        dateRange: DateRange
+        index: number
+    }
+    requisitesInputs: {
+        dateRange: DateRange
+        index: number
+    }
 };
 
 export type InputsKeys = keyof InputsState;
 
-export type DateRangeOptions = {
+export type DateRangePayload = {
     dateRange: DateRange
-    inputType: keyof InputsState
+    inputType: InputsKeys
+}
+
+export type IndexPayload = {
+    index: number
+    inputType: InputsKeys
 }
 
 export const SET_DATE_RANGE = 'SET_DATE_RANGE';
 export type SetDateRangeAction = {
     type: typeof SET_DATE_RANGE;
-    payload: DateRangeOptions
+    payload: DateRangePayload
 };
 
 export const SET_GLOBAL_DATE_RANGE = 'SET_GLOBAL_DATE_RANGE';
@@ -27,6 +38,13 @@ export type setGlobalDateRangeAction = {
     payload: DateRange
 };
 
+export const SET_ITEM_INDEX = 'SET_ITEM_INDEX';
+export type setItemIndexAction = {
+    type: typeof SET_ITEM_INDEX;
+    payload: IndexPayload
+};
+
 export type InputsActionTypes =
     | SetDateRangeAction
     | setGlobalDateRangeAction
+    | setItemIndexAction

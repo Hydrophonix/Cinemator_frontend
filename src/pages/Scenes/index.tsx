@@ -1,24 +1,22 @@
 // Core
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Table, Tbody, Thead, Tr, Th, Td } from 'react-super-responsive-table';
-import { ThemeContext } from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
 
 // Apollo Hooks
 import { useScenesQuery } from '../../bus/Scene';
+import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Redux
 import { useReduxInputs } from '../../@init/redux/inputs';
 
 // Components
-import { ErrorBoundary, DatePicker } from '../../components';
+import { ErrorBoundary, DatePicker, ScenesTable } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
 
 // Styles
-import { TableStyles } from '../../assets';
 import { ScenesContainer, Header } from './styles';
 
 // Types
@@ -27,107 +25,82 @@ type Params = { projectId: string };
 const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
-    const { inputs: { scenesDateRange }, setDateRange } = useReduxInputs();
+    const { data: workdaysData, loading: workdaysLoading } = useWorkdaysQuery({ projectId });
+    const { inputs, setDateRange, setItemIndex } = useReduxInputs();
 
-    const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
-    const workdayRedirectHandler = (event: any, workdayId: string) => {
-        event.stopPropagation();
-        push(`/${projectId}/calendar/${workdayId}`);
-    };
-    const requisiteRedirectHandler = (event: any, requisiteId: string) => {
-        event.stopPropagation();
-        push(`/${projectId}/requisites/${requisiteId}`);
-    };
-
-    if (loading || !data) {
+    if (loading || !data || workdaysLoading || !workdaysData) {
         return <div>Loading...</div>;
     }
+
+    const workdaysDates = workdaysData.workdays
+        .map((workday) => new Date(workday.date))
+        .sort((a, b) => a > b ? 1 : -1); // TODO: workdays server sort
+
+    const { dateRange: { startDay, endDay }, index } = inputs.scenesInputs;
+
+    const filterByDateRange = () => data.scenes.filter((scene) => scene.workdays.some((workday) => {
+        const workdayDateInMs = new Date(workday.date).getTime();
+
+        if (startDay!.getTime() <= workdayDateInMs && workdayDateInMs <= endDay!.getTime()) {
+            return true;
+        }
+
+        return false;
+    }));
+
+    const findByIndex = () => {
+        const scene = data.scenes.find((scene) => scene.sceneNumber === index);
+
+        if (scene) {
+            return [ scene ];
+        }
+
+        return data.scenes;
+    };
+
+    const filterHandler = () => {
+        if (index !== 0) {
+            return findByIndex();
+        }
+
+        if (!(startDay && endDay)) {
+            return data.scenes;
+        }
+
+        const isStartDayDifference = moment(workdaysDates[ 0 ]).diff(startDay) !== 0;
+        const isEndDayDifference = moment(workdaysDates[ workdaysDates.length - 1 ]).diff(endDay) !== 0;
+
+        if (!(isStartDayDifference || isEndDayDifference)) {
+            return data.scenes;
+        }
+
+        return filterByDateRange();
+    };
 
     return (
         <ScenesContainer>
             <Header>
                 <DatePicker
                     reset
-                    endDay = { scenesDateRange.endDay }
-                    inputType = 'scenesDateRange'
+                    endDay = { endDay }
+                    inputType = 'scenesInputs'
                     projectId = { projectId }
                     setDateRange = { setDateRange }
-                    startDay = { scenesDateRange.startDay }
+                    startDay = { startDay }
                 />
-                <h2>Scenes</h2>
-                <Button onClick = { () => void push(`/${projectId}/create-scene`) }>Add new scene</Button>
+                <h2>
+                    Scenes
+                </h2>
+                <Button onClick = { () => void push(`/${projectId}/create-scene`) }>
+                    Add new scene
+                </Button>
             </Header>
-            <TableStyles>
-                <Table>
-                    <Thead>
-                        <Tr className = 'scenesTableHead'>
-                            <Th>
-                                <input
-                                    type = 'number'
-                                />
-                                <span>
-                                    <FontAwesomeIcon
-                                        color = { theme.scene.primary }
-                                        icon = 'times-circle'
-                                    />
-                                </span>
-                            </Th>
-                            <Th>Location</Th>
-                            <Th>Workdays</Th>
-                            <Th>Requisites</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {
-                            data.scenes.map((scene) => (
-                                <Tr
-                                    className = 'scenesTableRow'
-                                    key = { scene.id }
-                                    onClick = { () => void sceneRedirectHandler(scene.id) }>
-                                    <Td style = {{ textAlign: 'center' }}>{`${scene.sceneNumber}`}</Td>
-                                    <Td>{scene.location}</Td>
-                                    <Td>
-                                        {
-                                            scene.workdays.map((workday, index) => (
-                                                <Button
-                                                    key = { index }
-                                                    style = {{
-                                                        backgroundColor: theme.workday.primary,
-                                                        color:           '#fff',
-                                                    }}
-                                                    onClick = { (event) => void workdayRedirectHandler(
-                                                        event, workday.id,
-                                                    ) }>
-                                                    {workday.date}
-                                                </Button>
-                                            ))
-                                        }
-                                    </Td>
-                                    <Td>
-                                        {
-                                            scene.requisites.map((requisite, index) => (
-                                                <Button
-                                                    key = { index }
-                                                    style = {{
-                                                        backgroundColor: theme.requisite.secondary,
-                                                        color:           '#fff',
-                                                    }}
-                                                    onClick = { (event) => void requisiteRedirectHandler(
-                                                        event, requisite.id,
-                                                    ) }>
-                                                    {requisite.title}
-                                                </Button>
-                                            ))
-                                        }
-                                    </Td>
-                                </Tr>
-                            ))
-                        }
-                    </Tbody>
-                </Table>
-            </TableStyles>
+            <ScenesTable
+                index = { index }
+                scenes = { filterHandler() }
+                setItemIndex = { setItemIndex }
+            />
         </ScenesContainer>
     );
 };

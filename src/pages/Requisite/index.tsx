@@ -48,7 +48,7 @@ const Requisite: FC = () => {
                     <Button onClick = { () => void push(`/${projectId}/requisites`) }>To requisites</Button>
                     <Button onClick = { goBack }>Go back</Button>
                 </div>
-                <h2>Requisite: {1}</h2>
+                <h2>R: {1}</h2>
                 <div>
                     <Button onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
                         Update

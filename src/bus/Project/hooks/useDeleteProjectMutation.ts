@@ -25,6 +25,8 @@ export const useDeleteProjectMutation = ({ projectId, redirect }: OptionsType) =
                 throw new Error('Project has not been deleted');
             }
 
+            redirect();
+
             const { ownedProjects } = cache.readQuery<OwnedProjects>({ query: OwnedProjectsSchema })!;
 
             cache.writeQuery({
@@ -51,9 +53,6 @@ export const useDeleteProjectMutation = ({ projectId, redirect }: OptionsType) =
                 variables: { projectId },
                 data:      { requisites: []},
             });
-        },
-        onCompleted(data) {
-            data.deleteProject && redirect();
         },
         variables: { projectId },
     });

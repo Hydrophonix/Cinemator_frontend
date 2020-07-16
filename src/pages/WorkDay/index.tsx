@@ -1,12 +1,10 @@
 // Core
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
-import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
-import { ThemeContext } from 'styled-components';
 import _ from 'lodash';
 
 // Components
-import { ErrorBoundary, TableHead, WorkdayScenesModal } from '../../components';
+import { ErrorBoundary, WorkdayScenesModal, ScenesTable } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
@@ -20,7 +18,6 @@ import { Button } from '../../elements';
 
 // Styles
 import { WorkdayContainer, WorkdayHeader } from './styles';
-import { TableStyles } from '../../assets';
 
 // Types
 type Params = {
@@ -31,7 +28,6 @@ type Params = {
 const Workday: FC = () => {
     const { push, goBack } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
-    const theme = useContext(ThemeContext);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
     const { setGlobalDateRange } = useReduxInputs();
@@ -52,16 +48,6 @@ const Workday: FC = () => {
         scenesData.scenes, sceneIds, (value, other) => value.id === other,
     );
 
-    const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
-    const workdayRedirectHandler = (event: any, workdayId: string) => {
-        event.stopPropagation();
-        push(`/${projectId}/calendar/${workdayId}`);
-    };
-    const requisiteRedirectHandler = (event: any, requisiteId: string) => {
-        event.stopPropagation();
-        push(`/${projectId}/requisites/${requisiteId}`);
-    };
-
     const deleteWorkdayHandler = async () => {
         const response = await deleteWorkday();
         response && response.data && void push(`/${projectId}/calendar`);
@@ -80,7 +66,7 @@ const Workday: FC = () => {
                     <Button onClick = { () => void push(`/${projectId}/calendar`) }>To calendar</Button>
                     <Button onClick = { goBack }>Go back</Button>
                 </div>
-                <h2>Workday: {workday.date}</h2>
+                <h2>W: {workday.date}</h2>
                 <div>
                     <Button onClick = { () => void push(
                         `/${projectId}/calendar/${workdayId}/add-scenes`,
@@ -93,69 +79,10 @@ const Workday: FC = () => {
                     <Button onClick = { deleteWorkdayHandler }>Delete</Button>
                 </div>
             </WorkdayHeader>
-            {
-                <TableStyles>
-                    <Table>
-                        <TableHead
-                            className = 'scenesTableHead'
-                            ThNames = { [ '#', 'Location', 'Another workdays', 'Requisites' ] }
-                        />
-                        <Tbody>
-                            {
-                                workdayScenes.map(({ id, sceneNumber, location, workdays, requisites }) => (
-                                    <Tr
-                                        className = 'scenesTableRow'
-                                        key = { id }
-                                        onClick = { () => void sceneRedirectHandler(id) }>
-                                        <Td>{`${sceneNumber}`}</Td>
-                                        <Td>{location}</Td>
-                                        <Td>
-                                            {
-                                                workdays.map((mappedWorkday, index) => {
-                                                    if (workday.date === mappedWorkday.date) {
-                                                        return null;
-                                                    }
-
-                                                    return (
-                                                        <Button
-                                                            key = { index }
-                                                            style = {{
-                                                                backgroundColor: theme.workday.primary,
-                                                                color:           '#fff',
-                                                            }}
-                                                            onClick = { (event) => void workdayRedirectHandler(
-                                                                event, mappedWorkday.id,
-                                                            ) }>
-                                                            {mappedWorkday.date}
-                                                        </Button>
-                                                    );
-                                                })
-                                            }
-                                        </Td>
-                                        <Td>
-                                            {
-                                                requisites.map((requisite, index) => (
-                                                    <Button
-                                                        key = { index }
-                                                        style = {{
-                                                            backgroundColor: theme.requisite.secondary,
-                                                            color:           '#fff',
-                                                        }}
-                                                        onClick = { (event) => void requisiteRedirectHandler(
-                                                            event, requisite.id,
-                                                        ) }>
-                                                        {requisite.title}
-                                                    </Button>
-                                                ))
-                                            }
-                                        </Td>
-                                    </Tr>
-                                ))
-                            }
-                        </Tbody>
-                    </Table>
-                </TableStyles>
-            }
+            <ScenesTable
+                scenes = { workdayScenes }
+                workdayId = { workdayId }
+            />
         </WorkdayContainer>
     );
 };

@@ -1,12 +1,12 @@
 // Core
 import styled from 'styled-components';
 
-export const SceneContainer = styled.section`
+export const Container = styled.section`
     width: 100%;
     background-color: ${({ theme }) => theme.scene.containerBg};
 `;
 
-export const SceneHeader = styled.header`
+export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 5px;

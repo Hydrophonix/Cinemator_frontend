@@ -14,14 +14,14 @@ import { useWorkdaysQuery } from '../../bus/Workday';
 import { Container, RedoContainer } from './styles';
 
 // Types
-import { DateRangeOptions, InputsKeys } from '../../@init/redux/inputs/types';
+import { DateRangePayload, InputsKeys } from '../../@init/redux/inputs/types';
 
 type PropTypes = {
     projectId: string
     startDay?: Date
     endDay?: Date
     inputType: InputsKeys
-    setDateRange: (DateRangeOptions: DateRangeOptions) => void,
+    setDateRange: (DateRangeOptions: DateRangePayload) => void,
     reset?: boolean
 }
 

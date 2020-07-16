@@ -2,39 +2,39 @@ import styled, { css } from 'styled-components';
 
 const indexStyles = css`
     th {
-      position: relative;
+      nav {
+        width: 35px;
+        position: relative;
 
-      input {
-        width: 25px;
-        text-align: center;
-        font-family: sans-serif;
-        margin-left: 2px;
-      }
-
-      span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        width: 13px;
-        height: 13px;
-        top: 2px;
-        right: 2px;
-        background-color: #fff;
-        border-radius: 100%;
-
-        svg {
-          cursor: pointer;
-          width: 16px;
-          height: 16px;
-
-          path: {
-            fill: ${({ theme }) => theme.scene.secondary};
-          }
+        input {
+          box-sizing: border-box;
+          width: 35px;
+          text-align: center;
+          font-family: sans-serif;
+          margin-left: 2px;
         }
 
-        &:hover {
-          background-color: #ff0000;
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          width: 17px;
+          height: 17px;
+          top: -5px;
+          right: -11px;
+          background-color: #fff;
+          border-radius: 100%;
+
+          svg {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+          }
+
+          &:hover {
+            background-color: #ff0000;
+          }
         }
       }
     }
