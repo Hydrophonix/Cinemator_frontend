@@ -1,4 +1,44 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const indexStyles = css`
+    th {
+      position: relative;
+
+      input {
+        width: 25px;
+        text-align: center;
+        font-family: sans-serif;
+        margin-left: 2px;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        top: 2px;
+        right: 2px;
+        background-color: #fff;
+        border-radius: 100%;
+
+        svg {
+          cursor: pointer;
+          width: 16px;
+          height: 16px;
+
+          path: {
+            fill: ${({ theme }) => theme.scene.secondary};
+          }
+        }
+
+        &:hover {
+          background-color: #ff0000;
+        }
+      }
+    }
+  `;
 
 export const TableStyles = styled.div`
     width: 100%;
@@ -32,6 +72,7 @@ export const TableStyles = styled.div`
     .scenesTableHead {
       background-color: ${({ theme }) => theme.scene.primary};
       color: #fff;
+      ${indexStyles};
     }
 
     .scenesTableRow {
@@ -49,6 +90,7 @@ export const TableStyles = styled.div`
     .requisitesTableHead {
       background-color: ${({ theme }) => theme.requisite.primary};
       color: #fff;
+      ${indexStyles};
     }
 
     .requisitesTableRow {

@@ -41,7 +41,10 @@ export const Sidebar: FC<projectFields> = (props) => {
             ref = { sideBarEl }>
             <Toogler
                 isActive = { isSidebarActive }
-                onClick = { () => void setSidebarStatus(!isSidebarActive) }>
+                onClick = { () => {
+                    setSidebarStatus(!isSidebarActive);
+                    flipped && void setFlipped(false);
+                } }>
                 <FontAwesomeIcon
                     color = '#fff'
                     icon = 'arrow-right'

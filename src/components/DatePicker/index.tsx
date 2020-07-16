@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CustomInput } from './CustomInput';
 
 // Apollo hooks
-import { useOwnedProjectsQuery } from '../../bus/Project';
+import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Styles
 import { Container, RedoContainer } from './styles';
@@ -22,10 +22,10 @@ type PropTypes = {
     endDay?: Date
     inputType: InputsKeys
     setDateRange: (DateRangeOptions: DateRangeOptions) => void,
+    reset?: boolean
 }
 
-// eslint-disable-next-line init-declarations
-let timeOutId: number | undefined;
+let timeOutId: number | undefined = void 0;
 
 export const DatePicker: FC<PropTypes> = ({
     startDay,
@@ -33,22 +33,23 @@ export const DatePicker: FC<PropTypes> = ({
     setDateRange,
     inputType,
     projectId,
+    reset,
 }) => {
     const [ isRotate, setRotateState ] = useState(false);
-    const { data } = useOwnedProjectsQuery();
+    const { data } = useWorkdaysQuery({ projectId });
 
     const setProjectDateRange = () => {
-        const project = data?.ownedProjects.find((project) => project.id === projectId);
+        const workdaysDates = data?.workdays
+            .map((workday) => new Date(workday.date))
+            .sort((a, b) => a > b ? 1 : -1); // TODO: workdays server sort
 
-        if (project) {
-            setDateRange({
-                dateRange: {
-                    startDay: new Date(project.startDay),
-                    endDay:   new Date(project.endDay),
-                },
-                inputType,
-            });
-        }
+        workdaysDates && void setDateRange({
+            dateRange: {
+                startDay: workdaysDates[ 0 ] || new Date(),
+                endDay:   workdaysDates[ workdaysDates.length - 1 ] || new Date(),
+            },
+            inputType,
+        });
     };
 
     useEffect(() => {
@@ -98,18 +99,22 @@ export const DatePicker: FC<PropTypes> = ({
                 startDate = { startDay }
                 onChange = { (date) => date && void setDateRange({ dateRange: { endDay: date }, inputType }) }
             />
-            <RedoContainer
-                isRotate = { isRotate }
-                onClick = { resetToProjectDateRange }>
-                <FontAwesomeIcon
-                    icon = 'redo'
-                    style = {{
-                        color:  '#000',
-                        width:  14,
-                        height: 14,
-                    }}
-                />
-            </RedoContainer>
+            {
+                reset && (
+                    <RedoContainer
+                        isRotate = { isRotate }
+                        onClick = { resetToProjectDateRange }>
+                        <FontAwesomeIcon
+                            icon = 'redo'
+                            style = {{
+                                color:  '#000',
+                                width:  14,
+                                height: 14,
+                            }}
+                        />
+                    </RedoContainer>
+                )
+            }
         </Container>
     );
 };

@@ -1,8 +1,6 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // TODO: duplicate css ?
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -10,9 +8,14 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button } from '../../elements';
 
+// Apollo hooks
+import { useCreateWorkdayMutation } from '../../bus/Workday';
+
 // Hooks
 import { useForm } from '../../hooks';
-import { useCreateWorkdayMutation } from '../../bus/Workday';
+
+// Redux
+import { useReduxInputs } from '../../@init/redux/inputs';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
@@ -33,8 +36,8 @@ const CreateWorkday: FC = () => {
     const { goBack } = useHistory();
     const { projectId, date } = useParams<Params>();
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
-    const [ startDate, setStartDate ] = useState(new Date(date));
-    const [ createWorkday ] = useCreateWorkdayMutation({ projectId });
+    const { setGlobalDateRange } = useReduxInputs();
+    const [ createWorkday ] = useCreateWorkdayMutation({ projectId, setGlobalDateRange });
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -43,7 +46,7 @@ const CreateWorkday: FC = () => {
             variables: {
                 input: {
                     title: form.title,
-                    date:  transformDateToISO8601(startDate),
+                    date:  transformDateToISO8601(new Date(date)),
                 },
                 projectId,
             },
@@ -68,10 +71,10 @@ const CreateWorkday: FC = () => {
                         value = { form.title }
                         onChange = { setForm }
                     />
-                    <DatePicker
+                    <input
                         disabled
-                        selected = { startDate }
-                        onChange = { (date) => date && void setStartDate(date) }
+                        readOnly
+                        value = { date }
                     />
                     <Button type = 'submit'>Submit</Button>
                 </form>

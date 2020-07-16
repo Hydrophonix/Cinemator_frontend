@@ -46,6 +46,7 @@ const Requisites: FC = () => {
         <RequisiteContainer>
             <Header>
                 <DatePicker
+                    reset
                     endDay = { requisitesDateRange.endDay }
                     inputType = 'requisitesDateRange'
                     projectId = { projectId }

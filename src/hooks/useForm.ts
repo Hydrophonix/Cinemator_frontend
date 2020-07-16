@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+
 // Core
 import { useState, ChangeEvent } from 'react';
 
@@ -11,12 +13,13 @@ export const useForm = <T>(initialValue: T): [T, HandleChange, (newInitialValue:
             return void setForm(initialValue);
         }
 
-        return void setForm({
-            ...form,
-            [ event.target.name ]: isNumber
-                ? parseInt(event.target.value, 10)
-                : event.target.value,
-        });
+        let value: string | number = event.target.value;
+
+        if (isNumber) {
+            value = value !== '' && parseInt(value, 10) >= 0  ? parseInt(value, 10) : 0;
+        }
+
+        return void setForm({ ...form, [ event.target.name ]: value });
     };
 
     const setInitialForm = (newInitialValue: T) => void setForm(newInitialValue);
