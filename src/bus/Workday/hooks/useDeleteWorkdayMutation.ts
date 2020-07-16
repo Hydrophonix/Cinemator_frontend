@@ -9,13 +9,15 @@ import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 // Types
 import { DeleteWorkday, DeleteWorkdayVariables, Workdays } from '../types';
 import { Scenes } from '../../Scene';
+import { DateRange } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
     workdayId: string
+    setGlobalDateRange: (options: DateRange) => void
 }
 
-export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsType) => {
+export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRange }: OptionsType) => {
     return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, {
         update(cache, { data }) {
             const { deleteWorkday } = data!;
@@ -34,11 +36,14 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsType) 
                 variables: { projectId },
             })!;
 
+            const updatedWorkdays = workdays.filter((workday) => workday.id !== workdayId)
+                .sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : -1); // TODO sort workday server side
+
             cache.writeQuery({
                 query:     WorkdaysSchema,
                 variables: { projectId },
                 data:      {
-                    workdays: workdays.filter((workday) => workday.id !== workdayId),
+                    workdays: updatedWorkdays,
                 },
             });
 
@@ -57,6 +62,11 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsType) 
                         return scene;
                     }),
                 },
+            });
+
+            setGlobalDateRange({
+                startDay: new Date(updatedWorkdays[ 0 ].date),
+                endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
             });
         },
         variables: { workdayId },

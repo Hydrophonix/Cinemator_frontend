@@ -1,4 +1,4 @@
-type DateRange = {
+export type DateRange = {
     startDay?: Date
     endDay?: Date
 };
@@ -21,5 +21,12 @@ export type SetDateRangeAction = {
     payload: DateRangeOptions
 };
 
+export const SET_GLOBAL_DATE_RANGE = 'SET_GLOBAL_DATE_RANGE';
+export type setGlobalDateRangeAction = {
+    type: typeof SET_GLOBAL_DATE_RANGE;
+    payload: DateRange
+};
+
 export type InputsActionTypes =
     | SetDateRangeAction
+    | setGlobalDateRangeAction

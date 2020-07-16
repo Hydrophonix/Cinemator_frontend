@@ -19,6 +19,19 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
                 },
             };
 
+        case types.SET_GLOBAL_DATE_RANGE:
+            return {
+                ...state,
+                scenesDateRange: {
+                    startDay: action.payload.startDay,
+                    endDay:   action.payload.endDay,
+                },
+                requisitesDateRange: {
+                    startDay: action.payload.startDay,
+                    endDay:   action.payload.endDay,
+                },
+            };
+
         default:
             return state;
     }

@@ -35,5 +35,5 @@ export const Main = styled.main`
 
 export const Footer = styled.footer`
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 `;

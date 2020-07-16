@@ -12,6 +12,9 @@ import { ErrorBoundary, TableHead, WorkdayScenesModal } from '../../components';
 import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
 import { useScenesQuery } from '../../bus/Scene';
 
+// Redux
+import { useReduxInputs } from '../../@init/redux/inputs';
+
 // Elements
 import { Button } from '../../elements';
 
@@ -31,7 +34,8 @@ const Workday: FC = () => {
     const theme = useContext(ThemeContext);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId });
+    const { setGlobalDateRange } = useReduxInputs();
+    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setGlobalDateRange });
 
     if (loading || !data || scenesLoading || !scenesData) {
         return <div>Loading...</div>;

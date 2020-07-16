@@ -5,18 +5,17 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from '../../../hooks';
 
 // Actions
-import { setDateRangeAction } from './actions';
+import { setDateRangeAction, setGlobalDateRangeAction } from './actions';
 
 // Types
-import { DateRangeOptions } from './types';
-
-export const useSelectorInputs = () => useSelector(({ inputs }) => inputs);
+import { DateRange, DateRangeOptions } from './types';
 
 export const useReduxInputs = () => {
     const dispatch = useDispatch();
 
     return {
-        inputs:       useSelectorInputs(),
-        setDateRange: (dateRangeOptions: DateRangeOptions) => dispatch(setDateRangeAction(dateRangeOptions)),
+        inputs:             useSelector(({ inputs }) => inputs),
+        setDateRange:       (options: DateRangeOptions) => dispatch(setDateRangeAction(options)),
+        setGlobalDateRange: (options: DateRange) => dispatch(setGlobalDateRangeAction(options)),
     };
 };

@@ -5,3 +5,8 @@ export const setDateRangeAction = (payload: types.DateRangeOptions): types.SetDa
     type: types.SET_DATE_RANGE,
     payload,
 });
+
+export const setGlobalDateRangeAction = (payload: types.DateRange): types.setGlobalDateRangeAction => ({
+    type: types.SET_GLOBAL_DATE_RANGE,
+    payload,
+});

@@ -6,6 +6,7 @@ import {
     faArrowRight,
     faRedo,
     faLongArrowAltRight,
+    faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const initIconsLibrary = () => library.add(
@@ -14,6 +15,7 @@ export const initIconsLibrary = () => library.add(
     faArrowRight,
     faRedo,
     faLongArrowAltRight,
+    faTimesCircle,
 );
 
 // Add icon objects to library to use in components like that:

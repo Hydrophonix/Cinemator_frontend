@@ -1,8 +1,9 @@
 // Core
 import React, { FC, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { Table, Tbody, Thead, Tr, Th, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Apollo Hooks
 import { useScenesQuery } from '../../bus/Scene';
@@ -11,7 +12,7 @@ import { useScenesQuery } from '../../bus/Scene';
 import { useReduxInputs } from '../../@init/redux/inputs';
 
 // Components
-import { ErrorBoundary, TableHead, DatePicker } from '../../components';
+import { ErrorBoundary, DatePicker } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -48,6 +49,7 @@ const Scenes: FC = () => {
         <ScenesContainer>
             <Header>
                 <DatePicker
+                    reset
                     endDay = { scenesDateRange.endDay }
                     inputType = 'scenesDateRange'
                     projectId = { projectId }
@@ -59,10 +61,24 @@ const Scenes: FC = () => {
             </Header>
             <TableStyles>
                 <Table>
-                    <TableHead
-                        className = 'scenesTableHead'
-                        ThNames = { [ '#', 'Location', 'Workdays', 'Requisites' ] }
-                    />
+                    <Thead>
+                        <Tr className = 'scenesTableHead'>
+                            <Th>
+                                <input
+                                    type = 'number'
+                                />
+                                <span>
+                                    <FontAwesomeIcon
+                                        color = { theme.scene.primary }
+                                        icon = 'times-circle'
+                                    />
+                                </span>
+                            </Th>
+                            <Th>Location</Th>
+                            <Th>Workdays</Th>
+                            <Th>Requisites</Th>
+                        </Tr>
+                    </Thead>
                     <Tbody>
                         {
                             data.scenes.map((scene) => (
@@ -70,7 +86,7 @@ const Scenes: FC = () => {
                                     className = 'scenesTableRow'
                                     key = { scene.id }
                                     onClick = { () => void sceneRedirectHandler(scene.id) }>
-                                    <Td>{`${scene.sceneNumber}`}</Td>
+                                    <Td style = {{ textAlign: 'center' }}>{`${scene.sceneNumber}`}</Td>
                                     <Td>{scene.location}</Td>
                                     <Td>
                                         {

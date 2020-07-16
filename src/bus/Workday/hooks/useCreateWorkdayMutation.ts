@@ -7,12 +7,14 @@ import WorkdaysSchema from '../schemas/workdays.graphql';
 
 // Types
 import { CreateWorkday, CreateWorkdayVariables, Workdays } from '../types';
+import { DateRange } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
+    setGlobalDateRange: (options: DateRange) => void
 }
 
-export const useCreateWorkdayMutation = ({ projectId }: OptionsType) => {
+export const useCreateWorkdayMutation = ({ projectId, setGlobalDateRange }: OptionsType) => {
     return useMutation<CreateWorkday, CreateWorkdayVariables>(CreateWorkdaySchema, {
         update(cache, { data }) {
             const { workdays } = cache.readQuery<Workdays>({
@@ -20,12 +22,20 @@ export const useCreateWorkdayMutation = ({ projectId }: OptionsType) => {
                 variables: { projectId },
             })!;
 
+            const updatedWorkdays = [ ...workdays, data!.createWorkday ]
+                .sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : -1); // TODO sort workday server side
+
             cache.writeQuery({
                 query:     WorkdaysSchema,
                 variables: { projectId },
                 data:      {
-                    workdays: workdays.concat([ data!.createWorkday ]),
+                    workdays: updatedWorkdays,
                 },
+            });
+
+            setGlobalDateRange({
+                startDay: new Date(updatedWorkdays[ 0 ].date),
+                endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
             });
         },
     });
