@@ -23,7 +23,7 @@ const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
-    const { inputs: { requisitesInputs }, setDateRange } = useReduxInputs();
+    const { inputs: { requisitesInputs }} = useReduxInputs();
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -32,13 +32,9 @@ const Requisites: FC = () => {
     return (
         <RequisiteContainer>
             <Header>
-                <DatePicker
-                    reset
-                    endDay = { requisitesInputs.dateRange.endDay }
-                    inputType = 'requisitesInputs'
-                    projectId = { projectId }
-                    setDateRange = { setDateRange }
-                    startDay = { requisitesInputs.dateRange.startDay }
+                <input
+                    value = ''
+                    onChange = { () => void 0 }
                 />
                 <h2>Requisites</h2>
                 <button onClick = { () => void push(`/${projectId}/create-requisite`) }>Add new requisite</button>

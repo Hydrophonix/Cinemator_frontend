@@ -2,7 +2,9 @@
 import styled from 'styled-components';
 
 export const Main = styled.main`
-    flex: 1;
+    /* flex: 1; */
+    max-height: 420px;
+    overflow-y: scroll;
 `;
 
 export const Footer = styled.footer`

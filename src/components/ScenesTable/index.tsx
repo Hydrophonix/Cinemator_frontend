@@ -24,17 +24,22 @@ export const ScenesTable: FC<PropTypes> = ({
     scenes, workdayId, index, setItemIndex,
 }) => {
     return (
-        <TableStyles>
-            <Table>
-                <ScenesHead
-                    index = { index }
-                    setItemIndex = { setItemIndex }
-                />
-                <ScenesBody
-                    scenes = { scenes }
-                    workdayId = { workdayId }
-                />
-            </Table>
-        </TableStyles>
+        <div style = {{
+            overflowX: 'hidden',
+            overflowY: 'scroll',
+        }}>
+            <TableStyles>
+                <Table>
+                    <ScenesHead
+                        index = { index }
+                        setItemIndex = { setItemIndex }
+                    />
+                    <ScenesBody
+                        scenes = { scenes }
+                        workdayId = { workdayId }
+                    />
+                </Table>
+            </TableStyles>
+        </div>
     );
 };

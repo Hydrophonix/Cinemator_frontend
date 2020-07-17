@@ -12,10 +12,6 @@ const initialState = {
         index: 0,
     },
     requisitesInputs: {
-        dateRange: {
-            startDay: void 0,
-            endDay:   void 0,
-        },
         index: 0,
     },
 };
@@ -25,29 +21,14 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
         case types.SET_DATE_RANGE:
             return {
                 ...state,
-                [ action.payload.inputType ]: {
-                    ...state[ action.payload.inputType ],
-                    dateRange: {
-                        ...state[ action.payload.inputType ].dateRange,
-                        ...action.payload.dateRange,
-                    },
-
-                },
-            };
-
-        case types.SET_GLOBAL_DATE_RANGE:
-            return {
-                ...state,
                 scenesInputs: {
                     ...state.scenesInputs,
-                    dateRange: action.payload,
-                },
-                requisitesInputs: {
-                    ...state.requisitesInputs,
-                    dateRange: action.payload,
+                    dateRange: {
+                        ...state.scenesInputs.dateRange,
+                        ...action.payload.dateRange,
+                    },
                 },
             };
-
 
         case types.SET_ITEM_INDEX:
             return {

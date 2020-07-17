@@ -36,8 +36,8 @@ const CreateWorkday: FC = () => {
     const { goBack } = useHistory();
     const { projectId, date } = useParams<Params>();
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
-    const { setGlobalDateRange } = useReduxInputs();
-    const [ createWorkday ] = useCreateWorkdayMutation({ projectId, setGlobalDateRange });
+    const { setDateRange } = useReduxInputs();
+    const [ createWorkday ] = useCreateWorkdayMutation({ projectId, setDateRange });
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

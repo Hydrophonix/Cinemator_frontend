@@ -9,7 +9,6 @@ export type InputsState = {
         index: number
     }
     requisitesInputs: {
-        dateRange: DateRange
         index: number
     }
 };
@@ -18,7 +17,7 @@ export type InputsKeys = keyof InputsState;
 
 export type DateRangePayload = {
     dateRange: DateRange
-    inputType: InputsKeys
+    inputType?: InputsKeys
 }
 
 export type IndexPayload = {
@@ -32,12 +31,6 @@ export type SetDateRangeAction = {
     payload: DateRangePayload
 };
 
-export const SET_GLOBAL_DATE_RANGE = 'SET_GLOBAL_DATE_RANGE';
-export type setGlobalDateRangeAction = {
-    type: typeof SET_GLOBAL_DATE_RANGE;
-    payload: DateRange
-};
-
 export const SET_ITEM_INDEX = 'SET_ITEM_INDEX';
 export type setItemIndexAction = {
     type: typeof SET_ITEM_INDEX;
@@ -46,5 +39,4 @@ export type setItemIndexAction = {
 
 export type InputsActionTypes =
     | SetDateRangeAction
-    | setGlobalDateRangeAction
     | setItemIndexAction

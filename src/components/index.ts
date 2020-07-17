@@ -1,6 +1,5 @@
 // App
 export * from './ErrorBoundary';
-export * from './TableHead';
 
 // Table
 export * from './ScenesTable';

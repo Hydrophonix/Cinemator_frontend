@@ -9,15 +9,15 @@ import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 // Types
 import { DeleteWorkday, DeleteWorkdayVariables, Workdays } from '../types';
 import { Scenes } from '../../Scene';
-import { DateRange } from '../../../@init/redux/inputs/types';
+import { DateRangePayload } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
     workdayId: string
-    setGlobalDateRange: (options: DateRange) => void
+    setDateRange: (payload: DateRangePayload) => void
 }
 
-export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRange }: OptionsType) => {
+export const useDeleteWorkdayMutation = ({ projectId, workdayId, setDateRange }: OptionsType) => {
     return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, {
         update(cache, { data }) {
             const { deleteWorkday } = data!;
@@ -64,9 +64,11 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRa
                 },
             });
 
-            setGlobalDateRange({
-                startDay: new Date(updatedWorkdays[ 0 ].date),
-                endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
+            setDateRange({
+                dateRange: {
+                    startDay: new Date(updatedWorkdays[ 0 ].date),
+                    endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
+                },
             });
         },
         variables: { workdayId },

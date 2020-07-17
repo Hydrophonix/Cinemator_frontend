@@ -18,14 +18,19 @@ type PropTypes = {
 
 export const RequisitesTable: FC<PropTypes> = ({ requisites, sceneId }) => {
     return (
-        <TableStyles>
-            <Table>
-                <RequisitesHead />
-                <RequisitesBody
-                    requisites = { requisites }
-                    sceneId = { sceneId }
-                />
-            </Table>
-        </TableStyles>
+        <div style = {{
+            overflowX: 'hidden',
+            overflowY: 'scroll',
+        }}>
+            <TableStyles>
+                <Table>
+                    <RequisitesHead />
+                    <RequisitesBody
+                        requisites = { requisites }
+                        sceneId = { sceneId }
+                    />
+                </Table>
+            </TableStyles>
+        </div>
     );
 };

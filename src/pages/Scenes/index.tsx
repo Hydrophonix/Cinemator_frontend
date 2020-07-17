@@ -5,7 +5,12 @@ import moment from 'moment';
 
 // Apollo Hooks
 import { useScenesQuery } from '../../bus/Scene';
-import { useWorkdaysQuery } from '../../bus/Workday';
+
+// Hooks
+import { useProjectDateRange } from '../../hooks';
+
+// Utils
+import { transformDateToISO8601 } from '../../utils';
 
 // Redux
 import { useReduxInputs } from '../../@init/redux/inputs';
@@ -26,27 +31,27 @@ const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
-    const { data: workdaysData, loading: workdaysLoading } = useWorkdaysQuery({ projectId });
+    const { projectStartDay, projectEndDay } = useProjectDateRange();
     const { inputs, setDateRange, setItemIndex } = useReduxInputs();
+    const { dateRange, index } = inputs.scenesInputs;
 
-    if (loading || !data || workdaysLoading || !workdaysData) {
+    const startDay = dateRange.startDay || projectStartDay;
+    const endDay = dateRange.endDay || projectEndDay;
+    const momentStartDay = moment(transformDateToISO8601(startDay));
+    const momentEndDay = moment(transformDateToISO8601(endDay));
+    const momentProjectStartDay = moment(transformDateToISO8601(projectStartDay));
+    const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
+
+    if (loading || !data) {
         return <div>Loading...</div>;
     }
 
-    const workdaysDates = workdaysData.workdays
-        .map((workday) => new Date(workday.date))
-        .sort((a, b) => a > b ? 1 : -1); // TODO: workdays server sort
-
-    const { dateRange: { startDay, endDay }, index } = inputs.scenesInputs;
+    // const ScenesWithoutWorkdaySort = () => data.scenes.sort((a, b) => a.workdays.length > b.workdays.length ? 1 : -1);
 
     const filterByDateRange = () => data.scenes.filter((scene) => scene.workdays.some((workday) => {
-        const workdayDateInMs = new Date(workday.date).getTime();
+        const parcedWorkday = moment(workday.date);
 
-        if (startDay!.getTime() <= workdayDateInMs && workdayDateInMs <= endDay!.getTime()) {
-            return true;
-        }
-
-        return false;
+        return parcedWorkday.isSameOrAfter(momentStartDay) && parcedWorkday.isSameOrBefore(momentEndDay);
     }));
 
     const findByIndex = () => {
@@ -64,14 +69,7 @@ const Scenes: FC = () => {
             return findByIndex();
         }
 
-        if (!(startDay && endDay)) {
-            return data.scenes;
-        }
-
-        const isStartDayDifference = moment(workdaysDates[ 0 ]).diff(startDay) !== 0;
-        const isEndDayDifference = moment(workdaysDates[ workdaysDates.length - 1 ]).diff(endDay) !== 0;
-
-        if (!(isStartDayDifference || isEndDayDifference)) {
+        if (momentProjectStartDay.isSame(momentStartDay) && momentProjectEndDay.isSame(momentEndDay)) {
             return data.scenes;
         }
 
@@ -84,14 +82,12 @@ const Scenes: FC = () => {
                 <DatePicker
                     reset
                     endDay = { endDay }
-                    inputType = 'scenesInputs'
-                    projectId = { projectId }
+                    projectEndDay = { projectEndDay }
+                    projectStartDay = { projectStartDay }
                     setDateRange = { setDateRange }
                     startDay = { startDay }
                 />
-                <h2>
-                    Scenes
-                </h2>
+                <h2>Scenes</h2>
                 <Button onClick = { () => void push(`/${projectId}/create-scene`) }>
                     Add new scene
                 </Button>

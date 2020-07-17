@@ -2,11 +2,12 @@
 // Core
 import React, { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Table, Tbody, Tr, Td } from 'react-super-responsive-table';
+import { Table, Tbody, Thead, Tr, Th, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
-import { Modal, TableHead } from '..';
+import { Modal } from '..';
 
 // Apollo hooks
 import { useScenesQuery } from '../../bus/Scene';
@@ -55,10 +56,28 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
             <Main>
                 <TableStyles>
                     <Table>
-                        <TableHead
-                            className = 'scenesTableHead'
-                            ThNames = { [ '#', 'Location' ] }
-                        />
+                        <Thead>
+                            <Tr className = 'scenesTableHead'>
+                                <Th>
+                                    <nav>
+                                        <input
+                                            type = 'number'
+                                            value = { 0 }
+                                            onChange = { () => void 0 }
+                                        />
+                                        {
+                                            <span onClick = { () => void 0 }>
+                                                <FontAwesomeIcon
+                                                    color = { theme.requisite.hoverSecondary }
+                                                    icon = 'times-circle'
+                                                />
+                                            </span>
+                                        }
+                                    </nav>
+                                </Th>
+                                <Th>Title</Th>
+                            </Tr>
+                        </Thead>
                         <Tbody>
                             {
                                 data.scenes.map(({ id, sceneNumber, location }) => (
@@ -66,10 +85,14 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
                                         className = 'scenesTableRow'
                                         key = { id }
                                         style = { scenesIdsArray.includes(id)
-                                            ? { backgroundColor: 'lightgreen' } : {}
+                                            ? { backgroundColor: 'green' } : {}
                                         }
                                         onClick = { () => void setScenesIdsArray(id) }>
-                                        <Td>{`${sceneNumber}`}</Td>
+                                        <Td>
+                                            <div style = {{ width: 35, textAlign: 'center' }}>
+                                                {`${sceneNumber}`}
+                                            </div>
+                                        </Td>
                                         <Td>{location}</Td>
                                     </Tr>
                                 ))
