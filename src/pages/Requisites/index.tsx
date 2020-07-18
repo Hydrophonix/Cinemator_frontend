@@ -9,7 +9,7 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { useReduxInputs } from '../../@init/redux/inputs';
 
 // Components
-import { ErrorBoundary, DatePicker, RequisitesTable } from '../../components';
+import { ErrorBoundary, RequisitesTable } from '../../components';
 
 // Styles
 import { RequisiteContainer, Header } from './styles';
@@ -23,23 +23,57 @@ const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
-    const { inputs: { requisitesInputs }} = useReduxInputs();
+    const { inputs: { requisitesInputs }, setIndexRedux, setRequisiteTitleRedux } = useReduxInputs();
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
+    const findByIndex = () => {
+        // const requisite = data.requisites.find((requisite) => requisite.requisiteNumber === index);
+
+        // if (requisite) {
+        //     return [requisite];
+        // }
+
+        return data.requisites;
+    };
+
+    const findByString = () => data.requisites.filter((requisite) => {
+        return requisite.title.toLocaleLowerCase().includes(requisitesInputs.title.toLocaleLowerCase());
+    });
+
+    const filterHandler = () => {
+        if (requisitesInputs.index !== 0) {
+            return findByIndex();
+        }
+
+        if (requisitesInputs.title !== '') {
+            return findByString();
+        }
+
+        return data.requisites;
+    };
+
     return (
         <RequisiteContainer>
             <Header>
-                <input
-                    value = ''
-                    onChange = { () => void 0 }
-                />
+                <div />
                 <h2>Requisites</h2>
                 <button onClick = { () => void push(`/${projectId}/create-requisite`) }>Add new requisite</button>
             </Header>
-            <RequisitesTable requisites = { data.requisites }/>
+            <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
+                <RequisitesTable
+                    index = { requisitesInputs.index }
+                    requisites = { filterHandler() }
+                    setIndex = { (newIndex: number) => void setIndexRedux({
+                        inputType: 'requisitesInputs',
+                        index:     newIndex,
+                    }) }
+                    setTitle = { (newTitle: string) => setRequisiteTitleRedux(newTitle) }
+                    title = { requisitesInputs.title }
+                />
+            </div>
         </RequisiteContainer>
     );
 };

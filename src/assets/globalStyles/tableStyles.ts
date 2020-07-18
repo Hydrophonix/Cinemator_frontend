@@ -3,13 +3,11 @@ import styled, { css } from 'styled-components';
 const indexStyles = css`
     th {
       nav {
-        width: 35px;
+        text-align: center;
         position: relative;
 
         input {
           box-sizing: border-box;
-          width: 35px;
-          text-align: center;
           font-family: sans-serif;
           margin-left: 2px;
         }
@@ -36,6 +34,10 @@ const indexStyles = css`
             background-color: #ff0000;
           }
         }
+      }
+
+      div {
+        background-color: #fff;
       }
     }
   `;

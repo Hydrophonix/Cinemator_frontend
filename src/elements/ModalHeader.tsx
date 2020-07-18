@@ -12,7 +12,7 @@ const HeaderContainer = styled.header`
 
     h1 {
         padding-left: 15px;
-        font-family: PacificoRegular;
+        font-family: sans-serif;
         font-size: 24px;
         color: #fff;
     }

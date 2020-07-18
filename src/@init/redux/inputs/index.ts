@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from '../../../hooks';
 
 // Actions
-import { setDateRangeAction, setItemIndexAction } from './actions';
+import { setDateRangeAction, setIndexAction, setRequisiteTitleAction } from './actions';
 
 // Types
 import * as types from './types';
@@ -14,8 +14,9 @@ export const useReduxInputs = () => {
     const dispatch = useDispatch();
 
     return {
-        inputs:       useSelector(({ inputs }) => inputs),
-        setDateRange: (options: types.DateRangePayload) => dispatch(setDateRangeAction(options)),
-        setItemIndex: (options: types.IndexPayload) => dispatch(setItemIndexAction(options)),
+        inputs:                 useSelector(({ inputs }) => inputs),
+        setDateRangeRedux:      (payload: types.DateRange) => dispatch(setDateRangeAction(payload)),
+        setIndexRedux:          (payload: types.IndexPayload) => dispatch(setIndexAction(payload)),
+        setRequisiteTitleRedux: (payload: string) => dispatch(setRequisiteTitleAction(payload)),
     };
 };

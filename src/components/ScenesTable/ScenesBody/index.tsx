@@ -13,13 +13,17 @@ import { Scenes_scenes } from '../../../bus/Scene';
 type Proptypes = {
     scenes: Scenes_scenes[]
     workdayId?: string
+    lightVersion?: {
+        scenesIdsArray: Array<string>
+        setScenesIdsArray: (sceneId: string) => void
+    }
 }
 
 type Params = {
     projectId: string
 };
 
-export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId }) => {
+export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId, lightVersion }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
@@ -41,53 +45,67 @@ export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId }) => {
                     <Tr
                         className = 'scenesTableRow'
                         key = { scene.id }
-                        onClick = { () => void sceneRedirectHandler(scene.id) }>
+                        style = {
+                            lightVersion?.scenesIdsArray.includes(scene.id)
+                                ? { backgroundColor: 'green' } : {}
+                        }
+                        onClick = { () => {
+                            lightVersion
+                                ? lightVersion.setScenesIdsArray(scene.id)
+                                : sceneRedirectHandler(scene.id);
+                        } }>
                         <Td>
                             <div style = {{ width: 35, textAlign: 'center' }}>
                                 {`${scene.sceneNumber}`}
                             </div>
                         </Td>
                         <Td>{scene.location}</Td>
-                        <Td>
-                            {
-                                scene.workdays.map((workday, index) => {
-                                    if (workdayId && workday.id === workdayId) {
-                                        return null;
-                                    }
+                        {
+                            !lightVersion && (
+                                <>
+                                    <Td>
+                                        {
+                                            scene.workdays.map((workday, index) => {
+                                                if (workdayId && workday.id === workdayId) {
+                                                    return null;
+                                                }
 
-                                    return (
-                                        <Button
-                                            key = { index }
-                                            style = {{
-                                                backgroundColor: theme.workday.primary,
-                                                color:           '#fff',
-                                            }}
-                                            onClick = { (event) => void workdayRedirectHandler(
-                                                event, workday.id,
-                                            ) }>
-                                            {workday.date}
-                                        </Button>
-                                    );
-                                })
-                            }
-                        </Td>
-                        <Td>
-                            {
-                                scene.requisites.map((requisite, index) => (
-                                    <Button
-                                        key = { index }
-                                        style = {{
-                                            backgroundColor: theme.requisite.secondary,
-                                            color:           '#fff',
-                                        }}
-                                        onClick = { (event) => void requisiteRedirectHandler(
-                                            event, requisite.id,
-                                        ) }>
-                                        {requisite.title}
-                                    </Button>
-                                ))
-                            }
-                        </Td>
+                                                return (
+                                                    <Button
+                                                        key = { index }
+                                                        style = {{
+                                                            backgroundColor: theme.workday.primary,
+                                                            color:           '#fff',
+                                                        }}
+                                                        onClick = { (event) => void workdayRedirectHandler(
+                                                            event, workday.id,
+                                                        ) }>
+                                                        {workday.date}
+                                                    </Button>
+                                                );
+                                            })
+                                        }
+                                    </Td>
+                                    <Td>
+                                        {
+                                            scene.requisites.map((requisite, index) => (
+                                                <Button
+                                                    key = { index }
+                                                    style = {{
+                                                        backgroundColor: theme.requisite.secondary,
+                                                        color:           '#fff',
+                                                    }}
+                                                    onClick = { (event) => void requisiteRedirectHandler(
+                                                        event, requisite.id,
+                                                    ) }>
+                                                    {requisite.title}
+                                                </Button>
+                                            ))
+                                        }
+                                    </Td>
+                                </>
+                            )
+                        }
                     </Tr>
                 ))
             }

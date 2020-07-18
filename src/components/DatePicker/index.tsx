@@ -11,14 +11,14 @@ import { CustomInput } from './CustomInput';
 import { Container, RedoContainer } from './styles';
 
 // Types
-import { DateRangePayload } from '../../@init/redux/inputs/types';
+import { DateRange } from '../../@init/redux/inputs/types';
 
 type PropTypes = {
     startDay?: Date
     endDay?: Date
     projectStartDay: Date
     projectEndDay: Date
-    setDateRange: (DateRangeOptions: DateRangePayload) => void,
+    setDateRange: (payload: DateRange) => void,
     reset?: boolean
 }
 
@@ -36,12 +36,7 @@ export const DatePicker: FC<PropTypes> = ({
 
     const resetToProjectDateRange = () => {
         if (!timeOutId) {
-            setDateRange({
-                dateRange: {
-                    startDay: projectStartDay,
-                    endDay:   projectEndDay,
-                },
-            });
+            setDateRange({ startDay: projectStartDay, endDay: projectEndDay });
             setRotateState(true);
             timeOutId = setTimeout(() => {
                 setRotateState(false);
@@ -60,7 +55,7 @@ export const DatePicker: FC<PropTypes> = ({
                 maxDate = { endDay }
                 selected = { startDay }
                 startDate = { startDay }
-                onChange = { (date) => date && void setDateRange({ dateRange: { startDay: date }}) }
+                onChange = { (date) => date && void setDateRange({ startDay: date }) }
             />
             <FontAwesomeIcon
                 color = '#000'
@@ -79,7 +74,7 @@ export const DatePicker: FC<PropTypes> = ({
                 popperPlacement = 'top-center'
                 selected = { endDay }
                 startDate = { startDay }
-                onChange = { (date) => date && void setDateRange({ dateRange: { endDay: date }}) }
+                onChange = { (date) => date && void setDateRange({ endDay: date }) }
             />
             {
                 reset && (

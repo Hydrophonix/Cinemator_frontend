@@ -4,58 +4,65 @@ import { Thead, Tr, Th } from 'react-super-responsive-table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
-// Types
-import { IndexPayload } from '../../../@init/redux/inputs/types';
-
 type PropTypes = {
     index?: number
-    setItemIndex?: (payload: IndexPayload) => void,
+    setIndex?: (index: number) => void
+    lightVersion?: Object
 }
 
-export const ScenesHead: FC<PropTypes> = ({ index, setItemIndex }) => {
+export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => {
     const theme = useContext(ThemeContext);
 
     const onChange = (event: any) => {
-        if (setItemIndex) {
-            const value = event.target.value !== '' ? event.target.value : 0;
-            const number = parseInt(value, 10);
-            const newIndex = number >= 0 && number <= 999 ? number : 0;
+        const value: string = event.target.value !== '' ? event.target.value : '0';
+        const number = parseInt(value, 10);
+        const newIndex = number >= 0 && number <= 999 ? number : 0;
+        const isIndexDiff = newIndex !== index;
 
-            newIndex !== index && void setItemIndex({ inputType: 'scenesInputs', index: newIndex });
-        }
+        setIndex && isIndexDiff && void setIndex(newIndex);
     };
 
-    const resetIndex = () => {
-        if (setItemIndex) {
-            index !== 0 && void setItemIndex({ inputType: 'scenesInputs', index: 0 });
-        }
-    };
+    const resetIndex = () => setIndex && (index !== 0) && void setIndex(0);
 
     return (
         <Thead>
             <Tr className = 'scenesTableHead'>
                 <Th>
-                    <nav>
-                        <input
-                            type = 'number'
-                            value = { index }
-                            onChange = { onChange }
-                        />
-                        {
-                            index !== 0 && (
-                                <span onClick = { resetIndex }>
-                                    <FontAwesomeIcon
-                                        color = { theme.scene.hoverSecondary }
-                                        icon = 'times-circle'
+                    {
+                        typeof index === 'number'
+                            ? (
+                                <nav style = {{ width: 35 }}>
+                                    <input
+                                        style = {{ width: 35, textAlign: 'center' }}
+                                        type = 'number'
+                                        value = { index }
+                                        onChange = { onChange }
                                     />
-                                </span>
+                                    {
+                                        index !== 0 && (
+                                            <span onClick = { resetIndex }>
+                                                <FontAwesomeIcon
+                                                    color = { theme.scene.hoverSecondary }
+                                                    icon = 'times-circle'
+                                                />
+                                            </span>
+                                        )
+                                    }
+                                </nav>
                             )
-                        }
-                    </nav>
+                            : <nav style = {{ width: 35, textAlign: 'center' }}>#</nav>
+                    }
+
                 </Th>
                 <Th>Location</Th>
-                <Th>Workdays</Th>
-                <Th>Requisites</Th>
+                {
+                    !lightVersion && (
+                        <>
+                            <Th>Workdays</Th>
+                            <Th>Requisites</Th>
+                        </>
+                    )
+                }
             </Tr>
         </Thead>
     );

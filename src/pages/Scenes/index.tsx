@@ -32,7 +32,7 @@ const Scenes: FC = () => {
     const { projectId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
     const { projectStartDay, projectEndDay } = useProjectDateRange();
-    const { inputs, setDateRange, setItemIndex } = useReduxInputs();
+    const { inputs, setDateRangeRedux, setIndexRedux } = useReduxInputs();
     const { dateRange, index } = inputs.scenesInputs;
 
     const startDay = dateRange.startDay || projectStartDay;
@@ -84,7 +84,7 @@ const Scenes: FC = () => {
                     endDay = { endDay }
                     projectEndDay = { projectEndDay }
                     projectStartDay = { projectStartDay }
-                    setDateRange = { setDateRange }
+                    setDateRange = { setDateRangeRedux }
                     startDay = { startDay }
                 />
                 <h2>Scenes</h2>
@@ -92,15 +92,19 @@ const Scenes: FC = () => {
                     Add new scene
                 </Button>
             </Header>
-            <ScenesTable
-                index = { index }
-                scenes = { filterHandler() }
-                setItemIndex = { setItemIndex }
-            />
+            <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
+                <ScenesTable
+                    index = { index }
+                    scenes = { filterHandler() }
+                    setIndex = { (newIndex: number) => void setIndexRedux({
+                        inputType: 'scenesInputs',
+                        index:     newIndex,
+                    }) }
+                />
+            </div>
         </ScenesContainer>
     );
 };
-
 
 export default () => (
     <ErrorBoundary>

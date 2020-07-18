@@ -17,29 +17,30 @@ type PropTypes = {
     scenes: Scenes_scenes[]
     workdayId?: string
     index?: number
-    setItemIndex?: (payload: IndexPayload) => void,
+    setIndex?: (index: number) => void
+    lightVersion?: {
+        scenesIdsArray: Array<string>
+        setScenesIdsArray: (sceneId: string) => void
+    }
 }
 
 export const ScenesTable: FC<PropTypes> = ({
-    scenes, workdayId, index, setItemIndex,
+    scenes, workdayId, index, setIndex, lightVersion,
 }) => {
     return (
-        <div style = {{
-            overflowX: 'hidden',
-            overflowY: 'scroll',
-        }}>
-            <TableStyles>
-                <Table>
-                    <ScenesHead
-                        index = { index }
-                        setItemIndex = { setItemIndex }
-                    />
-                    <ScenesBody
-                        scenes = { scenes }
-                        workdayId = { workdayId }
-                    />
-                </Table>
-            </TableStyles>
-        </div>
+        <TableStyles>
+            <Table>
+                <ScenesHead
+                    index = { index }
+                    lightVersion = { lightVersion }
+                    setIndex = { setIndex }
+                />
+                <ScenesBody
+                    lightVersion = { lightVersion }
+                    scenes = { scenes }
+                    workdayId = { workdayId }
+                />
+            </Table>
+        </TableStyles>
     );
 };

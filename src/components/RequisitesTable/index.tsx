@@ -8,29 +8,44 @@ import { RequisitesBody } from './RequisitesBody';
 
 // Styles
 import { TableStyles } from '../../assets';
-import { Requisites_requisites } from '../../bus/Requisite';
 
 // Types
+import { Requisites_requisites } from '../../bus/Requisite';
+
 type PropTypes = {
     requisites: Requisites_requisites[]
     sceneId?: string
+    index?: number
+    setIndex?: (newIndex: number) => void
+    title?: string
+    setTitle?: (newTitle: string) => void
+    lightVersion?: {
+        requisitesIdsArray: Array<string>
+        setRequisitesIdsArray: (sceneId: string) => void
+    }
 }
 
-export const RequisitesTable: FC<PropTypes> = ({ requisites, sceneId }) => {
+export const RequisitesTable: FC<PropTypes> = ({
+    requisites, sceneId, lightVersion,
+    index, setIndex,
+    title, setTitle,
+}) => {
     return (
-        <div style = {{
-            overflowX: 'hidden',
-            overflowY: 'scroll',
-        }}>
-            <TableStyles>
-                <Table>
-                    <RequisitesHead />
-                    <RequisitesBody
-                        requisites = { requisites }
-                        sceneId = { sceneId }
-                    />
-                </Table>
-            </TableStyles>
-        </div>
+        <TableStyles>
+            <Table>
+                <RequisitesHead
+                    index = { index }
+                    lightVersion = { lightVersion }
+                    setIndex = { setIndex }
+                    setTitle = { setTitle }
+                    title = { title }
+                />
+                <RequisitesBody
+                    lightVersion = { lightVersion }
+                    requisites = { requisites }
+                    sceneId = { sceneId }
+                />
+            </Table>
+        </TableStyles>
     );
 };

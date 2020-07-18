@@ -30,8 +30,8 @@ const Workday: FC = () => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const { setDateRange } = useReduxInputs();
-    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setDateRange });
+    const { setDateRangeRedux } = useReduxInputs();
+    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setDateRangeRedux });
 
     if (loading || !data || scenesLoading || !scenesData) {
         return <div>Loading...</div>;
