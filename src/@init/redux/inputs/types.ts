@@ -13,6 +13,9 @@ export type InputsState = {
         index: number
         title: string
     }
+    workdaysInputs: {
+        dateRange: DateRange
+    }
 };
 
 export type InputsKeys = keyof InputsState;
@@ -25,6 +28,12 @@ export type IndexPayload = {
 export const SET_DATE_RANGE = 'SET_DATE_RANGE';
 export type SetDateRangeAction = {
     type: typeof SET_DATE_RANGE
+    payload: DateRange
+};
+
+export const SET_WORKDAYS_DATE_RANGE = 'SET_WORKDAYS_DATE_RANGE';
+export type SetWorkdaysDateRangeAction = {
+    type: typeof SET_WORKDAYS_DATE_RANGE
     payload: DateRange
 };
 
@@ -44,3 +53,4 @@ export type InputsActionTypes =
     | SetDateRangeAction
     | setIndexAction
     | setRequisiteTitleAction
+    | SetWorkdaysDateRangeAction

@@ -18,3 +18,13 @@ export const Header = styled.header`
         color: #fff;
     }
 `;
+
+export const WorkdaysContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.workday.containerBg};
+`;

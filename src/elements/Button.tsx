@@ -14,9 +14,8 @@ const Styled = styled.button<ButtonProps>`
     outline: none;
     border-width: 2px;
     border-radius: 8px;
-    background-color: ${({ theme, active }) => active && theme.button.primary};
-    border-color: ${({ theme, active }) => active && theme.button.secondary};
-    border-style: ${({ active }) => active && 'inset'};
+    background-color: #fff;
+
     font-family: sans-serif;
 
     &:hover, &:focus {

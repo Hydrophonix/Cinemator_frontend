@@ -31,9 +31,9 @@ export const defaultTheme = {
         containerBg:    '#e3caf5',
     },
     workday: {
-        primary:        '#629460',
-        secondary:      '#96be8c',
-        hoverSecondary: null,
+        primary:        '#1b4332',
+        secondary:      '#2d6a4f',
+        hoverSecondary: '#96be8c',
         containerBg:    '#d8f3dc',
     },
     scene: {

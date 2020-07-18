@@ -10,9 +10,6 @@ import { ScenesBody } from './ScenesBody';
 import { TableStyles } from '../../assets';
 import { Scenes_scenes } from '../../bus/Scene';
 
-// Types
-import { IndexPayload } from '../../@init/redux/inputs/types';
-
 type PropTypes = {
     scenes: Scenes_scenes[]
     workdayId?: string

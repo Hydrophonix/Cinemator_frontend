@@ -16,6 +16,12 @@ const initialState = {
         index: 0,
         title: '',
     },
+    workdaysInputs: {
+        dateRange: {
+            startDay: void 0,
+            endDay:   void 0,
+        },
+    },
 };
 
 export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = initialState, action) => {
@@ -27,6 +33,18 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
                     ...state.scenesInputs,
                     dateRange: {
                         ...state.scenesInputs.dateRange,
+                        ...action.payload,
+                    },
+                },
+            };
+
+        case types.SET_WORKDAYS_DATE_RANGE:
+            return {
+                ...state,
+                workdaysInputs: {
+                    ...state.workdaysInputs,
+                    dateRange: {
+                        ...state.workdaysInputs.dateRange,
                         ...action.payload,
                     },
                 },

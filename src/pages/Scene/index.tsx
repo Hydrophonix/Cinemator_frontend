@@ -1,6 +1,7 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 import _ from 'lodash';
 
 // Components
@@ -14,7 +15,7 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { Button } from '../../elements';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, WorkdaysContainer } from './styles';
 
 // Types
 type Params = {
@@ -24,6 +25,7 @@ type Params = {
 const Scene: FC = () => {
     const { goBack, push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
     const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
@@ -46,6 +48,11 @@ const Scene: FC = () => {
     const deleteSceneHandler = async () => {
         const response = await deleteScene();
         response && response.data && void push(`/${projectId}/scenes`);
+    };
+
+    const workdayRedirectHandler = (event: any, workdayId: string) => {
+        event.stopPropagation();
+        push(`/${projectId}/calendar/${workdayId}`);
     };
 
     return (
@@ -72,6 +79,23 @@ const Scene: FC = () => {
                     <Button onClick = { deleteSceneHandler }>Delete</Button>
                 </nav>
             </Header>
+            <WorkdaysContainer>
+                {
+                    scene.workdays.map((workday, index) => (
+                        <Button
+                            key = { index }
+                            style = {{
+                                backgroundColor: theme.workday.primary,
+                                color:           '#fff',
+                            }}
+                            onClick = { (event) => void workdayRedirectHandler(
+                                event, workday.id,
+                            ) }>
+                            {workday.date}
+                        </Button>
+                    ))
+                }
+            </WorkdaysContainer>
             <RequisitesTable
                 requisites = { sceneRequisites }
                 sceneId = { sceneId }

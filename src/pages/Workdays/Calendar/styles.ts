@@ -1,5 +1,5 @@
 // Core
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const CalendarContainer = styled.section`
     width: 100%;
@@ -35,22 +35,23 @@ export const CustomToolbarContainer = styled.header`
     padding: 5px;
 `;
 
-export const ScenesCount = styled.div`
+const styles = css`
     text-align: center;
     font-size: 14px;
-    background-color: ${({ theme }) => theme.scene.secondary};
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     padding: 2px 0px;
     white-space: break-spaces;
 `;
 
+export const ScenesCount = styled.div`
+    ${styles};
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: ${({ theme }) => theme.scene.secondary};
+`;
+
 export const RequisitesCount = styled.div`
-    padding: 2px 0px;
+    ${styles};
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    text-align: center;
-    font-size: 14px;
     background-color: ${({ theme }) => theme.requisite.secondary};
-    white-space: break-spaces;
 `;

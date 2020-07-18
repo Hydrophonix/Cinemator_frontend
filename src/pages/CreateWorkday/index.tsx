@@ -15,7 +15,7 @@ import { useCreateWorkdayMutation } from '../../bus/Workday';
 import { useForm } from '../../hooks';
 
 // Redux
-import { useReduxInputs } from '../../@init/redux/inputs';
+import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
@@ -36,7 +36,7 @@ const CreateWorkday: FC = () => {
     const { goBack } = useHistory();
     const { projectId, date } = useParams<Params>();
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
-    const { setDateRangeRedux } = useReduxInputs();
+    const { setDateRangeRedux } = useInputsRedux();
     const [ createWorkday ] = useCreateWorkdayMutation({ projectId, setDateRangeRedux });
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

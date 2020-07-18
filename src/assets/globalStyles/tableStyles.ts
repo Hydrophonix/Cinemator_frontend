@@ -35,10 +35,6 @@ const indexStyles = css`
           }
         }
       }
-
-      div {
-        background-color: #fff;
-      }
     }
   `;
 
@@ -104,6 +100,24 @@ export const TableStyles = styled.div`
 
       &:hover {
         background-color: ${({ theme }) => theme.requisite.hoverSecondary};
+      }
+    }
+
+    .workdaysTableHead {
+      background-color: ${({ theme }) => theme.workday.primary};
+      color: #fff;
+      ${indexStyles};
+    }
+
+    .workdaysTableRow {
+      background-color: ${({ theme }) => theme.workday.secondary};
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #fff;
+      border-bottom: 1px solid ${({ theme }) => theme.workday.primary};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.workday.hoverSecondary};
       }
     }
 `;

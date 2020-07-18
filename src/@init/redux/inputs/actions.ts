@@ -6,6 +6,11 @@ export const setDateRangeAction = (payload: types.DateRange): types.SetDateRange
     payload,
 });
 
+export const setWorkdaysDateRangeAction = (payload: types.DateRange): types.SetWorkdaysDateRangeAction => ({
+    type: types.SET_WORKDAYS_DATE_RANGE,
+    payload,
+});
+
 export const setIndexAction = (payload: types.IndexPayload): types.setIndexAction => ({
     type: types.SET_INDEX,
     payload,

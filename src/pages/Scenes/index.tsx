@@ -13,7 +13,7 @@ import { useProjectDateRange } from '../../hooks';
 import { transformDateToISO8601 } from '../../utils';
 
 // Redux
-import { useReduxInputs } from '../../@init/redux/inputs';
+import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
 import { ErrorBoundary, DatePicker, ScenesTable } from '../../components';
@@ -32,7 +32,7 @@ const Scenes: FC = () => {
     const { projectId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
     const { projectStartDay, projectEndDay } = useProjectDateRange();
-    const { inputs, setDateRangeRedux, setIndexRedux } = useReduxInputs();
+    const { inputs, setDateRangeRedux, setIndexRedux } = useInputsRedux();
     const { dateRange, index } = inputs.scenesInputs;
 
     const startDay = dateRange.startDay || projectStartDay;

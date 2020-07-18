@@ -20,8 +20,10 @@ export const Header = styled.header`
         font-size: 24px;
         font-family: sans-serif;
         color: #fff;
+    }
 
-        @media (max-width: 1024px) {
+    @media (max-width: 1024px) {
+        h2 {
             display: none;
         }
     }

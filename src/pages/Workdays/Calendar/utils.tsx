@@ -3,14 +3,14 @@ import React from 'react';
 import _ from 'lodash';
 
 // Elements
-import { Button } from '../../elements';
+import { Button } from '../../../elements';
 
 // Styles
 import { CustomToolbarContainer, ScenesCount, RequisitesCount } from './styles';
 
 // Types
-import { EventTypes } from './types';
-import { Workdays } from '../../bus/Workday';
+import { EventTypes } from '../types';
+import { Workdays } from '../../../bus/Workday';
 
 export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventTypes> => {
     return workdays.map((workday) => {

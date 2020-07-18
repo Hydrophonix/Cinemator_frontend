@@ -7,17 +7,11 @@ import moment from 'moment';
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-// Components
-import { ErrorBoundary } from '../../components';
-
-// Apollo hooks
-import { useWorkdaysQuery } from '../../bus/Workday';
-
 // Types
-import { PropTypes, Params, EventTypes } from './types';
+import { PropTypes, Params, EventTypes } from '../types';
 
 // Utils
-import { transformDateToISO8601 } from '../../utils';
+import { transformDateToISO8601 } from '../../../utils';
 import { customEventView, customToolbarView, workdaysDataTransformer } from './utils';
 
 // Styles
@@ -26,14 +20,9 @@ import { CalendarContainer } from './styles';
 // Instruments
 const localizer = momentLocalizer(moment);
 
-const Calendar: FC<PropTypes> = () => {
+export const Calendar: FC<PropTypes> = ({ data }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { data, loading } = useWorkdaysQuery({ projectId });
-
-    if (loading || !data) {
-        return <div>Loading...</div>;
-    }
 
     const events = workdaysDataTransformer(data);
 
@@ -80,9 +69,3 @@ const Calendar: FC<PropTypes> = () => {
         </CalendarContainer>
     );
 };
-
-export default () => (
-    <ErrorBoundary>
-        <Calendar />
-    </ErrorBoundary>
-);

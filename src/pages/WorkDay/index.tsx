@@ -11,7 +11,7 @@ import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
 import { useScenesQuery } from '../../bus/Scene';
 
 // Redux
-import { useReduxInputs } from '../../@init/redux/inputs';
+import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Elements
 import { Button } from '../../elements';
@@ -30,7 +30,7 @@ const Workday: FC = () => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const { setDateRangeRedux } = useReduxInputs();
+    const { setDateRangeRedux } = useInputsRedux();
     const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setDateRangeRedux });
 
     if (loading || !data || scenesLoading || !scenesData) {

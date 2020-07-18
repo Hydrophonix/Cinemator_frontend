@@ -6,10 +6,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Redux
-import { useReduxInputs } from '../../@init/redux/inputs';
+import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
 import { ErrorBoundary, RequisitesTable } from '../../components';
+
+// Elemets
+import { Button } from '../../elements';
 
 // Styles
 import { RequisiteContainer, Header } from './styles';
@@ -23,7 +26,7 @@ const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
-    const { inputs: { requisitesInputs }, setIndexRedux, setRequisiteTitleRedux } = useReduxInputs();
+    const { inputs: { requisitesInputs }, setIndexRedux, setRequisiteTitleRedux } = useInputsRedux();
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -60,7 +63,9 @@ const Requisites: FC = () => {
             <Header>
                 <div />
                 <h2>Requisites</h2>
-                <button onClick = { () => void push(`/${projectId}/create-requisite`) }>Add new requisite</button>
+                <Button onClick = { () => void push(`/${projectId}/create-requisite`) }>
+                    Add new requisite
+                </Button>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
                 <RequisitesTable

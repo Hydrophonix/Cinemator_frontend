@@ -2,6 +2,7 @@
 export * from './ErrorBoundary';
 
 // Table
+export * from './WorkdaysTable';
 export * from './ScenesTable';
 export * from './RequisitesTable';
 

@@ -1,8 +1,12 @@
+import { Workdays } from '../../bus/Workday';
+
 export type Params = {
     projectId: string
 }
 
-export type PropTypes = {}
+export type PropTypes = {
+    data: Workdays
+}
 
 type stringOrDate = string | Date
 

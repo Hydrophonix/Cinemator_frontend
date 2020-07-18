@@ -8,7 +8,7 @@ export const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ './Pr
 export const Projects = lazy(() => import(/* webpackChunkName: "Projects" */ './Projects'));
 export const CreateProject = lazy(() => import(/* webpackChunkName: "CreateProject" */ './CreateProject'));
 
-export const Calendar = lazy(() => import(/* webpackChunkName: "Calendar" */ './Calendar'));
+export const Calendar = lazy(() => import(/* webpackChunkName: "Calendar" */ './Workdays'));
 export const Workday = lazy(() => import(/* webpackChunkName: "Workday" */ './Workday'));
 export const CreateWorkday = lazy(() => import(/* webpackChunkName: "CreateWorkday" */ './CreateWorkday'));
 export const UpdateWorkday = lazy(() => import(/* webpackChunkName: "UpdateWorkday" */ './UpdateWorkday'));
