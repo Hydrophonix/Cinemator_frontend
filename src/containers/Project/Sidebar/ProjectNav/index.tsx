@@ -36,7 +36,7 @@ export const ProjectNav: FC<PropTypes> = (props) => {
 
     const customHoverColorHandler = (key: number) => {
         switch (key) {
-            case 0: return theme.workday.secondary;
+            case 0: return theme.workday.hoverSecondary;
             case 1: return theme.scene.hoverSecondary;
             case 2: return theme.requisite.hoverSecondary;
 

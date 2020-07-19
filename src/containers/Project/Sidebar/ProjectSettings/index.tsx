@@ -9,10 +9,13 @@ import { Button } from '../../../../elements';
 import { useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../bus/Project';
 
 // Hooks
-import { useForm } from '../../../../hooks';
+import { useForm, useLocalStorage } from '../../../../hooks';
+
+// Redux
+import { useUiRedux } from '../../../../@init/redux/ui';
 
 // Styles
-import { Header, Main, Footer } from './styles';
+import { Header, Main, Footer, WorkdaysSettings } from './styles';
 import { Section } from '../styles';
 
 // Types
@@ -27,30 +30,37 @@ type Params = {
 };
 
 const innitialForm = {
-    title: '',
-    // description: '',
+    title:       '',
+    description: '',
 };
+
+// Instruments
+const activeStyles = { backgroundColor: '#2d6a4f', color: '#fff' };
 
 export const ProjectSettings: FC<PropTypes> = (props) => {
     const { projectId } = useParams<Params>();
     const { push } = useHistory();
+    const { ui, setCalendarView } = useUiRedux();
+    const [ _, setToLocalStorage ] = useLocalStorage('isCalendarView', true); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ updateProject ] = useUpdateProjectMutation();
     const [ deleteProject ] = useDeleteProjectMutation({
         projectId,
         redirect: () => push('/'),
     });
+
     const [ form, setForm, setInitialForm ] = useForm<typeof innitialForm>(innitialForm);
 
     useEffect(() => {
         setInitialForm({
-            title: props.title,
-            // description: props.description || '',
+            title:       props.title || '',
+            description: props.description || '',
         });
     }, []);
 
     const onSubmit = async () => {
-        const response = await updateProject({ variables: { input: form, projectId }});
-        response && response.data && void props.setFlipped();
+        await props.setFlipped();
+        // const response = await updateProject({ variables: { input: form, projectId }});
+        // response && response.data && void props.setFlipped();
     };
 
     const onDelete = async () => void await deleteProject();
@@ -61,33 +71,54 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                 <h2>Settings</h2>
             </Header>
             <Main>
-                <form>
-                    <h2>Title:</h2>
-                    <input
-                        name = 'title'
-                        placeholder = 'Title'
-                        value = { form.title }
-                        onChange = { setForm }
-                    />
-                    {/* <h2>Description:</h2>
-                    <input
-                        name = 'description'
-                        placeholder = 'Description'
-                        value = { '' }
-                        onChange = { setForm }
-                    /> */}
-                    <h2>Project locations:</h2>
-                    <select>
-                        <option>Kyiv</option>
-                        <option>Lviv</option>
-                        <option>Zaparizia</option>
-                        <option>New york</option>
-                    </select>
-                </form>
+                <h2>Title:</h2>
+                <input
+                    name = 'title'
+                    placeholder = 'Title'
+                    value = { form.title }
+                    onChange = { setForm }
+                />
+                <h2>Description:</h2>
+                <input
+                    name = 'description'
+                    placeholder = 'Description'
+                    value = { '' }
+                    onChange = { setForm }
+                />
+                <h2>Project locations:</h2>
+                <select>
+                    <option>Kyiv</option>
+                    <option>Lviv</option>
+                    <option>Zaparizia</option>
+                    <option>New york</option>
+                </select>
+                <h2>Calendar view:</h2>
+                <WorkdaysSettings>
+                    <Button
+                        style = { ui.isCalendarView ? activeStyles : {} }
+                        onClick = { () => {
+                            setCalendarView(true);
+                            setToLocalStorage(true);
+                        } }>
+                        Calendar
+                    </Button>
+                    <Button
+                        style = { !ui.isCalendarView ? activeStyles : {} }
+                        onClick = { () => {
+                            setCalendarView(false);
+                            setToLocalStorage(false);
+                        } }>
+                        Table
+                    </Button>
+                </WorkdaysSettings>
             </Main>
             <Footer>
-                <Button onClick = { onDelete }>Delete</Button>
-                <Button onClick = { onSubmit }>Save</Button>
+                <Button onClick = { onDelete }>
+                    Delete
+                </Button>
+                <Button onClick = { onSubmit }>
+                    Save
+                </Button>
             </Footer>
         </Section>
     );

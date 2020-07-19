@@ -8,7 +8,7 @@ export const WorkdaysHead: FC<PropTypes> = () => {
     return (
         <Thead>
             <Tr className = 'workdaysTableHead'>
-                <Th>Date</Th>
+                <Th style = {{ textAlign: 'center' }}>Date</Th>
                 <Th>Scenes</Th>
             </Tr>
         </Thead>

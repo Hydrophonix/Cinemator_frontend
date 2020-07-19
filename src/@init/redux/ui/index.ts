@@ -16,7 +16,7 @@ export const useUiRedux = () => {
     const dispatch = useDispatch();
 
     return {
-        ui:                    useSelector(({ ui }) => ui),
-        setCalendarViewAction: () => dispatch(setCalendarViewAction()),
+        ui:              useSelector(({ ui }) => ui),
+        setCalendarView: (payload: boolean) => dispatch(setCalendarViewAction(payload)),
     };
 };

@@ -15,10 +15,6 @@ export const Main = styled.main`
     flex: 1;
     padding: 10px 0px;
 
-    form {
-        display: flex;
-        flex-direction: column;
-
         h2 {
             font-size: 18px;
             color: #fff;
@@ -30,10 +26,20 @@ export const Main = styled.main`
             width: 100%;
             box-sizing: border-box;
         }
-    }
+    
 `;
 
 export const Footer = styled.footer`
     display: flex;
     justify-content: space-between;
 `;
+
+export const WorkdaysSettings = styled.section`
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        width: 100%;
+    }
+`;
+

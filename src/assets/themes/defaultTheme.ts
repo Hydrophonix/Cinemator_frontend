@@ -31,10 +31,11 @@ export const defaultTheme = {
         containerBg:    '#e3caf5',
     },
     workday: {
-        primary:        '#1b4332',
-        secondary:      '#2d6a4f',
-        hoverSecondary: '#96be8c',
-        containerBg:    '#d8f3dc',
+        primary:          '#1b4332',
+        secondary:        '#2d6a4f',
+        hoverSecondary:   '#55a630',
+        containerBg:      '#d8f3dc',
+        anotherSecondary: '#629460',
     },
     scene: {
         primary:        '#133c55',

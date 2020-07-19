@@ -63,7 +63,9 @@ export const Table: FC<PropTypes> = ({ data }) => {
                     startDay = { startDay }
                 />
                 <h2>Workdays</h2>
-                <Button onClick = { () => void push(`/${projectId}/create-scene`) }>
+                <Button
+                    disabled
+                    onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
                     Add new workday
                 </Button>
             </Header>

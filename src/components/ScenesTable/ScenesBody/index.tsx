@@ -74,7 +74,7 @@ export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId, lightVersion }) =
                                                     <Button
                                                         key = { index }
                                                         style = {{
-                                                            backgroundColor: theme.workday.primary,
+                                                            backgroundColor: theme.workday.anotherSecondary,
                                                             color:           '#fff',
                                                         }}
                                                         onClick = { (event) => void workdayRedirectHandler(

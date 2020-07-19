@@ -37,7 +37,9 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays }) => {
                         className = 'workdaysTableRow'
                         key = { workday.id }
                         onClick = { () => void workdayRedirectHandler(workday.id) }>
-                        <Td>{workday.date}</Td>
+                        <Td style = {{    fontSize: 20, textAlign: 'center' }}>
+                            {workday.date}
+                        </Td>
                         <Td>
                             {
                                 workday.scenes.map((scene, index) => {

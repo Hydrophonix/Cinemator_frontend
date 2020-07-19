@@ -15,7 +15,7 @@ export const CalendarContainer = styled.section`
     }
 
     .workday {
-        background-color: ${({ theme }) => theme.workday.secondary};
+        background-color: ${({ theme }) => theme.workday.anotherSecondary};
         cursor: pointer;
     }
 
@@ -30,7 +30,7 @@ export const CustomToolbarContainer = styled.header`
     align-items: center;
     font-size: 24px;
     font-family: sans-serif;
-    background-color: ${({ theme }) => theme.workday.primary};
+    background-color: ${({ theme }) => theme.workday.anotherSecondary};
     color: white;
     padding: 5px;
 `;
