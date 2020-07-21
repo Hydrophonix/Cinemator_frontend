@@ -15,15 +15,15 @@ export interface Workdays_workdays_scenes_requisites {
 export interface Workdays_workdays_scenes {
   __typename: "Scene";
   id: string;
-  sceneNumber: number;
+  number: number;
   requisites: Workdays_workdays_scenes_requisites[];
 }
 
 export interface Workdays_workdays {
   __typename: "Workday";
   id: string;
-  title: string | null;
   date: string;
+  description: string | null;
   scenes: Workdays_workdays_scenes[];
 }
 

@@ -1,10 +1,10 @@
 fragment workdayFields on Workday {
     id
-    title
     date
+    description
     scenes {
       id
-      sceneNumber
+      number
       requisites {
         id
       }

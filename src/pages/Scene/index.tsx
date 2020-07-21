@@ -68,7 +68,7 @@ const Scene: FC = () => {
                     <Button onClick = { () => void push(`/${projectId}/scenes`) }>To scenes</Button>
                     <Button onClick = { goBack }>Go back</Button>
                 </nav>
-                <h2>{`S: ${scene.sceneNumber}`}</h2>
+                <h2>{`S: ${scene.number}`}</h2>
                 <nav>
                     <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
                         Add requisite
@@ -79,23 +79,27 @@ const Scene: FC = () => {
                     <Button onClick = { deleteSceneHandler }>Delete</Button>
                 </nav>
             </Header>
-            <WorkdaysContainer>
-                {
-                    scene.workdays.map((workday, index) => (
-                        <Button
-                            key = { index }
-                            style = {{
-                                backgroundColor: theme.workday.anotherSecondary,
-                                color:           '#fff',
-                            }}
-                            onClick = { (event) => void workdayRedirectHandler(
-                                event, workday.id,
-                            ) }>
-                            {workday.date}
-                        </Button>
-                    ))
-                }
-            </WorkdaysContainer>
+            {
+                scene.workdays.length !== 0 && (
+                    <WorkdaysContainer>
+                        {
+                            scene.workdays.map((workday, index) => (
+                                <Button
+                                    key = { index }
+                                    style = {{
+                                        backgroundColor: theme.workday.anotherSecondary,
+                                        color:           '#fff',
+                                    }}
+                                    onClick = { (event) => void workdayRedirectHandler(
+                                        event, workday.id,
+                                    ) }>
+                                    {workday.date}
+                                </Button>
+                            ))
+                        }
+                    </WorkdaysContainer>
+                )
+            }
             <RequisitesTable
                 requisites = { sceneRequisites }
                 sceneId = { sceneId }

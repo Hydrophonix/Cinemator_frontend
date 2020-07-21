@@ -22,8 +22,9 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene_requis
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene {
   __typename: "Scene";
   id: string;
+  number: number;
   location: string | null;
-  sceneNumber: number;
+  description: string | null;
   workdays: UpdateSceneRequisites_updateSceneRequisites_updatedScene_workdays[];
   requisites: UpdateSceneRequisites_updateSceneRequisites_updatedScene_requisites[];
 }
@@ -31,12 +32,13 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene {
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes {
   __typename: "Scene";
   id: string;
-  sceneNumber: number;
+  number: number;
 }
 
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites {
   __typename: "Requisite";
   id: string;
+  number: number;
   title: string;
   description: string | null;
   scenes: UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes[];

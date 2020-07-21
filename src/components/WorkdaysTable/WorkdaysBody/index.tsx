@@ -53,7 +53,7 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays }) => {
                                             onClick = { (event) => void sceneRedirectHandler(
                                                 event, scene.id,
                                             ) }>
-                                            {`S:${scene.sceneNumber}`}
+                                            {`S:${scene.number}`}
                                         </Button>
                                     );
                                 })

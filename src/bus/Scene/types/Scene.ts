@@ -22,8 +22,9 @@ export interface Scene_scene_requisites {
 export interface Scene_scene {
   __typename: "Scene";
   id: string;
+  number: number;
   location: string | null;
-  sceneNumber: number;
+  description: string | null;
   workdays: Scene_scene_workdays[];
   requisites: Scene_scene_requisites[];
 }

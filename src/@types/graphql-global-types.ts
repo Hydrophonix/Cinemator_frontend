@@ -14,49 +14,46 @@ export interface AuthInput {
 
 export interface ProjectCreateInput {
   title: string;
-  startDay: string;
-  endDay: string;
+  description?: string | null;
 }
 
 export interface ProjectUpdateInput {
   title?: string | null;
-  startDay?: string | null;
-  endDay?: string | null;
+  description?: string | null;
 }
 
 export interface RequisiteCreateInput {
+  number: number;
   title: string;
   description?: string | null;
-  isOrdered?: boolean | null;
-  pricePerDay?: number | null;
 }
 
 export interface RequisiteUpdateInput {
+  number?: number | null;
   title?: string | null;
   description?: string | null;
-  isOrdered?: boolean | null;
-  pricePerDay?: number | null;
 }
 
 export interface SceneCreateInput {
-  title?: string | null;
+  number: number;
+  description?: string | null;
   location?: string | null;
-  sceneNumber: number;
 }
 
 export interface SceneUpdateInput {
-  title?: string | null;
+  number?: number | null;
+  description?: string | null;
   location?: string | null;
-  sceneNumber?: number | null;
 }
 
 export interface WorkdayCreateInput {
-  title?: string | null;
   date: string;
+  description?: string | null;
 }
 
 export interface WorkdayUpdateInput {
-  title?: string | null;
+  date: string;
+  description?: string | null;
 }
 
 //==============================================================

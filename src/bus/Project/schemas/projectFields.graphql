@@ -1,7 +1,9 @@
 fragment projectFields on Project {
     id
-    startDay
-    endDay
     title
     description
+    locations {
+        id
+        name
+    }
 }

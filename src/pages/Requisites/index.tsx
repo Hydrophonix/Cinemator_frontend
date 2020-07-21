@@ -33,11 +33,11 @@ const Requisites: FC = () => {
     }
 
     const findByIndex = () => {
-        // const requisite = data.requisites.find((requisite) => requisite.requisiteNumber === index);
+        const requisite = data.requisites.find((requisite) => requisite.number === requisitesInputs.index);
 
-        // if (requisite) {
-        //     return [requisite];
-        // }
+        if (requisite) {
+            return [ requisite ];
+        }
 
         return data.requisites;
     };

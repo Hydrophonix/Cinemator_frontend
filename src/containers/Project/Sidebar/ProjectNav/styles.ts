@@ -45,12 +45,6 @@ export const Footer = styled.footer`
             padding: 10px 0px;
         }
 
-        h3 {
-            font-size: 16px;
-            text-align: center;
-            padding-bottom: 10px;
-        }
-
         p {
             font-size: 14px;
             padding-bottom: 10px;

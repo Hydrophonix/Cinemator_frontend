@@ -56,7 +56,7 @@ export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId, lightVersion }) =
                         } }>
                         <Td>
                             <div style = {{ width: 35, textAlign: 'center' }}>
-                                {`${scene.sceneNumber}`}
+                                {`${scene.number}`}
                             </div>
                         </Td>
                         <Td>{scene.location}</Td>

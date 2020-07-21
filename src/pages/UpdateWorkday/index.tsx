@@ -24,7 +24,7 @@ type Params = {
 }
 
 const initialForm = {
-    title: '',
+    date: '',
 };
 
 const UpdateWorkday: FC = () => {
@@ -36,7 +36,7 @@ const UpdateWorkday: FC = () => {
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
 
     useEffect(() => {
-        workday && void setInitialForm({ title: workday.title ?? '' });
+        workday && void setInitialForm({ date: workday.date });
     }, [ workday ]);
 
     if (loading || !data || !workday) {
@@ -58,14 +58,18 @@ const UpdateWorkday: FC = () => {
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
-                    <h2>Workday title:</h2>
+                    <h2>Workday date:</h2>
                     <input
-                        name = 'title'
-                        placeholder = 'Workday title'
-                        value = { form.title ?? '' }
+                        disabled
+                        name = 'date'
+                        placeholder = 'Workday date'
+                        value = { form.date }
                         onChange = { setForm }
                     />
-                    <Button type = 'submit'>Update</Button>
+                    <Button
+                        disabled
+                        type = 'submit'>Update
+                    </Button>
                 </form>
             </main>
         </UpdateWorkdayContainer>

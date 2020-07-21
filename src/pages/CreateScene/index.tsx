@@ -23,9 +23,9 @@ export type Params = {
 }
 
 const innitialForm = {
-    title:       '',
     location:    '',
-    sceneNumber: 0,
+    number:      0,
+    description: '',
 };
 
 const CreateScene: FC = () => {
@@ -36,7 +36,7 @@ const CreateScene: FC = () => {
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const response = await createScene({ variables: { input: form, projectId, workdayId: '' }}); // TODO ???
+        const response = await createScene({ variables: { input: form, projectId }}); // TODO ???
         response && response.data && void goBack();
     };
 
@@ -51,26 +51,25 @@ const CreateScene: FC = () => {
                 <form onSubmit = { onSubmit }>
                     <h2>Scene number:</h2>
                     <input
-                        name = 'sceneNumber'
+                        name = 'number'
                         type = 'number'
-                        value = { form.sceneNumber }
+                        value = { form.number }
                         onChange = { (event) => setForm(event, true) }
-                    />
-                    <h2>Scene title:</h2>
-                    <input
-                        name = 'title'
-                        placeholder = 'Scene title'
-                        value = { form.title ?? '' }
-                        onChange = { setForm }
                     />
                     <h2>Scene location:</h2>
                     <input
                         name = 'location'
                         placeholder = 'Scene location'
-                        value = { form.location ?? '' }
+                        value = { form.location || '' }
                         onChange = { setForm }
                     />
-
+                    <h2>Scene description:</h2>
+                    <input
+                        name = 'description'
+                        placeholder = 'Description'
+                        value = { form.description || '' }
+                        onChange = { setForm }
+                    />
                     <Button type = 'submit'>Submit</Button>
                 </form>
             </main>

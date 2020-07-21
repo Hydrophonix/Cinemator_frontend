@@ -3,7 +3,7 @@
 // Core
 import { useState, ChangeEvent } from 'react';
 
-type HandleChange = (event: ChangeEvent<HTMLInputElement>  | null, isNumber?: boolean) => void;
+type HandleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>  | null, isNumber?: boolean) => void;
 
 export const useForm = <T>(initialValue: T): [T, HandleChange, (newInitialValue: T) => void, Function] => {
     const [ form, setForm ] = useState(initialValue);

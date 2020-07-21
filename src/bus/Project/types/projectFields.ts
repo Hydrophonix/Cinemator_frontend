@@ -7,11 +7,16 @@
 // GraphQL fragment: projectFields
 // ====================================================
 
+export interface projectFields_locations {
+  __typename: "Location";
+  id: string;
+  name: string;
+}
+
 export interface projectFields {
   __typename: "Project";
   id: string;
-  startDay: string;
-  endDay: string;
   title: string;
   description: string | null;
+  locations: projectFields_locations[];
 }

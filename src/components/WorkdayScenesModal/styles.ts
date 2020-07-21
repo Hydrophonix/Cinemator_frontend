@@ -2,9 +2,10 @@
 import styled from 'styled-components';
 
 export const Main = styled.main`
-    /* flex: 1; */
     max-height: 420px;
+    min-height: 420px;
     overflow-y: scroll;
+    background-color: ${({ theme }) => theme.scene.hoverSecondary}
 `;
 
 export const Footer = styled.footer`

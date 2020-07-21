@@ -13,8 +13,7 @@ export const useProjectDateRange = () => {
     const { projectId } = useParams<Params>();
     const { data } = useWorkdaysQuery({ projectId });
 
-    const workdaysDates = data?.workdays.map((workday) => new Date(workday.date))
-        .sort((a, b) => a > b ? 1 : -1); // TODO: workdays server sort
+    const workdaysDates = data?.workdays.map((workday) => new Date(workday.date));
 
     if (workdaysDates) {
         return {

@@ -1,7 +1,8 @@
 fragment sceneFields on Scene {
     id
+    number
     location
-    sceneNumber
+    description
     workdays {
       id
       date

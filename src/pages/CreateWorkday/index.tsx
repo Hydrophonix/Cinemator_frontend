@@ -24,7 +24,8 @@ import { transformDateToISO8601 } from '../../utils';
 import { CreateWorkdayContainer, Header } from './styles';
 
 const innitialForm = {
-    title: '',
+    date:        '',
+    description: '',
 };
 
 export type Params = {
@@ -45,8 +46,8 @@ const CreateWorkday: FC = () => {
         const response = await createWorkday({
             variables: {
                 input: {
-                    title: form.title,
-                    date:  transformDateToISO8601(new Date(date)),
+                    date:        transformDateToISO8601(new Date(date)),
+                    description: form.description,
                 },
                 projectId,
             },
@@ -64,17 +65,18 @@ const CreateWorkday: FC = () => {
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
-                    <h2>Workday title:</h2>
-                    <input
-                        name = 'title'
-                        placeholder = 'Workday title'
-                        value = { form.title }
-                        onChange = { setForm }
-                    />
+                    <h2>Workday date:</h2>
                     <input
                         disabled
                         readOnly
                         value = { date }
+                    />
+                    <h2>Workday description:</h2>
+                    <input
+                        name = 'description'
+                        placeholder = 'Description'
+                        value = { form.description }
+                        onChange = { setForm }
                     />
                     <Button type = 'submit'>Submit</Button>
                 </form>

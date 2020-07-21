@@ -27,8 +27,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
     const { projectId } = useParams<Params>();
     const { inputs: { workdaysInputs }, setWorkdaysDateRangeRedux } = useInputsRedux();
 
-    const workdaysDates = data.workdays.map((workday) => new Date(workday.date))
-        .sort((a, b) => a > b ? 1 : -1); // TODO: workdays server sort
+    const workdaysDates = data.workdays.map((workday) => new Date(workday.date));
 
     const projectStartDay = workdaysDates[ 0 ];
     const projectEndDay = workdaysDates[ workdaysDates.length - 1 ];

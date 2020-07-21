@@ -12,7 +12,7 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { useUpdateSceneRequisitesMutation } from '../../bus/Scene';
 
 // Hooks
-import { useArrayOfStringsForm, useForm } from '../../hooks';
+import { useArrayOfStringsForm } from '../../hooks';
 
 // Elements
 import { ModalHeader, Button } from '../../elements';
@@ -49,11 +49,11 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
     };
 
     const findByIndex = () => {
-        // const requisite = data.requisites.find((requisite) => requisite.requisiteNumber === index);
+        const requisite = data.requisites.find((requisite) => requisite.number === index);
 
-        // if (requisite) {
-        //     return [requisite];
-        // }
+        if (requisite) {
+            return [ requisite ];
+        }
 
         return data.requisites;
     };

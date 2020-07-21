@@ -24,8 +24,9 @@ export interface CreateScene_createScene_requisites {
 export interface CreateScene_createScene {
   __typename: "Scene";
   id: string;
+  number: number;
   location: string | null;
-  sceneNumber: number;
+  description: string | null;
   workdays: CreateScene_createScene_workdays[];
   requisites: CreateScene_createScene_requisites[];
 }
@@ -37,5 +38,4 @@ export interface CreateScene {
 export interface CreateSceneVariables {
   input: SceneCreateInput;
   projectId: string;
-  workdayId: string;
 }

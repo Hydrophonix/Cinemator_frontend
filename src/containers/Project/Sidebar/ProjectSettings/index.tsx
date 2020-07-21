@@ -20,6 +20,7 @@ import { Section } from '../styles';
 
 // Types
 import { projectFields } from '../../../../bus/Project';
+import { ProjectUpdateInput } from '../../../../@types/graphql-global-types';
 
 type PropTypes = projectFields & {
     setFlipped: Function
@@ -43,12 +44,9 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
     const { ui, setCalendarView } = useUiRedux();
     const [ _, setToLocalStorage ] = useLocalStorage('isCalendarView', true); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ updateProject ] = useUpdateProjectMutation();
-    const [ deleteProject ] = useDeleteProjectMutation({
-        projectId,
-        redirect: () => push('/'),
-    });
+    const [ deleteProject ] = useDeleteProjectMutation({ projectId, redirect: () => push('/') });
 
-    const [ form, setForm, setInitialForm ] = useForm<typeof innitialForm>(innitialForm);
+    const [ form, setForm, setInitialForm ] = useForm<ProjectUpdateInput>(innitialForm);
 
     useEffect(() => {
         setInitialForm({
@@ -58,9 +56,14 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
     }, []);
 
     const onSubmit = async () => {
-        await props.setFlipped();
-        // const response = await updateProject({ variables: { input: form, projectId }});
-        // response && response.data && void props.setFlipped();
+        if (props.title === form.title && props.description === form.description) {
+            props.setFlipped();
+
+            return;
+        }
+
+        const response = await updateProject({ variables: { input: form, projectId }});
+        response && response.data && void props.setFlipped();
     };
 
     const onDelete = async () => void await deleteProject();
@@ -75,14 +78,14 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                 <input
                     name = 'title'
                     placeholder = 'Title'
-                    value = { form.title }
+                    value = { form.title || '' }
                     onChange = { setForm }
                 />
                 <h2>Description:</h2>
                 <input
                     name = 'description'
                     placeholder = 'Description'
-                    value = { '' }
+                    value = { form.description || '' }
                     onChange = { setForm }
                 />
                 <h2>Project locations:</h2>

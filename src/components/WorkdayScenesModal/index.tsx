@@ -49,7 +49,7 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
     };
 
     const findByIndex = () => {
-        const scene = data.scenes.find((scene) => scene.sceneNumber === index);
+        const scene = data.scenes.find((scene) => scene.number === index);
 
         if (scene) {
             return [ scene ];

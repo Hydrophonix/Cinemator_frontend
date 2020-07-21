@@ -25,10 +25,10 @@ export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventType
 
         const sceneNumbers = workday.scenes.reduce<string>((acc, scene, index) => {
             if (index === 0) {
-                return `${scene.sceneNumber}`;
+                return `${scene.number}`;
             }
 
-            return `${acc}, ${scene.sceneNumber}`;
+            return `${acc}, ${scene.number}`;
         }, '');
 
         return {

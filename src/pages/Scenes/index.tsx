@@ -55,7 +55,7 @@ const Scenes: FC = () => {
     }));
 
     const findByIndex = () => {
-        const scene = data.scenes.find((scene) => scene.sceneNumber === index);
+        const scene = data.scenes.find((scene) => scene.number === index);
 
         if (scene) {
             return [ scene ];

@@ -48,7 +48,7 @@ const Requisite: FC = () => {
                     <Button onClick = { () => void push(`/${projectId}/requisites`) }>To requisites</Button>
                     <Button onClick = { goBack }>Go back</Button>
                 </div>
-                <h2>R: {1}</h2>
+                <h2>R: {requisite.number}</h2>
                 <div>
                     <Button onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
                         Update
@@ -57,7 +57,8 @@ const Requisite: FC = () => {
                 </div>
             </RequisiteHeader>
             <main>
-                Some requisite data
+                <h2>Description</h2>
+                <p>{requisite.description}</p>
             </main>
         </RequisiteContainer>
     );

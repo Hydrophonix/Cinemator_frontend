@@ -12,12 +12,13 @@ import { RequisiteCreateInput } from "./../../../@types/graphql-global-types";
 export interface CreateRequisite_createRequisite_scenes {
   __typename: "Scene";
   id: string;
-  sceneNumber: number;
+  number: number;
 }
 
 export interface CreateRequisite_createRequisite {
   __typename: "Requisite";
   id: string;
+  number: number;
   title: string;
   description: string | null;
   scenes: CreateRequisite_createRequisite_scenes[];

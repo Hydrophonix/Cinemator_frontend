@@ -10,7 +10,6 @@ export const ProjectItemContainer = styled.div`
     
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     cursor: pointer;
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
@@ -34,14 +33,9 @@ export const ProjectItemContainer = styled.div`
         justify-content: center;
     }
 
-    main {
+    section {
+        padding-top: 30px;
         display: flex;
         justify-content: center;
-    }
-
-    footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
     }
 `;

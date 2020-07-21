@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Components
@@ -8,9 +8,11 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button } from '../../elements';
 
+// Apollo hooks
+import { useRequisitesQuery, useCreateRequisiteMutation } from '../../bus/Requisite';
+
 // Hooks
 import { useForm } from '../../hooks';
-import { useCreateRequisiteMutation } from '../../bus/Requisite';
 
 // Styles
 import { CreateRequisiteContainer, Header } from './styles';
@@ -25,15 +27,32 @@ export type Params = {
 const innitialForm = {
     title:       '',
     description: '',
-    isOrdered:   false,
-    pricePerDay: 0,
+    number:      0,
 };
 
 const CreateRequisite: FC = () => {
     const { goBack } = useHistory();
     const { projectId } = useParams<Params>();
+    const { data, loading } = useRequisitesQuery({ projectId });
     const [ createRequisite ] = useCreateRequisiteMutation({ projectId });
-    const [ form, setForm ] = useForm<RequisiteCreateInput>(innitialForm);
+    const [ form, setForm, setInitialForm ] = useForm<RequisiteCreateInput>(innitialForm);
+
+    useEffect(() => {
+        if (data) {
+            const newRequisiteNumber = (data.requisites.map((requisite) => requisite.number)
+                .sort((a, b) => a < b ? 1 : -1)[ 0 ] || 0) + 1;
+
+            setInitialForm({
+                title:       '',
+                description: '',
+                number:      newRequisiteNumber,
+            });
+        }
+    }, [ data ]);
+
+    if (loading || !data) {
+        return <div>Loading...</div>;
+    }
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -50,6 +69,15 @@ const CreateRequisite: FC = () => {
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
+                    <h2>Requisite number:</h2>
+                    <input
+                        disabled
+                        name = 'number'
+                        placeholder = 'Requisite number'
+                        type = 'number'
+                        value = { form.number ?? 0 }
+                        onChange = { (event) => setForm(event, true) }
+                    />
                     <h2>Requisite title:</h2>
                     <input
                         name = 'title'
@@ -60,16 +88,8 @@ const CreateRequisite: FC = () => {
                     <h2>Requisite description:</h2>
                     <input
                         name = 'description'
-                        value = { form.description ?? '' }
+                        value = { form.description || '' }
                         onChange = { setForm }
-                    />
-                    <h2>Requisite pricePerDay:</h2>
-                    <input
-                        name = 'pricePerDay'
-                        placeholder = 'Requisite pricePerDay'
-                        type = 'number'
-                        value = { form.pricePerDay ?? '' }
-                        onChange = { (event) => setForm(event, true) }
                     />
                     <Button type = 'submit'>Submit</Button>
                 </form>

@@ -36,8 +36,7 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setDateRangeRed
                 variables: { projectId },
             })!;
 
-            const updatedWorkdays = workdays.filter((workday) => workday.id !== workdayId)
-                .sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : -1); // TODO sort workday server side
+            const updatedWorkdays = workdays.filter((workday) => workday.id !== workdayId);
 
             cache.writeQuery({
                 query:     WorkdaysSchema,

@@ -52,7 +52,7 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                         } }>
                         <Td>
                             <div style = {{ width: 35, textAlign: 'center' }}>
-                                {1}
+                                {requisite.number}
                             </div>
                         </Td>
                         <Td>{requisite.title}</Td>
@@ -75,7 +75,7 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                                     onClick = { (event) => void sceneRedirectHandler(
                                                         event, scene.id,
                                                     ) }>
-                                                    S:{`${scene.sceneNumber}`}
+                                                    S:{`${scene.number}`}
                                                 </Button>
                                             );
                                         })

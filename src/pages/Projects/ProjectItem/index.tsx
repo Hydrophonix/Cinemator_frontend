@@ -14,20 +14,12 @@ type PropTypes = OwnedProjects_ownedProjects & {
 export const ProjectItem: FC<PropTypes> = ({
     id,
     title,
-    startDay,
-    endDay,
-    description,
     projectRedirectHandler,
 }) => {
     return (
         <ProjectItemContainer onClick = { () => projectRedirectHandler(id) }>
             <header>Project: {title}</header>
-            <main>{description ? description : 'Tap to open'}</main>
-            <footer>
-                <span>{startDay}</span>
-                →
-                <span>{endDay}</span>
-            </footer>
+            <section>Tap to open</section>
         </ProjectItemContainer>
     );
 };

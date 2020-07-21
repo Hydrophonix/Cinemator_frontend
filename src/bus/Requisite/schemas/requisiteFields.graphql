@@ -1,9 +1,10 @@
 fragment requisiteFields on Requisite {
     id
+    number
     title
     description
     scenes {
       id
-      sceneNumber
+      number
     }
 }

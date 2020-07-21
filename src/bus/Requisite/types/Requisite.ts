@@ -10,12 +10,13 @@
 export interface Requisite_requisite_scenes {
   __typename: "Scene";
   id: string;
-  sceneNumber: number;
+  number: number;
 }
 
 export interface Requisite_requisite {
   __typename: "Requisite";
   id: string;
+  number: number;
   title: string;
   description: string | null;
   scenes: Requisite_requisite_scenes[];

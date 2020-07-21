@@ -72,7 +72,6 @@ export const ProjectNav: FC<PropTypes> = (props) => {
             <Footer>
                 <div>
                     <h2>{props.title}</h2>
-                    <h3>{props.startDay} → {props.endDay}</h3>
                     {props.description && <p>Description: {props.description}</p>}
                 </div>
                 <nav>

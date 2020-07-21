@@ -24,7 +24,7 @@ type Params = {
 }
 
 const initialForm = {
-    // description:       '', // TODO: ADD field description to scene entity
+    description: '',
     location:    '',
     sceneNumber: 0,
 };
@@ -39,9 +39,9 @@ const UpdateScene: FC = () => {
 
     useEffect(() => {
         scene && void setInitialForm({
-            // title:       scene.description ?? '',
-            location:    scene.location ?? '',
-            sceneNumber: scene.sceneNumber,
+            location:    scene.location || '',
+            description: scene.description || '',
+            number:      scene.number,
         });
     }, [ scene ]);
 
@@ -59,31 +59,31 @@ const UpdateScene: FC = () => {
         <Container>
             <Header>
                 <Button onClick = { goBack }>Back</Button>
-                <h2>Update scene: {scene.sceneNumber}</h2>
+                <h2>Update scene: {scene.number}</h2>
                 <div />
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
-                    {/* <h2>Description:</h2>
-                    <textarea
-                        name = 'description'
-                        placeholder = 'Description'
-                        value = { form.description ?? '' }
-                        onChange = { setForm }
-                    /> */}
+                    <h2>Number:</h2>
+                    <input
+                        name = 'number'
+                        type = 'number'
+                        value = { form.number ?? 0 }
+                        onChange = { (event) => void setForm(event, true) }
+                    />
                     <h2>Location:</h2>
                     <input
                         name = 'location'
                         placeholder = 'Location'
-                        value = { form.location ?? '' }
+                        value = { form.location || '' }
                         onChange = { setForm }
                     />
-                    <h2>Number:</h2>
-                    <input
-                        name = 'sceneNumber'
-                        type = 'number'
-                        value = { form.sceneNumber ?? '' }
-                        onChange = { (event) => void setForm(event, true) }
+                    <h2>Description:</h2>
+                    <textarea
+                        name = 'description'
+                        placeholder = 'Description'
+                        value = { form.description || '' }
+                        onChange = { setForm }
                     />
                     <Button type = 'submit'>Update</Button>
                 </form>

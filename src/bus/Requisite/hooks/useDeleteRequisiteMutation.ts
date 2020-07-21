@@ -17,6 +17,7 @@ type OptionsType = {
 
 export const useDeleteRequisiteMutation = ({ projectId, requisiteId }: OptionsType) => {
     return useMutation<DeleteRequisite, DeleteRequisiteVariables>(DeleteRequisiteSchema, {
+        variables: { requisiteId },
         update(cache, { data }) {
             const { deleteRequisite } = data!;
 
@@ -29,11 +30,6 @@ export const useDeleteRequisiteMutation = ({ projectId, requisiteId }: OptionsTy
                 variables: { projectId },
             })!;
 
-            const { scenes } = cache.readQuery<Scenes>({
-                query:     ScenesSchema,
-                variables: { projectId },
-            })!;
-
             cache.writeQuery({
                 query:     RequisitesSchema,
                 variables: { projectId },
@@ -42,23 +38,29 @@ export const useDeleteRequisiteMutation = ({ projectId, requisiteId }: OptionsTy
                 },
             });
 
-            cache.writeQuery({
-                query:     ScenesSchema,
-                variables: { projectId },
-                data:      {
-                    scenes: scenes.map((scene) => {
-                        if (scene.requisites.some((requisite) => requisite.id === requisiteId)) {
-                            return {
-                                ...scene,
-                                requisites: scene.requisites.filter((requisite) => requisite.id !== requisiteId),
-                            };
-                        }
+            try {
+                const { scenes } = cache.readQuery<Scenes>({
+                    query:     ScenesSchema,
+                    variables: { projectId },
+                })!;
 
-                        return scene;
-                    }),
-                },
-            });
+                cache.writeQuery({
+                    query:     ScenesSchema,
+                    variables: { projectId },
+                    data:      {
+                        scenes: scenes.map((scene) => {
+                            if (scene.requisites.some((requisite) => requisite.id === requisiteId)) {
+                                return {
+                                    ...scene,
+                                    requisites: scene.requisites.filter((requisite) => requisite.id !== requisiteId),
+                                };
+                            }
+
+                            return scene;
+                        }),
+                    },
+                });
+            } catch (error) { } // eslint-disable-line no-empty
         },
-        variables: { requisiteId },
     });
 };
