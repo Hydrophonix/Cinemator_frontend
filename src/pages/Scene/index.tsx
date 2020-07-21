@@ -2,6 +2,7 @@
 import React, { FC, useContext } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 
 // Components
@@ -23,7 +24,7 @@ type Params = {
     sceneId: string
 }
 const Scene: FC = () => {
-    const { goBack, push } = useHistory();
+    const { push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
@@ -65,18 +66,45 @@ const Scene: FC = () => {
             </Route>
             <Header>
                 <nav>
-                    <Button onClick = { () => void push(`/${projectId}/scenes`) }>To scenes</Button>
-                    <Button onClick = { goBack }>Go back</Button>
+                    <Button onClick = { () => void push(`/${projectId}/scenes`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16, marginRight: 5 }}
+                        />
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'mask'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </nav>
                 <h2>{`S: ${scene.number}`}</h2>
                 <nav>
                     <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
-                        Add requisite
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>R:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
                     </Button>
                     <Button onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
-                        Update
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'wrench'
+                            style = {{ width: 16, height: 16 }}
+                        />
                     </Button>
-                    <Button onClick = { deleteSceneHandler }>Delete</Button>
+                    <Button onClick = { deleteSceneHandler }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'trash-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </nav>
             </Header>
             {
@@ -86,13 +114,8 @@ const Scene: FC = () => {
                             scene.workdays.map((workday, index) => (
                                 <Button
                                     key = { index }
-                                    style = {{
-                                        backgroundColor: theme.workday.anotherSecondary,
-                                        color:           '#fff',
-                                    }}
-                                    onClick = { (event) => void workdayRedirectHandler(
-                                        event, workday.id,
-                                    ) }>
+                                    style = {{ backgroundColor: theme.workday.anotherSecondary, color: '#fff' }}
+                                    onClick = { (event) => void workdayRedirectHandler(event, workday.id) }>
                                     {workday.date}
                                 </Button>
                             ))

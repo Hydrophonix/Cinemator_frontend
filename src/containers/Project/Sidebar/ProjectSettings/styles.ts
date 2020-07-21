@@ -15,18 +15,17 @@ export const Main = styled.main`
     flex: 1;
     padding: 10px 0px;
 
-        h2 {
-            font-size: 18px;
-            color: #fff;
-            padding: 5px 0px;
-            font-family: sans-serif;
-        }
+    h2 {
+        font-size: 18px;
+        color: #fff;
+        padding: 5px 0px;
+        font-family: sans-serif;
+    }
 
-        input {
-            width: 100%;
-            box-sizing: border-box;
-        }
-    
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
 `;
 
 export const Footer = styled.footer`

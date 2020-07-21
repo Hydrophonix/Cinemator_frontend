@@ -17,8 +17,9 @@ export const Container = styled.div`
             flex-direction: column;
 
             h2 {
-                font-size: 18px;
+                font-size: 20px;
                 padding: 5px 0px;
+                font-family: sans-serif;
             }
 
             button {

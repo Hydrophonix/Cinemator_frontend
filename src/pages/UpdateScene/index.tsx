@@ -1,12 +1,13 @@
 // Core
 import React, { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Input } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -30,7 +31,7 @@ const initialForm = {
 };
 
 const UpdateScene: FC = () => {
-    const { goBack } = useHistory();
+    const { push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
     const [ updateScene ] = useUpdateSceneMutation();
@@ -52,27 +53,34 @@ const UpdateScene: FC = () => {
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const response = await updateScene({ variables: { input: form, sceneId }});
-        response && response.data && void goBack();
+        response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
     return (
         <Container>
             <Header>
-                <Button onClick = { goBack }>Back</Button>
+                <div>
+                    <Button onClick = { () => push(`/${projectId}/scenes/${sceneId}`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </div>
                 <h2>Update scene: {scene.number}</h2>
-                <div />
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
                     <h2>Number:</h2>
-                    <input
+                    <Input
                         name = 'number'
                         type = 'number'
                         value = { form.number ?? 0 }
                         onChange = { (event) => void setForm(event, true) }
                     />
                     <h2>Location:</h2>
-                    <input
+                    <Input
                         name = 'location'
                         placeholder = 'Location'
                         value = { form.location || '' }

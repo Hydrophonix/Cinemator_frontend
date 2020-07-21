@@ -1,5 +1,6 @@
 // Core
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 
 // Elements
@@ -71,9 +72,21 @@ export const customToolbarView = (toolbar: any) => {
 
     return (
         <CustomToolbarContainer>
-            <Button onClick = { goToBack }>prev</Button>
+            <Button onClick = { goToBack }>
+                <FontAwesomeIcon
+                    color = '#000'
+                    icon = 'reply'
+                    style = {{ width: 16, height: 16 }}
+                />
+            </Button>
             {toolbar.label}
-            <Button onClick = { goToNext }>next</Button>
+            <Button onClick = { goToNext }>
+                <FontAwesomeIcon
+                    color = '#000'
+                    icon = 'share'
+                    style = {{ width: 16, height: 16 }}
+                />
+            </Button>
         </CustomToolbarContainer>
     );
 };

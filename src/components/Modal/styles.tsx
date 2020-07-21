@@ -45,6 +45,7 @@ export default {
 
     Cross: styled.button`
       position: absolute;
+      border: none;
       background-color: transparent;
       right: 13px;
       top: 5px;

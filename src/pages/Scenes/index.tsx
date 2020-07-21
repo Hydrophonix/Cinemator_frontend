@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 
 // Apollo Hooks
@@ -16,7 +17,7 @@ import { transformDateToISO8601 } from '../../utils';
 import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
-import { ErrorBoundary, DatePicker, ScenesTable } from '../../components';
+import { ErrorBoundary, DateRangePicker, ScenesTable } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -79,7 +80,7 @@ const Scenes: FC = () => {
     return (
         <ScenesContainer>
             <Header>
-                <DatePicker
+                <DateRangePicker
                     reset
                     endDay = { endDay }
                     projectEndDay = { projectEndDay }
@@ -89,7 +90,14 @@ const Scenes: FC = () => {
                 />
                 <h2>Scenes</h2>
                 <Button onClick = { () => void push(`/${projectId}/create-scene`) }>
-                    Add new scene
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'plus'
+                        style = {{
+                            width:  16,
+                            height: 16,
+                        }}
+                    />
                 </Button>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>

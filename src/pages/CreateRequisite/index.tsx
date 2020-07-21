@@ -1,12 +1,13 @@
 // Core
 import React, { FC, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Input } from '../../elements';
 
 // Apollo hooks
 import { useRequisitesQuery, useCreateRequisiteMutation } from '../../bus/Requisite';
@@ -31,7 +32,7 @@ const innitialForm = {
 };
 
 const CreateRequisite: FC = () => {
-    const { goBack } = useHistory();
+    const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ createRequisite ] = useCreateRequisiteMutation({ projectId });
@@ -57,21 +58,27 @@ const CreateRequisite: FC = () => {
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const response = await createRequisite({ variables: { input: form, projectId }});
-        response && response.data && void goBack();
+        response && response.data && void push(`/${projectId}/requisites`);
     };
 
     return (
         <CreateRequisiteContainer>
             <Header>
-                <Button onClick = { goBack }>Back</Button>
+                <div>
+                    <Button onClick = { () => push(`/${projectId}/requisites`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </div>
                 <h2>Create requisite</h2>
-                <div />
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
                     <h2>Requisite number:</h2>
-                    <input
-                        disabled
+                    <Input
                         name = 'number'
                         placeholder = 'Requisite number'
                         type = 'number'
@@ -79,14 +86,14 @@ const CreateRequisite: FC = () => {
                         onChange = { (event) => setForm(event, true) }
                     />
                     <h2>Requisite title:</h2>
-                    <input
+                    <Input
                         name = 'title'
                         placeholder = 'Requisite title'
                         value = { form.title }
                         onChange = { setForm }
                     />
                     <h2>Requisite description:</h2>
-                    <input
+                    <Input
                         name = 'description'
                         value = { form.description || '' }
                         onChange = { setForm }

@@ -2,13 +2,14 @@
 // Core
 import React, { FC } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 
 // Redux
 import { useInputsRedux } from '../../../@init/redux/inputs';
 
 // Components
-import { WorkdaysTable, DatePicker } from '../../../components';
+import { WorkdaysTable, DateRangePicker } from '../../../components';
 
 // Elements
 import { Button } from '../../../elements';
@@ -53,7 +54,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
     return (
         <Container>
             <Header>
-                <DatePicker
+                <DateRangePicker
                     reset
                     endDay = { endDay }
                     projectEndDay = { projectEndDay }
@@ -62,16 +63,16 @@ export const Table: FC<PropTypes> = ({ data }) => {
                     startDay = { startDay }
                 />
                 <h2>Workdays</h2>
-                <Button
-                    disabled
-                    onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
-                    Add new workday
+                <Button onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'plus'
+                        style = {{ width: 16, height: 16 }}
+                    />
                 </Button>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
-                <WorkdaysTable
-                    workdays = { filterByDateRange() }
-                />
+                <WorkdaysTable workdays = { filterByDateRange() } />
             </div>
         </Container>
     );

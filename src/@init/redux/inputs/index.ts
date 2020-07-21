@@ -24,5 +24,9 @@ export const useInputsRedux = () => {
         setWorkdaysDateRangeRedux: (payload: types.DateRange) => dispatch(setWorkdaysDateRangeAction(payload)),
         setIndexRedux:             (payload: types.IndexPayload) => dispatch(setIndexAction(payload)),
         setRequisiteTitleRedux:    (payload: string) => dispatch(setRequisiteTitleAction(payload)),
+        setGlobalDateRangeRedux:   (payload: types.DateRange) => {
+            dispatch(setDateRangeAction(payload));
+            dispatch(setWorkdaysDateRangeAction(payload));
+        },
     };
 };

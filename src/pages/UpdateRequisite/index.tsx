@@ -1,12 +1,13 @@
 // Core
 import React, { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Input } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -29,7 +30,7 @@ const initialForm = {
 };
 
 const UpdateRequisite: FC = () => {
-    const { goBack } = useHistory();
+    const { push } = useHistory();
     const { projectId, requisiteId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ updateRequisite ] = useUpdateRequisiteMutation();
@@ -50,27 +51,34 @@ const UpdateRequisite: FC = () => {
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const response = await updateRequisite({ variables: { input: form, requisiteId }});
-        response && response.data && void goBack();
+        response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
     };
 
     return (
         <Container>
             <Header>
-                <Button onClick = { goBack }>Back</Button>
-                <h2>Update requisite: {1}</h2>
-                <div />
+                <div>
+                    <Button onClick = { () => void push(`/${projectId}/requisites/${requisiteId}`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </div>
+                <h2>Update requisite: {requisite.number}</h2>
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
                     <h2>Title:</h2>
-                    <input
+                    <Input
                         name = 'title'
                         placeholder = 'Title'
                         value = { form.title ?? '' }
                         onChange = { setForm }
                     />
                     <h2>Description:</h2>
-                    <input
+                    <Input
                         name = 'description'
                         placeholder = 'Description'
                         value = { form.description ?? '' }

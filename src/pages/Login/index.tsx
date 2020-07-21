@@ -6,7 +6,7 @@ import { useApolloClient } from '@apollo/react-hooks';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Input } from '../../elements';
 
 // Hooks
 import { useLoginMutation } from '../../bus';
@@ -45,13 +45,13 @@ const Login: FC = () => {
         <LoginContainer>
             <h1>Login</h1>
             <form onSubmit = { onSubmit }>
-                <input
+                <Input
                     name = 'email'
                     placeholder = 'enter email'
                     value = { form.email }
                     onChange = { setForm }
                 />
-                <input
+                <Input
                     name = 'password'
                     placeholder = 'enter password'
                     value = { form.password }

@@ -9,7 +9,7 @@ export const Container = styled.aside<{ isActive: boolean }>`
     max-width: ${`${sideBarWidth}px`};
     border-right: 1px solid black;
     box-sizing: border-box;
-    background-color: ${({ theme }) => theme.app.sideBar};
+    background-color: ${({ theme }) => theme.app.secondary};
     background-size: cover;
 
     @media (max-width: 1024px) {

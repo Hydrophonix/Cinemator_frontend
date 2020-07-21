@@ -8,7 +8,7 @@ export const TopbarContainer = styled.header`
     box-sizing: border-box;
     padding: 5px;
     justify-content: space-between;
-    background-color: ${({ theme }) => theme.app.topBar};
+    background-color: ${({ theme }) => theme.app.primary};
     background-size: cover;
 
     h1 {

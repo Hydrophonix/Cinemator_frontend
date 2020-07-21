@@ -13,3 +13,4 @@ export * from './SceneRequisitesModal';
 
 // Custom
 export * from './DatePicker';
+export * from './DateRangePicker';

@@ -2,6 +2,7 @@
 // Core
 import React, { FC, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
 // Components
@@ -88,7 +89,13 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.requisite.primary }}>
-                <Button onClick = { addRequsitesToSceneHandler }>Save</Button>
+                <Button onClick = { addRequsitesToSceneHandler }>
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'save'
+                        style = {{ width: 26, height: 26 }}
+                    />
+                </Button>
             </Footer>
         </Modal>
     );

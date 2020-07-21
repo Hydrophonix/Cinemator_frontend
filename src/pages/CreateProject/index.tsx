@@ -1,13 +1,13 @@
 // Core
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import 'react-datepicker/dist/react-datepicker.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Input } from '../../elements';
 
 // Assets
 import { Container, Header } from './styles';
@@ -25,7 +25,7 @@ const innitialForm = {
 };
 
 const CreateProject: FC = () => {
-    const { goBack } = useHistory();
+    const { push } = useHistory();
     const [ createProject ] = useCreateProjectMutation();
     const [ form, setForm ] = useForm<ProjectCreateInput>(innitialForm);
 
@@ -34,29 +34,35 @@ const CreateProject: FC = () => {
 
         const response = await createProject({ variables: { input: form }});
 
-        response && response.data && void goBack();
+        response && response.data && void push('/');
     };
 
     return (
         <Container>
             <Header>
                 <div>
-                    <Button onClick = { goBack }>Back</Button>
+                    <Button onClick = { () => void push('/') }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </div>
                 <h2>Create project</h2>
             </Header>
             <main>
                 <form onSubmit = { onSubmit }>
                     <h2>Project title:</h2>
-                    <input
+                    <Input
                         name = 'title'
-                        placeholder = 'Project title'
+                        placeholder = 'Type here...'
                         onChange = { setForm }
                     />
                     <h2>Project description:</h2>
-                    <input
+                    <textarea
                         name = 'description'
-                        placeholder = 'Project description'
+                        placeholder = 'Type here...'
                         onChange = { setForm }
                     />
                     <Button type = 'submit'>Submit</Button>

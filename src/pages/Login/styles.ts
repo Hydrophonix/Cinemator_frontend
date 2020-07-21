@@ -7,13 +7,14 @@ export const LoginContainer = styled.section`
     flex-direction: column;
     align-items: center;
     flex: 1;
-    background-color: lightblue;
+    background-color: ${({ theme }) => theme.app.secondary};
 
     padding-top: 5%;
 
     h1 {
         font-size: 24px;
         margin-bottom: 5px;
+        font-family: sans-serif;
     }
 
     form {
@@ -29,4 +30,5 @@ export const LoginContainer = styled.section`
 export const RegisterLink = styled(Link)`
     text-decoration: underline;
     padding-top: 10px;
+    font-family: sans-serif;
 `;

@@ -10,6 +10,7 @@ export const ProjectItemContainer = styled.div`
     
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
     cursor: pointer;
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
@@ -30,11 +31,20 @@ export const ProjectItemContainer = styled.div`
 
     header {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+        span {
+            font-size: 14px;
+        }
+
+        p {
+            font-size: 20px;
+            text-align: center;
+        }
     }
 
     section {
-        padding-top: 30px;
         display: flex;
         justify-content: center;
     }

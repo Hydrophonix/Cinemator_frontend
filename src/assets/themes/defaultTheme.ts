@@ -11,7 +11,7 @@ export const defaultTheme = {
         error:     'red',
     },
     input: {
-        primary:   '#BDBDBD',
+        primary:   '#fff',
         secondary: '#FFEE58',
         error:     'red',
     },
@@ -21,8 +21,8 @@ export const defaultTheme = {
         error:     'red',
     },
     app: {
-        topBar:  '#006d77',
-        sideBar: '#83c5be',
+        primary:   '#006d77',
+        secondary: '#83c5be',
     },
     project: {
         primary:        '#5f00a8',

@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 // GraphQL
 import CreateProjectSchema from '../schemas/createProject.graphql';
@@ -8,21 +8,20 @@ import OwnedProjectsSchema from '../schemas/ownedProjects.graphql';
 // Types
 import { CreateProject, CreateProjectVariables, OwnedProjects } from '../types';
 
-const defaultOptions: MutationHookOptions<CreateProject, CreateProjectVariables> = {
-    update(cache, { data }) {
-        const { ownedProjects } = cache.readQuery<OwnedProjects>({ query: OwnedProjectsSchema })!;
+export const useCreateProjectMutation = () => {
+    return useMutation<CreateProject, CreateProjectVariables>(CreateProjectSchema, {
+        update(cache, { data }) {
+            // TODO: Если создавать проект без скачаных проектов выкидывает ошибку
+            const { ownedProjects } = cache.readQuery<OwnedProjects>({ query: OwnedProjectsSchema })!;
 
-        cache.writeQuery({
-            query: OwnedProjectsSchema,
-            data:  {
-                ownedProjects: data
-                    ? ownedProjects.concat([ data.createProject ])
-                    : ownedProjects,
-            },
-        });
-    },
-};
-
-export const useCreateProjectMutation = (baseOptions = defaultOptions) => {
-    return useMutation<CreateProject, CreateProjectVariables>(CreateProjectSchema, baseOptions);
+            cache.writeQuery({
+                query: OwnedProjectsSchema,
+                data:  {
+                    ownedProjects: data
+                        ? ownedProjects.concat([ data.createProject ])
+                        : ownedProjects,
+                },
+            });
+        },
+    });
 };

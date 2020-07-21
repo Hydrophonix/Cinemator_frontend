@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -21,7 +22,7 @@ type Params = {
 }
 
 const Requisite: FC = () => {
-    const { goBack, push } = useHistory();
+    const { push } = useHistory();
     const { projectId, requisiteId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ deleteRequisite ] = useDeleteRequisiteMutation({ projectId, requisiteId });
@@ -45,15 +46,35 @@ const Requisite: FC = () => {
         <RequisiteContainer>
             <RequisiteHeader>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/requisites`) }>To requisites</Button>
-                    <Button onClick = { goBack }>Go back</Button>
+                    <Button onClick = { () => void push(`/${projectId}/requisites`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16, marginRight: 5 }}
+                        />
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'utensils'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </div>
                 <h2>R: {requisite.number}</h2>
                 <div>
                     <Button onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
-                        Update
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'wrench'
+                            style = {{ width: 16, height: 16 }}
+                        />
                     </Button>
-                    <Button onClick = { deleteRequisiteHandler }>Delete</Button>
+                    <Button onClick = { deleteRequisiteHandler }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'trash-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </div>
             </RequisiteHeader>
             <main>

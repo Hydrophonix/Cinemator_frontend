@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Apollo Hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
@@ -64,7 +65,14 @@ const Requisites: FC = () => {
                 <div />
                 <h2>Requisites</h2>
                 <Button onClick = { () => void push(`/${projectId}/create-requisite`) }>
-                    Add new requisite
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'plus'
+                        style = {{
+                            width:  16,
+                            height: 16,
+                        }}
+                    />
                 </Button>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>

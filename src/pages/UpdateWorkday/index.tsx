@@ -1,22 +1,27 @@
 // Core
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, DatePicker } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
 
+// Apollo hooks
+import { useWorkdaysQuery, useUpdateWorkdayMutation } from '../../bus/Workday';
+
 // Hooks
 import { useForm } from '../../hooks';
-import { useWorkdaysQuery, useUpdateWorkdayMutation } from '../../bus/Workday';
+
+// Redux
+import { useInputsRedux } from '../../@init/redux/inputs';
+
+// Utils
+import { transformDateToISO8601 } from '../../utils';
 
 // Styles
 import { UpdateWorkdayContainer, Header } from './styles';
-
-// Types
-import { WorkdayUpdateInput } from '../../@types/graphql-global-types';
 
 type Params = {
     projectId: string
@@ -24,53 +29,69 @@ type Params = {
 }
 
 const initialForm = {
-    date: '',
+    description: '',
 };
 
 const UpdateWorkday: FC = () => {
-    const { goBack } = useHistory();
+    const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
-    const [ updateWorkday ] = useUpdateWorkdayMutation();
-    const [ form, setForm, setInitialForm ] = useForm<WorkdayUpdateInput>(initialForm);
+    const { setGlobalDateRangeRedux } = useInputsRedux();
+    const [ updateWorkday ] = useUpdateWorkdayMutation({ projectId, setGlobalDateRangeRedux });
+    const [ form, setForm, setInitialForm ] = useForm<typeof initialForm>(initialForm);
+    const [ workdayDate, setWorkdayDate ] = useState<Date>(new Date());
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
 
     useEffect(() => {
-        workday && void setInitialForm({ date: workday.date });
+        if (workday) {
+            setInitialForm({ description: workday.description || '' });
+            setWorkdayDate(new Date(workday.date));
+        }
     }, [ workday ]);
 
     if (loading || !data || !workday) {
         return <div>Loading...</div>;
     }
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const excludeDates = data.workdays.reduce<Date[]>((acc, mapWorkday) => {
+        if (mapWorkday.date === workday.date) {
+            return acc;
+        }
+
+        return [ ...acc, new Date(mapWorkday.date) ];
+    }, []);
+
+    const onSubmit = async (event: any) => {
         event.preventDefault();
-        const response = await updateWorkday({ variables: { input: form, workdayId }});
-        response && response.data && void goBack();
+        const response = await updateWorkday({ variables: { input: {
+            ...form,
+            date: transformDateToISO8601(workdayDate),
+        }, workdayId }});
+        response && response.data && void push(`/${projectId}/calendar/${workdayId}`);
     };
 
     return (
         <UpdateWorkdayContainer>
             <Header>
-                <Button onClick = { goBack }>Back</Button>
+                <Button onClick = { () => push(`/${projectId}/calendar/${workdayId}`) }>Back</Button>
                 <h2>Update workday {workday.date}</h2>
                 <div />
             </Header>
             <main>
-                <form onSubmit = { onSubmit }>
-                    <h2>Workday date:</h2>
-                    <input
-                        disabled
-                        name = 'date'
-                        placeholder = 'Workday date'
-                        value = { form.date }
-                        onChange = { setForm }
-                    />
-                    <Button
-                        disabled
-                        type = 'submit'>Update
-                    </Button>
-                </form>
+                <h2>Workday date:</h2>
+                <DatePicker
+                    date = { workdayDate }
+                    excludeDates = { excludeDates || [] }
+                    onChange = { setWorkdayDate }
+                />
+                <h2>Workday description:</h2>
+                <textarea
+                    name = 'description'
+                    placeholder = 'Type here...'
+                    value = { form.description || '' }
+                    onChange = { setForm }
+                />
+                <Button onClick = { onSubmit }>Update</Button>
             </main>
         </UpdateWorkdayContainer>
     );

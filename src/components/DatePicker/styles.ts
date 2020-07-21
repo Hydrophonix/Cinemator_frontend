@@ -1,52 +1,45 @@
 // Core
-import styled, { keyframes, css } from 'styled-components';
-
-const rotateAnimation = keyframes`
-  from { transform:rotate(0deg); }
-  to { transform:rotate(360deg); }
-`;
+import styled from 'styled-components';
 
 export const Container = styled.section`
     display: flex;
+    width: 160px;
     align-items: center;
     box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.5);
     border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
 
-    span {
-        padding: 0px 2px;
-        font-family: sans-serif;
-        color: #000;
+    input {
+        width: 100%;
+    }
+
+    .react-datepicker-wrapper {
+        width: 100%;
     }
 `;
 
-export const CustomDatePickerInput = styled.button`
+export const CustomDatePickerInput = styled.button<{ disabled: boolean }>`
     cursor: pointer;
     padding: 2px 5px;
     border: none;
     outline: none;
     background-color: #fff;
     font-family: sans-serif;
+    font-size: 20px;
     color: #000;
-    
-    &:hover {
-        color: #fff;
-        background-color: ${({ theme }) => theme.workday.primary};
+    width: 100%;
+    margin: 0px !important;
+
+    &:disabled {
+        color: gray;
+        cursor: not-allowed;
     }
-`;
 
-export const RedoContainer = styled.div<{isRotate?: boolean}>`
-    display: flex;
-    align-items: center;
-    padding: 0px 2px;
-    cursor: pointer;
-
-    &:hover {
-        svg > path {
-            fill: orange;
-        };
-    };
-
-    ${({ isRotate }) => isRotate && css`animation: ${rotateAnimation} 0.5s`}
+    ${({ theme, disabled }) => !disabled && {
+        '&:hover': {
+            color:              '#fff',
+            'background-color': theme.workday.anotherSecondary,
+        },
+    } }
 `;

@@ -2,6 +2,7 @@
 // Core
 import React, { FC, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
 // Components
@@ -81,7 +82,13 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scen
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.scene.primary }}>
-                <Button onClick = { addScenesToWorkdayHandler }>Save</Button>
+                <Button onClick = { addScenesToWorkdayHandler }>
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'save'
+                        style = {{ width: 26, height: 26 }}
+                    />
+                </Button>
             </Footer>
         </Modal>
     );

@@ -2,8 +2,8 @@
 import styled from 'styled-components';
 
 export const Main = styled.main`
-    max-height: 420px;
-    min-height: 420px;
+    max-height: 410px;
+    min-height: 410px;
     overflow-y: scroll;
     background-color: ${({ theme }) => theme.requisite.hoverSecondary}
 `;

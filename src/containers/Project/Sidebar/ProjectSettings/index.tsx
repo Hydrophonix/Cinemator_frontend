@@ -1,9 +1,10 @@
 // Core
 import React, { FC, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
-import { Button } from '../../../../elements';
+import { Button, Input } from '../../../../elements';
 
 // Apollo hooks
 import { useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../bus/Project';
@@ -75,14 +76,14 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
             </Header>
             <Main>
                 <h2>Title:</h2>
-                <input
+                <Input
                     name = 'title'
                     placeholder = 'Title'
                     value = { form.title || '' }
                     onChange = { setForm }
                 />
                 <h2>Description:</h2>
-                <input
+                <textarea
                     name = 'description'
                     placeholder = 'Description'
                     value = { form.description || '' }
@@ -103,7 +104,11 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                             setCalendarView(true);
                             setToLocalStorage(true);
                         } }>
-                        Calendar
+                        <FontAwesomeIcon
+                            color = { !ui.isCalendarView ? '#000' : '#fff' }
+                            icon = 'calendar-alt'
+                            style = {{ width: 26, height: 26 }}
+                        />
                     </Button>
                     <Button
                         style = { !ui.isCalendarView ? activeStyles : {} }
@@ -111,16 +116,28 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                             setCalendarView(false);
                             setToLocalStorage(false);
                         } }>
-                        Table
+                        <FontAwesomeIcon
+                            color = { ui.isCalendarView ? '#000' : '#fff' }
+                            icon = 'table'
+                            style = {{ width: 26, height: 26 }}
+                        />
                     </Button>
                 </WorkdaysSettings>
             </Main>
             <Footer>
                 <Button onClick = { onDelete }>
-                    Delete
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'trash-alt'
+                        style = {{ width: 26, height: 26 }}
+                    />
                 </Button>
                 <Button onClick = { onSubmit }>
-                    Save
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'save'
+                        style = {{ width: 26, height: 26 }}
+                    />
                 </Button>
             </Footer>
         </Section>

@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ProjectItem } from './ProjectItem';
@@ -30,7 +31,11 @@ const Projects: FC = () => {
                 <h2>Projects</h2>
                 <div style = {{ alignContent: 'flex-end' }}>
                     <Button onClick = { () => void push('/create-project') }>
-                        Create new project
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'plus'
+                            style = {{ width: 16, height: 16 }}
+                        />
                     </Button>
                 </div>
             </Header>

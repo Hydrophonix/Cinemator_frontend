@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 
 // Components
@@ -26,12 +27,12 @@ type Params = {
 }
 
 const Workday: FC = () => {
-    const { push, goBack } = useHistory();
+    const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const { setDateRangeRedux } = useInputsRedux();
-    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setDateRangeRedux });
+    const { setGlobalDateRangeRedux } = useInputsRedux();
+    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setGlobalDateRangeRedux });
 
     if (loading || !data || scenesLoading || !scenesData) {
         return <div>Loading...</div>;
@@ -63,20 +64,45 @@ const Workday: FC = () => {
             </Route>
             <WorkdayHeader>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/calendar`) }>To calendar</Button>
-                    <Button onClick = { goBack }>Go back</Button>
+                    <Button onClick = { () => void push(`/${projectId}/calendar`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16, marginRight: 5 }}
+                        />
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'calendar-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </div>
                 <h2>W: {workday.date}</h2>
                 <div>
-                    <Button onClick = { () => void push(
-                        `/${projectId}/calendar/${workdayId}/add-scenes`,
-                    ) }>
-                        Add scene
+                    <Button onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>S:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
                     </Button>
                     <Button onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
-                        Update
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'wrench'
+                            style = {{ width: 16, height: 16 }}
+                        />
                     </Button>
-                    <Button onClick = { deleteWorkdayHandler }>Delete</Button>
+                    <Button onClick = { deleteWorkdayHandler }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'trash-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
                 </div>
             </WorkdayHeader>
             <ScenesTable

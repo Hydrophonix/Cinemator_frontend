@@ -1,5 +1,6 @@
 // Core
 import { useMutation } from '@apollo/react-hooks';
+import _ from 'lodash';
 
 // GraphQL
 import DeleteWorkdaySchema from '../schemas/deleteWorkday.graphql';
@@ -14,10 +15,10 @@ import { DateRange } from '../../../@init/redux/inputs/types';
 type OptionsType = {
     projectId: string
     workdayId: string
-    setDateRangeRedux: (payload: DateRange) => void
+    setGlobalDateRangeRedux: (payload: DateRange) => void
 }
 
-export const useDeleteWorkdayMutation = ({ projectId, workdayId, setDateRangeRedux }: OptionsType) => {
+export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRangeRedux }: OptionsType) => {
     return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, {
         update(cache, { data }) {
             const { deleteWorkday } = data!;
@@ -36,7 +37,10 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setDateRangeRed
                 variables: { projectId },
             })!;
 
-            const updatedWorkdays = workdays.filter((workday) => workday.id !== workdayId);
+            const updatedWorkdays = _.sortBy(
+                workdays.filter((workday) => workday.id !== workdayId),
+                ({ date }) => new Date(date),
+            );
 
             cache.writeQuery({
                 query:     WorkdaysSchema,
@@ -63,7 +67,7 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setDateRangeRed
                 },
             });
 
-            setDateRangeRedux({
+            setGlobalDateRangeRedux({
                 startDay: new Date(updatedWorkdays[ 0 ].date),
                 endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
             });

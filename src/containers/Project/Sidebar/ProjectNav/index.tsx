@@ -1,6 +1,7 @@
 // Core
 import React, { FC, useContext } from 'react';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
 // Elements
@@ -49,7 +50,13 @@ export const ProjectNav: FC<PropTypes> = (props) => {
             <div>
                 <Header>
                     <nav>
-                        <Button onClick = { () => void push('/') }>To projects</Button>
+                        <Button onClick = { () => void push('/') }>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'reply'
+                                style = {{ width: 20, height: 20, margin: '0px 5px' }}
+                            />
+                        </Button>
                     </nav>
                 </Header>
                 <Ul>
@@ -76,7 +83,11 @@ export const ProjectNav: FC<PropTypes> = (props) => {
                 </div>
                 <nav>
                     <Button onClick = { () => props.setFlipped() }>
-                        Settings
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'wrench'
+                            style = {{ width: 20, height: 20, margin: '0px 5px' }}
+                        />
                     </Button>
                 </nav>
             </Footer>

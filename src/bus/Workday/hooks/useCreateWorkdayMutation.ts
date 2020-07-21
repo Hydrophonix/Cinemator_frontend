@@ -12,10 +12,10 @@ import { DateRange } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
-    setDateRangeRedux: (payload: DateRange) => void
+    setGlobalDateRangeRedux: (payload: DateRange) => void
 }
 
-export const useCreateWorkdayMutation = ({ projectId, setDateRangeRedux }: OptionsType) => {
+export const useCreateWorkdayMutation = ({ projectId, setGlobalDateRangeRedux }: OptionsType) => {
     return useMutation<CreateWorkday, CreateWorkdayVariables>(CreateWorkdaySchema, {
         update(cache, { data }) {
             const { workdays } = cache.readQuery<Workdays>({
@@ -33,7 +33,7 @@ export const useCreateWorkdayMutation = ({ projectId, setDateRangeRedux }: Optio
                 },
             });
 
-            setDateRangeRedux({
+            setGlobalDateRangeRedux({
                 startDay: new Date(updatedWorkdays[ 0 ].date),
                 endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
             });

@@ -19,8 +19,8 @@ const indexStyles = css`
           position: absolute;
           width: 17px;
           height: 17px;
-          top: -5px;
-          right: -11px;
+          top: -1px;
+          right: -10px;
           background-color: #fff;
           border-radius: 100%;
 

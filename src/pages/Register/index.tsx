@@ -12,7 +12,7 @@ import { useRegisterMutation } from '../../bus';
 import { useForm } from '../../hooks';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Input } from '../../elements';
 
 // Instruments
 import { setAccessToken } from '../../@init/tokenStore';
@@ -47,13 +47,13 @@ const Register: FC = () => {
         <RegisterContainer>
             <h1>Register</h1>
             <form onSubmit = { onSubmit }>
-                <input
+                <Input
                     name = 'email'
                     placeholder = 'enter email'
                     value = { form.email }
                     onChange = { setForm }
                 />
-                <input
+                <Input
                     name = 'password'
                     placeholder = 'enter password'
                     value = { form.password }

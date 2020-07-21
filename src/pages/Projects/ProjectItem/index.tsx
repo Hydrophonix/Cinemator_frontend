@@ -18,7 +18,10 @@ export const ProjectItem: FC<PropTypes> = ({
 }) => {
     return (
         <ProjectItemContainer onClick = { () => projectRedirectHandler(id) }>
-            <header>Project: {title}</header>
+            <header>
+                <span>Project:</span>
+                <p>{title}</p>
+            </header>
             <section>Tap to open</section>
         </ProjectItemContainer>
     );
