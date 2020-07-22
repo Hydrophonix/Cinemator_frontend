@@ -1,6 +1,7 @@
 // Core
 import { ContextReplacementPlugin, Configuration } from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 /**
@@ -124,50 +125,22 @@ export const optimizeBuild = (): Configuration => ({
     },
 });
 
-export const loadImagesProd = (): Configuration => ({
-    module: {
-        rules: [
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use:  [
-                    'file-loader',
-                    {
-                        loader:  'image-webpack-loader',
-                        // https://github.com/tcoopman/image-webpack-loader
-                        // options and links
-                        options: {
-                            mozjpeg: {
-                                progressive: true,
-                                quality:     65,
-                            },
-                            // optipng.enabled: false will disable optipng
-                            optipng: {
-                                enabled: false,
-                            },
-                            pngquant: {
-                                quality: [ 0.65, 0.90 ],
-                                speed:   4,
-                            },
-                            gifsicle: {
-                                interlaced: false,
-                            },
-                            // the webp option will enable WEBP
-                            webp: {
-                                quality: 75,
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    },
+export const cleanDirectories = (): Configuration => ({
+    plugins: [
+        new CleanWebpackPlugin({
+            verbose: true,
+        }),
+    ],
 });
 
-// TODO: fix locales, and add filterMomentTimezones
 export const filterMomentLocales = (): Configuration => ({
-    plugins: [ new ContextReplacementPlugin(/moment\/locale$/, /(en)/) ],
+    plugins: [ new ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb|ru/) ],
 });
 
 export const filterLodashModules = () => ({
-    plugins: [ new LodashModuleReplacementPlugin() ],
+    plugins: [
+        new LodashModuleReplacementPlugin({
+            collections: true,
+        }),
+    ],
 });

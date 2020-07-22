@@ -3,7 +3,7 @@ import React, { FC, useContext } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _ from 'lodash';
+import _intersectionWith from 'lodash/intersectionWith';
 
 // Components
 import { ErrorBoundary, SceneRequisitesModal, RequisitesTable } from '../../components';
@@ -42,7 +42,7 @@ const Scene: FC = () => {
     }
 
     const requisiteIds = scene.requisites.map((requisite) => requisite.id);
-    const sceneRequisites = _.intersectionWith(
+    const sceneRequisites = _intersectionWith(
         requisiteData.requisites, requisiteIds, (value, other) => value.id === other,
     );
 

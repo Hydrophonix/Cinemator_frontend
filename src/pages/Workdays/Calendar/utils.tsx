@@ -1,7 +1,7 @@
 // Core
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _ from 'lodash';
+import _difference from 'lodash/difference';
 
 // Elements
 import { Button } from '../../../elements';
@@ -19,7 +19,7 @@ export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventType
 
         const requisitesCount = workday.scenes.reduce<Array<string>>((acc, scene) => {
             const requisiteIds = scene.requisites.map((requisite) => requisite.id); // TODO  => differenceBy
-            const difference = _.difference(requisiteIds, acc);
+            const difference = _difference(requisiteIds, acc);
 
             return [ ...acc, ...difference ];
         }, []).length;

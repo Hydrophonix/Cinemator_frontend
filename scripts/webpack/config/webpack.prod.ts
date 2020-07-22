@@ -18,6 +18,8 @@ export const getProdConfig = () => {
         modules.loadImagesProd(),
         modules.loadProdCss(),
         modules.cleanDirectories(),
+        modules.filterLodashModules(),
+        modules.filterMomentLocales(),
         modules.connectBuildProgressIndicator(),
         modules.optimizeBuild(),
         modules.connectBundleAnalyzer(),

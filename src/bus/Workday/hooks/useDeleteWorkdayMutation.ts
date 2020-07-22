@@ -1,6 +1,6 @@
 // Core
 import { useMutation } from '@apollo/react-hooks';
-import _ from 'lodash';
+import _sortBy from 'lodash/sortBy';
 
 // GraphQL
 import DeleteWorkdaySchema from '../schemas/deleteWorkday.graphql';
@@ -37,7 +37,7 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRa
                 variables: { projectId },
             })!;
 
-            const updatedWorkdays = _.sortBy(
+            const updatedWorkdays = _sortBy(
                 workdays.filter((workday) => workday.id !== workdayId),
                 ({ date }) => new Date(date),
             );

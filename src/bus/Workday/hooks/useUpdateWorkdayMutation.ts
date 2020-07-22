@@ -1,6 +1,6 @@
 // Core
 import { useMutation } from '@apollo/react-hooks';
-import _ from 'lodash';
+import _sortBy from 'lodash/sortBy';
 
 // GraphQL
 import WorkdaysSchema from '../schemas/workdays.graphql';
@@ -23,7 +23,7 @@ export const useUpdateWorkdayMutation = ({ projectId, setGlobalDateRangeRedux }:
                 variables: { projectId },
             })!;
 
-            const updatedWorkdays = _.sortBy(
+            const updatedWorkdays = _sortBy(
                 workdays.map((workday) => {
                     if (workday.date === data!.updateWorkday.date) {
                         return data!.updateWorkday;

@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _ from 'lodash';
+import _intersectionWith from 'lodash/intersectionWith';
 
 // Components
 import { ErrorBoundary, WorkdayScenesModal, ScenesTable } from '../../components';
@@ -45,7 +45,7 @@ const Workday: FC = () => {
     }
 
     const sceneIds = workday.scenes.map((scene) => scene.id);
-    const workdayScenes = _.intersectionWith(
+    const workdayScenes = _intersectionWith(
         scenesData.scenes, sceneIds, (value, other) => value.id === other,
     );
 

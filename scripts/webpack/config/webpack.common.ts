@@ -33,7 +33,6 @@ export const getCommonConfig = () => {
         modules.loadFonts(),
         modules.loadAudio(),
         modules.connectHtml(),
-        modules.filterMomentLocales(),
         modules.provideGlobals(),
     );
 };

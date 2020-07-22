@@ -7,7 +7,6 @@ import {
 } from 'webpack';
 import WebpackBar from 'webpackbar';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import dotenv from 'dotenv';
 
@@ -21,14 +20,6 @@ export const connectFriendlyErrors = (): Configuration => ({
 
 export const connectHMR = (): Configuration => ({
     plugins: [ new HotModuleReplacementPlugin() ],
-});
-
-export const cleanDirectories = (): Configuration => ({
-    plugins: [
-        new CleanWebpackPlugin({
-            verbose: true,
-        }),
-    ],
 });
 
 export const connectBundleAnalyzer = (): Configuration => ({
