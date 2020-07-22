@@ -59,20 +59,32 @@ export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId, lightVersion }) =
                                 {`${scene.number}`}
                             </div>
                         </Td>
-                        <Td>{scene.location}</Td>
+                        <Td>
+                            {
+                                scene.locations.map((location) => {
+                                    return (
+                                        <Button
+                                            key = { location.id }
+                                            style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}>
+                                            {location.name}
+                                        </Button>
+                                    );
+                                })
+                            }
+                        </Td>
                         {
                             !lightVersion && (
                                 <>
                                     <Td>
                                         {
-                                            scene.workdays.map((workday, index) => {
+                                            scene.workdays.map((workday) => {
                                                 if (workdayId && workday.id === workdayId) {
                                                     return null;
                                                 }
 
                                                 return (
                                                     <Button
-                                                        key = { index }
+                                                        key = { workday.id }
                                                         style = {{
                                                             backgroundColor: theme.workday.anotherSecondary,
                                                             color:           '#fff',

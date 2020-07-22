@@ -28,3 +28,14 @@ export const WorkdaysContainer = styled.section`
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.workday.containerBg};
 `;
+
+export const LocationsContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border-top: 1px solid ${({ theme }) => theme.scene.primary};
+    background-color: ${({ theme }) => theme.scene.containerBg};
+`;

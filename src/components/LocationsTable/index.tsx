@@ -12,16 +12,18 @@ import { Locations_locations } from '../../bus/Location';
 
 type PropTypes = {
     locations: Locations_locations[]
+    updateLocationHandler: (locationId: string, name: string) => Promise<boolean>
     deleteLocationHandler: (locationId: string) => void
     locationIdsArray?: String[]
-    setLocationIdsArray?: (locationId: string) => void
+    handler?: (locationId: string) => void
 }
 
 export const LocationsTable: FC<PropTypes> = ({
     locations,
+    updateLocationHandler,
     deleteLocationHandler,
     locationIdsArray,
-    setLocationIdsArray,
+    handler,
 }) => {
     return (
         <TableStyles>
@@ -29,9 +31,10 @@ export const LocationsTable: FC<PropTypes> = ({
                 <LocationsHead />
                 <LocationsBody
                     deleteLocationHandler = { deleteLocationHandler }
+                    handler = { handler }
                     locationIdsArray = { locationIdsArray }
                     locations = { locations }
-                    setLocationIdsArray = { setLocationIdsArray }
+                    updateLocationHandler = { updateLocationHandler }
                 />
             </Table>
         </TableStyles>

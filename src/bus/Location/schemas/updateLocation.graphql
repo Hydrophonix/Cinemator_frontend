@@ -1,0 +1,7 @@
+#import "./locationFields.graphql"
+
+mutation UpdateLocation ($input: LocationUpdateInput!, $locationId: String!) {
+    updateLocation(input: $input, locationId: $locationId) {
+        ...locationFields
+    }
+}

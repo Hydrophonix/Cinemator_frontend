@@ -1,22 +1,23 @@
 // Core
-import React, { FC, useContext } from 'react';
-import { useHistory, useParams, Route } from 'react-router-dom';
+import React, { FC, useContext, useEffect } from 'react';
+import { useHistory, useParams, Route, Switch } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _intersectionWith from 'lodash/intersectionWith';
 
 // Components
-import { ErrorBoundary, SceneRequisitesModal, RequisitesTable } from '../../components';
+import { ErrorBoundary, SceneRequisitesModal, RequisitesTable, LocationsModal } from '../../components';
 
 // Apollo hooks
-import { useScenesQuery, useDeleteSceneMutation } from '../../bus/Scene';
+import { useScenesQuery, useDeleteSceneMutation, useUpdateSceneLocationsMutation } from '../../bus/Scene';
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Elements
 import { Button } from '../../elements';
 
 // Styles
-import { Container, Header, WorkdaysContainer } from './styles';
+import { Container, Header, WorkdaysContainer, LocationsContainer } from './styles';
+import { useArrayOfStringsForm } from '../../hooks';
 
 // Types
 type Params = {
@@ -29,13 +30,20 @@ const Scene: FC = () => {
     const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
+    const [ updateSceneLocations ] = useUpdateSceneLocationsMutation();
     const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
+    const [ locationIdsArray, setLocationIdsArray, setInitialLocationIds ] = useArrayOfStringsForm([]);
+    const scene = data?.scenes.find((scene) => scene.id === sceneId);
+
+    useEffect(() =>{
+        if (scene) {
+            setInitialLocationIds(scene.locations.map((location) => location.id));
+        }
+    }, [ scene ]);
 
     if (loading || !data || requisiteLoading || !requisiteData) {
         return <div>Loading...</div>;
     }
-
-    const scene = data.scenes.find((scene) => scene.id === sceneId);
 
     if (!scene) {
         return <div>No scene exist</div>;
@@ -51,6 +59,11 @@ const Scene: FC = () => {
         response && response.data && void push(`/${projectId}/scenes`);
     };
 
+    const updateSceneLocationsHandler = async () => {
+        const response = await updateSceneLocations({ variables: { sceneId, locationIds: locationIdsArray }});
+        response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
+    };
+
     const workdayRedirectHandler = (event: any, workdayId: string) => {
         event.stopPropagation();
         push(`/${projectId}/calendar/${workdayId}`);
@@ -58,12 +71,22 @@ const Scene: FC = () => {
 
     return (
         <Container>
-            <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
-                <SceneRequisitesModal
-                    closeHandler = { () => void push(`/${projectId}/scenes/${sceneId}`) }
-                    requisiteIds = { requisiteIds }
-                />
-            </Route>
+            <Switch>
+                <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
+                    <SceneRequisitesModal
+                        closeHandler = { () => void push(`/${projectId}/scenes/${sceneId}`) }
+                        requisiteIds = { requisiteIds }
+                    />
+                </Route>
+                <Route path = { '/:projectId/scenes/:sceneId/locations' }>
+                    <LocationsModal
+                        closeHandler = { () => void push(`/${projectId}/scenes/${sceneId}`) }
+                        handler = { setLocationIdsArray }
+                        locationIdsArray = { locationIdsArray }
+                        saveHandler = { updateSceneLocationsHandler }
+                    />
+                </Route>
+            </Switch>
             <Header>
                 <nav>
                     <Button onClick = { () => void push(`/${projectId}/scenes`) }>
@@ -81,6 +104,16 @@ const Scene: FC = () => {
                 </nav>
                 <h2>{`S: ${scene.number}`}</h2>
                 <nav>
+                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>L:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
+                    </Button>
                     <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>R:</span>
@@ -121,6 +154,21 @@ const Scene: FC = () => {
                             ))
                         }
                     </WorkdaysContainer>
+                )
+            }
+            {
+                scene.locations.length !== 0 && (
+                    <LocationsContainer>
+                        {
+                            scene.locations.map((location) => (
+                                <Button
+                                    key = { location.id }
+                                    style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}>
+                                    {location.name}
+                                </Button>
+                            ))
+                        }
+                    </LocationsContainer>
                 )
             }
             <RequisitesTable

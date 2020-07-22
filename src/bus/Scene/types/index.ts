@@ -4,3 +4,4 @@ export * from './CreateScene';
 export * from './DeleteScene';
 export * from './UpdateScene';
 export * from './UpdateSceneRequisites';
+export * from './UpdateSceneLocations';

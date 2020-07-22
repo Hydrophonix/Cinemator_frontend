@@ -31,6 +31,12 @@ export type SetDateRangeAction = {
     payload: DateRange
 };
 
+export const SET_SCENES_LOCATION = 'SET_SCENES_LOCATION';
+export type SetScenesLocationAction = {
+    type: typeof SET_SCENES_LOCATION
+    payload: string
+};
+
 export const SET_WORKDAYS_DATE_RANGE = 'SET_WORKDAYS_DATE_RANGE';
 export type SetWorkdaysDateRangeAction = {
     type: typeof SET_WORKDAYS_DATE_RANGE
@@ -54,3 +60,4 @@ export type InputsActionTypes =
     | setIndexAction
     | setRequisiteTitleAction
     | SetWorkdaysDateRangeAction
+    | SetScenesLocationAction

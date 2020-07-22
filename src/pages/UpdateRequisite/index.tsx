@@ -25,6 +25,7 @@ type Params = {
 }
 
 const initialForm = {
+    // number:      0,
     title:       '',
     description: '',
 };
@@ -39,6 +40,7 @@ const UpdateRequisite: FC = () => {
 
     useEffect(() => {
         requisite && void setInitialForm({
+            // number:      requisite.number,
             title:       requisite.title,
             description: requisite.description ?? '',
         });
@@ -48,7 +50,7 @@ const UpdateRequisite: FC = () => {
         return <div>Loading...</div>;
     }
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: any) => {
         event.preventDefault();
         const response = await updateRequisite({ variables: { input: form, requisiteId }});
         response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
@@ -69,23 +71,31 @@ const UpdateRequisite: FC = () => {
                 <h2>Update requisite: {requisite.number}</h2>
             </Header>
             <main>
-                <form onSubmit = { onSubmit }>
-                    <h2>Title:</h2>
+                <div>
+                    {/* <h2>Requisite number:</h2>
+                    <Input
+                        name = 'number'
+                        placeholder = 'Number'
+                        type = 'number'
+                        value = { form.number ?? 0 }
+                        onChange = { (event) => void setForm(event, true) }
+                    /> */}
+                    <h2>Requisite title:</h2>
                     <Input
                         name = 'title'
                         placeholder = 'Title'
                         value = { form.title ?? '' }
                         onChange = { setForm }
                     />
-                    <h2>Description:</h2>
+                    <h2>Requisite description:</h2>
                     <textarea
                         name = 'description'
                         placeholder = 'Description'
                         value = { form.description ?? '' }
                         onChange = { setForm }
                     />
-                    <Button type = 'submit'>Update</Button>
-                </form>
+                    <Button onClick = { onSubmit }>Update</Button>
+                </div>
             </main>
         </Container>
     );

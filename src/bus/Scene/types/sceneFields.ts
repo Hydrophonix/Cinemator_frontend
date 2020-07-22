@@ -7,6 +7,12 @@
 // GraphQL fragment: sceneFields
 // ====================================================
 
+export interface sceneFields_locations {
+  __typename: "Location";
+  id: string;
+  name: string;
+}
+
 export interface sceneFields_workdays {
   __typename: "Workday";
   id: string;
@@ -23,8 +29,9 @@ export interface sceneFields {
   __typename: "Scene";
   id: string;
   number: number;
-  location: string | null;
+  title: string | null;
   description: string | null;
+  locations: sceneFields_locations[];
   workdays: sceneFields_workdays[];
   requisites: sceneFields_requisites[];
 }

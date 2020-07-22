@@ -1,10 +1,10 @@
 // Core
 import React, { FC, useEffect } from 'react';
-import { useHistory, useParams, Route } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
-import { ErrorBoundary, LocationsModal } from '../../components';
+import { ErrorBoundary } from '../../components';
 
 // Elements
 import { Button, Input } from '../../elements';
@@ -25,9 +25,9 @@ type Params = {
 }
 
 const initialForm = {
-    description: '',
-    location:    '',
     sceneNumber: 0,
+    title:       '',
+    description: '',
 };
 
 const UpdateScene: FC = () => {
@@ -40,9 +40,9 @@ const UpdateScene: FC = () => {
 
     useEffect(() => {
         scene && void setInitialForm({
-            location:    scene.location || '',
-            description: scene.description || '',
             number:      scene.number,
+            title:       scene.title || '',
+            description: scene.description || '',
         });
     }, [ scene ]);
 
@@ -58,13 +58,6 @@ const UpdateScene: FC = () => {
 
     return (
         <Container>
-            <Route
-                exact
-                path = { '/:projectId/update-scene/:sceneId/locations' }>
-                <LocationsModal
-                    closeHandler = { () => void push(`/${projectId}/scenes`) }
-                />
-            </Route>
             <Header>
                 <div>
                     <Button onClick = { () => push(`/${projectId}/scenes/${sceneId}`) }>
@@ -78,27 +71,29 @@ const UpdateScene: FC = () => {
                 <h2>Update scene: {scene.number}</h2>
             </Header>
             <main>
-                <h2>Number:</h2>
-                <Input
-                    name = 'number'
-                    type = 'number'
-                    value = { form.number ?? 0 }
-                    onChange = { (event) => void setForm(event, true) }
-                />
-                <h2>Location:</h2>
-                <Button
-                    style = {{ width: 200, fontSize: 20 }}
-                    onClick = { () => push(`/${projectId}/update-scene/${sceneId}/locations`) }>
-                    {form.location || 'Choose Location'}
-                </Button>
-                <h2>Description:</h2>
-                <textarea
-                    name = 'description'
-                    placeholder = 'Description'
-                    value = { form.description || '' }
-                    onChange = { setForm }
-                />
-                <Button onClick = { onSubmit }>Update</Button>
+                <div>
+                    <h2>Scene number:</h2>
+                    <Input
+                        name = 'number'
+                        type = 'number'
+                        value = { form.number ?? 0 }
+                        onChange = { (event) => void setForm(event, true) }
+                    />
+                    <h2>Scene title:</h2>
+                    <Input
+                        name = 'title'
+                        value = { form.title || '' }
+                        onChange = { setForm }
+                    />
+                    <h2>Scene description:</h2>
+                    <textarea
+                        name = 'description'
+                        placeholder = 'Description'
+                        value = { form.description || '' }
+                        onChange = { setForm }
+                    />
+                    <Button onClick = { onSubmit }>Update</Button>
+                </div>
             </main>
         </Container>
     );

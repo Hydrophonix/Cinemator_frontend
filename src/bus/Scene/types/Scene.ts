@@ -7,6 +7,12 @@
 // GraphQL query operation: Scene
 // ====================================================
 
+export interface Scene_scene_locations {
+  __typename: "Location";
+  id: string;
+  name: string;
+}
+
 export interface Scene_scene_workdays {
   __typename: "Workday";
   id: string;
@@ -23,8 +29,9 @@ export interface Scene_scene {
   __typename: "Scene";
   id: string;
   number: number;
-  location: string | null;
+  title: string | null;
   description: string | null;
+  locations: Scene_scene_locations[];
   workdays: Scene_scene_workdays[];
   requisites: Scene_scene_requisites[];
 }

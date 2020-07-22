@@ -55,7 +55,7 @@ const CreateRequisite: FC = () => {
         return <div>Loading...</div>;
     }
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: any) => {
         event.preventDefault();
         const response = await createRequisite({ variables: { input: form, projectId }});
         response && response.data && void push(`/${projectId}/requisites`);
@@ -76,7 +76,7 @@ const CreateRequisite: FC = () => {
                 <h2>Create requisite</h2>
             </Header>
             <main>
-                <form onSubmit = { onSubmit }>
+                <div>
                     <h2>Requisite number:</h2>
                     <Input
                         name = 'number'
@@ -98,8 +98,8 @@ const CreateRequisite: FC = () => {
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button type = 'submit'>Submit</Button>
-                </form>
+                    <Button onClick = { onSubmit }>Submit</Button>
+                </div>
             </main>
         </CreateRequisiteContainer>
     );

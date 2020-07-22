@@ -5,23 +5,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 
-// Elements
-import { Button } from '../../../elements';
-
+// Types
 type PropTypes = {
     index?: number
     setIndex?: (index: number) => void
+    location?: string
+    setLocation?: (location: string) => void
     lightVersion?: Object
 }
 
 type Params = { projectId: string };
 
-export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => {
+export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocation, lightVersion }) => {
     const theme = useContext(ThemeContext);
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
 
-    const onChange = (event: any) => {
+    const onIndexChange = (event: any) => {
         const value: string = event.target.value !== '' ? event.target.value : '0';
         const number = parseInt(value, 10);
         const newIndex = number >= 0 && number <= 999 ? number : 0;
@@ -30,7 +30,11 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => 
         setIndex && isIndexDiff && void setIndex(newIndex);
     };
 
-    const resetIndex = () => setIndex && (index !== 0) && void setIndex(0);
+    const resetIndex = () => setIndex && void setIndex(0);
+
+    const onLocationChange = (event: any) => setLocation && void setLocation(event.target.value);
+
+    const resetLocation = () => setLocation && void setLocation('');
 
     return (
         <Thead>
@@ -44,7 +48,7 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => 
                                         style = {{ width: 35, textAlign: 'center' }}
                                         type = 'number'
                                         value = { index }
-                                        onChange = { onChange }
+                                        onChange = { onIndexChange }
                                     />
                                     {
                                         index !== 0 && (
@@ -58,16 +62,38 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => 
                                     }
                                 </nav>
                             )
-                            : <nav style = {{ width: 35, textAlign: 'center' }}>#</nav>
+                            : (
+                                <nav style = {{ width: 35, textAlign: 'center' }}>
+                                    #
+                                </nav>
+                            )
                     }
-
                 </Th>
                 <Th>
-                    <Button
-                        style = {{ width: 110 }}
-                        onClick = { () => void push(`/${projectId}/scenes/locations`) }>
-                        All locations
-                    </Button>
+                    {
+                        typeof location === 'string'
+                            ? (
+                                <nav style = {{ width: 100 }}>
+                                    <input
+                                        placeholder = 'All locations'
+                                        style = {{ width: 100 }}
+                                        value = { location }
+                                        onChange = { onLocationChange }
+                                    />
+                                    <span onClick = {
+                                        () => location !== ''
+                                            ? void resetLocation()
+                                            : void push(`/${projectId}/scenes/locations`)
+                                    }>
+                                        <FontAwesomeIcon
+                                            color = { theme.scene.hoverSecondary }
+                                            icon = { location !== '' ? 'times-circle' : 'compass' }
+                                        />
+                                    </span>
+                                </nav>
+                            )
+                            : 'Locations'
+                    }
                 </Th>
                 {
                     !lightVersion && (

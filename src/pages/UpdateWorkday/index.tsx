@@ -78,20 +78,22 @@ const UpdateWorkday: FC = () => {
                 <div />
             </Header>
             <main>
-                <h2>Workday date:</h2>
-                <DatePicker
-                    date = { workdayDate }
-                    excludeDates = { excludeDates || [] }
-                    onChange = { setWorkdayDate }
-                />
-                <h2>Workday description:</h2>
-                <textarea
-                    name = 'description'
-                    placeholder = 'Type here...'
-                    value = { form.description || '' }
-                    onChange = { setForm }
-                />
-                <Button onClick = { onSubmit }>Update</Button>
+                <nav>
+                    <h2>Workday date:</h2>
+                    <DatePicker
+                        date = { workdayDate }
+                        excludeDates = { excludeDates || [] }
+                        onChange = { setWorkdayDate }
+                    />
+                    <h2>Workday description:</h2>
+                    <textarea
+                        name = 'description'
+                        placeholder = 'Type here...'
+                        value = { form.description || '' }
+                        onChange = { setForm }
+                    />
+                    <Button onClick = { onSubmit }>Update</Button>
+                </nav>
             </main>
         </UpdateWorkdayContainer>
     );

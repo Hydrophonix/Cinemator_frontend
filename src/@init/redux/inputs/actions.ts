@@ -6,6 +6,11 @@ export const setDateRangeAction = (payload: types.DateRange): types.SetDateRange
     payload,
 });
 
+export const setScenesLocationAction = (payload: string): types.SetScenesLocationAction => ({
+    type: types.SET_SCENES_LOCATION,
+    payload,
+});
+
 export const setWorkdaysDateRangeAction = (payload: types.DateRange): types.SetWorkdaysDateRangeAction => ({
     type: types.SET_WORKDAYS_DATE_RANGE,
     payload,

@@ -89,13 +89,6 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                     value = { form.description || '' }
                     onChange = { setForm }
                 />
-                <h2>Project locations:</h2>
-                <select>
-                    <option>Kyiv</option>
-                    <option>Lviv</option>
-                    <option>Zaparizia</option>
-                    <option>New york</option>
-                </select>
                 <h2>Calendar view:</h2>
                 <WorkdaysSettings>
                     <Button

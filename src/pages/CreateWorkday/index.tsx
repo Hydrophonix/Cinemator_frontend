@@ -83,25 +83,27 @@ const CreateWorkday: FC = () => {
                 <h2>Create workday{ !isTableMode && ` ${date}`}</h2>
             </Header>
             <main>
-                <h2>Workday date:</h2>
-                <DatePicker
-                    date = { isTableMode ? defaultDate : new Date(date) }
-                    disabled = { !isTableMode }
-                    excludeDates = { excludeDates }
-                    onChange = { setDefaultDate }
-                />
-                <h2>Workday description:</h2>
-                <textarea
-                    name = 'description'
-                    placeholder = 'Type here...'
-                    value = { form.description }
-                    onChange = { setForm }
-                />
-                <Button
-                    disabled = { isTableMode ? isTodayWorkday : false }
-                    onClick = { onSubmit }>
-                    Submit
-                </Button>
+                <nav>
+                    <h2>Workday date:</h2>
+                    <DatePicker
+                        date = { isTableMode ? defaultDate : new Date(date) }
+                        disabled = { !isTableMode }
+                        excludeDates = { excludeDates }
+                        onChange = { setDefaultDate }
+                    />
+                    <h2>Workday description:</h2>
+                    <textarea
+                        name = 'description'
+                        placeholder = 'Type here...'
+                        value = { form.description }
+                        onChange = { setForm }
+                    />
+                    <Button
+                        disabled = { isTableMode ? isTodayWorkday : false }
+                        onClick = { onSubmit }>
+                        Submit
+                    </Button>
+                </nav>
             </main>
         </CreateWorkdayContainer>
     );

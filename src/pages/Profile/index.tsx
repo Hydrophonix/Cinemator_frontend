@@ -41,7 +41,7 @@ const Profile: FC = () => {
         return <div>Loading...</div>;
     }
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: any) => {
         await event.preventDefault();
 
         // const response = await createWorkday({
@@ -69,25 +69,25 @@ const Profile: FC = () => {
                         />
                     </Button>
                 </div>
-                <h2>User: {data.me.email}</h2>
+                <h2>{data.me.email}</h2>
             </Header>
             <main>
-                <form onSubmit = { onSubmit }>
-                    <h2>Email:</h2>
+                <div>
+                    <h2>User email:</h2>
                     <Input
                         name = 'email'
                         placeholder = 'Email'
                         value = { form.email }
                         onChange = { setForm }
                     />
-                    <h2>Name:</h2>
+                    <h2>User name:</h2>
                     <Input
                         name = 'name'
                         placeholder = 'Name'
                         value = { form.name }
                         onChange = { setForm }
                     />
-                    <h2>Phone:</h2>
+                    <h2>User phone:</h2>
                     <Input
                         name = 'phone'
                         placeholder = 'Phone'
@@ -95,9 +95,9 @@ const Profile: FC = () => {
                         onChange = { setForm }
                     />
 
-                    <Button type = 'submit'>Update</Button>
-                </form>
-                <Button style = {{ marginTop: '10px' }}>Logout</Button>
+                    <Button onClick = { onSubmit }>Update</Button>
+                    <Button>Logout</Button>
+                </div>
             </main>
         </Container>
     );
