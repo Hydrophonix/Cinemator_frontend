@@ -5,7 +5,7 @@ export const Main = styled.main`
     max-height: 410px;
     min-height: 410px;
     overflow-y: scroll;
-    background-color: ${({ theme }) => theme.requisite.hoverSecondary}
+    background-color: ${({ theme }) => theme.requisite.hoverSecondary};
 `;
 
 export const Footer = styled.footer`

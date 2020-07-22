@@ -3,6 +3,10 @@ import React, { FC, useContext } from 'react';
 import { Thead, Tr, Th } from 'react-super-responsive-table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
+import { useHistory, useParams } from 'react-router-dom';
+
+// Elements
+import { Button } from '../../../elements';
 
 type PropTypes = {
     index?: number
@@ -10,8 +14,12 @@ type PropTypes = {
     lightVersion?: Object
 }
 
+type Params = { projectId: string };
+
 export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => {
     const theme = useContext(ThemeContext);
+    const { push } = useHistory();
+    const { projectId } = useParams<Params>();
 
     const onChange = (event: any) => {
         const value: string = event.target.value !== '' ? event.target.value : '0';
@@ -54,7 +62,13 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, lightVersion }) => 
                     }
 
                 </Th>
-                <Th>Location</Th>
+                <Th>
+                    <Button
+                        style = {{ width: 110 }}
+                        onClick = { () => void push(`/${projectId}/scenes/locations`) }>
+                        All locations
+                    </Button>
+                </Th>
                 {
                     !lightVersion && (
                         <>

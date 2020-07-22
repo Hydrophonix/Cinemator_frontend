@@ -1,6 +1,6 @@
 // Core
 import React, { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 
@@ -17,7 +17,7 @@ import { transformDateToISO8601 } from '../../utils';
 import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
-import { ErrorBoundary, DateRangePicker, ScenesTable } from '../../components';
+import { ErrorBoundary, DateRangePicker, ScenesTable, LocationsModal } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -46,8 +46,6 @@ const Scenes: FC = () => {
     if (loading || !data) {
         return <div>Loading...</div>;
     }
-
-    // const ScenesWithoutWorkdaySort = () => data.scenes.sort((a, b) => a.workdays.length > b.workdays.length ? 1 : -1);
 
     const filterByDateRange = () => data.scenes.filter((scene) => scene.workdays.some((workday) => {
         const parcedWorkday = moment(workday.date);
@@ -79,6 +77,11 @@ const Scenes: FC = () => {
 
     return (
         <ScenesContainer>
+            <Route path = { '/:projectId/scenes/locations' }>
+                <LocationsModal
+                    closeHandler = { () => void push(`/${projectId}/scenes`) }
+                />
+            </Route>
             <Header>
                 <DateRangePicker
                     reset

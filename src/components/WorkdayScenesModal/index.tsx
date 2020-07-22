@@ -32,12 +32,12 @@ type PropTypes = {
     sceneIds: Array<string>
 }
 
-export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds: scenesIds }) => {
+export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds }) => {
     const { projectId, workdayId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
-    const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(scenesIds);
+    const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(sceneIds);
     const [ index, setIndexUseState ] = useState(0);
 
     if (loading || !data) {

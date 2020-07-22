@@ -1,0 +1,4 @@
+fragment locationFields on Location {
+    id
+    name
+}

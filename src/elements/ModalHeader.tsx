@@ -5,7 +5,7 @@ import styled from 'styled-components';
 // Styles
 const HeaderContainer = styled.header`
     width: 100%;
-    height: 50px;
+    height: 40px;
     display: flex;
     align-items: center;
     box-sizing: border-box;

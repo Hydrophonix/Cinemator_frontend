@@ -1,0 +1,7 @@
+#import "./locationFields.graphql"
+
+query Locations($projectId: String!) {
+  locations(projectId: $projectId) {
+    ...locationFields
+  }
+}

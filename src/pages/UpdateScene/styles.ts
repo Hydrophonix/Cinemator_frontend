@@ -12,18 +12,13 @@ export const Container = styled.div`
         flex-direction: column;
         align-items: center;
 
-        form {
-            display: flex;
-            flex-direction: column;
+        h2 {
+            font-size: 18px;
+            padding: 5px 0px;
+        }
 
-            h2 {
-                font-size: 18px;
-                padding: 5px 0px;
-            }
-
-            button {
-                margin-top: 5px;
-            }
+        button {
+            margin-top: 5px;
         }
     }
 `;

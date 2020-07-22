@@ -2169,16 +2169,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
             "name": "title",
             "description": null,
             "type": {

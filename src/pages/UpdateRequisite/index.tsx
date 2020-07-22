@@ -78,7 +78,7 @@ const UpdateRequisite: FC = () => {
                         onChange = { setForm }
                     />
                     <h2>Description:</h2>
-                    <Input
+                    <textarea
                         name = 'description'
                         placeholder = 'Description'
                         value = { form.description ?? '' }

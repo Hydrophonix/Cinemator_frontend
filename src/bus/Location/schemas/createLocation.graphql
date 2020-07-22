@@ -1,0 +1,7 @@
+#import "./locationFields.graphql"
+
+mutation CreateLocation($input: LocationCreateInput!, $projectId: String!) {
+    createLocation(input: $input, projectId: $projectId) {
+        ...locationFields
+    }
+}

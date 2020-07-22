@@ -40,8 +40,16 @@ export const Routes: FC = () => {
                 <Route path = { '/:projectId/calendar/:workdayId' }>
                     <Workday />
                 </Route>
-                <Route path = { '/:projectId/scenes/:sceneId' }>
-                    <Scene />
+                <Route
+                    path = { '/:projectId/scenes/:sceneId' }
+                    render = { ({ match }) => {
+                        if (match.params.sceneId !== 'locations') {
+                            return <Scene />;
+                        }
+
+                        return <Scenes />;
+                    } }>
+
                 </Route>
                 <Route path = { '/:projectId/requisites/:requisiteId' }>
                     <Requisite />

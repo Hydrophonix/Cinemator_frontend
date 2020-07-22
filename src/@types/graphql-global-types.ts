@@ -12,6 +12,10 @@ export interface AuthInput {
   password: string;
 }
 
+export interface LocationCreateInput {
+  name: string;
+}
+
 export interface ProjectCreateInput {
   title: string;
   description?: string | null;
@@ -29,7 +33,6 @@ export interface RequisiteCreateInput {
 }
 
 export interface RequisiteUpdateInput {
-  number?: number | null;
   title?: string | null;
   description?: string | null;
 }

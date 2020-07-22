@@ -41,9 +41,7 @@ const CreateWorkday: FC = () => {
     const { setGlobalDateRangeRedux } = useInputsRedux();
     const [ createWorkday ] = useCreateWorkdayMutation({ projectId, setGlobalDateRangeRedux });
     const isTableMode = date === 'new-date';
-    const [ defaultDate, setDefaultDate ] = useState<Date>(
-        isTableMode ? new Date() : new Date(date),
-    );
+    const [ defaultDate, setDefaultDate ] = useState<Date>(isTableMode ? new Date() : new Date(date));
 
     if (loading || !data) {
         return <div>Loading...</div>;
@@ -67,8 +65,8 @@ const CreateWorkday: FC = () => {
 
     const excludeDates = data.workdays.map((workday) => new Date(workday.date));
     const isTodayWorkday = excludeDates.some((date) => {
-        return transformDateToISO8601(new Date()) === transformDateToISO8601(date);
-    }) && transformDateToISO8601(defaultDate) === transformDateToISO8601(new Date());
+        return transformDateToISO8601(defaultDate) === transformDateToISO8601(date);
+    });
 
     return (
         <CreateWorkdayContainer>

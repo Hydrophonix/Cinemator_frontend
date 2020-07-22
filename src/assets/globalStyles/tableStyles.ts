@@ -84,6 +84,24 @@ export const TableStyles = styled.div`
         background-color: ${({ theme }) => theme.scene.hoverSecondary};
       }
     }
+    
+    .locationsTableHead {
+      background-color: ${({ theme }) => theme.scene.primary};
+      color: #fff;
+      ${indexStyles};
+    }
+
+    .locationsTableRow {
+      background-color: ${({ theme }) => theme.scene.secondary};
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #fff;
+      border-bottom: 1px solid ${({ theme }) => theme.scene.primary};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.scene.hoverSecondary};
+      }
+    }
 
     .requisitesTableHead {
       background-color: ${({ theme }) => theme.requisite.primary};

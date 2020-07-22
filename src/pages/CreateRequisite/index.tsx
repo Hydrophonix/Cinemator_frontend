@@ -93,7 +93,7 @@ const CreateRequisite: FC = () => {
                         onChange = { setForm }
                     />
                     <h2>Requisite description:</h2>
-                    <Input
+                    <textarea
                         name = 'description'
                         value = { form.description || '' }
                         onChange = { setForm }
