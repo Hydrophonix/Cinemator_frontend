@@ -1,0 +1,13 @@
+#import "./sceneFields.graphql"
+#import "../../Location/schemas/locationFields.graphql"
+
+mutation UpdateSceneLocations($sceneId: String!, $locationIds: [String!]!) {
+    updateSceneLocations(sceneId: $sceneId, locationIds: $locationIds) {
+        updatedScene {
+            ...sceneFields
+        }
+        updatedLocations {
+            ...locationFields
+        }
+    }
+}

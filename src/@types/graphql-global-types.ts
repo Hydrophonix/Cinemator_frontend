@@ -16,6 +16,10 @@ export interface LocationCreateInput {
   name: string;
 }
 
+export interface LocationUpdateInput {
+  name?: string | null;
+}
+
 export interface ProjectCreateInput {
   title: string;
   description?: string | null;
@@ -39,14 +43,14 @@ export interface RequisiteUpdateInput {
 
 export interface SceneCreateInput {
   number: number;
+  title?: string | null;
   description?: string | null;
-  location?: string | null;
 }
 
 export interface SceneUpdateInput {
   number?: number | null;
+  title?: string | null;
   description?: string | null;
-  location?: string | null;
 }
 
 export interface WorkdayCreateInput {

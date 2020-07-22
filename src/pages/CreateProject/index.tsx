@@ -29,11 +29,9 @@ const CreateProject: FC = () => {
     const [ createProject ] = useCreateProjectMutation();
     const [ form, setForm ] = useForm<ProjectCreateInput>(innitialForm);
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: any) => {
         event.preventDefault();
-
         const response = await createProject({ variables: { input: form }});
-
         response && response.data && void push('/');
     };
 
@@ -52,7 +50,7 @@ const CreateProject: FC = () => {
                 <h2>Create project</h2>
             </Header>
             <main>
-                <form onSubmit = { onSubmit }>
+                <div>
                     <h2>Project title:</h2>
                     <Input
                         name = 'title'
@@ -65,8 +63,8 @@ const CreateProject: FC = () => {
                         placeholder = 'Type here...'
                         onChange = { setForm }
                     />
-                    <Button type = 'submit'>Submit</Button>
-                </form>
+                    <Button onClick = { onSubmit }>Submit</Button>
+                </div>
             </main>
         </Container>
     );

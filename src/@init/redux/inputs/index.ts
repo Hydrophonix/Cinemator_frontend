@@ -7,6 +7,7 @@ import { useSelector } from '../../../hooks';
 // Actions
 import {
     setDateRangeAction,
+    setScenesLocationAction,
     setIndexAction,
     setRequisiteTitleAction,
     setWorkdaysDateRangeAction,
@@ -21,6 +22,7 @@ export const useInputsRedux = () => {
     return {
         inputs:                    useSelector(({ inputs }) => inputs),
         setDateRangeRedux:         (payload: types.DateRange) => dispatch(setDateRangeAction(payload)),
+        setScenesLocationRedux:    (payload: string) => dispatch(setScenesLocationAction(payload)),
         setWorkdaysDateRangeRedux: (payload: types.DateRange) => dispatch(setWorkdaysDateRangeAction(payload)),
         setIndexRedux:             (payload: types.IndexPayload) => dispatch(setIndexAction(payload)),
         setRequisiteTitleRedux:    (payload: string) => dispatch(setRequisiteTitleAction(payload)),

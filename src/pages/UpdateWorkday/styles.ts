@@ -12,14 +12,23 @@ export const UpdateWorkdayContainer = styled.div`
         flex-direction: column;
         align-items: center;
 
-        h2 {
-            font-size: 18px;
-            padding: 5px 0px;
-            font-family: sans-serif;
-        }
+        nav {
+            display: flex;
+            flex-direction: column;
 
-        button {
-            margin-top: 5px;
+            section { 
+                width: 100%;
+            }
+
+            h2 {
+                font-size: 20px;
+                padding: 5px 0px;
+                font-family: sans-serif;
+            }
+
+            button {
+                margin-top: 5px;
+            }
         }
     }
 `;
@@ -28,7 +37,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    background-color: ${({ theme }) => theme.workday.primary};
+    background-color: ${({ theme }) => theme.workday.anotherSecondary};
 
     h2 {
         font-size: 24px;

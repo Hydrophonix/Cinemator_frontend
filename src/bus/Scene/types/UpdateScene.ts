@@ -9,6 +9,12 @@ import { SceneUpdateInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: UpdateScene
 // ====================================================
 
+export interface UpdateScene_updateScene_locations {
+  __typename: "Location";
+  id: string;
+  name: string;
+}
+
 export interface UpdateScene_updateScene_workdays {
   __typename: "Workday";
   id: string;
@@ -25,8 +31,9 @@ export interface UpdateScene_updateScene {
   __typename: "Scene";
   id: string;
   number: number;
-  location: string | null;
+  title: string | null;
   description: string | null;
+  locations: UpdateScene_updateScene_locations[];
   workdays: UpdateScene_updateScene_workdays[];
   requisites: UpdateScene_updateScene_requisites[];
 }

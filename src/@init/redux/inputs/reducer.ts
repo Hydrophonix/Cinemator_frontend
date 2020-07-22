@@ -10,7 +10,7 @@ const initialState = {
             endDay:   void 0,
         },
         index:    0,
-        location: 'Any',
+        location: '',
     },
     requisitesInputs: {
         index: 0,
@@ -35,6 +35,15 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
                         ...state.scenesInputs.dateRange,
                         ...action.payload,
                     },
+                },
+            };
+
+        case types.SET_SCENES_LOCATION:
+            return {
+                ...state,
+                scenesInputs: {
+                    ...state.scenesInputs,
+                    location: action.payload,
                 },
             };
 

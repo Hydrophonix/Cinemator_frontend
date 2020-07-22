@@ -7,6 +7,12 @@
 // GraphQL mutation operation: UpdateSceneRequisites
 // ====================================================
 
+export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene_locations {
+  __typename: "Location";
+  id: string;
+  name: string;
+}
+
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene_workdays {
   __typename: "Workday";
   id: string;
@@ -23,8 +29,9 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene {
   __typename: "Scene";
   id: string;
   number: number;
-  location: string | null;
+  title: string | null;
   description: string | null;
+  locations: UpdateSceneRequisites_updateSceneRequisites_updatedScene_locations[];
   workdays: UpdateSceneRequisites_updateSceneRequisites_updatedScene_workdays[];
   requisites: UpdateSceneRequisites_updateSceneRequisites_updatedScene_requisites[];
 }

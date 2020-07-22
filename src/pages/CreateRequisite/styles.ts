@@ -12,7 +12,7 @@ export const CreateRequisiteContainer = styled.div`
         flex-direction: column;
         align-items: center;
 
-        form {
+        div {
             display: flex;
             flex-direction: column;
 

@@ -11,15 +11,20 @@ export const CreateSceneContainer = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+        
+        div {
+            display: flex;
+            flex-direction: column;
 
-        h2 {
-            font-size: 20px;
-            padding: 5px 0px;
-            font-family: sans-serif;
-        }
+            h2 {
+                font-size: 20px;
+                padding: 5px 0px;
+                font-family: sans-serif;
+            }
 
-        button {
-            margin-top: 5px;
+            button {
+                margin-top: 5px;
+            }
         }
     }
 `;

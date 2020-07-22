@@ -11,7 +11,7 @@ export const Container = styled.section`
         flex-direction: column;
         align-items: center;
 
-        form {
+        div {
             display: flex;
             flex-direction: column;
 
@@ -22,7 +22,7 @@ export const Container = styled.section`
             }
 
             button {
-                margin-top: 5px;
+                margin-top: 10px;
             }
         }
     }
