@@ -56,6 +56,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
                 <DateRangePicker
                     reset
                     endDay = { endDay }
+                    firstPopperPlacement = 'top-start'
                     projectEndDay = { projectEndDay }
                     projectStartDay = { projectStartDay }
                     setDateRange = { setWorkdaysDateRangeRedux }

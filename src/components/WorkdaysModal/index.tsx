@@ -4,9 +4,10 @@ import React, { FC, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
+import moment from 'moment';
 
 // Components
-import { Modal, WorkdaysTable } from '..';
+import { Modal, WorkdaysTable, DateRangePicker } from '..';
 
 // Apollo hooks
 import { useWorkdaysQuery } from '../../bus/Workday';
@@ -14,10 +15,14 @@ import { useWorkdaysQuery } from '../../bus/Workday';
 // Elements
 import { ModalHeader, Button } from '../../elements';
 
+import { transformDateToISO8601 } from '../../utils';
+
 // Styles
-import { Main, Footer } from './styles';
+import { Main, Footer, Section } from './styles';
 
 // Types
+import { DateRange } from '../../@init/redux/inputs/types';
+
 type Params = {
     projectId: string
 }
@@ -33,26 +38,58 @@ export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useWorkdaysQuery({ projectId });
+    const workdaysDates = data?.workdays.map((workday) => new Date(workday.date));
+    const [ dateRange, seDateRange ] = useState<{ startDay?: Date, endDay?: Date}>({
+        startDay: void 0,
+        endDay:   void 0,
+    });
 
-    if (loading || !data) {
+    if (loading || !data || !workdaysDates) {
         return <div>Loading...</div>;
     }
 
-    const filterHandler = () => {
-        return data.workdays;
+    const projectStartDay = workdaysDates[ 0 ] || new Date();
+    const projectEndDay = workdaysDates[ workdaysDates.length - 1 ] || new Date();
+    const startDay = dateRange.startDay || projectStartDay;
+    const endDay = dateRange.endDay || projectEndDay;
+    const momentStartDay = moment(transformDateToISO8601(startDay));
+    const momentEndDay = moment(transformDateToISO8601(endDay));
+    const momentProjectStartDay = moment(transformDateToISO8601(projectStartDay));
+    const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
+
+    const filterByDateRange = () => {
+        if (momentProjectStartDay.isSame(momentStartDay) && momentProjectEndDay.isSame(momentEndDay)) {
+            return data.workdays;
+        }
+
+        return data.workdays.filter((workday) => {
+            const momentWorkday = moment(workday.date);
+
+            return momentWorkday.isSameOrAfter(momentStartDay) && momentWorkday.isSameOrBefore(momentEndDay);
+        });
     };
 
     return (
         <Modal closeHandler = { closeHandler }>
             <ModalHeader style = {{ backgroundColor: theme.workday.secondary }}>Add workdays</ModalHeader>
+            <Section>
+                <DateRangePicker
+                    reset
+                    endDay = { endDay }
+                    projectEndDay = { projectEndDay }
+                    projectStartDay = { projectStartDay }
+                    setDateRange = { (payload: DateRange) => seDateRange({ ...dateRange, ...payload }) }
+                    startDay = { startDay }
+                />
+            </Section>
             <Main>
                 <WorkdaysTable
                     handler = { handler }
                     workdayIds = { workdayIds }
-                    workdays = { filterHandler() }
+                    workdays = { filterByDateRange() }
                 />
             </Main>
-            <Footer style = {{ backgroundColor: theme.workday.primary }}>
+            <Footer>
                 <Button
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>

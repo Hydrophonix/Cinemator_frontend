@@ -20,6 +20,8 @@ type PropTypes = {
     projectEndDay: Date
     setDateRange: (payload: DateRange) => void,
     reset?: boolean
+    firstPopperPlacement?: string
+    secondPopperPlacement?: string
 }
 
 let timeOutId: number | undefined = void 0;
@@ -31,6 +33,8 @@ export const DateRangePicker: FC<PropTypes> = ({
     projectEndDay,
     setDateRange,
     reset,
+    firstPopperPlacement,
+    secondPopperPlacement,
 }) => {
     const [ isRotate, setRotateState ] = useState(false);
 
@@ -53,6 +57,7 @@ export const DateRangePicker: FC<PropTypes> = ({
                 customInput = { <CustomInput /> }
                 endDate = { endDay }
                 maxDate = { endDay }
+                popperPlacement = { firstPopperPlacement ? firstPopperPlacement : 'top-center' }
                 selected = { startDay }
                 startDate = { startDay }
                 onChange = { (date) => date && void setDateRange({ startDay: date }) }
@@ -71,7 +76,7 @@ export const DateRangePicker: FC<PropTypes> = ({
                 customInput = { <CustomInput /> }
                 endDate = { endDay }
                 minDate = { startDay }
-                popperPlacement = 'top-center'
+                popperPlacement = { secondPopperPlacement ? secondPopperPlacement : 'top-center' }
                 selected = { endDay }
                 startDate = { startDay }
                 onChange = { (date) => date && void setDateRange({ endDay: date }) }

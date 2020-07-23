@@ -111,6 +111,7 @@ const Scenes: FC = () => {
                 <DateRangePicker
                     reset
                     endDay = { endDay }
+                    firstPopperPlacement = 'top-start'
                     projectEndDay = { projectEndDay }
                     projectStartDay = { projectStartDay }
                     setDateRange = { setDateRangeRedux }
