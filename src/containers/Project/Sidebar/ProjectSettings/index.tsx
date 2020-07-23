@@ -67,7 +67,15 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
         response && response.data && void props.setFlipped();
     };
 
-    const onDelete = async () => void await deleteProject();
+    const onDelete = async () => {
+        const isContinue = window.confirm(`Confirm delete project: ${props.title}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
+        await deleteProject();
+    };
 
     return (
         <Section>

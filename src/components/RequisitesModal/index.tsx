@@ -26,7 +26,6 @@ type PropTypes = {
 }
 type Params = {
     projectId: string
-    sceneId: string
 }
 
 export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, handler, saveHandler }) => {

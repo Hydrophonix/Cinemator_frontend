@@ -10,6 +10,7 @@ export * from './LocationsTable';
 // Modal
 export * from './Modal';
 export * from './ScenesModal';
+export * from './WorkdaysModal';
 export * from './RequisitesModal';
 export * from './LocationsModal';
 

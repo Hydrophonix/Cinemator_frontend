@@ -32,7 +32,7 @@ const CreateProject: FC = () => {
     const onSubmit = async (event: any) => {
         event.preventDefault();
         const response = await createProject({ variables: { input: form }});
-        response && response.data && void push('/');
+        response && response.data && void push(`/${response.data.createProject.id}`);
     };
 
     return (

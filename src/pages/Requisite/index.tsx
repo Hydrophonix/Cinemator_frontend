@@ -57,6 +57,12 @@ const Requisite: FC = () => {
     };
 
     const deleteRequisiteHandler = async () => {
+        const isContinue = window.confirm(`Confirm delete requisite: ${requisite.number}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
         const response = await deleteRequisite();
         response && response.data && void push(`/${projectId}/requisites`);
     };

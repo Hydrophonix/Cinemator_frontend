@@ -65,6 +65,12 @@ const Workday: FC = () => {
     };
 
     const deleteWorkdayHandler = async () => {
+        const isContinue = window.confirm(`Confirm delete workday: ${workday.date}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
         const response = await deleteWorkday();
         response && response.data && void push(`/${projectId}/calendar`);
     };

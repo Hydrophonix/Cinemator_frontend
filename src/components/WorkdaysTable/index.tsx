@@ -12,14 +12,18 @@ import { Workdays_workdays } from '../../bus/Workday';
 
 type PropTypes = {
     workdays: Workdays_workdays[]
+    workdayIds?: Array<string>
+    handler?: (workdayId: string) => void
 }
 
-export const WorkdaysTable: FC<PropTypes> = ({ workdays }) => {
+export const WorkdaysTable: FC<PropTypes> = ({ workdays, workdayIds, handler }) => {
     return (
         <TableStyles>
             <Table>
                 <WorkdaysHead />
                 <WorkdaysBody
+                    handler = { handler }
+                    workdayIds = { workdayIds }
                     workdays = { workdays }
                 />
             </Table>

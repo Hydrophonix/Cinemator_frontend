@@ -9,6 +9,7 @@ import { Button } from '../../../elements';
 
 // Types
 import { Requisites_requisites } from '../../../bus/Requisite';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Proptypes = {
     requisites: Requisites_requisites[]
@@ -46,8 +47,8 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                 ? void handler(requisite.id)
                                 : void requisiteRedirectHandler(requisite.id);
                         } }>
-                        <Td>
-                            <div style = {{ width: 35, textAlign: 'center' }}>
+                        <Td style = {{ position: 'relative' }}>
+                            <div style = {{ width: 35, textAlign: 'center', fontSize: 20 }}>
                                 {requisite.number}
                             </div>
                         </Td>

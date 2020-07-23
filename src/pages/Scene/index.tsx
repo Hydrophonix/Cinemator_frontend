@@ -6,10 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _intersectionWith from 'lodash/intersectionWith';
 
 // Components
-import { ErrorBoundary, RequisitesModal, RequisitesTable, LocationsModal } from '../../components';
+import { ErrorBoundary, RequisitesModal, RequisitesTable, LocationsModal, WorkdaysModal } from '../../components';
 
 // Apollo hooks
-import { useScenesQuery, useDeleteSceneMutation, useUpdateSceneLocationsMutation, useUpdateSceneRequisitesMutation } from '../../bus/Scene';
+import {
+    useScenesQuery,
+    useDeleteSceneMutation,
+    useUpdateSceneWorkdaysMutation,
+    useUpdateSceneRequisitesMutation,
+    useUpdateSceneLocationsMutation,
+} from '../../bus/Scene';
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Elements
@@ -32,19 +38,23 @@ const Scene: FC = () => {
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
 
+    const [ updateSceneWorkdays ] = useUpdateSceneWorkdaysMutation();
+    const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
     const [ updateSceneLocations ] = useUpdateSceneLocationsMutation();
     const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
-    const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
 
-    const [ locationIds, setLocationIdsArray, setInitialLocationIds ] = useArrayOfStringsForm([]);
+    const [ workdayIds, setWorkdayIds, setInitialWorkdayIds ] = useArrayOfStringsForm([]);
     const [ requisiteIds, setRequisiteIds, setInitialRequisiteIds ] = useArrayOfStringsForm([]);
+    const [ locationIds, setLocationIdsArray, setInitialLocationIds ] = useArrayOfStringsForm([]);
 
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
     const requisiteIdsArray = scene?.requisites.map((requisite) => requisite.id);
+    const workdayIdsArray = scene?.workdays.map((workday) => workday.id);
 
     useEffect(() =>{
         scene && void setInitialLocationIds(scene.locations.map((location) => location.id));
         requisiteIdsArray && void setInitialRequisiteIds(requisiteIdsArray);
+        workdayIdsArray && void setInitialWorkdayIds(workdayIdsArray);
     }, [ scene ]);
 
     if (loading || !data || requisiteLoading || !requisiteData) {
@@ -60,17 +70,28 @@ const Scene: FC = () => {
     );
 
     const deleteSceneHandler = async () => {
+        const isContinue = window.confirm(`Confirm delete scene: ${scene.number}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
         const response = await deleteScene();
         response && response.data && void push(`/${projectId}/scenes`);
     };
 
-    const updateSceneLocationsHandler = async () => {
-        const response = await updateSceneLocations({ variables: { sceneId, locationIds }});
+    const updateSceneWorkdaysHandler = async () => {
+        const response = await updateSceneWorkdays({ variables: { sceneId, workdayIds }});
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
-    const updateSceneRequisiteHandler = async () => {
+    const updateSceneRequisitesHandler = async () => {
         const response = await updateSceneRequisites({ variables: { sceneId, requisiteIds }});
+        response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
+    };
+
+    const updateSceneLocationsHandler = async () => {
+        const response = await updateSceneLocations({ variables: { sceneId, locationIds }});
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
@@ -82,6 +103,17 @@ const Scene: FC = () => {
     return (
         <Container>
             <Switch>
+                <Route path = { '/:projectId/scenes/:sceneId/add-workdays' }>
+                    <WorkdaysModal
+                        closeHandler = { () => {
+                            workdayIdsArray && setInitialWorkdayIds(workdayIdsArray);
+                            push(`/${projectId}/scenes/${sceneId}`);
+                        } }
+                        handler = { (workdayId: string) => void setWorkdayIds(workdayId) }
+                        saveHandler = { updateSceneWorkdaysHandler }
+                        workdayIds = { workdayIds }
+                    />
+                </Route>
                 <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
                     <RequisitesModal
                         closeHandler = { () => {
@@ -90,8 +122,7 @@ const Scene: FC = () => {
                         } }
                         handler = { (requisiteId: string) => void setRequisiteIds(requisiteId) }
                         requisiteIds = { requisiteIds }
-                        saveHandler = { updateSceneRequisiteHandler }
-
+                        saveHandler = { updateSceneRequisitesHandler }
                     />
                 </Route>
                 <Route path = { '/:projectId/scenes/:sceneId/locations' }>
@@ -120,9 +151,9 @@ const Scene: FC = () => {
                 </nav>
                 <h2>{`S: ${scene.number}`}</h2>
                 <nav>
-                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
+                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-workdays`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
-                            <span style = {{ fontSize: 16 }}>L:</span>
+                            <span style = {{ fontSize: 16 }}>W:</span>
                             <FontAwesomeIcon
                                 color = '#000'
                                 icon = 'plus'
@@ -133,6 +164,16 @@ const Scene: FC = () => {
                     <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>R:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
+                    </Button>
+                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>L:</span>
                             <FontAwesomeIcon
                                 color = '#000'
                                 icon = 'plus'

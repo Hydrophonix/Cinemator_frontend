@@ -1,0 +1,13 @@
+#import "./sceneFields.graphql"
+#import "../../Workday/schemas/workdayFields.graphql"
+
+mutation UpdateSceneWorkdays($sceneId: String!, $workdayIds: [String!]!) {
+    updateSceneWorkdays(sceneId: $sceneId, workdayIds: $workdayIds) {
+        updatedScene {
+            ...sceneFields
+        }
+        updatedWorkdays {
+            ...workdayFields
+        }
+    }
+}

@@ -58,7 +58,7 @@ const CreateRequisite: FC = () => {
     const onSubmit = async (event: any) => {
         event.preventDefault();
         const response = await createRequisite({ variables: { input: form, projectId }});
-        response && response.data && void push(`/${projectId}/requisites`);
+        response && response.data && void push(`/${projectId}/requisites/${response.data.createRequisite.id}`);
     };
 
     return (

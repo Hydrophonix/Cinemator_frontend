@@ -49,7 +49,7 @@ export const ScenesBody: FC<Proptypes> = ({
                         style = { sceneIds?.includes(scene.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => { handler ? void handler(scene.id) : void sceneRedirectHandler(scene.id); } }>
                         <Td>
-                            <div style = {{ width: 35, textAlign: 'center' }}>
+                            <div style = {{ width: 35, textAlign: 'center', fontSize: 20 }}>
                                 {`${scene.number}`}
                             </div>
                         </Td>

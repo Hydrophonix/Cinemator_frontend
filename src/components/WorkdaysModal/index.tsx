@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
 // Components
-import { Modal, ScenesTable } from '..';
+import { Modal, WorkdaysTable } from '..';
 
 // Apollo hooks
-import { useScenesQuery } from '../../bus/Scene';
+import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Elements
 import { ModalHeader, Button } from '../../elements';
@@ -24,54 +24,35 @@ type Params = {
 
 type PropTypes = {
     closeHandler: () => void
-    sceneIds?: Array<string>
+    workdayIds?: Array<string>
     handler?: (sceneId: string) => void
     saveHandler?: Function
 }
 
-export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, saveHandler }) => {
+export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler, saveHandler }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
-    const { data, loading } = useScenesQuery({ projectId });
-    const [ index, setIndexUseState ] = useState(0);
+    const { data, loading } = useWorkdaysQuery({ projectId });
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
-
-    const findByIndex = () => {
-        const scene = data.scenes.find((scene) => scene.number === index);
-
-        if (scene) {
-            return [ scene ];
-        }
-
-        return data.scenes;
-    };
-
     const filterHandler = () => {
-        if (index !== 0) {
-            return findByIndex();
-        }
-
-        return data.scenes;
+        return data.workdays;
     };
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Add scenes</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: theme.workday.secondary }}>Add workdays</ModalHeader>
             <Main>
-                <ScenesTable
-                    lightVersion
+                <WorkdaysTable
                     handler = { handler }
-                    index = { index }
-                    sceneIds = { sceneIds }
-                    scenes = { filterHandler() }
-                    setIndex = { (newIndex: number) => setIndexUseState(newIndex) }
+                    workdayIds = { workdayIds }
+                    workdays = { filterHandler() }
                 />
             </Main>
-            <Footer style = {{ backgroundColor: theme.scene.primary }}>
+            <Footer style = {{ backgroundColor: theme.workday.primary }}>
                 <Button onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
