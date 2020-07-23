@@ -1,0 +1,13 @@
+#import "./requisiteFields.graphql"
+#import "../../Scene/schemas/sceneFields.graphql"
+
+mutation UpdateRequisiteScenes($requisiteId: String!, $sceneIds: [String!]!) {  
+    updateRequisiteScenes(requisiteId: $requisiteId, sceneIds: $sceneIds) {
+        updatedRequisite {
+            ...requisiteFields
+        }
+        updatedScenes {
+            ...sceneFields
+        }
+    }
+}

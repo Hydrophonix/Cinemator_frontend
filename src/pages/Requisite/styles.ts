@@ -18,3 +18,13 @@ export const RequisiteHeader = styled.header`
         color: #fff;
     }
 `;
+
+export const ScenesContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.scene.containerBg};
+`;

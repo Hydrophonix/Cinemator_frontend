@@ -35,7 +35,7 @@ import { Main, Footer, Nav, RedoContainer } from './styles';
 type Params = { projectId: string }
 type PropTypes = {
     closeHandler: () => void
-    locationIdsArray?: String[]
+    locationIds?: String[]
     handler?: (locationId: string) => void
     saveHandler?: Function
 }
@@ -48,7 +48,7 @@ const initialForm = {
 let timeOutId: number | undefined = void 0;
 
 export const LocationsModal: FC<PropTypes> = ({
-    closeHandler, locationIdsArray, handler, saveHandler,
+    closeHandler, locationIds, handler, saveHandler,
 }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
@@ -197,7 +197,7 @@ export const LocationsModal: FC<PropTypes> = ({
                 <LocationsTable
                     deleteLocationHandler = { deleteLocationHandler }
                     handler = { handler }
-                    locationIdsArray = { locationIdsArray }
+                    locationIds = { locationIds }
                     locations = { filterHandler() }
                     updateLocationHandler = { updateLocationHandler }
                 />

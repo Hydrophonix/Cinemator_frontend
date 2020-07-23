@@ -11,7 +11,7 @@ type PropTypes = {
     setIndex?: (index: number) => void
     location?: string
     setLocation?: (location: string) => void
-    lightVersion?: Object
+    lightVersion?: true
 }
 
 type Params = { projectId: string };

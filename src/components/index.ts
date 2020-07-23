@@ -9,7 +9,7 @@ export * from './LocationsTable';
 
 // Modal
 export * from './Modal';
-export * from './WorkdayScenesModal';
+export * from './ScenesModal';
 export * from './SceneRequisitesModal';
 export * from './LocationsModal';
 

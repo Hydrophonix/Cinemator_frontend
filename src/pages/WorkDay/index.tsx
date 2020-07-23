@@ -1,15 +1,19 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _intersectionWith from 'lodash/intersectionWith';
 
 // Components
-import { ErrorBoundary, WorkdayScenesModal, ScenesTable } from '../../components';
+import { ErrorBoundary, ScenesModal, ScenesTable } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
 import { useScenesQuery } from '../../bus/Scene';
+import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
+
+// Hooks
+import { useArrayOfStringsForm } from '../../hooks';
 
 // Redux
 import { useInputsRedux } from '../../@init/redux/inputs';
@@ -33,21 +37,32 @@ const Workday: FC = () => {
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
     const { setGlobalDateRangeRedux } = useInputsRedux();
     const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setGlobalDateRangeRedux });
+    const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
+    const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
+
+    const workday = data?.workdays.find((workday) => workday.id === workdayId);
+    const sceneIdsArray = workday?.scenes.map((scene) => scene.id);
+
+    useEffect(() => {
+        workday && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+    }, [ workday ]);
 
     if (loading || !data || scenesLoading || !scenesData) {
         return <div>Loading...</div>;
     }
 
-    const workday = data.workdays.find((workday) => workday.id === workdayId);
-
-    if (!workday) {
+    if (!workday || !sceneIdsArray) {
         return <div>No workday exist</div>;
     }
 
-    const sceneIds = workday.scenes.map((scene) => scene.id);
     const workdayScenes = _intersectionWith(
-        scenesData.scenes, sceneIds, (value, other) => value.id === other,
+        scenesData.scenes, sceneIdsArray, (value, other) => value.id === other,
     );
+
+    const updateWorkdayScenesHandler = async () => {
+        const response = await updateWorkdayScenes({ variables: { workdayId, sceneIds }});
+        response && response.data && void push(`/${projectId}/calendar/${workdayId}`);
+    };
 
     const deleteWorkdayHandler = async () => {
         const response = await deleteWorkday();
@@ -57,8 +72,13 @@ const Workday: FC = () => {
     return (
         <WorkdayContainer>
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
-                <WorkdayScenesModal
-                    closeHandler = { () => void push(`/${projectId}/calendar/${workdayId}`) }
+                <ScenesModal
+                    closeHandler = { () => {
+                        workday && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+                        push(`/${projectId}/calendar/${workdayId}`);
+                    } }
+                    handler = { (sceneId: string) => void setSceneIds(sceneId) }
+                    saveHandler = { updateWorkdayScenesHandler }
                     sceneIds = { sceneIds }
                 />
             </Route>

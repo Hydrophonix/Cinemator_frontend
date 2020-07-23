@@ -32,7 +32,7 @@ const Scene: FC = () => {
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
     const [ updateSceneLocations ] = useUpdateSceneLocationsMutation();
     const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
-    const [ locationIdsArray, setLocationIdsArray, setInitialLocationIds ] = useArrayOfStringsForm([]);
+    const [ locationIds, setLocationIdsArray, setInitialLocationIds ] = useArrayOfStringsForm([]);
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
 
     useEffect(() =>{
@@ -60,7 +60,7 @@ const Scene: FC = () => {
     };
 
     const updateSceneLocationsHandler = async () => {
-        const response = await updateSceneLocations({ variables: { sceneId, locationIds: locationIdsArray }});
+        const response = await updateSceneLocations({ variables: { sceneId, locationIds }});
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
@@ -82,7 +82,7 @@ const Scene: FC = () => {
                     <LocationsModal
                         closeHandler = { () => void push(`/${projectId}/scenes/${sceneId}`) }
                         handler = { setLocationIdsArray }
-                        locationIdsArray = { locationIdsArray }
+                        locationIds = { locationIds }
                         saveHandler = { updateSceneLocationsHandler }
                     />
                 </Route>
@@ -144,9 +144,9 @@ const Scene: FC = () => {
                 scene.workdays.length !== 0 && (
                     <WorkdaysContainer>
                         {
-                            scene.workdays.map((workday, index) => (
+                            scene.workdays.map((workday) => (
                                 <Button
-                                    key = { index }
+                                    key = { workday.id }
                                     style = {{ backgroundColor: theme.workday.anotherSecondary, color: '#fff' }}
                                     onClick = { (event) => void workdayRedirectHandler(event, workday.id) }>
                                     {workday.date}

@@ -1,19 +1,23 @@
 // Core
-import React, { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { FC, useEffect, useContext } from 'react';
+import { useHistory, useParams, Route } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, ScenesModal } from '../../components';
 
 // Apollo hooks
-import { useRequisitesQuery, useDeleteRequisiteMutation } from '../../bus/Requisite';
+import { useRequisitesQuery, useDeleteRequisiteMutation, useUpdateRequisiteScenesMutation } from '../../bus/Requisite';
+
+// Hooks
+import { useArrayOfStringsForm } from '../../hooks';
 
 // Elements
 import { Button } from '../../elements';
 
 // Styles
-import { RequisiteContainer, RequisiteHeader } from './styles';
+import { RequisiteContainer, RequisiteHeader, ScenesContainer } from './styles';
 
 // Types
 type Params = {
@@ -24,18 +28,33 @@ type Params = {
 const Requisite: FC = () => {
     const { push } = useHistory();
     const { projectId, requisiteId } = useParams<Params>();
+    const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
+    const [ updateRequisite ] = useUpdateRequisiteScenesMutation();
     const [ deleteRequisite ] = useDeleteRequisiteMutation({ projectId, requisiteId });
+    const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
+
+    const requisite = data?.requisites.find((requisite) => requisite.id === requisiteId);
+    const sceneIdsArray = requisite?.scenes.map((scene) => scene.id);
+
+    useEffect(() => {
+        requisite && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+    }, [ requisite ]);
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
-    const requisite = data.requisites.find((requisite) => requisite.id === requisiteId);
-
     if (!requisite) {
         return <div>No requisite exist</div>;
     }
+
+    const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
+
+    const updateRequisiteScenesHandler = async () => {
+        const response = await updateRequisite({ variables: { requisiteId, sceneIds }});
+        response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
+    };
 
     const deleteRequisiteHandler = async () => {
         const response = await deleteRequisite();
@@ -44,6 +63,17 @@ const Requisite: FC = () => {
 
     return (
         <RequisiteContainer>
+            <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
+                <ScenesModal
+                    closeHandler = { () => {
+                        requisite && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+                        push(`/${projectId}/requisites/${requisiteId}`);
+                    } }
+                    handler = { (sceneId: string) => void setSceneIds(sceneId) }
+                    saveHandler = { updateRequisiteScenesHandler }
+                    sceneIds = { sceneIds }
+                />
+            </Route>
             <RequisiteHeader>
                 <div>
                     <Button onClick = { () => void push(`/${projectId}/requisites`) }>
@@ -61,6 +91,16 @@ const Requisite: FC = () => {
                 </div>
                 <h2>R: {requisite.number}</h2>
                 <div>
+                    <Button onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/add-scenes`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>S:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
+                    </Button>
                     <Button onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
                         <FontAwesomeIcon
                             color = '#000'
@@ -78,6 +118,22 @@ const Requisite: FC = () => {
                 </div>
             </RequisiteHeader>
             <main>
+                {
+                    requisite.scenes.length !== 0 && (
+                        <ScenesContainer>
+                            {
+                                requisite.scenes.map((scene) => (
+                                    <Button
+                                        key = { scene.id }
+                                        style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}
+                                        onClick = { () => void sceneRedirectHandler(scene.id) }>
+                                        S:{scene.number}
+                                    </Button>
+                                ))
+                            }
+                        </ScenesContainer>
+                    )
+                }
                 <h2>Description</h2>
                 <p>{requisite.description}</p>
             </main>

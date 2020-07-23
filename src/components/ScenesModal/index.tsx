@@ -10,10 +10,6 @@ import { Modal, ScenesTable } from '..';
 
 // Apollo hooks
 import { useScenesQuery } from '../../bus/Scene';
-import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
-
-// Hooks
-import { useArrayOfStringsForm } from '../../hooks';
 
 // Elements
 import { ModalHeader, Button } from '../../elements';
@@ -29,25 +25,21 @@ type Params = {
 
 type PropTypes = {
     closeHandler: () => void
-    sceneIds: Array<string>
+    sceneIds?: Array<string>
+    handler?: (sceneId: string) => void
+    saveHandler?: Function
 }
 
-export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds }) => {
-    const { projectId, workdayId } = useParams<Params>();
+export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, saveHandler }) => {
+    const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
-    const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
-    const [ scenesIdsArray, setScenesIdsArray ] = useArrayOfStringsForm(sceneIds);
     const [ index, setIndexUseState ] = useState(0);
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
-    const addScenesToWorkdayHandler = async () => {
-        const response = await updateWorkdayScenes({ variables: { workdayId, sceneIds: scenesIdsArray }});
-        response && response.data && void closeHandler();
-    };
 
     const findByIndex = () => {
         const scene = data.scenes.find((scene) => scene.number === index);
@@ -72,17 +64,16 @@ export const WorkdayScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds }) =>
             <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Add scenes</ModalHeader>
             <Main>
                 <ScenesTable
+                    lightVersion
+                    handler = { handler }
                     index = { index }
-                    lightVersion = {{
-                        scenesIdsArray,
-                        setScenesIdsArray,
-                    }}
+                    sceneIds = { sceneIds }
                     scenes = { filterHandler() }
                     setIndex = { (newIndex: number) => setIndexUseState(newIndex) }
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.scene.primary }}>
-                <Button onClick = { addScenesToWorkdayHandler }>
+                <Button onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'save'

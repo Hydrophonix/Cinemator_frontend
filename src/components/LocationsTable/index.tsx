@@ -14,7 +14,7 @@ type PropTypes = {
     locations: Locations_locations[]
     updateLocationHandler: (locationId: string, name: string) => Promise<boolean>
     deleteLocationHandler: (locationId: string) => void
-    locationIdsArray?: String[]
+    locationIds?: String[]
     handler?: (locationId: string) => void
 }
 
@@ -22,7 +22,7 @@ export const LocationsTable: FC<PropTypes> = ({
     locations,
     updateLocationHandler,
     deleteLocationHandler,
-    locationIdsArray,
+    locationIds,
     handler,
 }) => {
     return (
@@ -32,7 +32,7 @@ export const LocationsTable: FC<PropTypes> = ({
                 <LocationsBody
                     deleteLocationHandler = { deleteLocationHandler }
                     handler = { handler }
-                    locationIdsArray = { locationIdsArray }
+                    locationIds = { locationIds }
                     locations = { locations }
                     updateLocationHandler = { updateLocationHandler }
                 />

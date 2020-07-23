@@ -13,17 +13,18 @@ import { Scenes_scenes } from '../../../bus/Scene';
 type Proptypes = {
     scenes: Scenes_scenes[]
     workdayId?: string
-    lightVersion?: {
-        scenesIdsArray: Array<string>
-        setScenesIdsArray: (sceneId: string) => void
-    }
+    lightVersion?: boolean
+    sceneIds?: Array<string>
+    handler?: (sceneId: string) => void
 }
 
 type Params = {
     projectId: string
 };
 
-export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId, lightVersion }) => {
+export const ScenesBody: FC<Proptypes> = ({
+    scenes, workdayId, lightVersion, sceneIds, handler,
+}) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
@@ -45,15 +46,8 @@ export const ScenesBody: FC<Proptypes> = ({ scenes, workdayId, lightVersion }) =
                     <Tr
                         className = 'scenesTableRow'
                         key = { scene.id }
-                        style = {
-                            lightVersion?.scenesIdsArray.includes(scene.id)
-                                ? { backgroundColor: 'green' } : {}
-                        }
-                        onClick = { () => {
-                            lightVersion
-                                ? lightVersion.setScenesIdsArray(scene.id)
-                                : sceneRedirectHandler(scene.id);
-                        } }>
+                        style = { sceneIds?.includes(scene.id) ? { backgroundColor: 'green' } : {} }
+                        onClick = { () => { handler ? void handler(scene.id) : void sceneRedirectHandler(scene.id); } }>
                         <Td>
                             <div style = {{ width: 35, textAlign: 'center' }}>
                                 {`${scene.number}`}

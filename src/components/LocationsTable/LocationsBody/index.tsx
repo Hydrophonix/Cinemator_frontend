@@ -17,12 +17,12 @@ type Proptypes = {
     locations: Locations_locations[]
     updateLocationHandler: (locationId: string, name: string) => Promise<boolean>
     deleteLocationHandler: (locationId: string) => void
-    locationIdsArray?: String[]
+    locationIds?: String[]
     handler?: (locationId: string) => void
 }
 
 export const LocationsBody: FC<Proptypes> = ({
-    locations, updateLocationHandler, deleteLocationHandler, locationIdsArray, handler,
+    locations, updateLocationHandler, deleteLocationHandler, locationIds, handler,
 }) => {
     const [ updateLocationId, setUpdateLocationId ] = useState('');
     const [ tempLocationName, setTempLocationName ] = useState('');
@@ -34,7 +34,7 @@ export const LocationsBody: FC<Proptypes> = ({
                     <Tr
                         className = 'locationsTableRow'
                         key = { location.id }
-                        style = { locationIdsArray?.includes(location.id) ? { backgroundColor: 'green' } : {} }
+                        style = { locationIds?.includes(location.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => handler && void handler(location.id) }>
                         <Td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
                             {

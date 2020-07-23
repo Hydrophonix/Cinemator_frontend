@@ -17,14 +17,17 @@ type PropTypes = {
     setIndex?: (index: number) => void
     location?: string
     setLocation?: (location: string) => void
-    lightVersion?: {
-        scenesIdsArray: Array<string>
-        setScenesIdsArray: (sceneId: string) => void
-    }
+    lightVersion?: true
+    sceneIds?: Array<string>
+    handler?: (sceneId: string) => void
 }
 
 export const ScenesTable: FC<PropTypes> = ({
-    scenes, workdayId, index, setIndex, location, setLocation, lightVersion,
+    scenes, workdayId,
+    index, setIndex,
+    location, setLocation,
+    sceneIds, handler,
+    lightVersion,
 }) => {
     return (
         <TableStyles>
@@ -37,7 +40,9 @@ export const ScenesTable: FC<PropTypes> = ({
                     setLocation = { setLocation }
                 />
                 <ScenesBody
+                    handler = { handler }
                     lightVersion = { lightVersion }
+                    sceneIds = { sceneIds }
                     scenes = { scenes }
                     workdayId = { workdayId }
                 />

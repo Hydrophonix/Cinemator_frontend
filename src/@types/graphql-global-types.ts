@@ -59,7 +59,7 @@ export interface WorkdayCreateInput {
 }
 
 export interface WorkdayUpdateInput {
-  date: string;
+  date?: string | null;
   description?: string | null;
 }
 
