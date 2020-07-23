@@ -136,7 +136,9 @@ const Scene: FC = () => {
             </Switch>
             <Header>
                 <nav>
-                    <Button onClick = { () => void push(`/${projectId}/scenes`) }>
+                    <Button
+                        title = 'Back to scenes'
+                        onClick = { () => void push(`/${projectId}/scenes`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'
@@ -151,7 +153,9 @@ const Scene: FC = () => {
                 </nav>
                 <h2>{`S: ${scene.number}`}</h2>
                 <nav>
-                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-workdays`) }>
+                    <Button
+                        title = 'Add workdays'
+                        onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-workdays`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>W:</span>
                             <FontAwesomeIcon
@@ -161,7 +165,9 @@ const Scene: FC = () => {
                             />
                         </div>
                     </Button>
-                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
+                    <Button
+                        title = 'Add requisites'
+                        onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>R:</span>
                             <FontAwesomeIcon
@@ -171,7 +177,9 @@ const Scene: FC = () => {
                             />
                         </div>
                     </Button>
-                    <Button onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
+                    <Button
+                        title = 'Add locations'
+                        onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>L:</span>
                             <FontAwesomeIcon
@@ -181,14 +189,18 @@ const Scene: FC = () => {
                             />
                         </div>
                     </Button>
-                    <Button onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
+                    <Button
+                        title = 'Settings'
+                        onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                    <Button onClick = { deleteSceneHandler }>
+                    <Button
+                        title = 'Delete'
+                        onClick = { deleteSceneHandler }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'trash-alt'

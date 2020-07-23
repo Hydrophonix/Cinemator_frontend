@@ -65,7 +65,9 @@ const CreateRequisite: FC = () => {
         <CreateRequisiteContainer>
             <Header>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/requisites`) }>
+                    <Button
+                        title = 'Back to requisites'
+                        onClick = { () => push(`/${projectId}/requisites`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'

@@ -72,7 +72,9 @@ export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, sa
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.scene.primary }}>
-                <Button onClick = { () => saveHandler && void saveHandler() }>
+                <Button
+                    title = 'Save'
+                    onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'save'

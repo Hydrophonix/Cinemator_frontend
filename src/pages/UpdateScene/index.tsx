@@ -60,7 +60,9 @@ const UpdateScene: FC = () => {
         <Container>
             <Header>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/scenes/${sceneId}`) }>
+                    <Button
+                        title = { `Back to S:${scene.number}` }
+                        onClick = { () => push(`/${projectId}/scenes/${sceneId}`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'

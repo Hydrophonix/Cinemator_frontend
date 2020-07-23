@@ -45,7 +45,9 @@ const CreateScene: FC = () => {
         <CreateSceneContainer>
             <Header>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/scenes`) }>
+                    <Button
+                        title = 'Back to scenes'
+                        onClick = { () => push(`/${projectId}/scenes`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'

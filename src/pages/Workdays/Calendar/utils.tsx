@@ -72,7 +72,9 @@ export const customToolbarView = (toolbar: any) => {
 
     return (
         <CustomToolbarContainer>
-            <Button onClick = { goToBack }>
+            <Button
+                title = 'Prev month'
+                onClick = { goToBack }>
                 <FontAwesomeIcon
                     color = '#000'
                     icon = 'reply'
@@ -80,7 +82,9 @@ export const customToolbarView = (toolbar: any) => {
                 />
             </Button>
             {toolbar.label}
-            <Button onClick = { goToNext }>
+            <Button
+                title = 'Next month'
+                onClick = { goToNext }>
                 <FontAwesomeIcon
                     color = '#000'
                     icon = 'share'

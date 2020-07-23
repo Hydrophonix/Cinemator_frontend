@@ -101,6 +101,7 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                 <WorkdaysSettings>
                     <Button
                         style = { ui.isCalendarView ? activeStyles : {} }
+                        title = 'Calendar view'
                         onClick = { () => {
                             setCalendarView(true);
                             setToLocalStorage(true);
@@ -113,6 +114,7 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                     </Button>
                     <Button
                         style = { !ui.isCalendarView ? activeStyles : {} }
+                        title = 'Table view'
                         onClick = { () => {
                             setCalendarView(false);
                             setToLocalStorage(false);
@@ -126,14 +128,18 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                 </WorkdaysSettings>
             </Main>
             <Footer>
-                <Button onClick = { onDelete }>
+                <Button
+                    title = 'Delete'
+                    onClick = { onDelete }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'trash-alt'
                         style = {{ width: 26, height: 26 }}
                     />
                 </Button>
-                <Button onClick = { onSubmit }>
+                <Button
+                    title = 'Save'
+                    onClick = { onSubmit }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'save'

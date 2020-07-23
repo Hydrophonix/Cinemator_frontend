@@ -90,7 +90,9 @@ const Workday: FC = () => {
             </Route>
             <WorkdayHeader>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/calendar`) }>
+                    <Button
+                        title = 'Back to calendar'
+                        onClick = { () => void push(`/${projectId}/calendar`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'
@@ -105,7 +107,9 @@ const Workday: FC = () => {
                 </div>
                 <h2>W: {workday.date}</h2>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
+                    <Button
+                        title = 'Add scenes'
+                        onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>S:</span>
                             <FontAwesomeIcon
@@ -115,14 +119,18 @@ const Workday: FC = () => {
                             />
                         </div>
                     </Button>
-                    <Button onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
+                    <Button
+                        title = 'Settings'
+                        onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                    <Button onClick = { deleteWorkdayHandler }>
+                    <Button
+                        title = 'Delete'
+                        onClick = { deleteWorkdayHandler }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'trash-alt'

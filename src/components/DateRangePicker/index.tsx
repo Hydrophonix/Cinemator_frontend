@@ -80,6 +80,7 @@ export const DateRangePicker: FC<PropTypes> = ({
                 reset && (
                     <RedoContainer
                         isRotate = { isRotate }
+                        title = 'Reset'
                         onClick = { resetToProjectDateRange }>
                         <FontAwesomeIcon
                             icon = 'redo'

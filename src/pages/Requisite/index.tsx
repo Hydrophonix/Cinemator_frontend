@@ -82,7 +82,9 @@ const Requisite: FC = () => {
             </Route>
             <RequisiteHeader>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/requisites`) }>
+                    <Button
+                        title = 'Back to requisites'
+                        onClick = { () => void push(`/${projectId}/requisites`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'
@@ -97,7 +99,9 @@ const Requisite: FC = () => {
                 </div>
                 <h2>R: {requisite.number}</h2>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/add-scenes`) }>
+                    <Button
+                        title = 'Add scenes'
+                        onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/add-scenes`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
                             <span style = {{ fontSize: 16 }}>S:</span>
                             <FontAwesomeIcon
@@ -107,14 +111,18 @@ const Requisite: FC = () => {
                             />
                         </div>
                     </Button>
-                    <Button onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
+                    <Button
+                        title = 'Settings'
+                        onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                    <Button onClick = { deleteRequisiteHandler }>
+                    <Button
+                        title = 'Delete'
+                        onClick = { deleteRequisiteHandler }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'trash-alt'

@@ -50,7 +50,9 @@ export const ProjectNav: FC<PropTypes> = (props) => {
             <div>
                 <Header>
                     <nav>
-                        <Button onClick = { () => void push('/') }>
+                        <Button
+                            title = 'Back to projects'
+                            onClick = { () => void push('/') }>
                             <FontAwesomeIcon
                                 color = '#000'
                                 icon = 'reply'
@@ -82,7 +84,9 @@ export const ProjectNav: FC<PropTypes> = (props) => {
                     {props.description && <p>Description: {props.description}</p>}
                 </div>
                 <nav>
-                    <Button onClick = { () => props.setFlipped() }>
+                    <Button
+                        title = 'Settings'
+                        onClick = { () => props.setFlipped() }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'

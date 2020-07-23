@@ -53,7 +53,9 @@ export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.workday.primary }}>
-                <Button onClick = { () => saveHandler && void saveHandler() }>
+                <Button
+                    title = 'Save'
+                    onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'save'

@@ -40,7 +40,7 @@ const UpdateRequisite: FC = () => {
 
     useEffect(() => {
         requisite && void setInitialForm({
-            // number:      requisite.number,
+            // number:      requisite.number, // TODO: нужно ли здесь обновление номера?
             title:       requisite.title,
             description: requisite.description ?? '',
         });
@@ -60,7 +60,9 @@ const UpdateRequisite: FC = () => {
         <Container>
             <Header>
                 <div>
-                    <Button onClick = { () => void push(`/${projectId}/requisites/${requisiteId}`) }>
+                    <Button
+                        title = { `Back to R:${requisite.number}` }
+                        onClick = { () => void push(`/${projectId}/requisites/${requisiteId}`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'

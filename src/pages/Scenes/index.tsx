@@ -117,7 +117,9 @@ const Scenes: FC = () => {
                     startDay = { startDay }
                 />
                 <h2>Scenes</h2>
-                <Button onClick = { () => void push(`/${projectId}/create-scene`) }>
+                <Button
+                    title = 'Create scene'
+                    onClick = { () => void push(`/${projectId}/create-scene`) }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'plus'

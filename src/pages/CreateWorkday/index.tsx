@@ -72,7 +72,9 @@ const CreateWorkday: FC = () => {
         <CreateWorkdayContainer>
             <Header>
                 <div>
-                    <Button onClick = { () => push(`/${projectId}/calendar`) }>
+                    <Button
+                        title = 'Back to calendar'
+                        onClick = { () => push(`/${projectId}/calendar`) }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'

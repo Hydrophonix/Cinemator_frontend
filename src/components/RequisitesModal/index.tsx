@@ -81,7 +81,9 @@ export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, han
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.requisite.primary }}>
-                <Button onClick = { () => saveHandler && void saveHandler() }>
+                <Button
+                    title = 'Save'
+                    onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'save'

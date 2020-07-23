@@ -30,7 +30,9 @@ const Projects: FC = () => {
                 <div />
                 <h2>Projects</h2>
                 <div style = {{ alignContent: 'flex-end' }}>
-                    <Button onClick = { () => void push('/create-project') }>
+                    <Button
+                        title = 'Create project'
+                        onClick = { () => void push('/create-project') }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'plus'

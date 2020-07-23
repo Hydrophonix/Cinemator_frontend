@@ -39,7 +39,9 @@ const CreateProject: FC = () => {
         <Container>
             <Header>
                 <div>
-                    <Button onClick = { () => void push('/') }>
+                    <Button
+                        title = 'Back to projects'
+                        onClick = { () => void push('/') }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'reply'

@@ -174,6 +174,7 @@ export const LocationsModal: FC<PropTypes> = ({
                             color = '#000'
                             icon = 'plus'
                             style = {{ width: 20, height: 20 }}
+                            title = { 'Add location' }
                         />
                     </RedoContainer>
                     <RedoContainer
@@ -183,6 +184,7 @@ export const LocationsModal: FC<PropTypes> = ({
                             color = '#000'
                             icon = 'trash-alt'
                             style = {{ width: 20, height: 20 }}
+                            title = { 'Clear' }
                         />
                     </RedoContainer>
                 </section>
@@ -203,11 +205,13 @@ export const LocationsModal: FC<PropTypes> = ({
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.scene.primary }}>
-                <Button onClick = {
-                    () => saveHandler
-                        ? void saveHandler()
-                        : void push(`/${projectId}/scenes`)
-                }>
+                <Button
+                    title = { saveHandler ? 'Save' : 'Close' }
+                    onClick = {
+                        () => saveHandler
+                            ? void saveHandler()
+                            : void push(`/${projectId}/scenes`)
+                    }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = { saveHandler ? 'save' : 'reply' }

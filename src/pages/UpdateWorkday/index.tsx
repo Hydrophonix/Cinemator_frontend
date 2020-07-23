@@ -1,6 +1,7 @@
 // Core
 import React, { FC, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary, DatePicker } from '../../components';
@@ -73,7 +74,15 @@ const UpdateWorkday: FC = () => {
     return (
         <UpdateWorkdayContainer>
             <Header>
-                <Button onClick = { () => push(`/${projectId}/calendar/${workdayId}`) }>Back</Button>
+                <Button
+                    title = { `Back to ${workday.date}` }
+                    onClick = { () => push(`/${projectId}/calendar/${workdayId}`) }>
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = 'reply'
+                        style = {{ width: 16, height: 16 }}
+                    />
+                </Button>
                 <h2>Update workday {workday.date}</h2>
                 <div />
             </Header>

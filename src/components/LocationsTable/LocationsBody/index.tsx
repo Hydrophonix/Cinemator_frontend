@@ -57,21 +57,25 @@ export const LocationsBody: FC<Proptypes> = ({
                                 updateLocationId !== location.id
                                     ? (
                                         <>
-                                            <Button onClick = { (event) => {
-                                                event.stopPropagation();
-                                                setUpdateLocationId(location.id);
-                                                setTempLocationName(location.name);
-                                            } }>
+                                            <Button
+                                                title = 'Settings'
+                                                onClick = { (event) => {
+                                                    event.stopPropagation();
+                                                    setUpdateLocationId(location.id);
+                                                    setTempLocationName(location.name);
+                                                } }>
                                                 <FontAwesomeIcon
                                                     color = '#000'
                                                     icon = 'wrench'
                                                     style = {{ width: 16, height: 16 }}
                                                 />
                                             </Button>
-                                            <Button onClick = { (event) => {
-                                                event.stopPropagation();
-                                                deleteLocationHandler(location.id);
-                                            } }>
+                                            <Button
+                                                title = 'Delete'
+                                                onClick = { (event) => {
+                                                    event.stopPropagation();
+                                                    deleteLocationHandler(location.id);
+                                                } }>
                                                 <FontAwesomeIcon
                                                     color = '#000'
                                                     icon = 'trash-alt'
@@ -82,26 +86,30 @@ export const LocationsBody: FC<Proptypes> = ({
                                     )
                                     : (
                                         <>
-                                            <Button onClick = { async (event) => {
-                                                event.stopPropagation();
-                                                const isUpdated = await updateLocationHandler(location.id, tempLocationName);
+                                            <Button
+                                                title = 'Save'
+                                                onClick = { async (event) => {
+                                                    event.stopPropagation();
+                                                    const isUpdated = await updateLocationHandler(location.id, tempLocationName);
 
-                                                if (isUpdated) {
-                                                    setUpdateLocationId('');
-                                                    setTempLocationName('');
-                                                }
-                                            } }>
+                                                    if (isUpdated) {
+                                                        setUpdateLocationId('');
+                                                        setTempLocationName('');
+                                                    }
+                                                } }>
                                                 <FontAwesomeIcon
                                                     color = '#000'
                                                     icon = 'save'
                                                     style = {{ width: 16, height: 16 }}
                                                 />
                                             </Button>
-                                            <Button onClick = { (event) => {
-                                                event.stopPropagation();
-                                                setUpdateLocationId('');
-                                                setTempLocationName('');
-                                            } }>
+                                            <Button
+                                                title = 'Cancel'
+                                                onClick = { (event) => {
+                                                    event.stopPropagation();
+                                                    setUpdateLocationId('');
+                                                    setTempLocationName('');
+                                                } }>
                                                 <FontAwesomeIcon
                                                     color = '#000'
                                                     icon = 'times'

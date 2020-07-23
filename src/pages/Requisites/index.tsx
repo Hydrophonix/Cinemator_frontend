@@ -64,7 +64,9 @@ const Requisites: FC = () => {
             <Header>
                 <div />
                 <h2>Requisites</h2>
-                <Button onClick = { () => void push(`/${projectId}/create-requisite`) }>
+                <Button
+                    title = 'Create requisite'
+                    onClick = { () => void push(`/${projectId}/create-requisite`) }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'plus'

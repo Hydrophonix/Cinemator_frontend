@@ -62,7 +62,9 @@ export const Table: FC<PropTypes> = ({ data }) => {
                     startDay = { startDay }
                 />
                 <h2>Workdays</h2>
-                <Button onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
+                <Button
+                    title = 'Create workday'
+                    onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'plus'
