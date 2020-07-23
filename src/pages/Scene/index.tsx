@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _intersectionWith from 'lodash/intersectionWith';
 
 // Components
-import { ErrorBoundary, SceneRequisitesModal, RequisitesTable, LocationsModal } from '../../components';
+import { ErrorBoundary, RequisitesModal, RequisitesTable, LocationsModal } from '../../components';
 
 // Apollo hooks
-import { useScenesQuery, useDeleteSceneMutation, useUpdateSceneLocationsMutation } from '../../bus/Scene';
+import { useScenesQuery, useDeleteSceneMutation, useUpdateSceneLocationsMutation, useUpdateSceneRequisitesMutation } from '../../bus/Scene';
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Elements
@@ -28,30 +28,35 @@ const Scene: FC = () => {
     const { push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
     const theme = useContext(ThemeContext);
+
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
+
     const [ updateSceneLocations ] = useUpdateSceneLocationsMutation();
     const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
+    const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
+
     const [ locationIds, setLocationIdsArray, setInitialLocationIds ] = useArrayOfStringsForm([]);
+    const [ requisiteIds, setRequisiteIds, setInitialRequisiteIds ] = useArrayOfStringsForm([]);
+
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
+    const requisiteIdsArray = scene?.requisites.map((requisite) => requisite.id);
 
     useEffect(() =>{
-        if (scene) {
-            setInitialLocationIds(scene.locations.map((location) => location.id));
-        }
+        scene && void setInitialLocationIds(scene.locations.map((location) => location.id));
+        requisiteIdsArray && void setInitialRequisiteIds(requisiteIdsArray);
     }, [ scene ]);
 
     if (loading || !data || requisiteLoading || !requisiteData) {
         return <div>Loading...</div>;
     }
 
-    if (!scene) {
+    if (!scene || !requisiteIdsArray) {
         return <div>No scene exist</div>;
     }
 
-    const requisiteIds = scene.requisites.map((requisite) => requisite.id);
     const sceneRequisites = _intersectionWith(
-        requisiteData.requisites, requisiteIds, (value, other) => value.id === other,
+        requisiteData.requisites, requisiteIdsArray, (value, other) => value.id === other,
     );
 
     const deleteSceneHandler = async () => {
@@ -64,6 +69,11 @@ const Scene: FC = () => {
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
+    const updateSceneRequisiteHandler = async () => {
+        const response = await updateSceneRequisites({ variables: { sceneId, requisiteIds }});
+        response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
+    };
+
     const workdayRedirectHandler = (event: any, workdayId: string) => {
         event.stopPropagation();
         push(`/${projectId}/calendar/${workdayId}`);
@@ -73,9 +83,15 @@ const Scene: FC = () => {
         <Container>
             <Switch>
                 <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
-                    <SceneRequisitesModal
-                        closeHandler = { () => void push(`/${projectId}/scenes/${sceneId}`) }
+                    <RequisitesModal
+                        closeHandler = { () => {
+                            requisiteIdsArray && setInitialRequisiteIds(requisiteIdsArray);
+                            push(`/${projectId}/scenes/${sceneId}`);
+                        } }
+                        handler = { (requisiteId: string) => void setRequisiteIds(requisiteId) }
                         requisiteIds = { requisiteIds }
+                        saveHandler = { updateSceneRequisiteHandler }
+
                     />
                 </Route>
                 <Route path = { '/:projectId/scenes/:sceneId/locations' }>

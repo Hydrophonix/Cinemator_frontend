@@ -38,7 +38,7 @@ const Requisite: FC = () => {
     const sceneIdsArray = requisite?.scenes.map((scene) => scene.id);
 
     useEffect(() => {
-        requisite && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+        sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
     }, [ requisite ]);
 
     if (loading || !data) {
@@ -66,7 +66,7 @@ const Requisite: FC = () => {
             <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
                 <ScenesModal
                     closeHandler = { () => {
-                        requisite && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+                        sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
                         push(`/${projectId}/requisites/${requisiteId}`);
                     } }
                     handler = { (sceneId: string) => void setSceneIds(sceneId) }

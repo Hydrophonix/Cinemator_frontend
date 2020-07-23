@@ -1,5 +1,6 @@
 // Core
 import { useMutation } from '@apollo/react-hooks';
+import _sortBy from 'lodash/sortBy';
 
 // GraphQL
 import CreateRequisiteSchema from '../schemas/createRequisite.graphql';
@@ -15,18 +16,29 @@ type OptionsType = {
 export const useCreateRequisiteMutation = ({ projectId }: OptionsType) => {
     return useMutation<CreateRequisite, CreateRequisiteVariables>(CreateRequisiteSchema, {
         update(cache, { data }) {
-            const { requisites } = cache.readQuery<Requisites>({
-                query:     RequisitesSchema,
-                variables: { projectId },
-            })!;
+            if (!data) {
+                throw new Error('Requisite create failed');
+            }
 
-            cache.writeQuery({
-                query:     RequisitesSchema,
-                variables: { projectId },
-                data:      {
-                    requisites: requisites.concat([ data!.createRequisite ]),
-                },
-            });
+            try {
+                const requisitesData = cache.readQuery<Requisites>({
+                    query:     RequisitesSchema,
+                    variables: { projectId },
+                })!;
+
+                const updatedRequisites = _sortBy(
+                    [ ...requisitesData.requisites, data.createRequisite ],
+                    ({ number }) => number,
+                );
+
+                cache.writeQuery({
+                    query:     RequisitesSchema,
+                    variables: { projectId },
+                    data:      {
+                        requisites: updatedRequisites,
+                    },
+                });
+            } catch (error) {} // eslint-disable-line no-empty
         },
     });
 };

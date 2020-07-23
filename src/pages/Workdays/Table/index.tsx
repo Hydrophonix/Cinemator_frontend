@@ -1,4 +1,3 @@
-
 // Core
 import React, { FC } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
@@ -30,8 +29,8 @@ export const Table: FC<PropTypes> = ({ data }) => {
 
     const workdaysDates = data.workdays.map((workday) => new Date(workday.date));
 
-    const projectStartDay = workdaysDates[ 0 ];
-    const projectEndDay = workdaysDates[ workdaysDates.length - 1 ];
+    const projectStartDay = workdaysDates[ 0 ] || new Date();
+    const projectEndDay = workdaysDates[ workdaysDates.length - 1 ] || new Date();
     const startDay = workdaysInputs.dateRange.startDay || projectStartDay;
     const endDay = workdaysInputs.dateRange.endDay || projectEndDay;
     const momentStartDay = moment(transformDateToISO8601(startDay));

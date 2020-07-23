@@ -1,5 +1,6 @@
 // Core
 import { useMutation } from '@apollo/react-hooks';
+import _sortBy from 'lodash/sortBy';
 
 // GraphQL
 import CreateSceneSchema from '../schemas/createScene.graphql';
@@ -15,18 +16,26 @@ type OptionsType = {
 export const useCreateSceneMutation = ({ projectId }: OptionsType) => {
     return useMutation<CreateScene, CreateSceneVariables>(CreateSceneSchema, {
         update(cache, { data }) {
-            const { scenes } = cache.readQuery<Scenes>({
-                query:     ScenesSchema,
-                variables: { projectId },
-            })!;
+            if (!data) {
+                throw new Error('Scene create failed');
+            }
 
-            cache.writeQuery({
-                query:     ScenesSchema,
-                variables: { projectId },
-                data:      {
-                    scenes: scenes.concat([ data!.createScene ]),
-                },
-            });
+            try {
+                const scenesData = cache.readQuery<Scenes>({
+                    query:     ScenesSchema,
+                    variables: { projectId },
+                })!;
+
+                const updatedScenes = _sortBy([ ...scenesData.scenes, data.createScene ], ({ number }) => number);
+
+                cache.writeQuery({
+                    query:     ScenesSchema,
+                    variables: { projectId },
+                    data:      {
+                        scenes: updatedScenes,
+                    },
+                });
+            } catch (error) {}  // eslint-disable-line no-empty
         },
     });
 };

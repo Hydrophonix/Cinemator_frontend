@@ -10,10 +10,6 @@ import { Modal, RequisitesTable } from '..';
 
 // Apollo hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
-import { useUpdateSceneRequisitesMutation } from '../../bus/Scene';
-
-// Hooks
-import { useArrayOfStringsForm } from '../../hooks';
 
 // Elements
 import { ModalHeader, Button } from '../../elements';
@@ -25,29 +21,24 @@ import { Main, Footer } from './styles';
 type PropTypes = {
     closeHandler: () => void
     requisiteIds: Array<string>
+    handler?: (requisiteId: string) => void
+    saveHandler?: Function
 }
 type Params = {
     projectId: string
     sceneId: string
 }
 
-export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds }) => {
-    const { projectId, sceneId } = useParams<Params>();
+export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, handler, saveHandler }) => {
+    const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
-    const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
-    const [ requisitesIdsArray, setRequisitesIdsArray ] = useArrayOfStringsForm(requisiteIds);
     const [ index, setIndexUseState ] = useState(0);
     const [ title, setTitleUseState ] = useState('');
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
-
-    const addRequsitesToSceneHandler = async () => {
-        const response = await updateSceneRequisites({ variables: { sceneId, requisiteIds: requisitesIdsArray }});
-        response && response.data && void closeHandler();
-    };
 
     const findByIndex = () => {
         const requisite = data.requisites.find((requisite) => requisite.number === index);
@@ -80,8 +71,10 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
             <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Add requisites</ModalHeader>
             <Main>
                 <RequisitesTable
+                    lightVersion
+                    handler = { handler }
                     index = { index }
-                    lightVersion = {{ requisitesIdsArray, setRequisitesIdsArray }}
+                    requisiteIds = { requisiteIds }
                     requisites = { filterHandler() }
                     setIndex = { (newIndex: number) => void setIndexUseState(newIndex) }
                     setTitle = { (newTitle: string) => void setTitleUseState(newTitle) }
@@ -89,7 +82,7 @@ export const SceneRequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds
                 />
             </Main>
             <Footer style = {{ backgroundColor: theme.requisite.primary }}>
-                <Button onClick = { addRequsitesToSceneHandler }>
+                <Button onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = 'save'

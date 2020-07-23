@@ -11,17 +11,22 @@ import { CreateProject, CreateProjectVariables, OwnedProjects } from '../types';
 export const useCreateProjectMutation = () => {
     return useMutation<CreateProject, CreateProjectVariables>(CreateProjectSchema, {
         update(cache, { data }) {
-            // TODO: Если создавать проект без скачаных проектов выкидывает ошибку
-            const { ownedProjects } = cache.readQuery<OwnedProjects>({ query: OwnedProjectsSchema })!;
+            if (!data) {
+                throw new Error('Project create failed');
+            }
 
-            cache.writeQuery({
-                query: OwnedProjectsSchema,
-                data:  {
-                    ownedProjects: data
-                        ? ownedProjects.concat([ data.createProject ])
-                        : ownedProjects,
-                },
-            });
+            try {
+                const ownedProjectsData = cache.readQuery<OwnedProjects>({ query: OwnedProjectsSchema })!;
+
+                const updatedProjects = [ ...ownedProjectsData.ownedProjects, data.createProject ];
+
+                cache.writeQuery({
+                    query: OwnedProjectsSchema,
+                    data:  {
+                        ownedProjects: updatedProjects,
+                    },
+                });
+            } catch (error) {} // eslint-disable-line no-empty
         },
     });
 };

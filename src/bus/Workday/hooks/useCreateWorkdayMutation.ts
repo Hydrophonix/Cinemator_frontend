@@ -18,25 +18,34 @@ type OptionsType = {
 export const useCreateWorkdayMutation = ({ projectId, setGlobalDateRangeRedux }: OptionsType) => {
     return useMutation<CreateWorkday, CreateWorkdayVariables>(CreateWorkdaySchema, {
         update(cache, { data }) {
-            const { workdays } = cache.readQuery<Workdays>({
-                query:     WorkdaysSchema,
-                variables: { projectId },
-            })!;
+            if (!data) {
+                throw new Error('Workday create failed');
+            }
 
-            const updatedWorkdays = _sortBy([ ...workdays, data!.createWorkday ], ({ date }) => new Date(date));
+            try {
+                const workdaysData = cache.readQuery<Workdays>({
+                    query:     WorkdaysSchema,
+                    variables: { projectId },
+                })!;
 
-            cache.writeQuery({
-                query:     WorkdaysSchema,
-                variables: { projectId },
-                data:      {
-                    workdays: updatedWorkdays,
-                },
-            });
+                const updatedWorkdays = _sortBy(
+                    [ ...workdaysData.workdays, data.createWorkday ],
+                    ({ date }) => new Date(date),
+                );
 
-            setGlobalDateRangeRedux({
-                startDay: new Date(updatedWorkdays[ 0 ].date),
-                endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
-            });
+                cache.writeQuery({
+                    query:     WorkdaysSchema,
+                    variables: { projectId },
+                    data:      {
+                        workdays: updatedWorkdays,
+                    },
+                });
+
+                setGlobalDateRangeRedux({
+                    startDay: new Date(updatedWorkdays[ 0 ].date),
+                    endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
+                });
+            } catch (error) {} // eslint-disable-line no-empty
         },
     });
 };

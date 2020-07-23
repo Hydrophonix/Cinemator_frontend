@@ -27,8 +27,6 @@ export const useDeleteSceneMutation = ({ projectId, sceneId }: OptionsType) => {
             }
 
             const { scenes } = cache.readQuery<Scenes>({ query: ScenesSchema, variables: { projectId }})!;
-            const { workdays } = cache.readQuery<Workdays>({ query: WorkdaysSchema, variables: { projectId }})!;
-            const { requisites } = cache.readQuery<Requisites>({ query: RequisitesSchema, variables: { projectId }})!;
 
             cache.writeQuery({
                 query:     ScenesSchema,
@@ -38,39 +36,47 @@ export const useDeleteSceneMutation = ({ projectId, sceneId }: OptionsType) => {
                 },
             });
 
-            cache.writeQuery({
-                query:     WorkdaysSchema,
-                variables: { projectId },
-                data:      {
-                    workdays: workdays.map((workday) => {
-                        if (workday.scenes.some((scene) => scene.id === sceneId)) {
-                            return {
-                                ...workday,
-                                scenes: workday.scenes.filter((scene) => scene.id !== sceneId),
-                            };
-                        }
+            try {
+                const { workdays } = cache.readQuery<Workdays>({ query: WorkdaysSchema, variables: { projectId }})!;
 
-                        return workday;
-                    }),
-                },
-            });
+                cache.writeQuery({
+                    query:     WorkdaysSchema,
+                    variables: { projectId },
+                    data:      {
+                        workdays: workdays.map((workday) => {
+                            if (workday.scenes.some((scene) => scene.id === sceneId)) {
+                                return {
+                                    ...workday,
+                                    scenes: workday.scenes.filter((scene) => scene.id !== sceneId),
+                                };
+                            }
 
-            cache.writeQuery({
-                query:     RequisitesSchema,
-                variables: { projectId },
-                data:      {
-                    requisites: requisites.map((requisite) => {
-                        if (requisite.scenes.some((scene) => scene.id === sceneId)) {
-                            return {
-                                ...requisite,
-                                scenes: requisite.scenes.filter((scene) => scene.id !== sceneId),
-                            };
-                        }
+                            return workday;
+                        }),
+                    },
+                });
+            } catch (error) {} // eslint-disable-line no-empty
 
-                        return requisite;
-                    }),
-                },
-            });
+            try {
+                const { requisites } = cache.readQuery<Requisites>({ query: RequisitesSchema, variables: { projectId }})!;
+
+                cache.writeQuery({
+                    query:     RequisitesSchema,
+                    variables: { projectId },
+                    data:      {
+                        requisites: requisites.map((requisite) => {
+                            if (requisite.scenes.some((scene) => scene.id === sceneId)) {
+                                return {
+                                    ...requisite,
+                                    scenes: requisite.scenes.filter((scene) => scene.id !== sceneId),
+                                };
+                            }
+
+                            return requisite;
+                        }),
+                    },
+                });
+            } catch (error) {} // eslint-disable-line no-empty
         },
         variables: { sceneId },
     });

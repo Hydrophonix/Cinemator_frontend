@@ -13,17 +13,16 @@ import { Requisites_requisites } from '../../../bus/Requisite';
 type Proptypes = {
     requisites: Requisites_requisites[]
     sceneId?: string
-    lightVersion?: {
-        requisitesIdsArray: Array<string>
-        setRequisitesIdsArray: (sceneId: string) => void
-    }
+    lightVersion?: true
+    requisiteIds?: Array<string>
+    handler?: (requisiteId: string) => void
 }
 
 type Params = {
     projectId: string
 };
 
-export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersion }) => {
+export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersion, requisiteIds, handler }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
@@ -41,14 +40,11 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                     <Tr
                         className = 'requisitesTableRow'
                         key = { requisite.id }
-                        style = {
-                            lightVersion?.requisitesIdsArray.includes(requisite.id)
-                                ? { backgroundColor: 'green' } : {}
-                        }
+                        style = { requisiteIds?.includes(requisite.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => {
-                            lightVersion
-                                ? lightVersion.setRequisitesIdsArray(requisite.id)
-                                : requisiteRedirectHandler(requisite.id);
+                            handler
+                                ? void handler(requisite.id)
+                                : void requisiteRedirectHandler(requisite.id);
                         } }>
                         <Td>
                             <div style = {{ width: 35, textAlign: 'center' }}>
@@ -68,13 +64,8 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                             return (
                                                 <Button
                                                     key = { index }
-                                                    style = {{
-                                                        backgroundColor: theme.scene.secondary,
-                                                        color:           '#fff',
-                                                    }}
-                                                    onClick = { (event) => void sceneRedirectHandler(
-                                                        event, scene.id,
-                                                    ) }>
+                                                    style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}
+                                                    onClick = { (event) => void sceneRedirectHandler(event, scene.id) }>
                                                     S:{`${scene.number}`}
                                                 </Button>
                                             );

@@ -44,7 +44,7 @@ const Workday: FC = () => {
     const sceneIdsArray = workday?.scenes.map((scene) => scene.id);
 
     useEffect(() => {
-        workday && sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+        sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
     }, [ workday ]);
 
     if (loading || !data || scenesLoading || !scenesData) {

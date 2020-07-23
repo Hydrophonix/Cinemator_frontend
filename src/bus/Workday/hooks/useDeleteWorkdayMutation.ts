@@ -32,11 +32,6 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRa
                 variables: { projectId },
             })!;
 
-            const { scenes } = cache.readQuery<Scenes>({
-                query:     ScenesSchema,
-                variables: { projectId },
-            })!;
-
             const updatedWorkdays = _sortBy(
                 workdays.filter((workday) => workday.id !== workdayId),
                 ({ date }) => new Date(date),
@@ -50,27 +45,39 @@ export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRa
                 },
             });
 
-            cache.writeQuery({
-                query:     ScenesSchema,
-                variables: { projectId },
-                data:      {
-                    scenes: scenes.map((scene) => {
-                        if (scene.workdays.some((workday) => workday.id === workdayId)) {
-                            return {
-                                ...scene,
-                                workdays: scene.workdays.filter((workday) => workday.id !== workdayId),
-                            };
-                        }
+            updatedWorkdays.length > 0
+                ? void setGlobalDateRangeRedux({
+                    startDay: new Date(updatedWorkdays[ 0 ].date),
+                    endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
+                })
+                : void setGlobalDateRangeRedux({
+                    startDay: new Date(),
+                    endDay:   new Date(),
+                });
 
-                        return scene;
-                    }),
-                },
-            });
+            try {
+                const { scenes } = cache.readQuery<Scenes>({
+                    query:     ScenesSchema,
+                    variables: { projectId },
+                })!;
 
-            setGlobalDateRangeRedux({
-                startDay: new Date(updatedWorkdays[ 0 ].date),
-                endDay:   new Date(updatedWorkdays[ updatedWorkdays.length - 1 ].date),
-            });
+                cache.writeQuery({
+                    query:     ScenesSchema,
+                    variables: { projectId },
+                    data:      {
+                        scenes: scenes.map((scene) => {
+                            if (scene.workdays.some((workday) => workday.id === workdayId)) {
+                                return {
+                                    ...scene,
+                                    workdays: scene.workdays.filter((workday) => workday.id !== workdayId),
+                                };
+                            }
+
+                            return scene;
+                        }),
+                    },
+                });
+            } catch (error) { }   // eslint-disable-line no-empty
         },
         variables: { workdayId },
     });

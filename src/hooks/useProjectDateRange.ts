@@ -17,8 +17,8 @@ export const useProjectDateRange = () => {
 
     if (workdaysDates) {
         return {
-            projectStartDay: workdaysDates[ 0 ],
-            projectEndDay:   workdaysDates[ workdaysDates.length - 1 ],
+            projectStartDay: workdaysDates[ 0 ] || new Date(),
+            projectEndDay:   workdaysDates[ workdaysDates.length - 1 ] || new Date(),
         };
     }
 

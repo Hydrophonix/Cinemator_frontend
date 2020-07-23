@@ -38,7 +38,7 @@ const CreateScene: FC = () => {
     const onSubmit = async (event: any) => {
         event.preventDefault();
         const response = await createScene({ variables: { input: form, projectId }});
-        response && response.data && void push(`/${projectId}/scenes`);
+        response && response.data && void push(`/${projectId}/scenes/${response.data.createScene.id}`);
     };
 
     return (

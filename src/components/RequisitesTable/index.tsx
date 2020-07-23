@@ -19,16 +19,16 @@ type PropTypes = {
     setIndex?: (newIndex: number) => void
     title?: string
     setTitle?: (newTitle: string) => void
-    lightVersion?: {
-        requisitesIdsArray: Array<string>
-        setRequisitesIdsArray: (sceneId: string) => void
-    }
+    lightVersion?: true
+    requisiteIds?: Array<string>
+    handler?: (requisiteId: string) => void
 }
 
 export const RequisitesTable: FC<PropTypes> = ({
     requisites, sceneId, lightVersion,
     index, setIndex,
     title, setTitle,
+    requisiteIds, handler,
 }) => {
     return (
         <TableStyles>
@@ -41,7 +41,9 @@ export const RequisitesTable: FC<PropTypes> = ({
                     title = { title }
                 />
                 <RequisitesBody
+                    handler = { handler }
                     lightVersion = { lightVersion }
+                    requisiteIds = { requisiteIds }
                     requisites = { requisites }
                     sceneId = { sceneId }
                 />

@@ -9,7 +9,7 @@ type PropTypes = {
     setIndex?: (index: number) => void
     title?: string
     setTitle?: (newTitle: string) => void
-    lightVersion?: Object
+    lightVersion?: true
 }
 
 export const RequisitesHead: FC<PropTypes> = ({
