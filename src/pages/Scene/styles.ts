@@ -65,6 +65,7 @@ export const Section = styled.section`
         width: 100%;
         box-sizing: border-box;
         padding-bottom: 5px;
+        font-family: sans-serif;
 
         &:first-child {
             text-align: center;
