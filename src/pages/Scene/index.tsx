@@ -22,7 +22,7 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { Button } from '../../elements';
 
 // Styles
-import { Container, Header, WorkdaysContainer, LocationsContainer } from './styles';
+import { Container, Header, WorkdaysContainer, LocationsContainer, Section } from './styles';
 import { useArrayOfStringsForm } from '../../hooks';
 
 // Types
@@ -137,6 +137,7 @@ const Scene: FC = () => {
             <Header>
                 <nav>
                     <Button
+                        style = {{ width: 55 }}
                         title = 'Back to scenes'
                         onClick = { () => void push(`/${projectId}/scenes`) }>
                         <FontAwesomeIcon
@@ -209,6 +210,14 @@ const Scene: FC = () => {
                     </Button>
                 </nav>
             </Header>
+            {
+                (scene.title || scene.description) && (
+                    <Section>
+                        {scene.title && <p>{scene.title}</p>}
+                        {scene.description && <p>{scene.description}</p>}
+                    </Section>
+                )
+            }
             {
                 scene.workdays.length !== 0 && (
                     <WorkdaysContainer>

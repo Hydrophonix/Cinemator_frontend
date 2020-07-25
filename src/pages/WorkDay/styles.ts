@@ -16,5 +16,29 @@ export const WorkdayHeader = styled.header`
         font-size: 24px;
         font-family: sans-serif;
         color: #fff;
+        min-width: 160px;
+        text-align: center
+    }
+
+    nav {
+        &:last-child {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+    }
+`;
+
+export const Description = styled.section`
+    display: flex;
+    background-color: ${({ theme }) => theme.workday.anotherSecondary};
+    font-family: sans-serif;
+    padding: 5px 10px;
+    justify-content: center;
+    border-top: 0.5px solid #fff;
+
+    p {
+        font-size: 18px;
+        color: #fff;
     }
 `;

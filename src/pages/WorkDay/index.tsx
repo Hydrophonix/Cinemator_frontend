@@ -22,7 +22,7 @@ import { useInputsRedux } from '../../@init/redux/inputs';
 import { Button } from '../../elements';
 
 // Styles
-import { WorkdayContainer, WorkdayHeader } from './styles';
+import { WorkdayContainer, WorkdayHeader, Description } from './styles';
 
 // Types
 type Params = {
@@ -89,8 +89,9 @@ const Workday: FC = () => {
                 />
             </Route>
             <WorkdayHeader>
-                <div>
+                <nav>
                     <Button
+                        style = {{ width: 55 }}
                         title = 'Back to calendar'
                         onClick = { () => void push(`/${projectId}/calendar`) }>
                         <FontAwesomeIcon
@@ -104,9 +105,9 @@ const Workday: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>W: {workday.date}</h2>
-                <div>
+                <nav>
                     <Button
                         title = 'Add scenes'
                         onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
@@ -137,8 +138,15 @@ const Workday: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
             </WorkdayHeader>
+            {
+                workday.description && (
+                    <Description>
+                        <p>{workday.description}</p>
+                    </Description>
+                )
+            }
             <ScenesTable
                 scenes = { workdayScenes }
                 workdayId = { workdayId }

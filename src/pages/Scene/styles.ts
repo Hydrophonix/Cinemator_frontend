@@ -16,6 +16,16 @@ export const Header = styled.header`
         font-size: 24px;
         font-family: sans-serif;
         color: #fff;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    nav {
+        &:last-child {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
     }
 `;
 
@@ -25,6 +35,7 @@ export const WorkdaysContainer = styled.section`
     justify-content: center;
     width: 100%;
     padding: 5px;
+    border-top: 0.5px solid ${({ theme }) => theme.scene.primary};
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.workday.containerBg};
 `;
@@ -36,6 +47,27 @@ export const LocationsContainer = styled.section`
     width: 100%;
     padding: 5px;
     box-sizing: border-box;
-    border-top: 1px solid ${({ theme }) => theme.scene.primary};
+    border-top: 0.5px solid ${({ theme }) => theme.scene.primary};
     background-color: ${({ theme }) => theme.scene.containerBg};
+`;
+
+export const Section = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 0.5px solid #fff;
+    background-color: ${({ theme }) => theme.scene.secondary};
+    color: #fff;
+    box-sizing: border-box;
+    padding: 5px 5px 0px;
+
+    p {
+        width: 100%;
+        box-sizing: border-box;
+        padding-bottom: 5px;
+
+        &:first-child {
+            text-align: center;
+        }
+    }
 `;

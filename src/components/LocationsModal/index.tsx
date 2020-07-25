@@ -67,9 +67,11 @@ export const LocationsModal: FC<PropTypes> = ({
         return <div>Loading...</div>;
     }
 
+
     const filterHandler = () => {
-        return data.locations.filter((location) => location.name.includes(form.location))
-            .sort((a, b) => a.name.length > b.name.length ? 1 : -1);
+        return data.locations.filter(
+            (location) => location.name.toLocaleLowerCase().includes(form.location.toLocaleLowerCase()),
+        );
     };
 
     const addNewLocationHandler = async () => {
@@ -179,7 +181,7 @@ export const LocationsModal: FC<PropTypes> = ({
                     </RedoContainer>
                     <RedoContainer
                         isRotate = { isTrashRotate }
-                        onClick = { resetFormHandler }>
+                        onClick = { () => form.location !== '' && void resetFormHandler() }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'trash-alt'

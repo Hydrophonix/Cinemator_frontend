@@ -16,6 +16,16 @@ export const RequisiteHeader = styled.header`
         font-size: 24px;
         font-family: sans-serif;
         color: #fff;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    nav {
+        &:last-child {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
     }
 `;
 

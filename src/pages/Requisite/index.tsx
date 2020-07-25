@@ -81,8 +81,9 @@ const Requisite: FC = () => {
                 />
             </Route>
             <RequisiteHeader>
-                <div>
+                <nav>
                     <Button
+                        style = {{ width: 55 }}
                         title = 'Back to requisites'
                         onClick = { () => void push(`/${projectId}/requisites`) }>
                         <FontAwesomeIcon
@@ -96,9 +97,9 @@ const Requisite: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>R: {requisite.number}</h2>
-                <div>
+                <nav>
                     <Button
                         title = 'Add scenes'
                         onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/add-scenes`) }>
@@ -129,7 +130,7 @@ const Requisite: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
             </RequisiteHeader>
             <main>
                 {
