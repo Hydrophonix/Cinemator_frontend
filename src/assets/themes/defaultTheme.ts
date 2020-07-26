@@ -38,10 +38,11 @@ export const defaultTheme = {
         anotherSecondary: '#629460',
     },
     scene: {
-        primary:        '#133c55',
-        secondary:      '#386fa4',
-        hoverSecondary: '#59a5d8',
-        containerBg:    '#caf0f8',
+        primary:         '#133c55',
+        secondary:       '#386fa4',
+        hoverSecondary:  '#59a5d8',
+        containerBg:     '#caf0f8',
+        locationPrimary: '#415a77',
     },
     requisite: {
         primary:        '#5c4d3c',

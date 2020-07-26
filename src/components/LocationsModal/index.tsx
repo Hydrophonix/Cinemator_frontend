@@ -206,7 +206,7 @@ export const LocationsModal: FC<PropTypes> = ({
                     updateLocationHandler = { updateLocationHandler }
                 />
             </Main>
-            <Footer style = {{ backgroundColor: theme.scene.primary }}>
+            <Footer>
                 <Button
                     title = { saveHandler ? 'Save' : 'Close' }
                     onClick = {

@@ -18,7 +18,7 @@ export const workdaysDataTransformer = ({ workdays }: Workdays): Array<EventType
         const eventDate = new Date(workday.date);
 
         const requisitesCount = workday.scenes.reduce<Array<string>>((acc, scene) => {
-            const requisiteIds = scene.requisites.map((requisite) => requisite.id); // TODO  => differenceBy
+            const requisiteIds = scene.requisites.map((requisite) => requisite.id);
             const difference = _difference(requisiteIds, acc);
 
             return [ ...acc, ...difference ];

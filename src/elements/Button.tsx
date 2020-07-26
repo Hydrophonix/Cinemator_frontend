@@ -14,12 +14,11 @@ const Styled = styled.button<ButtonProps>`
     outline: none;
     border-width: 2px;
     border-radius: 8px;
-    background-color: #fff;
-
     font-family: sans-serif;
+    padding: 1px 4px;
+    margin: 0px;
 
-    &:hover, &:focus {
-        background-color: ${({ theme }) => theme.button.primary};
+    &:hover {
         border-color: ${({ theme }) => theme.button.secondary};
     }
 `;

@@ -71,7 +71,7 @@ const Profile: FC = () => {
                         />
                     </Button>
                 </div>
-                <h2>{data.me.email}</h2>
+                <h2>Profile</h2>
             </Header>
             <main>
                 <div>

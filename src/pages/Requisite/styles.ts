@@ -38,3 +38,24 @@ export const ScenesContainer = styled.section`
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.scene.containerBg};
 `;
+
+export const Section = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 0.5px solid #fff;
+    background-color: ${({ theme }) => theme.requisite.secondary};
+    color: #fff;
+    box-sizing: border-box;
+    padding: 5px 5px 0px;
+
+    div {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 5px;
+
+        p {
+            font-family: sans-serif;
+        }
+    }
+`;

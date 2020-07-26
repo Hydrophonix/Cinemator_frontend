@@ -20,6 +20,8 @@ import {
     faCompass,
     faTimes,
     faCheckCircle,
+    faEye,
+    faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const initIconsLibrary = () => library.add(
@@ -42,6 +44,8 @@ export const initIconsLibrary = () => library.add(
     faCompass,
     faTimes,
     faCheckCircle,
+    faEye,
+    faEyeSlash,
 );
 
 // Add icon objects to library to use in components like that:

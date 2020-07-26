@@ -213,8 +213,8 @@ const Scene: FC = () => {
             {
                 (scene.title || scene.description) && (
                     <Section>
-                        {scene.title && <p>{scene.title}</p>}
-                        {scene.description && <p>{scene.description}</p>}
+                        {scene.title && <div><p>{scene.title}</p></div>}
+                        {scene.description && <div><p>{scene.description}</p></div>}
                     </Section>
                 )
             }
@@ -241,7 +241,7 @@ const Scene: FC = () => {
                             scene.locations.map((location) => (
                                 <Button
                                     key = { location.id }
-                                    style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}>
+                                    style = {{ backgroundColor: theme.scene.locationPrimary, color: '#fff' }}>
                                     {location.name}
                                 </Button>
                             ))

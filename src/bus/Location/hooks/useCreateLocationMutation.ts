@@ -24,7 +24,8 @@ export const useCreateLocationMutation = ({ projectId }: OptionsType) => {
                 query:     LocationsSchema,
                 variables: { projectId },
                 data:      {
-                    locations: locations.concat([ data!.createLocation ]),
+                    locations: [ data!.createLocation, ...locations ],
+                    // TODO: Новая локация при создании должна попадать в начало массива
                 },
             });
         },

@@ -71,7 +71,7 @@ export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, sa
                     setIndex = { (newIndex: number) => setIndexUseState(newIndex) }
                 />
             </Main>
-            <Footer style = {{ backgroundColor: theme.scene.primary }}>
+            <Footer>
                 <Button
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>

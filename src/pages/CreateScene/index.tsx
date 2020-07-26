@@ -79,7 +79,7 @@ const CreateScene: FC = () => {
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Submit</Button>
+                    <Button onClick = { onSubmit }>Create</Button>
                 </div>
             </main>
         </CreateSceneContainer>

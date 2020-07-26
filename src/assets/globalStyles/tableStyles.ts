@@ -92,7 +92,7 @@ export const TableStyles = styled.div`
     }
 
     .locationsTableRow {
-      background-color: ${({ theme }) => theme.scene.secondary};
+      background-color: ${({ theme }) => theme.scene.locationPrimary};
       font-family: sans-serif;
       font-size: 14px;
       color: #fff;

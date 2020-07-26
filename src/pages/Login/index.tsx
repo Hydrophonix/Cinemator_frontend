@@ -1,6 +1,7 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -19,7 +20,7 @@ import { AuthInput } from '../../@types/graphql-global-types';
 import { setAccessToken } from '../../@init/tokenStore';
 
 // Styles
-import { LoginContainer, RegisterLink } from './styles';
+import { LoginContainer, RegisterLink, RelativeContainer } from './styles';
 
 const innitialForm = {
     email:    '',
@@ -30,6 +31,7 @@ const Login: FC = () => {
     const client = useApolloClient();
     const [ login ] = useLoginMutation();
     const [ form, setForm ] = useForm<AuthInput>(innitialForm);
+    const [ isPasswordVisible, setPasswordVisible ] = useState(false);
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -47,16 +49,26 @@ const Login: FC = () => {
             <form onSubmit = { onSubmit }>
                 <Input
                     name = 'email'
-                    placeholder = 'enter email'
+                    placeholder = 'Enter email'
+                    type = 'email'
                     value = { form.email }
                     onChange = { setForm }
                 />
-                <Input
-                    name = 'password'
-                    placeholder = 'enter password'
-                    value = { form.password }
-                    onChange = { setForm }
-                />
+                <RelativeContainer>
+                    <FontAwesomeIcon
+                        color = '#000'
+                        icon = { isPasswordVisible ? 'eye-slash' : 'eye' }
+                        style = {{ width: 16, height: 16 }}
+                        onClick = { () => void setPasswordVisible(!isPasswordVisible) }
+                    />
+                    <Input
+                        name = 'password'
+                        placeholder = 'Enter password'
+                        type = { isPasswordVisible ? 'text' : 'password' }
+                        value = { form.password }
+                        onChange = { setForm }
+                    />
+                </RelativeContainer>
                 <Button type = 'submit'>Submit</Button>
             </form>
             <RegisterLink to = '/register'>Register here</RegisterLink>

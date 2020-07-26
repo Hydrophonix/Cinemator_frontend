@@ -61,14 +61,13 @@ export const Section = styled.section`
     box-sizing: border-box;
     padding: 5px 5px 0px;
 
-    p {
-        width: 100%;
-        box-sizing: border-box;
+    div {
+        display: flex;
+        justify-content: center;
         padding-bottom: 5px;
-        font-family: sans-serif;
 
-        &:first-child {
-            text-align: center;
+        p {
+            font-family: sans-serif;
         }
     }
 `;

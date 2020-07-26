@@ -100,7 +100,11 @@ const CreateRequisite: FC = () => {
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Submit</Button>
+                    <Button
+                        disabled = { form.title === '' }
+                        onClick = { onSubmit }>
+                        Create
+                    </Button>
                 </div>
             </main>
         </CreateRequisiteContainer>

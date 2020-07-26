@@ -103,7 +103,7 @@ const CreateWorkday: FC = () => {
                     <Button
                         disabled = { isTableMode ? isTodayWorkday : false }
                         onClick = { onSubmit }>
-                        Submit
+                        Create
                     </Button>
                 </nav>
             </main>

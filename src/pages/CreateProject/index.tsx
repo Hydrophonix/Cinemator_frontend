@@ -65,7 +65,7 @@ const CreateProject: FC = () => {
                         placeholder = 'Type here...'
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Submit</Button>
+                    <Button onClick = { onSubmit }>Create</Button>
                 </div>
             </main>
         </Container>

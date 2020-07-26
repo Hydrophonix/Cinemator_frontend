@@ -17,7 +17,7 @@ import { useArrayOfStringsForm } from '../../hooks';
 import { Button } from '../../elements';
 
 // Styles
-import { RequisiteContainer, RequisiteHeader, ScenesContainer } from './styles';
+import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section } from './styles';
 
 // Types
 type Params = {
@@ -132,6 +132,10 @@ const Requisite: FC = () => {
                     </Button>
                 </nav>
             </RequisiteHeader>
+            <Section>
+                <div><p>{requisite.title}</p></div>
+                {requisite.description && <div><p>{requisite.description}</p></div>}
+            </Section>
             <main>
                 {
                     requisite.scenes.length !== 0 && (
@@ -149,8 +153,6 @@ const Requisite: FC = () => {
                         </ScenesContainer>
                     )
                 }
-                <h2>Description</h2>
-                <p>{requisite.description}</p>
             </main>
         </RequisiteContainer>
     );

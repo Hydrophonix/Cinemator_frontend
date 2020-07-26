@@ -59,7 +59,7 @@ export const ScenesBody: FC<Proptypes> = ({
                                     return (
                                         <Button
                                             key = { location.id }
-                                            style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}>
+                                            style = {{ backgroundColor: theme.scene.locationPrimary, color: '#fff' }}>
                                             {location.name}
                                         </Button>
                                     );

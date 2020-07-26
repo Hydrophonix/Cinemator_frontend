@@ -32,3 +32,19 @@ export const RegisterLink = styled(Link)`
     padding-top: 10px;
     font-family: sans-serif;
 `;
+
+export const RelativeContainer = styled.div`
+    position: relative;
+    
+    svg {
+        position: absolute;
+        top: 7px;
+        right: 5px;
+        opacity: 0.7;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+`;

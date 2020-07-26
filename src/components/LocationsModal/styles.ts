@@ -10,11 +10,11 @@ export const Main = styled.main`
     max-height: 390px;
     min-height: 390px;
     overflow-y: scroll;
-    background-color: ${({ theme }) => theme.scene.hoverSecondary};
+    background-color: ${({ theme }) => theme.scene.containerBg};
 `;
 
 export const Footer = styled.footer`
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.scene.primary};
     padding: 10px;
     display: flex;
     justify-content: flex-end;
