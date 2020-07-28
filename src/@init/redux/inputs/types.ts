@@ -12,6 +12,7 @@ export type InputsState = {
     requisitesInputs: {
         index: number
         title: string
+        reqType: string
     }
     workdaysInputs: {
         dateRange: DateRange
@@ -25,9 +26,9 @@ export type IndexPayload = {
     inputType: InputsKeys
 }
 
-export const SET_DATE_RANGE = 'SET_DATE_RANGE';
-export type SetDateRangeAction = {
-    type: typeof SET_DATE_RANGE
+export const SET_SCENES_DATE_RANGE = 'SET_SCENES_DATE_RANGE';
+export type SetScenesDateRangeAction = {
+    type: typeof SET_SCENES_DATE_RANGE
     payload: DateRange
 };
 
@@ -44,20 +45,27 @@ export type SetWorkdaysDateRangeAction = {
 };
 
 export const SET_INDEX = 'SET_INDEX';
-export type setIndexAction = {
+export type SetIndexAction = {
     type: typeof SET_INDEX
     payload: IndexPayload
 };
 
-export const SET_REQUISITE_TITLE = 'SET_REQUISITE_TITLE';
-export type setRequisiteTitleAction = {
-    type: typeof SET_REQUISITE_TITLE
+export const SET_REQUISITES_TITLE = 'SET_REQUISITES_TITLE';
+export type SetRequisitesTitleAction = {
+    type: typeof SET_REQUISITES_TITLE
+    payload: string
+};
+
+export const SET_REQUISITES_REQTYPE = 'SET_REQUISITES_REQTYPE';
+export type SetRequisitesReqTypeAction = {
+    type: typeof SET_REQUISITES_REQTYPE
     payload: string
 };
 
 export type InputsActionTypes =
-    | SetDateRangeAction
-    | setIndexAction
-    | setRequisiteTitleAction
+    | SetScenesDateRangeAction
+    | SetIndexAction
+    | SetRequisitesTitleAction
+    | SetRequisitesReqTypeAction
     | SetWorkdaysDateRangeAction
     | SetScenesLocationAction

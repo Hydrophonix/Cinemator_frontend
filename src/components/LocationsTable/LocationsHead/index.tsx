@@ -1,27 +1,13 @@
 // Core
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { Thead, Tr, Th } from 'react-super-responsive-table';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { ThemeContext } from 'styled-components';
-// import { useHistory, useParams } from 'react-router-dom';
 
-// Elements
-// import { Button } from '../../../elements';
-
-type PropTypes = {}
-
-type Params = { projectId: string };
-
-export const LocationsHead: FC<PropTypes> = () => {
-    // const theme = useContext(ThemeContext);
-    // const { push } = useHistory();
-    // const { projectId } = useParams<Params>();
-
+export const LocationsHead: FC = () => {
     return (
         <Thead>
             <Tr className = 'locationsTableHead'>
                 <Th style = {{ textAlign: 'center' }}>
-                    Name
+                    Location
                 </Th>
                 <Th style = {{ textAlign: 'center' }}>
                     Actions

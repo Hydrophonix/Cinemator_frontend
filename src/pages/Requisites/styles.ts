@@ -12,6 +12,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 35px;
     padding:  5px;
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.requisite.secondary};

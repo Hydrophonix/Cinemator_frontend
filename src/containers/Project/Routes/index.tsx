@@ -48,12 +48,18 @@ export const Routes: FC = () => {
                         }
 
                         return <Scenes />;
-                    } }>
+                    } }
+                />
+                <Route
+                    path = { '/:projectId/requisites/:requisiteId' }
+                    render = { ({ match }) => {
+                        if (match.params.requisiteId !== 'types') {
+                            return <Requisite />;
+                        }
 
-                </Route>
-                <Route path = { '/:projectId/requisites/:requisiteId' }>
-                    <Requisite />
-                </Route>
+                        return <Requisites />;
+                    } }
+                />
                 {/* List */}
                 <Route path = { '/:projectId/calendar' }>
                     <Calendar/>

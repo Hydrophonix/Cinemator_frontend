@@ -1,0 +1,3 @@
+mutation DeleteReqType($reqTypeId: String!) {
+    deleteReqType(reqTypeId: $reqTypeId)
+}

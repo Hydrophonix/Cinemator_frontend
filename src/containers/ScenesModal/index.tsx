@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
 // Components
-import { Modal, RequisitesTable } from '..';
+import { Modal, ScenesTable } from '../../components';
 
 // Apollo hooks
-import { useRequisitesQuery } from '../../bus/Requisite';
+import { useScenesQuery } from '../../bus/Scene';
 
 // Elements
 import { ModalHeader, Button } from '../../elements';
@@ -18,66 +18,57 @@ import { ModalHeader, Button } from '../../elements';
 import { Main, Footer } from './styles';
 
 // Types
-type PropTypes = {
-    closeHandler: () => void
-    requisiteIds: Array<string>
-    handler?: (requisiteId: string) => void
-    saveHandler?: Function
-}
 type Params = {
     projectId: string
 }
 
-export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, handler, saveHandler }) => {
+type PropTypes = {
+    closeHandler: () => void
+    sceneIds?: Array<string>
+    handler?: (sceneId: string) => void
+    saveHandler?: Function
+}
+
+export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, saveHandler }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
-    const { data, loading } = useRequisitesQuery({ projectId });
+    const { data, loading } = useScenesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
-    const [ title, setTitleUseState ] = useState('');
 
     if (loading || !data) {
         return <div>Loading...</div>;
     }
 
-    const findByIndex = () => {
-        const requisite = data.requisites.find((requisite) => requisite.number === index);
 
-        if (requisite) {
-            return [ requisite ];
+    const findByIndex = () => {
+        const scene = data.scenes.find((scene) => scene.number === index);
+
+        if (scene) {
+            return [ scene ];
         }
 
-        return data.requisites;
+        return data.scenes;
     };
-
-    const findByString = () => data.requisites.filter((requisite) => {
-        return requisite.title.toLocaleLowerCase().includes(title.toLocaleLowerCase());
-    });
 
     const filterHandler = () => {
         if (index !== 0) {
             return findByIndex();
         }
 
-        if (title !== '') {
-            return findByString();
-        }
-
-        return data.requisites;
+        return data.scenes;
     };
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Add requisites</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Scenes</ModalHeader>
             <Main>
-                <RequisitesTable
+                <ScenesTable
                     lightVersion
                     handler = { handler }
                     index = { index }
-                    requisiteIds = { requisiteIds }
-                    requisites = { filterHandler() }
-                    setIndex = { (newIndex: number) => void setIndexUseState(newIndex) }
-                    setTitle = { (newTitle: string) => void setTitleUseState(newTitle) }
-                    title = { title }
+                    sceneIds = { sceneIds }
+                    scenes = { filterHandler() }
+                    setIndex = { (newIndex: number) => setIndexUseState(newIndex) }
                 />
             </Main>
             <Footer>

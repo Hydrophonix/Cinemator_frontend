@@ -1,13 +1,17 @@
 // Core
 import React, { FC } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Apollo Hooks
 import { useRequisitesQuery } from '../../bus/Requisite';
+import { useReqTypesQuery } from '../../bus/ReqType';
 
 // Redux
 import { useInputsRedux } from '../../@init/redux/inputs';
+
+// Containers
+import { ReqTypesModal } from '../../containers';
 
 // Components
 import { ErrorBoundary, RequisitesTable } from '../../components';
@@ -27,11 +31,26 @@ const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
-    const { inputs: { requisitesInputs }, setIndexRedux, setRequisiteTitleRedux } = useInputsRedux();
+    const { data: reqTypesData, loading: reqTypesLoading } = useReqTypesQuery({ projectId });
+    const {
+        inputs: { requisitesInputs },
+        setIndexRedux,
+        setRequisiteTitleRedux,
+        setRequisitesReqTypeRedux,
+    } = useInputsRedux();
 
-    if (loading || !data) {
+    if (loading || !data || reqTypesLoading || !reqTypesData) {
         return <div>Loading...</div>;
     }
+
+    const setRequisitesReqTypeHandler = (reqTypeId: string) => {
+        const findedReqType = reqTypesData.reqTypes.find((reqType) => reqType.id === reqTypeId);
+
+        if (findedReqType) {
+            setRequisitesReqTypeRedux(findedReqType.name);
+            push(`/${projectId}/requisites`);
+        }
+    };
 
     const findByIndex = () => {
         const requisite = data.requisites.find((requisite) => requisite.number === requisitesInputs.index);
@@ -47,6 +66,15 @@ const Requisites: FC = () => {
         return requisite.title.toLocaleLowerCase().includes(requisitesInputs.title.toLocaleLowerCase());
     });
 
+    const findByReqType = () => {
+        return data.requisites.filter(
+            (requisite) => requisite.reqTypes.some(
+                (somereqType) => somereqType.name.toLocaleLowerCase()
+                    .includes(requisitesInputs.reqType.toLocaleLowerCase()),
+            ),
+        );
+    };
+
     const filterHandler = () => {
         if (requisitesInputs.index !== 0) {
             return findByIndex();
@@ -56,11 +84,21 @@ const Requisites: FC = () => {
             return findByString();
         }
 
+        if (requisitesInputs.reqType !== '') {
+            return findByReqType();
+        }
+
         return data.requisites;
     };
 
     return (
         <RequisiteContainer>
+            <Route path = { '/:projectId/requisites/types' }>
+                <ReqTypesModal
+                    closeHandler = { () => void push(`/${projectId}/requisites`) }
+                    handler = { setRequisitesReqTypeHandler }
+                />
+            </Route>
             <Header>
                 <div />
                 <h2>Requisites</h2>
@@ -80,12 +118,14 @@ const Requisites: FC = () => {
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
                 <RequisitesTable
                     index = { requisitesInputs.index }
+                    reqType = { requisitesInputs.reqType }
                     requisites = { filterHandler() }
                     setIndex = { (newIndex: number) => void setIndexRedux({
                         inputType: 'requisitesInputs',
                         index:     newIndex,
                     }) }
-                    setTitle = { (newTitle: string) => setRequisiteTitleRedux(newTitle) }
+                    setReqType = { (newReqType: string) => void setRequisitesReqTypeRedux(newReqType) }
+                    setTitle = { (newTitle: string) => void setRequisiteTitleRedux(newTitle) }
                     title = { requisitesInputs.title }
                 />
             </div>

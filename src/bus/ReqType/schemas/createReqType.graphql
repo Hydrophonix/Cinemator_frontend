@@ -1,0 +1,7 @@
+#import "./reqTypeFields.graphql"
+
+mutation CreateReqType($input: ReqTypeCreateInput!, $projectId: String!) {
+    createReqType(input: $input, projectId: $projectId) {
+        ...reqTypeFields
+    }
+}

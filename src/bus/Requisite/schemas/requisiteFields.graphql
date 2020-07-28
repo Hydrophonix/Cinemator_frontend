@@ -7,4 +7,8 @@ fragment requisiteFields on Requisite {
       id
       number
     }
+    reqTypes {
+      id
+      name
+    }
 }

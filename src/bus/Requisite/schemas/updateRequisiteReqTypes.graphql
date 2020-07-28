@@ -1,0 +1,13 @@
+#import "./requisiteFields.graphql"
+#import "../../ReqType/schemas/reqTypeFields.graphql"
+
+mutation UpdateRequisiteReqTypes ($reqTypeIds: [String!]!, $requisiteId: String!) {
+    updateRequisiteReqTypes(reqTypeIds: $reqTypeIds, requisiteId: $requisiteId) {
+        updatedRequisite {
+            ...requisiteFields
+        }
+        updatedReqTypes {
+            ...reqTypeFields
+        }
+    }
+}

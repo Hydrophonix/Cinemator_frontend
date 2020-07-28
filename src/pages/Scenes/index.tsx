@@ -18,7 +18,10 @@ import { transformDateToISO8601 } from '../../utils';
 import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
-import { ErrorBoundary, DateRangePicker, ScenesTable, LocationsModal } from '../../components';
+import { LocationsModal } from '../../containers';
+
+// Components
+import { ErrorBoundary, DateRangePicker, ScenesTable } from '../../components';
 
 // Elements
 import { Button } from '../../elements';
@@ -35,7 +38,7 @@ const Scenes: FC = () => {
     const { data, loading } = useScenesQuery({ projectId });
     const { data: locationsData, loading: locationsLoading } = useLocationsQuery({ projectId });
     const { projectStartDay, projectEndDay } = useProjectDateRange();
-    const { inputs, setDateRangeRedux, setIndexRedux, setScenesLocationRedux } = useInputsRedux();
+    const { inputs, setScenesDateRangeRedux, setIndexRedux, setScenesLocationRedux } = useInputsRedux();
     const { dateRange, index, location } = inputs.scenesInputs;
 
     const startDay = dateRange.startDay || projectStartDay;
@@ -49,9 +52,8 @@ const Scenes: FC = () => {
         return <div>Loading...</div>;
     }
 
-
-    const setScenesLocationHandler = (loactionId: string) => {
-        const findedLocation = locationsData.locations.find((location) => location.id === loactionId);
+    const setScenesLocationHandler = (locationId: string) => {
+        const findedLocation = locationsData.locations.find((location) => location.id === locationId);
 
         if (findedLocation) {
             setScenesLocationRedux(findedLocation.name);
@@ -114,7 +116,7 @@ const Scenes: FC = () => {
                     firstPopperPlacement = 'top-start'
                     projectEndDay = { projectEndDay }
                     projectStartDay = { projectStartDay }
-                    setDateRange = { setDateRangeRedux }
+                    setDateRange = { setScenesDateRangeRedux }
                     startDay = { startDay }
                 />
                 <h2>Scenes</h2>

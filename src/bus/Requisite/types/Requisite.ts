@@ -13,6 +13,12 @@ export interface Requisite_requisite_scenes {
   number: number;
 }
 
+export interface Requisite_requisite_reqTypes {
+  __typename: "ReqType";
+  id: string;
+  name: string;
+}
+
 export interface Requisite_requisite {
   __typename: "Requisite";
   id: string;
@@ -20,6 +26,7 @@ export interface Requisite_requisite {
   title: string;
   description: string | null;
   scenes: Requisite_requisite_scenes[];
+  reqTypes: Requisite_requisite_reqTypes[];
 }
 
 export interface Requisite {

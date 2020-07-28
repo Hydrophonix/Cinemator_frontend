@@ -6,10 +6,11 @@ import { useSelector } from '../../../hooks';
 
 // Actions
 import {
-    setDateRangeAction,
+    setScenesDateRangeAction,
     setScenesLocationAction,
     setIndexAction,
-    setRequisiteTitleAction,
+    setRequisitesTitleAction,
+    setRequisitesReqTypeAction,
     setWorkdaysDateRangeAction,
 } from './actions';
 
@@ -21,13 +22,14 @@ export const useInputsRedux = () => {
 
     return {
         inputs:                    useSelector(({ inputs }) => inputs),
-        setDateRangeRedux:         (payload: types.DateRange) => dispatch(setDateRangeAction(payload)),
-        setScenesLocationRedux:    (payload: string) => dispatch(setScenesLocationAction(payload)),
-        setWorkdaysDateRangeRedux: (payload: types.DateRange) => dispatch(setWorkdaysDateRangeAction(payload)),
-        setIndexRedux:             (payload: types.IndexPayload) => dispatch(setIndexAction(payload)),
-        setRequisiteTitleRedux:    (payload: string) => dispatch(setRequisiteTitleAction(payload)),
+        setScenesDateRangeRedux:   (payload: types.DateRange) => void dispatch(setScenesDateRangeAction(payload)),
+        setScenesLocationRedux:    (payload: string) => void dispatch(setScenesLocationAction(payload)),
+        setWorkdaysDateRangeRedux: (payload: types.DateRange) => void dispatch(setWorkdaysDateRangeAction(payload)),
+        setIndexRedux:             (payload: types.IndexPayload) => void dispatch(setIndexAction(payload)),
+        setRequisiteTitleRedux:    (payload: string) => void dispatch(setRequisitesTitleAction(payload)),
+        setRequisitesReqTypeRedux: (payload: string) => void dispatch(setRequisitesReqTypeAction(payload)),
         setGlobalDateRangeRedux:   (payload: types.DateRange) => {
-            dispatch(setDateRangeAction(payload));
+            dispatch(setScenesDateRangeAction(payload));
             dispatch(setWorkdaysDateRangeAction(payload));
         },
     };

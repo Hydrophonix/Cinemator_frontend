@@ -9,7 +9,6 @@ import { Button } from '../../../elements';
 
 // Types
 import { Requisites_requisites } from '../../../bus/Requisite';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Proptypes = {
     requisites: Requisites_requisites[]
@@ -52,21 +51,38 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                 {requisite.number}
                             </div>
                         </Td>
+                        {
+                            !lightVersion && (
+                                <Td>
+                                    {
+                                        requisite.reqTypes.map((reqType) => (
+                                            <Button
+                                                key = { reqType.id }
+                                                style = {{ backgroundColor: theme.requisite.primary, color: '#fff' }}>
+                                                {reqType.name}
+                                            </Button>
+                                        ))
+                                    }
+                                </Td>
+                            )
+                        }
                         <Td>{requisite.title}</Td>
                         {
                             !lightVersion && (
                                 <Td>
                                     {
-                                        requisite.scenes.map((scene, index) => {
+                                        requisite.scenes.map((scene) => {
                                             if (sceneId && scene.id === sceneId) {
                                                 return null;
                                             }
 
                                             return (
                                                 <Button
-                                                    key = { index }
+                                                    key = { scene.id }
                                                     style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}
-                                                    onClick = { (event) => void sceneRedirectHandler(event, scene.id) }>
+                                                    onClick = {
+                                                        (event) => void sceneRedirectHandler(event, scene.id)
+                                                    }>
                                                     S:{`${scene.number}`}
                                                 </Button>
                                             );

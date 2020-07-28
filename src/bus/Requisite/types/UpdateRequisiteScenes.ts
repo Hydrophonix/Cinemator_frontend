@@ -13,6 +13,12 @@ export interface UpdateRequisiteScenes_updateRequisiteScenes_updatedRequisite_sc
   number: number;
 }
 
+export interface UpdateRequisiteScenes_updateRequisiteScenes_updatedRequisite_reqTypes {
+  __typename: "ReqType";
+  id: string;
+  name: string;
+}
+
 export interface UpdateRequisiteScenes_updateRequisiteScenes_updatedRequisite {
   __typename: "Requisite";
   id: string;
@@ -20,6 +26,7 @@ export interface UpdateRequisiteScenes_updateRequisiteScenes_updatedRequisite {
   title: string;
   description: string | null;
   scenes: UpdateRequisiteScenes_updateRequisiteScenes_updatedRequisite_scenes[];
+  reqTypes: UpdateRequisiteScenes_updateRequisiteScenes_updatedRequisite_reqTypes[];
 }
 
 export interface UpdateRequisiteScenes_updateRequisiteScenes_updatedScenes_locations {

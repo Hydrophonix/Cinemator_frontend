@@ -6,13 +6,10 @@ export * from './WorkdaysTable';
 export * from './ScenesTable';
 export * from './RequisitesTable';
 export * from './LocationsTable';
+export * from './ReqTypesTable';
 
 // Modal
 export * from './Modal';
-export * from './ScenesModal';
-export * from './WorkdaysModal';
-export * from './RequisitesModal';
-export * from './LocationsModal';
 
 // Custom
 export * from './DatePicker';

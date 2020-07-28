@@ -15,6 +15,12 @@ export interface UpdateRequisite_updateRequisite_scenes {
   number: number;
 }
 
+export interface UpdateRequisite_updateRequisite_reqTypes {
+  __typename: "ReqType";
+  id: string;
+  name: string;
+}
+
 export interface UpdateRequisite_updateRequisite {
   __typename: "Requisite";
   id: string;
@@ -22,6 +28,7 @@ export interface UpdateRequisite_updateRequisite {
   title: string;
   description: string | null;
   scenes: UpdateRequisite_updateRequisite_scenes[];
+  reqTypes: UpdateRequisite_updateRequisite_reqTypes[];
 }
 
 export interface UpdateRequisite {

@@ -30,7 +30,7 @@ export const App: FC = () => {
 
                 if (accessToken) {
                     setAccessToken(accessToken);
-                    client.writeData({ data: { isLoggedIn: true }});
+                    client.writeData({ data: { isLoggedIn: true }}); // TODO: Reactivate variables Apollo 3.0
                 }
 
                 setIsInitialized(true);

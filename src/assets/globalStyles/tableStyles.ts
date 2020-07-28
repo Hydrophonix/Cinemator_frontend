@@ -121,6 +121,24 @@ export const TableStyles = styled.div`
       }
     }
 
+    .reqTypesTableHead {
+      background-color: ${({ theme }) => theme.requisite.primary};
+      color: #fff;
+      ${indexStyles};
+    }
+
+    .reqTypesTableRow {
+      background-color: ${({ theme }) => theme.requisite.typePrimary};
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #fff;
+      border-bottom: 1px solid ${({ theme }) => theme.requisite.primary};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.requisite.hoverSecondary};
+      }
+    }
+
     .workdaysTableHead {
       background-color: ${({ theme }) => theme.workday.primary};
       color: #fff;

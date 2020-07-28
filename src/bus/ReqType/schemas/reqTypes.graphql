@@ -1,0 +1,7 @@
+#import "./reqTypeFields.graphql"
+
+query ReqTypes($projectId: String!) {
+  reqTypes(projectId: $projectId) {
+    ...reqTypeFields
+  }
+}

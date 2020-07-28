@@ -7,7 +7,7 @@ import { ThemeContext } from 'styled-components';
 import moment from 'moment';
 
 // Components
-import { Modal, WorkdaysTable, DateRangePicker } from '..';
+import { Modal, WorkdaysTable, DateRangePicker } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery } from '../../bus/Workday';
@@ -71,7 +71,7 @@ export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler
 
     return (
         <Modal closeHandler = { closeHandler }>
-            <ModalHeader style = {{ backgroundColor: theme.workday.secondary }}>Add workdays</ModalHeader>
+            <ModalHeader style = {{ backgroundColor: theme.workday.secondary }}>Workdays</ModalHeader>
             <Section>
                 <DateRangePicker
                     reset

@@ -11,6 +11,7 @@ export const ScenesContainer = styled.section`
 export const Header = styled.header`
     display: flex;
     justify-content: space-between;
+    min-height: 35px;
     align-items: center;
     padding:  5px;
     box-sizing: border-box;

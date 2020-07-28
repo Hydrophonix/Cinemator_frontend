@@ -11,6 +11,8 @@ export const WorkdayHeader = styled.header`
     justify-content: space-between;
     padding: 5px;
     background-color: ${({ theme }) => theme.workday.anotherSecondary};
+    min-height: 35px;
+    box-sizing: border-box;
 
     h2 {
         font-size: 24px;

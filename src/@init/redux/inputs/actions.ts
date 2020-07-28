@@ -1,8 +1,13 @@
 // Instruments
 import * as types from './types';
 
-export const setDateRangeAction = (payload: types.DateRange): types.SetDateRangeAction => ({
-    type: types.SET_DATE_RANGE,
+export const setIndexAction = (payload: types.IndexPayload): types.SetIndexAction => ({
+    type: types.SET_INDEX,
+    payload,
+});
+
+export const setScenesDateRangeAction = (payload: types.DateRange): types.SetScenesDateRangeAction => ({
+    type: types.SET_SCENES_DATE_RANGE,
     payload,
 });
 
@@ -16,12 +21,12 @@ export const setWorkdaysDateRangeAction = (payload: types.DateRange): types.SetW
     payload,
 });
 
-export const setIndexAction = (payload: types.IndexPayload): types.setIndexAction => ({
-    type: types.SET_INDEX,
+export const setRequisitesTitleAction = (payload: string): types.SetRequisitesTitleAction => ({
+    type: types.SET_REQUISITES_TITLE,
     payload,
 });
 
-export const setRequisiteTitleAction = (payload: string): types.setRequisiteTitleAction => ({
-    type: types.SET_REQUISITE_TITLE,
+export const setRequisitesReqTypeAction = (payload: string): types.SetRequisitesReqTypeAction => ({
+    type: types.SET_REQUISITES_REQTYPE,
     payload,
 });

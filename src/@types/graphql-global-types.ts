@@ -30,6 +30,14 @@ export interface ProjectUpdateInput {
   description?: string | null;
 }
 
+export interface ReqTypeCreateInput {
+  name: string;
+}
+
+export interface ReqTypeUpdateInput {
+  name?: string | null;
+}
+
 export interface RequisiteCreateInput {
   number: number;
   title: string;

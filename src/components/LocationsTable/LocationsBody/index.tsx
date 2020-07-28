@@ -90,7 +90,9 @@ export const LocationsBody: FC<Proptypes> = ({
                                                 title = 'Save'
                                                 onClick = { async (event) => {
                                                     event.stopPropagation();
-                                                    const isUpdated = await updateLocationHandler(location.id, tempLocationName);
+                                                    const isUpdated = await updateLocationHandler(
+                                                        location.id, tempLocationName,
+                                                    );
 
                                                     if (isUpdated) {
                                                         setUpdateLocationId('');

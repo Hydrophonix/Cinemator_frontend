@@ -5,8 +5,11 @@ import { ThemeContext } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _intersectionWith from 'lodash/intersectionWith';
 
+// Containers
+import { RequisitesModal, LocationsModal, WorkdaysModal } from '../../containers';
+
 // Components
-import { ErrorBoundary, RequisitesModal, RequisitesTable, LocationsModal, WorkdaysModal } from '../../components';
+import { ErrorBoundary, RequisitesTable } from '../../components';
 
 // Apollo hooks
 import {
@@ -106,7 +109,7 @@ const Scene: FC = () => {
                 <Route path = { '/:projectId/scenes/:sceneId/add-workdays' }>
                     <WorkdaysModal
                         closeHandler = { () => {
-                            workdayIdsArray && setInitialWorkdayIds(workdayIdsArray);
+                            workdayIdsArray && void setInitialWorkdayIds(workdayIdsArray);
                             push(`/${projectId}/scenes/${sceneId}`);
                         } }
                         handler = { (workdayId: string) => void setWorkdayIds(workdayId) }
@@ -117,7 +120,7 @@ const Scene: FC = () => {
                 <Route path = { '/:projectId/scenes/:sceneId/add-requisites' }>
                     <RequisitesModal
                         closeHandler = { () => {
-                            requisiteIdsArray && setInitialRequisiteIds(requisiteIdsArray);
+                            requisiteIdsArray && void setInitialRequisiteIds(requisiteIdsArray);
                             push(`/${projectId}/scenes/${sceneId}`);
                         } }
                         handler = { (requisiteId: string) => void setRequisiteIds(requisiteId) }

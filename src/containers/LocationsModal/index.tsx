@@ -1,7 +1,7 @@
 
 // Core
 import React, { FC, useContext, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 import { useApolloClient } from '@apollo/react-hooks';
@@ -11,7 +11,7 @@ import LocationsSchema from '../../bus/Location/schemas/locations.graphql';
 import ScenesSchema from '../../bus/Scene/schemas/scenes.graphql';
 
 // Components
-import { Modal, LocationsTable } from '..';
+import { Modal, LocationsTable } from '../../components';
 
 // Apollo hooks
 import {
@@ -50,7 +50,6 @@ let timeOutId: number | undefined = void 0;
 export const LocationsModal: FC<PropTypes> = ({
     closeHandler, locationIds, handler, saveHandler,
 }) => {
-    const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const client = useApolloClient();
@@ -209,11 +208,7 @@ export const LocationsModal: FC<PropTypes> = ({
             <Footer>
                 <Button
                     title = { saveHandler ? 'Save' : 'Close' }
-                    onClick = {
-                        () => saveHandler
-                            ? void saveHandler()
-                            : void push(`/${projectId}/scenes`)
-                    }>
+                    onClick = { () => saveHandler ? void saveHandler() : void closeHandler() }>
                     <FontAwesomeIcon
                         color = '#000'
                         icon = { saveHandler ? 'save' : 'reply' }

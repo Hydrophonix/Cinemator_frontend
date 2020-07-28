@@ -49,5 +49,6 @@ export const defaultTheme = {
         secondary:      '#a56336',
         hoverSecondary: '#f77f00',
         containerBg:    '#f9dcc4',
+        typePrimary:    '#a56336',
     },
 };

@@ -17,6 +17,8 @@ const Styled = styled.button<ButtonProps>`
     font-family: sans-serif;
     padding: 1px 4px;
     margin: 0px;
+    background-color: #fff;
+    color: #000;
 
     &:hover {
         border-color: ${({ theme }) => theme.button.secondary};

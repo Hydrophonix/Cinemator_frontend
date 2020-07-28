@@ -4,8 +4,11 @@ import { useHistory, useParams, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _intersectionWith from 'lodash/intersectionWith';
 
+// Containers
+import { ScenesModal } from '../../containers';
+
 // Components
-import { ErrorBoundary, ScenesModal, ScenesTable } from '../../components';
+import { ErrorBoundary, ScenesTable } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';

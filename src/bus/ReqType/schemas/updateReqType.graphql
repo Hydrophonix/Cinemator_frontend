@@ -1,0 +1,7 @@
+#import "./reqTypeFields.graphql"
+
+mutation UpdateReqType ($input: ReqTypeUpdateInput!, $reqTypeId: String!) {
+    updateReqType(input: $input, reqTypeId: $reqTypeId) {
+        ...reqTypeFields
+    }
+}

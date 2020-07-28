@@ -1,14 +1,22 @@
 // Core
 import React, { FC, useEffect, useContext } from 'react';
-import { useHistory, useParams, Route } from 'react-router-dom';
+import { useHistory, useParams, Route, Switch } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
-import { ErrorBoundary, ScenesModal } from '../../components';
+import { ScenesModal, ReqTypesModal } from '../../containers';
+
+// Components
+import { ErrorBoundary } from '../../components';
 
 // Apollo hooks
-import { useRequisitesQuery, useDeleteRequisiteMutation, useUpdateRequisiteScenesMutation } from '../../bus/Requisite';
+import {
+    useRequisitesQuery,
+    useDeleteRequisiteMutation,
+    useUpdateRequisiteScenesMutation,
+    useUpdateRequisiteReqTypesMutation,
+} from '../../bus/Requisite';
 
 // Hooks
 import { useArrayOfStringsForm } from '../../hooks';
@@ -17,7 +25,7 @@ import { useArrayOfStringsForm } from '../../hooks';
 import { Button } from '../../elements';
 
 // Styles
-import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section } from './styles';
+import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section, ReqTypesContainer } from './styles';
 
 // Types
 type Params = {
@@ -30,15 +38,18 @@ const Requisite: FC = () => {
     const { projectId, requisiteId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
-    const [ updateRequisite ] = useUpdateRequisiteScenesMutation();
+    const [ updateRequisiteScenes ] = useUpdateRequisiteScenesMutation();
+    const [ updateRequisiteReqTypes ] = useUpdateRequisiteReqTypesMutation();
     const [ deleteRequisite ] = useDeleteRequisiteMutation({ projectId, requisiteId });
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
+    const [ reqTypeIds, setReqTypeIdsArray, setInitialReqTypeIds ] = useArrayOfStringsForm([]);
 
     const requisite = data?.requisites.find((requisite) => requisite.id === requisiteId);
     const sceneIdsArray = requisite?.scenes.map((scene) => scene.id);
 
     useEffect(() => {
         sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+        requisite && void setInitialReqTypeIds(requisite.reqTypes.map((reqType) => reqType.id));
     }, [ requisite ]);
 
     if (loading || !data) {
@@ -52,7 +63,12 @@ const Requisite: FC = () => {
     const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
 
     const updateRequisiteScenesHandler = async () => {
-        const response = await updateRequisite({ variables: { requisiteId, sceneIds }});
+        const response = await updateRequisiteScenes({ variables: { requisiteId, sceneIds }});
+        response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
+    };
+
+    const updateRequisiteReqTypesHandler = async () => {
+        const response = await updateRequisiteReqTypes({ variables: { requisiteId, reqTypeIds }});
         response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
     };
 
@@ -69,17 +85,27 @@ const Requisite: FC = () => {
 
     return (
         <RequisiteContainer>
-            <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
-                <ScenesModal
-                    closeHandler = { () => {
-                        sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
-                        push(`/${projectId}/requisites/${requisiteId}`);
-                    } }
-                    handler = { (sceneId: string) => void setSceneIds(sceneId) }
-                    saveHandler = { updateRequisiteScenesHandler }
-                    sceneIds = { sceneIds }
-                />
-            </Route>
+            <Switch>
+                <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
+                    <ScenesModal
+                        closeHandler = { () => {
+                            sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
+                            push(`/${projectId}/requisites/${requisiteId}`);
+                        } }
+                        handler = { (sceneId: string) => void setSceneIds(sceneId) }
+                        saveHandler = { updateRequisiteScenesHandler }
+                        sceneIds = { sceneIds }
+                    />
+                </Route>
+                <Route path = { '/:projectId/requisites/:requisiteId/types' }>
+                    <ReqTypesModal
+                        closeHandler = { () => void push(`/${projectId}/requisites/${requisiteId}`) }
+                        handler = { setReqTypeIdsArray }
+                        reqTypeIds = { reqTypeIds }
+                        saveHandler = { updateRequisiteReqTypesHandler }
+                    />
+                </Route>
+            </Switch>
             <RequisiteHeader>
                 <nav>
                     <Button
@@ -113,6 +139,18 @@ const Requisite: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        title = 'Add types'
+                        onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/types`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>T:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
+                    </Button>
+                    <Button
                         title = 'Settings'
                         onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
                         <FontAwesomeIcon
@@ -137,6 +175,21 @@ const Requisite: FC = () => {
                 {requisite.description && <div><p>{requisite.description}</p></div>}
             </Section>
             <main>
+                {
+                    requisite.reqTypes.length !== 0 && (
+                        <ReqTypesContainer>
+                            {
+                                requisite.reqTypes.map((reqTypes) => (
+                                    <Button
+                                        key = { reqTypes.id }
+                                        style = {{ backgroundColor: theme.requisite.primary, color: '#fff' }}>
+                                        {reqTypes.name}
+                                    </Button>
+                                ))
+                            }
+                        </ReqTypesContainer>
+                    )
+                }
                 {
                     requisite.scenes.length !== 0 && (
                         <ScenesContainer>

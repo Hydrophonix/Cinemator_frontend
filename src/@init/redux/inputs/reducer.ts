@@ -13,8 +13,9 @@ const initialState = {
         location: '',
     },
     requisitesInputs: {
-        index: 0,
-        title: '',
+        index:   0,
+        title:   '',
+        reqType: '',
     },
     workdaysInputs: {
         dateRange: {
@@ -26,7 +27,7 @@ const initialState = {
 
 export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = initialState, action) => {
     switch (action.type) {
-        case types.SET_DATE_RANGE:
+        case types.SET_SCENES_DATE_RANGE:
             return {
                 ...state,
                 scenesInputs: {
@@ -68,12 +69,21 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
                 },
             };
 
-        case types.SET_REQUISITE_TITLE:
+        case types.SET_REQUISITES_TITLE:
             return {
                 ...state,
                 requisitesInputs: {
                     ...state.requisitesInputs,
                     title: action.payload,
+                },
+            };
+
+        case types.SET_REQUISITES_REQTYPE:
+            return {
+                ...state,
+                requisitesInputs: {
+                    ...state.requisitesInputs,
+                    reqType: action.payload,
                 },
             };
 

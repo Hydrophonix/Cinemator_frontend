@@ -11,7 +11,9 @@ export const RequisiteHeader = styled.header`
     justify-content: space-between;
     padding: 5px;
     background-color: ${({ theme }) => theme.requisite.secondary};
-
+    min-height: 35px;
+    box-sizing: border-box;
+    
     h2 {
         font-size: 24px;
         font-family: sans-serif;
@@ -27,6 +29,16 @@ export const RequisiteHeader = styled.header`
             flex-wrap: wrap;
         }
     }
+`;
+
+export const ReqTypesContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.requisite.secondary};
 `;
 
 export const ScenesContainer = styled.section`

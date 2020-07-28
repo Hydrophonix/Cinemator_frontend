@@ -13,6 +13,12 @@ export interface requisiteFields_scenes {
   number: number;
 }
 
+export interface requisiteFields_reqTypes {
+  __typename: "ReqType";
+  id: string;
+  name: string;
+}
+
 export interface requisiteFields {
   __typename: "Requisite";
   id: string;
@@ -20,4 +26,5 @@ export interface requisiteFields {
   title: string;
   description: string | null;
   scenes: requisiteFields_scenes[];
+  reqTypes: requisiteFields_reqTypes[];
 }
