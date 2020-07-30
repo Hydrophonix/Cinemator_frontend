@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 
 export const WorkdayContainer = styled.section`
+    position: relative;
     width: 100%;
     background-color: ${({ theme }) => theme.workday.containerBg};
 `;

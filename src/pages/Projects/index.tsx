@@ -8,7 +8,7 @@ import { ProjectItem } from './ProjectItem';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Hooks
 import { useOwnedProjectsQuery } from '../../bus/Project';
@@ -21,7 +21,7 @@ const Projects: FC = () => {
     const { data, loading } = useOwnedProjectsQuery();
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     return (

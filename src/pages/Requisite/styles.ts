@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 
 export const RequisiteContainer = styled.section`
+    position: relative;
     width: 100%;
     background-color: ${({ theme }) => theme.requisite.containerBg};
 `;

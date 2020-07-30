@@ -61,6 +61,12 @@ export interface SceneUpdateInput {
   description?: string | null;
 }
 
+export interface UserUpdateInput {
+  phone?: string | null;
+  name?: string | null;
+  email?: string | null;
+}
+
 export interface WorkdayCreateInput {
   date: string;
   description?: string | null;

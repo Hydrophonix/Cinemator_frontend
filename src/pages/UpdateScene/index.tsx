@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -34,7 +34,7 @@ const UpdateScene: FC = () => {
     const { push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
-    const [ updateScene ] = useUpdateSceneMutation();
+    const [ updateScene, { loading: updateSceneLoading }] = useUpdateSceneMutation();
     const [ form, setForm, setInitialForm ] = useForm<SceneUpdateInput>(initialForm);
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
 
@@ -47,17 +47,17 @@ const UpdateScene: FC = () => {
     }, [ scene ]);
 
     if (loading || !data || !scene) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
-    const onSubmit = async (event: any) => {
-        event.preventDefault();
+    const onSubmit = async () => {
         const response = await updateScene({ variables: { input: form, sceneId }});
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
     return (
         <Container>
+            {updateSceneLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button

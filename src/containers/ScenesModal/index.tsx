@@ -27,18 +27,20 @@ type PropTypes = {
     sceneIds?: Array<string>
     handler?: (sceneId: string) => void
     saveHandler?: Function
+    saveHandlerLoading?: boolean
 }
 
-export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, saveHandler }) => {
+export const ScenesModal: FC<PropTypes> = ({
+    closeHandler, sceneIds, handler, saveHandler, saveHandlerLoading,
+}) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useScenesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return null;
     }
-
 
     const findByIndex = () => {
         const scene = data.scenes.find((scene) => scene.number === index);
@@ -59,7 +61,9 @@ export const ScenesModal: FC<PropTypes> = ({ closeHandler, sceneIds, handler, sa
     };
 
     return (
-        <Modal closeHandler = { closeHandler }>
+        <Modal
+            closeHandler = { closeHandler }
+            spinner = { saveHandlerLoading }>
             <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Scenes</ModalHeader>
             <Main>
                 <ScenesTable

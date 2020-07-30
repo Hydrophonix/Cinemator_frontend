@@ -1,8 +1,7 @@
+#import "./userFields.graphql"
+
 query MeQuery {
     me {
-        id
-        name
-        phone
-        email
+        ...userFields
     }
 }

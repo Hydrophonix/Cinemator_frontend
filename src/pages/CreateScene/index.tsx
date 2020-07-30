@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -32,7 +32,7 @@ const innitialForm = {
 const CreateScene: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const [ createScene ] = useCreateSceneMutation({ projectId });
+    const [ createScene, { loading: createSceneLoading }] = useCreateSceneMutation({ projectId });
     const [ form, setForm ] = useForm<SceneCreateInput>(innitialForm);
 
     const onSubmit = async (event: any) => {
@@ -43,6 +43,7 @@ const CreateScene: FC = () => {
 
     return (
         <CreateSceneContainer>
+            {createSceneLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button

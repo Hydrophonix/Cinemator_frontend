@@ -13,7 +13,7 @@ import { Modal, WorkdaysTable, DateRangePicker } from '../../components';
 import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Elements
-import { ModalHeader, Button } from '../../elements';
+import { ModalHeader, Button, Spinner } from '../../elements';
 
 import { transformDateToISO8601 } from '../../utils';
 
@@ -32,9 +32,12 @@ type PropTypes = {
     workdayIds?: Array<string>
     handler?: (sceneId: string) => void
     saveHandler?: Function
+    saveHandlerLoading?: boolean
 }
 
-export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler, saveHandler }) => {
+export const WorkdaysModal: FC<PropTypes> = ({
+    closeHandler, workdayIds, handler, saveHandler, saveHandlerLoading,
+}) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useWorkdaysQuery({ projectId });
@@ -45,7 +48,7 @@ export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler
     });
 
     if (loading || !data || !workdaysDates) {
-        return <div>Loading...</div>;
+        return null;
     }
 
     const projectStartDay = workdaysDates[ 0 ] || new Date();
@@ -70,7 +73,9 @@ export const WorkdaysModal: FC<PropTypes> = ({ closeHandler, workdayIds, handler
     };
 
     return (
-        <Modal closeHandler = { closeHandler }>
+        <Modal
+            closeHandler = { closeHandler }
+            spinner = { saveHandlerLoading }>
             <ModalHeader style = {{ backgroundColor: theme.workday.secondary }}>Workdays</ModalHeader>
             <Section>
                 <DateRangePicker

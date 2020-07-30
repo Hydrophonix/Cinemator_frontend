@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary, DatePicker } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Apollo hooks
 import { useWorkdaysQuery, useUpdateWorkdayMutation } from '../../bus/Workday';
@@ -38,7 +38,9 @@ const UpdateWorkday: FC = () => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { setGlobalDateRangeRedux } = useInputsRedux();
-    const [ updateWorkday ] = useUpdateWorkdayMutation({ projectId, setGlobalDateRangeRedux });
+    const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({
+        projectId, setGlobalDateRangeRedux,
+    });
     const [ form, setForm, setInitialForm ] = useForm<typeof initialForm>(initialForm);
     const [ workdayDate, setWorkdayDate ] = useState<Date>(new Date());
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
@@ -51,7 +53,7 @@ const UpdateWorkday: FC = () => {
     }, [ workday ]);
 
     if (loading || !data || !workday) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     const excludeDates = data.workdays.reduce<Date[]>((acc, mapWorkday) => {
@@ -62,8 +64,7 @@ const UpdateWorkday: FC = () => {
         return [ ...acc, new Date(mapWorkday.date) ];
     }, []);
 
-    const onSubmit = async (event: any) => {
-        event.preventDefault();
+    const onSubmit = async () => {
         const response = await updateWorkday({ variables: { input: {
             ...form,
             date: transformDateToISO8601(workdayDate),
@@ -73,6 +74,7 @@ const UpdateWorkday: FC = () => {
 
     return (
         <UpdateWorkdayContainer>
+            {updateWorkdayLoading && <Spinner absolute />}
             <Header>
                 <Button
                     title = { `Back to ${workday.date}` }

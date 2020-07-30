@@ -38,6 +38,7 @@ type PropTypes = {
     locationIds?: String[]
     handler?: (locationId: string) => void
     saveHandler?: Function
+    saveHandlerLoading?: boolean
 }
 
 // Instruments
@@ -48,24 +49,25 @@ const initialForm = {
 let timeOutId: number | undefined = void 0;
 
 export const LocationsModal: FC<PropTypes> = ({
-    closeHandler, locationIds, handler, saveHandler,
+    closeHandler, locationIds, handler, saveHandler, saveHandlerLoading,
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const client = useApolloClient();
     const { data, loading } = useLocationsQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const [ createLocation ] = useCreateLocationMutation({ projectId });
-    const [ updateLocation ] = useUpdateLocationMutation();
-    const [ deleteLocation ] = useDeleteLocationMutation();
+    const [ createLocation, { loading: createLocationLoading }] = useCreateLocationMutation({ projectId });
+    const [ updateLocation, { loading: updateLocationLoading }] = useUpdateLocationMutation();
+    const [ deleteLocation, { loading: deleteLocationLoading }] = useDeleteLocationMutation();
     const [ form, setForm, _, resetForm ] = useForm<typeof initialForm>(initialForm); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ isPlusRotate, setPlusRotateState ] = useState(false);
     const [ isTrashRotate, setTrashRotateState ] = useState(false);
+    const isSpinnerActive = saveHandlerLoading || createLocationLoading
+        || updateLocationLoading || deleteLocationLoading;
 
     if (loading || !data || scenesLoading || !scenesData) {
-        return <div>Loading...</div>;
+        return null;
     }
-
 
     const filterHandler = () => {
         return data.locations.filter(
@@ -164,7 +166,9 @@ export const LocationsModal: FC<PropTypes> = ({
     };
 
     return (
-        <Modal closeHandler = { closeHandler }>
+        <Modal
+            closeHandler = { closeHandler }
+            spinner = { isSpinnerActive }>
             <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Locations</ModalHeader>
             <Nav>
                 <section>

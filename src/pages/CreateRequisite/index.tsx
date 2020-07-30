@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Apollo hooks
 import { useRequisitesQuery, useCreateRequisiteMutation } from '../../bus/Requisite';
@@ -35,24 +35,15 @@ const CreateRequisite: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
-    const [ createRequisite ] = useCreateRequisiteMutation({ projectId });
+    const [ createRequisite, { loading: createRequisiteLoading }] = useCreateRequisiteMutation({ projectId });
     const [ form, setForm, setInitialForm ] = useForm<RequisiteCreateInput>(innitialForm);
 
     useEffect(() => {
-        if (data) {
-            const newRequisiteNumber = (data.requisites.map((requisite) => requisite.number)
-                .sort((a, b) => a < b ? 1 : -1)[ 0 ] || 0) + 1;
-
-            setInitialForm({
-                title:       '',
-                description: '',
-                number:      newRequisiteNumber,
-            });
-        }
+        data && void setInitialForm({ title: '', description: '', number: 0 });
     }, [ data ]);
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     const onSubmit = async (event: any) => {
@@ -63,6 +54,7 @@ const CreateRequisite: FC = () => {
 
     return (
         <CreateRequisiteContainer>
+            {createRequisiteLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button

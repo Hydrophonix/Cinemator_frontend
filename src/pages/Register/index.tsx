@@ -13,7 +13,7 @@ import { useRegisterMutation } from '../../bus';
 import { useForm } from '../../hooks';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Instruments
 import { setAccessToken } from '../../@init/tokenStore';
@@ -31,7 +31,7 @@ const innitialForm = {
 
 const Register: FC = () => {
     const client = useApolloClient();
-    const [ register ] = useRegisterMutation();
+    const [ register, { loading: registerLoading }] = useRegisterMutation();
     const [ form, setForm ] = useForm<AuthInput>(innitialForm);
     const [ confirm, setConfirm ] = useState('');
     const [ isPasswordVisible, setPasswordVisible ] = useState(false);
@@ -53,6 +53,7 @@ const Register: FC = () => {
 
     return (
         <RegisterContainer>
+            {registerLoading && <Spinner absolute />}
             <h1>Register</h1>
             <form onSubmit = { onSubmit }>
                 <Input

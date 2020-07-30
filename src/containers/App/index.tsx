@@ -32,7 +32,6 @@ export const App: FC = () => {
                     setAccessToken(accessToken);
                     client.writeData({ data: { isLoggedIn: true }}); // TODO: Reactivate variables Apollo 3.0
                 }
-
                 setIsInitialized(true);
             })
             .catch(() => {
@@ -41,7 +40,7 @@ export const App: FC = () => {
     }, []);
 
     if (!isInitialized) {
-        return <div>Loading...</div>;
+        return null;
     }
 
     return (

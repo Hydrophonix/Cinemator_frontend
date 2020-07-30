@@ -17,7 +17,7 @@ import { ReqTypesModal } from '../../containers';
 import { ErrorBoundary, RequisitesTable } from '../../components';
 
 // Elemets
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Styles
 import { RequisiteContainer, Header } from './styles';
@@ -40,7 +40,7 @@ const Requisites: FC = () => {
     } = useInputsRedux();
 
     if (loading || !data || reqTypesLoading || !reqTypesData) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     const setRequisitesReqTypeHandler = (reqTypeId: string) => {

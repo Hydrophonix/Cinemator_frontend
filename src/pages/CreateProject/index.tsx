@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Assets
 import { Container, Header } from './styles';
@@ -26,7 +26,7 @@ const innitialForm = {
 
 const CreateProject: FC = () => {
     const { push } = useHistory();
-    const [ createProject ] = useCreateProjectMutation();
+    const [ createProject, { loading: createProjectLoading }] = useCreateProjectMutation();
     const [ form, setForm ] = useForm<ProjectCreateInput>(innitialForm);
 
     const onSubmit = async (event: any) => {
@@ -37,6 +37,7 @@ const CreateProject: FC = () => {
 
     return (
         <Container>
+            {createProjectLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button

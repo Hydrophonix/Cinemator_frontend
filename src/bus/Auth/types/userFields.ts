@@ -4,24 +4,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: MeQuery
+// GraphQL fragment: userFields
 // ====================================================
 
-export interface MeQuery_me_projects {
+export interface userFields_projects {
   __typename: "Project";
   id: string;
   title: string;
 }
 
-export interface MeQuery_me {
+export interface userFields {
   __typename: "User";
   id: string;
   email: string;
   name: string | null;
   phone: string | null;
-  projects: MeQuery_me_projects[];
-}
-
-export interface MeQuery {
-  me: MeQuery_me;
+  projects: userFields_projects[];
 }
