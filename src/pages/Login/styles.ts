@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const LoginContainer = styled.section`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;

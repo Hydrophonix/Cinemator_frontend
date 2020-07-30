@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary, DatePicker } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Apollo hooks
 import { useCreateWorkdayMutation, useWorkdaysQuery } from '../../bus/Workday';
@@ -39,12 +39,12 @@ const CreateWorkday: FC = () => {
     const { data, loading } = useWorkdaysQuery({ projectId });
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
     const { setGlobalDateRangeRedux } = useInputsRedux();
-    const [ createWorkday ] = useCreateWorkdayMutation({ projectId, setGlobalDateRangeRedux });
+    const [ createWorkday, { loading: createWorkdayLoading }] = useCreateWorkdayMutation({ projectId, setGlobalDateRangeRedux });
     const isTableMode = date === 'new-date';
     const [ defaultDate, setDefaultDate ] = useState<Date>(isTableMode ? new Date() : new Date(date));
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     const onSubmit = async (event: any) => {
@@ -70,6 +70,7 @@ const CreateWorkday: FC = () => {
 
     return (
         <CreateWorkdayContainer>
+            {createWorkdayLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button

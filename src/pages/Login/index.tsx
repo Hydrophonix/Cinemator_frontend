@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Hooks
 import { useLoginMutation } from '../../bus';
@@ -29,7 +29,7 @@ const innitialForm = {
 
 const Login: FC = () => {
     const client = useApolloClient();
-    const [ login ] = useLoginMutation();
+    const [ login, { loading: loginLoading }] = useLoginMutation();
     const [ form, setForm ] = useForm<AuthInput>(innitialForm);
     const [ isPasswordVisible, setPasswordVisible ] = useState(false);
 
@@ -45,6 +45,7 @@ const Login: FC = () => {
 
     return (
         <LoginContainer>
+            {loginLoading && <Spinner absolute />}
             <h1>Login</h1>
             <form onSubmit = { onSubmit }>
                 <Input

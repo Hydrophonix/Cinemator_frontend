@@ -7,16 +7,19 @@ import { useHistory } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Apollo hooks
-import { useMeQuery } from '../../bus/Auth';
+import { useMeQuery, useUpdateMeMutation } from '../../bus/Auth';
 
 // Hooks
 import { useForm } from '../../hooks';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Styles
 import { Container, Header } from './styles';
+
+// Types
+import { UserUpdateInput } from '../../@types/graphql-global-types';
 
 const innitialForm = {
     email: '',
@@ -27,7 +30,8 @@ const innitialForm = {
 const Profile: FC = () => {
     const { push } = useHistory();
     const { data, loading } = useMeQuery();
-    const [ form, setForm, setInitialForm ] = useForm<typeof innitialForm>(innitialForm);
+    const [ updateMe, { loading: updateMeLoading }] = useUpdateMeMutation();
+    const [ form, setForm, setInitialForm ] = useForm<UserUpdateInput>(innitialForm);
 
     useEffect(() => {
         data && void setInitialForm({
@@ -38,27 +42,14 @@ const Profile: FC = () => {
     }, [ data ]);
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
-    const onSubmit = async (event: any) => {
-        await event.preventDefault();
-
-        // const response = await createWorkday({
-        //     variables: {
-        //         input: {
-        //             title: form.title,
-        //             date: transformDateToISO8601(startDate),
-        //         },
-        //         projectId,
-        //     },
-        // });
-
-        // response && response.data && void goBack();
-    };
+    const onSubmit = async () => void await updateMe({ variables: { input: form }});
 
     return (
         <Container>
+            {updateMeLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button
@@ -79,21 +70,21 @@ const Profile: FC = () => {
                     <Input
                         name = 'email'
                         placeholder = 'Email'
-                        value = { form.email }
+                        value = { form.email || '' }
                         onChange = { setForm }
                     />
                     <h2>User name:</h2>
                     <Input
                         name = 'name'
                         placeholder = 'Name'
-                        value = { form.name }
+                        value = { form.name || '' }
                         onChange = { setForm }
                     />
                     <h2>User phone:</h2>
                     <Input
                         name = 'phone'
                         placeholder = 'Phone'
-                        value = { form.phone }
+                        value = { form.phone || '' }
                         onChange = { setForm }
                     />
 

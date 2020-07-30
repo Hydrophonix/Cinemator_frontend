@@ -22,7 +22,7 @@ import {
 import { useArrayOfStringsForm } from '../../hooks';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Styles
 import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section, ReqTypesContainer } from './styles';
@@ -38,9 +38,11 @@ const Requisite: FC = () => {
     const { projectId, requisiteId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
-    const [ updateRequisiteScenes ] = useUpdateRequisiteScenesMutation();
-    const [ updateRequisiteReqTypes ] = useUpdateRequisiteReqTypesMutation();
-    const [ deleteRequisite ] = useDeleteRequisiteMutation({ projectId, requisiteId });
+    const [ updateRequisiteScenes, { loading: updateRequisiteScenesLoading }] = useUpdateRequisiteScenesMutation();
+    const [ updateRequisiteReqTypes, { loading: updateRequisiteReqTypesLoading }] = useUpdateRequisiteReqTypesMutation(); // eslint-disable-line max-len
+    const [ deleteRequisite, { loading: deleteRequisiteLoading }] = useDeleteRequisiteMutation({
+        projectId, requisiteId,
+    });
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
     const [ reqTypeIds, setReqTypeIdsArray, setInitialReqTypeIds ] = useArrayOfStringsForm([]);
 
@@ -53,11 +55,11 @@ const Requisite: FC = () => {
     }, [ requisite ]);
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     if (!requisite) {
-        return <div>No requisite exist</div>;
+        return <div>No requisite exist</div>; // TODO: MAKE FALLBACK COMPONENT WITH REDIRECT
     }
 
     const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
@@ -85,6 +87,7 @@ const Requisite: FC = () => {
 
     return (
         <RequisiteContainer>
+            {deleteRequisiteLoading && <Spinner absolute />}
             <Switch>
                 <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
                     <ScenesModal
@@ -94,6 +97,7 @@ const Requisite: FC = () => {
                         } }
                         handler = { (sceneId: string) => void setSceneIds(sceneId) }
                         saveHandler = { updateRequisiteScenesHandler }
+                        saveHandlerLoading = { updateRequisiteScenesLoading }
                         sceneIds = { sceneIds }
                     />
                 </Route>
@@ -103,6 +107,7 @@ const Requisite: FC = () => {
                         handler = { setReqTypeIdsArray }
                         reqTypeIds = { reqTypeIds }
                         saveHandler = { updateRequisiteReqTypesHandler }
+                        saveHandlerLoading = { updateRequisiteReqTypesLoading }
                     />
                 </Route>
             </Switch>

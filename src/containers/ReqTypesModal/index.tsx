@@ -38,6 +38,7 @@ type PropTypes = {
     reqTypeIds?: String[]
     handler?: (reqTypeId: string) => void
     saveHandler?: Function
+    saveHandlerLoading?: boolean
 }
 
 // Instruments
@@ -48,22 +49,23 @@ const initialForm = {
 let timeOutId: number | undefined = void 0;
 
 export const ReqTypesModal: FC<PropTypes> = ({
-    closeHandler, reqTypeIds, handler, saveHandler,
+    closeHandler, reqTypeIds, handler, saveHandler, saveHandlerLoading,
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const client = useApolloClient();
     const { data, loading } = useReqTypesQuery({ projectId });
     const { data: requisitesData, loading: requisitesLoading } = useRequisitesQuery({ projectId });
-    const [ createReqType ] = useCreateReqTypeMutation({ projectId });
-    const [ updateReqType ] = useUpdateReqTypeMutation();
-    const [ deleteReqType ] = useDeleteReqTypeMutation();
+    const [ createReqType, { loading: createReqTypeLoading }] = useCreateReqTypeMutation({ projectId });
+    const [ updateReqType, { loading: updateReqTypeLoading }] = useUpdateReqTypeMutation();
+    const [ deleteReqType, { loading: deleteReqTypeLoading }] = useDeleteReqTypeMutation();
     const [ form, setForm, _, resetForm ] = useForm<typeof initialForm>(initialForm); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ isPlusRotate, setPlusRotateState ] = useState(false);
     const [ isTrashRotate, setTrashRotateState ] = useState(false);
+    const isSpinnerActive = saveHandlerLoading || createReqTypeLoading || updateReqTypeLoading || deleteReqTypeLoading;
 
     if (loading || !data || requisitesLoading || !requisitesData) {
-        return <div>Loading...</div>;
+        return null;
     }
 
     const filterHandler = () => {
@@ -169,7 +171,9 @@ export const ReqTypesModal: FC<PropTypes> = ({
 
 
     return (
-        <Modal closeHandler = { closeHandler }>
+        <Modal
+            closeHandler = { closeHandler }
+            spinner = { isSpinnerActive }>
             <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Types</ModalHeader>
             <Nav>
                 <section>

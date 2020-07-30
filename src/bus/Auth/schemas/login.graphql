@@ -1,8 +1,9 @@
+#import "./userFields.graphql"
+
 mutation Login($input: AuthInput!) {
   loginWeb(input: $input) {
       user {
-          id
-          email
+        ...userFields
       }
       accessToken
   }

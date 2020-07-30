@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom';
 // Components
 import { Sidebar } from './Sidebar';
 
+// Elements
+import { Spinner } from '../../elements';
+
 // Routes
 import { Routes } from './Routes';
 
@@ -23,13 +26,13 @@ export const Project: FC = () => {
     const { data, loading } = useOwnedProjectsQuery();
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     const project = data.ownedProjects.find((project) => project.id === projectId);
 
     if (!project) {
-        return <div>Project do not exist!</div>;
+        return <div>Project do not exist!</div>; // TODO: MAKE FALLBACK COMPONENT WITH REDIRECT!
     }
 
     return (

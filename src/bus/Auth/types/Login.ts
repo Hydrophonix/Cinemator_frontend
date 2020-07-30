@@ -9,10 +9,19 @@ import { AuthInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: Login
 // ====================================================
 
+export interface Login_loginWeb_user_projects {
+  __typename: "Project";
+  id: string;
+  title: string;
+}
+
 export interface Login_loginWeb_user {
   __typename: "User";
   id: string;
   email: string;
+  name: string | null;
+  phone: string | null;
+  projects: Login_loginWeb_user_projects[];
 }
 
 export interface Login_loginWeb {

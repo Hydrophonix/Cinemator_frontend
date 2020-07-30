@@ -23,12 +23,15 @@ type PropTypes = {
     requisiteIds: Array<string>
     handler?: (requisiteId: string) => void
     saveHandler?: Function
+    saveHandlerLoading?: boolean
 }
 type Params = {
     projectId: string
 }
 
-export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, handler, saveHandler }) => {
+export const RequisitesModal: FC<PropTypes> = ({
+    closeHandler, requisiteIds, handler, saveHandler, saveHandlerLoading,
+}) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
     const { data, loading } = useRequisitesQuery({ projectId });
@@ -36,7 +39,7 @@ export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, han
     const [ title, setTitleUseState ] = useState('');
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return null;
     }
 
     const findByIndex = () => {
@@ -66,7 +69,9 @@ export const RequisitesModal: FC<PropTypes> = ({ closeHandler, requisiteIds, han
     };
 
     return (
-        <Modal closeHandler = { closeHandler }>
+        <Modal
+            closeHandler = { closeHandler }
+            spinner = { saveHandlerLoading }>
             <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Requisites</ModalHeader>
             <Main>
                 <RequisitesTable

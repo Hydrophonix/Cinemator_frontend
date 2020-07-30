@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 
 export const CreateSceneContainer = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;

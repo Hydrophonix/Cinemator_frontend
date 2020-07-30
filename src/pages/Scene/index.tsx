@@ -22,7 +22,7 @@ import {
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Styles
 import { Container, Header, WorkdaysContainer, LocationsContainer, Section } from './styles';
@@ -41,10 +41,10 @@ const Scene: FC = () => {
     const { data, loading } = useScenesQuery({ projectId });
     const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
 
-    const [ updateSceneWorkdays ] = useUpdateSceneWorkdaysMutation();
-    const [ updateSceneRequisites ] = useUpdateSceneRequisitesMutation();
-    const [ updateSceneLocations ] = useUpdateSceneLocationsMutation();
-    const [ deleteScene ] = useDeleteSceneMutation({ projectId, sceneId });
+    const [ updateSceneWorkdays, { loading: updateSceneWorkdaysLoading }] = useUpdateSceneWorkdaysMutation();
+    const [ updateSceneRequisites, { loading: updateSceneRequisitesLoading }] = useUpdateSceneRequisitesMutation();
+    const [ updateSceneLocations, { loading: updateSceneLocationsLoading }] = useUpdateSceneLocationsMutation();
+    const [ deleteScene, { loading: deleteSceneLoading }] = useDeleteSceneMutation({ projectId, sceneId });
 
     const [ workdayIds, setWorkdayIds, setInitialWorkdayIds ] = useArrayOfStringsForm([]);
     const [ requisiteIds, setRequisiteIds, setInitialRequisiteIds ] = useArrayOfStringsForm([]);
@@ -61,11 +61,11 @@ const Scene: FC = () => {
     }, [ scene ]);
 
     if (loading || !data || requisiteLoading || !requisiteData) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     if (!scene || !requisiteIdsArray) {
-        return <div>No scene exist</div>;
+        return <div>No scene exist</div>; // TODO: MAKE Component with redirect
     }
 
     const sceneRequisites = _intersectionWith(
@@ -105,6 +105,7 @@ const Scene: FC = () => {
 
     return (
         <Container>
+            {deleteSceneLoading && <Spinner absolute />}
             <Switch>
                 <Route path = { '/:projectId/scenes/:sceneId/add-workdays' }>
                     <WorkdaysModal
@@ -114,6 +115,7 @@ const Scene: FC = () => {
                         } }
                         handler = { (workdayId: string) => void setWorkdayIds(workdayId) }
                         saveHandler = { updateSceneWorkdaysHandler }
+                        saveHandlerLoading = { updateSceneWorkdaysLoading }
                         workdayIds = { workdayIds }
                     />
                 </Route>
@@ -126,6 +128,7 @@ const Scene: FC = () => {
                         handler = { (requisiteId: string) => void setRequisiteIds(requisiteId) }
                         requisiteIds = { requisiteIds }
                         saveHandler = { updateSceneRequisitesHandler }
+                        saveHandlerLoading = { updateSceneRequisitesLoading }
                     />
                 </Route>
                 <Route path = { '/:projectId/scenes/:sceneId/locations' }>
@@ -134,6 +137,7 @@ const Scene: FC = () => {
                         handler = { setLocationIdsArray }
                         locationIds = { locationIds }
                         saveHandler = { updateSceneLocationsHandler }
+                        saveHandlerLoading = { updateSceneLocationsLoading }
                     />
                 </Route>
             </Switch>

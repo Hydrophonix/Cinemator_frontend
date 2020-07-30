@@ -13,6 +13,9 @@ import { ErrorBoundary } from '../../components';
 import { Calendar } from './Calendar';
 import { Table } from './Table';
 
+// Elements
+import { Spinner } from '../../elements';
+
 // Types
 import { Params } from './types';
 
@@ -22,7 +25,7 @@ const Workdays: FC = () => {
     const { ui } = useUiRedux();
 
     if (loading || !data) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     return (

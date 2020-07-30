@@ -24,7 +24,7 @@ import { LocationsModal } from '../../containers';
 import { ErrorBoundary, DateRangePicker, ScenesTable } from '../../components';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Styles
 import { ScenesContainer, Header } from './styles';
@@ -49,7 +49,7 @@ const Scenes: FC = () => {
     const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
 
     if (loading || !data || locationsLoading || !locationsData) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     const setScenesLocationHandler = (locationId: string) => {

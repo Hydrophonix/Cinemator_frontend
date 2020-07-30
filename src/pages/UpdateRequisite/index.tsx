@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input } from '../../elements';
+import { Button, Input, Spinner } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -34,7 +34,7 @@ const UpdateRequisite: FC = () => {
     const { push } = useHistory();
     const { projectId, requisiteId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
-    const [ updateRequisite ] = useUpdateRequisiteMutation();
+    const [ updateRequisite, { loading: updateRequisiteLoading }] = useUpdateRequisiteMutation();
     const [ form, setForm, setInitialForm ] = useForm<RequisiteUpdateInput>(initialForm);
     const requisite = data?.requisites.find((requisite) => requisite.id === requisiteId);
 
@@ -47,17 +47,17 @@ const UpdateRequisite: FC = () => {
     }, [ requisite ]);
 
     if (loading || !data || !requisite) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
-    const onSubmit = async (event: any) => {
-        event.preventDefault();
+    const onSubmit = async () => {
         const response = await updateRequisite({ variables: { input: form, requisiteId }});
         response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
     };
 
     return (
         <Container>
+            {updateRequisiteLoading && <Spinner absolute />}
             <Header>
                 <div>
                     <Button

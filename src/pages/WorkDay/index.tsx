@@ -22,7 +22,7 @@ import { useArrayOfStringsForm } from '../../hooks';
 import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Elements
-import { Button } from '../../elements';
+import { Button, Spinner } from '../../elements';
 
 // Styles
 import { WorkdayContainer, WorkdayHeader, Description } from './styles';
@@ -39,8 +39,12 @@ const Workday: FC = () => {
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
     const { setGlobalDateRangeRedux } = useInputsRedux();
-    const [ deleteWorkday ] = useDeleteWorkdayMutation({ projectId, workdayId, setGlobalDateRangeRedux });
-    const [ updateWorkdayScenes ] = useUpdateWorkdayScenesMutation({ projectId });
+    const [ deleteWorkday, { loading: deleteWorkdayLoading }] = useDeleteWorkdayMutation({
+        projectId, workdayId, setGlobalDateRangeRedux,
+    });
+    const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation({
+        projectId,
+    });
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
 
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
@@ -51,11 +55,11 @@ const Workday: FC = () => {
     }, [ workday ]);
 
     if (loading || !data || scenesLoading || !scenesData) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     if (!workday || !sceneIdsArray) {
-        return <div>No workday exist</div>;
+        return <div>No workday exist</div>; // TODO: MAKE redirect component
     }
 
     const workdayScenes = _intersectionWith(
@@ -80,6 +84,7 @@ const Workday: FC = () => {
 
     return (
         <WorkdayContainer>
+            {deleteWorkdayLoading && <Spinner absolute />}
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
                 <ScenesModal
                     closeHandler = { () => {
@@ -88,6 +93,7 @@ const Workday: FC = () => {
                     } }
                     handler = { (sceneId: string) => void setSceneIds(sceneId) }
                     saveHandler = { updateWorkdayScenesHandler }
+                    saveHandlerLoading = { updateWorkdayScenesLoading }
                     sceneIds = { sceneIds }
                 />
             </Route>
