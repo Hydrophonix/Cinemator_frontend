@@ -22,6 +22,7 @@ import {
     faEye,
     faEyeSlash,
     faCog,
+    faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const initIconsLibrary = () => library.add(
@@ -46,4 +47,5 @@ export const initIconsLibrary = () => library.add(
     faEye,
     faEyeSlash,
     faCog,
+    faCheck,
 );

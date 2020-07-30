@@ -25,7 +25,7 @@ import { useArrayOfStringsForm } from '../../hooks';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section, ReqTypesContainer } from './styles';
+import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section, ReqTypesContainer, Main } from './styles';
 
 // Types
 type Params = {
@@ -179,7 +179,7 @@ const Requisite: FC = () => {
                 <div><p>{requisite.title}</p></div>
                 {requisite.description && <div><p>{requisite.description}</p></div>}
             </Section>
-            <main>
+            <Main>
                 {
                     requisite.reqTypes.length !== 0 && (
                         <ReqTypesContainer>
@@ -211,7 +211,7 @@ const Requisite: FC = () => {
                         </ScenesContainer>
                     )
                 }
-            </main>
+            </Main>
         </RequisiteContainer>
     );
 };

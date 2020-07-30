@@ -25,7 +25,7 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { Container, Header, WorkdaysContainer, LocationsContainer, Section } from './styles';
+import { Container, Header, WorkdaysContainer, LocationsContainer, Section, Main } from './styles';
 import { useArrayOfStringsForm } from '../../hooks';
 
 // Types
@@ -225,37 +225,39 @@ const Scene: FC = () => {
                     </Section>
                 )
             }
-            {
-                scene.workdays.length !== 0 && (
-                    <WorkdaysContainer>
-                        {
-                            scene.workdays.map((workday) => (
-                                <Button
-                                    key = { workday.id }
-                                    style = {{ backgroundColor: theme.workday.anotherSecondary, color: '#fff' }}
-                                    onClick = { (event) => void workdayRedirectHandler(event, workday.id) }>
-                                    {workday.date}
-                                </Button>
-                            ))
-                        }
-                    </WorkdaysContainer>
-                )
-            }
-            {
-                scene.locations.length !== 0 && (
-                    <LocationsContainer>
-                        {
-                            scene.locations.map((location) => (
-                                <Button
-                                    key = { location.id }
-                                    style = {{ backgroundColor: theme.scene.locationPrimary, color: '#fff' }}>
-                                    {location.name}
-                                </Button>
-                            ))
-                        }
-                    </LocationsContainer>
-                )
-            }
+            <Main>
+                {
+                    scene.workdays.length !== 0 && (
+                        <WorkdaysContainer>
+                            {
+                                scene.workdays.map((workday) => (
+                                    <Button
+                                        key = { workday.id }
+                                        style = {{ backgroundColor: theme.workday.anotherSecondary, color: '#fff' }}
+                                        onClick = { (event) => void workdayRedirectHandler(event, workday.id) }>
+                                        {workday.date}
+                                    </Button>
+                                ))
+                            }
+                        </WorkdaysContainer>
+                    )
+                }
+                {
+                    scene.locations.length !== 0 && (
+                        <LocationsContainer>
+                            {
+                                scene.locations.map((location) => (
+                                    <Button
+                                        key = { location.id }
+                                        style = {{ backgroundColor: theme.scene.locationPrimary, color: '#fff' }}>
+                                        {location.name}
+                                    </Button>
+                                ))
+                            }
+                        </LocationsContainer>
+                    )
+                }
+            </Main>
             <RequisitesTable
                 requisites = { sceneRequisites }
                 sceneId = { sceneId }

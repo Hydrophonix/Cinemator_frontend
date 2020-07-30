@@ -32,26 +32,6 @@ export const RequisiteHeader = styled.header`
     }
 `;
 
-export const ReqTypesContainer = styled.section`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    background-color: ${({ theme }) => theme.requisite.secondary};
-`;
-
-export const ScenesContainer = styled.section`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    background-color: ${({ theme }) => theme.scene.containerBg};
-`;
-
 export const Section = styled.section`
     display: flex;
     flex-direction: column;
@@ -71,4 +51,31 @@ export const Section = styled.section`
             font-family: sans-serif;
         }
     }
+`;
+
+export const Main = styled.main`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const ReqTypesContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.requisite.hoverSecondary};
+`;
+
+export const ScenesContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.scene.hoverSecondary};
 `;

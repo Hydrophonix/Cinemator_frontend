@@ -50,9 +50,9 @@ export const RequisitesHead: FC<PropTypes> = ({
                     {
                         typeof index === 'number'
                             ? (
-                                <nav style = {{ width: 35 }}>
+                                <nav style = {{ width: 40 }}>
                                     <input
-                                        style = {{ width: 35, textAlign: 'center' }}
+                                        style = {{ width: 40, textAlign: 'center' }}
                                         type = 'number'
                                         value = { index }
                                         onChange = { onIndexChange }
@@ -69,7 +69,7 @@ export const RequisitesHead: FC<PropTypes> = ({
                                     }
                                 </nav>
                             )
-                            : <nav style = {{ width: 35, textAlign: 'center' }}>#</nav>
+                            : <nav style = {{ width: 40, textAlign: 'center' }}>#</nav>
                     }
                 </Th>
                 {

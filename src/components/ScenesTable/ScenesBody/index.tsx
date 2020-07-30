@@ -3,9 +3,13 @@ import React, { FC, useContext } from 'react';
 import { Tbody, Tr, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
 import { Button } from '../../../elements';
+
+// Styles
+import { IndexContainer } from './styles';
 
 // Types
 import { Scenes_scenes } from '../../../bus/Scene';
@@ -49,9 +53,18 @@ export const ScenesBody: FC<Proptypes> = ({
                         style = { sceneIds?.includes(scene.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => { handler ? void handler(scene.id) : void sceneRedirectHandler(scene.id); } }>
                         <Td>
-                            <div style = {{ width: 35, textAlign: 'center', fontSize: 20 }}>
-                                {`${scene.number}`}
-                            </div>
+                            <IndexContainer>
+                                <span>{`${scene.number}`}</span>
+                                {
+                                    false && (
+                                        <FontAwesomeIcon
+                                            color = '#fff'
+                                            icon = 'check'
+                                            style = {{ width: 14, height: 14 }}
+                                        />
+                                    )
+                                }
+                            </IndexContainer>
                         </Td>
                         <Td>
                             {

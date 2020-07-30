@@ -9,7 +9,6 @@ const indexStyles = css`
         input {
           box-sizing: border-box;
           font-family: sans-serif;
-          margin-left: 2px;
         }
 
         span {

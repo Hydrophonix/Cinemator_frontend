@@ -43,9 +43,9 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
                     {
                         typeof index === 'number'
                             ? (
-                                <nav style = {{ width: 35 }}>
+                                <nav style = {{ width: 40 }}>
                                     <input
-                                        style = {{ width: 35, textAlign: 'center' }}
+                                        style = {{ width: 40, textAlign: 'center' }}
                                         type = 'number'
                                         value = { index }
                                         onChange = { onIndexChange }
@@ -63,7 +63,7 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
                                 </nav>
                             )
                             : (
-                                <nav style = {{ width: 35, textAlign: 'center' }}>
+                                <nav style = {{ width: 40, textAlign: 'center' }}>
                                     #
                                 </nav>
                             )

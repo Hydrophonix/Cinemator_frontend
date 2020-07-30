@@ -32,28 +32,6 @@ export const Header = styled.header`
     }
 `;
 
-export const WorkdaysContainer = styled.section`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    padding: 5px;
-    border-top: 0.5px solid ${({ theme }) => theme.scene.primary};
-    box-sizing: border-box;
-    background-color: ${({ theme }) => theme.workday.containerBg};
-`;
-
-export const LocationsContainer = styled.section`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    border-top: 0.5px solid ${({ theme }) => theme.scene.primary};
-    background-color: ${({ theme }) => theme.scene.containerBg};
-`;
-
 export const Section = styled.section`
     display: flex;
     flex-direction: column;
@@ -73,4 +51,31 @@ export const Section = styled.section`
             font-family: sans-serif;
         }
     }
+`;
+
+export const Main = styled.main`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const WorkdaysContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.workday.containerBg};
+`;
+
+export const LocationsContainer = styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.scene.hoverSecondary};
 `;
