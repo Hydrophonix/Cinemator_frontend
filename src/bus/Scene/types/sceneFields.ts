@@ -31,6 +31,7 @@ export interface sceneFields {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: sceneFields_locations[];
   workdays: sceneFields_workdays[];
   requisites: sceneFields_requisites[];

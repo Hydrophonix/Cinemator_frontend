@@ -1,31 +1,19 @@
 // Core
 import styled from 'styled-components';
 
-export const RequisiteContainer = styled.header`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+// Styles
+import { EntityContainer, EntityHeader } from '../styles';
+
+export const Container = styled(EntityContainer)`
     background-color: ${({ theme }) => theme.requisite.containerBg};
 `;
 
-export const Header = styled.header`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 35px;
-    padding:  5px;
-    box-sizing: border-box;
+export const Header = styled(EntityHeader)`
     background-color: ${({ theme }) => theme.requisite.secondary};
 
-    h2 {
-        font-size: 24px;
-        font-family: sans-serif;
-        color: #fff;
-    }
-
-    @media (max-width: 1024px) {
-        h1 {
-            display: none;
+    @media (max-width: 375px) {
+        h2 {
+            font-size: 0px;
         }
     }
 `;

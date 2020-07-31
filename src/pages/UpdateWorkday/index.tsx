@@ -22,7 +22,7 @@ import { useInputsRedux } from '../../@init/redux/inputs';
 import { transformDateToISO8601 } from '../../utils';
 
 // Styles
-import { UpdateWorkdayContainer, Header } from './styles';
+import { Container, Header, UpdateInputs } from './styles';
 
 type Params = {
     projectId: string
@@ -73,23 +73,24 @@ const UpdateWorkday: FC = () => {
     };
 
     return (
-        <UpdateWorkdayContainer>
+        <Container>
             {updateWorkdayLoading && <Spinner absolute />}
             <Header>
-                <Button
-                    title = { `Back to ${workday.date}` }
-                    onClick = { () => push(`/${projectId}/calendar/${workdayId}`) }>
-                    <FontAwesomeIcon
-                        color = '#000'
-                        icon = 'reply'
-                        style = {{ width: 16, height: 16 }}
-                    />
-                </Button>
-                <h2>Update workday {workday.date}</h2>
-                <div />
-            </Header>
-            <main>
                 <nav>
+                    <Button
+                        title = { `Back to ${workday.date}` }
+                        onClick = { () => push(`/${projectId}/calendar/${workdayId}`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
+                <h2>Update W:{workday.date}</h2>
+            </Header>
+            <UpdateInputs>
+                <section>
                     <h2>Workday date:</h2>
                     <DatePicker
                         date = { workdayDate }
@@ -104,9 +105,9 @@ const UpdateWorkday: FC = () => {
                         onChange = { setForm }
                     />
                     <Button onClick = { onSubmit }>Update</Button>
-                </nav>
-            </main>
-        </UpdateWorkdayContainer>
+                </section>
+            </UpdateInputs>
+        </Container>
     );
 };
 

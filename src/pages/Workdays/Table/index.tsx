@@ -53,25 +53,29 @@ export const Table: FC<PropTypes> = ({ data }) => {
     return (
         <Container>
             <Header>
-                <DateRangePicker
-                    reset
-                    endDay = { endDay }
-                    firstPopperPlacement = 'top-start'
-                    projectEndDay = { projectEndDay }
-                    projectStartDay = { projectStartDay }
-                    setDateRange = { setWorkdaysDateRangeRedux }
-                    startDay = { startDay }
-                />
-                <h2>Workdays</h2>
-                <Button
-                    title = 'Create workday'
-                    onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
-                    <FontAwesomeIcon
-                        color = '#000'
-                        icon = 'plus'
-                        style = {{ width: 16, height: 16 }}
+                <nav>
+                    <DateRangePicker
+                        reset
+                        endDay = { endDay }
+                        firstPopperPlacement = 'top-start'
+                        projectEndDay = { projectEndDay }
+                        projectStartDay = { projectStartDay }
+                        setDateRange = { setWorkdaysDateRangeRedux }
+                        startDay = { startDay }
                     />
-                </Button>
+                </nav>
+                <h2>Workdays</h2>
+                <nav>
+                    <Button
+                        title = 'Create workday'
+                        onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'plus'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
                 <WorkdaysTable workdays = { filterByDateRange() } />

@@ -25,7 +25,7 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { Container, Header, WorkdaysContainer, LocationsContainer, Section, Main } from './styles';
+import { Container, Header, Info, Relations } from './styles';
 import { useArrayOfStringsForm } from '../../hooks';
 
 // Types
@@ -159,7 +159,21 @@ const Scene: FC = () => {
                         />
                     </Button>
                 </nav>
-                <h2>{`S: ${scene.number}`}</h2>
+                <h2>
+                    {`S:${scene.number}`}
+                    {
+                        scene.isCompleted && (
+                            <>
+                                :
+                                <FontAwesomeIcon
+                                    color = '#fff'
+                                    icon = 'check'
+                                    style = {{ width: 18, height: 18 }}
+                                />
+                            </>
+                        )
+                    }
+                </h2>
                 <nav>
                     <Button
                         title = 'Add workdays'
@@ -219,16 +233,16 @@ const Scene: FC = () => {
             </Header>
             {
                 (scene.title || scene.description) && (
-                    <Section>
+                    <Info>
                         {scene.title && <div><p>{scene.title}</p></div>}
                         {scene.description && <div><p>{scene.description}</p></div>}
-                    </Section>
+                    </Info>
                 )
             }
-            <Main>
+            <Relations>
                 {
                     scene.workdays.length !== 0 && (
-                        <WorkdaysContainer>
+                        <section style = {{ backgroundColor: theme.workday.containerBg }}>
                             {
                                 scene.workdays.map((workday) => (
                                     <Button
@@ -239,12 +253,12 @@ const Scene: FC = () => {
                                     </Button>
                                 ))
                             }
-                        </WorkdaysContainer>
+                        </section>
                     )
                 }
                 {
                     scene.locations.length !== 0 && (
-                        <LocationsContainer>
+                        <section style = {{ backgroundColor: theme.scene.hoverSecondary }}>
                             {
                                 scene.locations.map((location) => (
                                     <Button
@@ -254,10 +268,10 @@ const Scene: FC = () => {
                                     </Button>
                                 ))
                             }
-                        </LocationsContainer>
+                        </section>
                     )
                 }
-            </Main>
+            </Relations>
             <RequisitesTable
                 requisites = { sceneRequisites }
                 sceneId = { sceneId }

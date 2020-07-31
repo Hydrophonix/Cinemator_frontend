@@ -31,6 +31,7 @@ export interface UpdateSceneWorkdays_updateSceneWorkdays_updatedScene {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: UpdateSceneWorkdays_updateSceneWorkdays_updatedScene_locations[];
   workdays: UpdateSceneWorkdays_updateSceneWorkdays_updatedScene_workdays[];
   requisites: UpdateSceneWorkdays_updateSceneWorkdays_updatedScene_requisites[];
@@ -45,6 +46,7 @@ export interface UpdateSceneWorkdays_updateSceneWorkdays_updatedWorkdays_scenes 
   __typename: "Scene";
   id: string;
   number: number;
+  isCompleted: boolean;
   requisites: UpdateSceneWorkdays_updateSceneWorkdays_updatedWorkdays_scenes_requisites[];
 }
 

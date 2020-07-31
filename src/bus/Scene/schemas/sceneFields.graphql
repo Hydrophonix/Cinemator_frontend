@@ -3,6 +3,7 @@ fragment sceneFields on Scene {
     number
     title
     description
+    isCompleted
     locations {
       id
       name

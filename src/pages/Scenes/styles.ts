@@ -1,31 +1,22 @@
 // Core
 import styled from 'styled-components';
 
-export const ScenesContainer = styled.section`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+// Styles
+import { EntityContainer, EntityHeader } from '../styles';
+
+export const Container = styled(EntityContainer)`
     background-color: ${({ theme }) => theme.scene.containerBg};
 `;
 
-export const Header = styled.header`
+export const Header = styled(EntityHeader)`
     display: flex;
     justify-content: space-between;
-    min-height: 35px;
     align-items: center;
-    padding:  5px;
-    box-sizing: border-box;
     background-color: ${({ theme }) => theme.scene.secondary};
 
-    h2 {
-        font-size: 24px;
-        font-family: sans-serif;
-        color: #fff;
-    }
-
-    @media (max-width: 1024px) {
+    @media (max-width: 375px) {
         h2 {
-            display: none;
+            font-size: 0px;
         }
     }
 `;

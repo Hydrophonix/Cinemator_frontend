@@ -16,7 +16,7 @@ import { useForm } from '../../hooks';
 import { Button, Input, Spinner } from '../../elements';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, UpdateInputs } from './styles';
 
 // Types
 import { UserUpdateInput } from '../../@types/graphql-global-types';
@@ -51,7 +51,7 @@ const Profile: FC = () => {
         <Container>
             {updateMeLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = 'Back to projects'
                         onClick = { () => void push('/') }>
@@ -61,11 +61,11 @@ const Profile: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>Profile</h2>
             </Header>
-            <main>
-                <div>
+            <UpdateInputs>
+                <section>
                     <h2>User email:</h2>
                     <Input
                         name = 'email'
@@ -87,11 +87,10 @@ const Profile: FC = () => {
                         value = { form.phone || '' }
                         onChange = { setForm }
                     />
-
                     <Button onClick = { onSubmit }>Update</Button>
                     <Button>Logout</Button>
-                </div>
-            </main>
+                </section>
+            </UpdateInputs>
         </Container>
     );
 };

@@ -14,7 +14,7 @@ import { useForm } from '../../hooks';
 import { useRequisitesQuery, useUpdateRequisiteMutation } from '../../bus/Requisite';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, UpdateInputs } from './styles';
 
 // Types
 import { RequisiteUpdateInput } from '../../@types/graphql-global-types';
@@ -59,7 +59,7 @@ const UpdateRequisite: FC = () => {
         <Container>
             {updateRequisiteLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = { `Back to R:${requisite.number}` }
                         onClick = { () => void push(`/${projectId}/requisites/${requisiteId}`) }>
@@ -69,11 +69,11 @@ const UpdateRequisite: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
-                <h2>Update requisite: {requisite.number}</h2>
+                </nav>
+                <h2>Update R:{requisite.number}</h2>
             </Header>
-            <main>
-                <div>
+            <UpdateInputs>
+                <section>
                     {/* <h2>Requisite number:</h2>
                     <Input
                         name = 'number'
@@ -97,8 +97,8 @@ const UpdateRequisite: FC = () => {
                         onChange = { setForm }
                     />
                     <Button onClick = { onSubmit }>Update</Button>
-                </div>
-            </main>
+                </section>
+            </UpdateInputs>
         </Container>
     );
 };

@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -7,14 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input, Spinner } from '../../elements';
+import { Button, Input, Spinner, Toggle } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
 import { useScenesQuery, useUpdateSceneMutation } from '../../bus/Scene';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, UpdateInputs } from './styles';
 
 // Types
 import { SceneUpdateInput } from '../../@types/graphql-global-types';
@@ -36,14 +36,18 @@ const UpdateScene: FC = () => {
     const { data, loading } = useScenesQuery({ projectId });
     const [ updateScene, { loading: updateSceneLoading }] = useUpdateSceneMutation();
     const [ form, setForm, setInitialForm ] = useForm<SceneUpdateInput>(initialForm);
+    const [ isCompleted, setIsCompleted ] = useState(false);
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
 
     useEffect(() => {
-        scene && void setInitialForm({
-            number:      scene.number,
-            title:       scene.title || '',
-            description: scene.description || '',
-        });
+        if (scene) {
+            setInitialForm({
+                number:      scene.number,
+                title:       scene.title || '',
+                description: scene.description || '',
+            });
+            setIsCompleted(scene.isCompleted);
+        }
     }, [ scene ]);
 
     if (loading || !data || !scene) {
@@ -51,7 +55,7 @@ const UpdateScene: FC = () => {
     }
 
     const onSubmit = async () => {
-        const response = await updateScene({ variables: { input: form, sceneId }});
+        const response = await updateScene({ variables: { input: { ...form, isCompleted }, sceneId }});
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
@@ -59,7 +63,7 @@ const UpdateScene: FC = () => {
         <Container>
             {updateSceneLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = { `Back to S:${scene.number}` }
                         onClick = { () => push(`/${projectId}/scenes/${sceneId}`) }>
@@ -69,11 +73,17 @@ const UpdateScene: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
-                <h2>Update scene: {scene.number}</h2>
+                </nav>
+                <h2>Update S:{scene.number}</h2>
             </Header>
-            <main>
-                <div>
+            <UpdateInputs>
+                <section>
+                    <h2>Scene condition:</h2>
+                    <Toggle
+                        active = { isCompleted }
+                        text = { isCompleted ? 'Completed' : 'In progress' }
+                        onChange = { setIsCompleted }
+                    />
                     <h2>Scene number:</h2>
                     <Input
                         name = 'number'
@@ -95,8 +105,8 @@ const UpdateScene: FC = () => {
                         onChange = { setForm }
                     />
                     <Button onClick = { onSubmit }>Update</Button>
-                </div>
-            </main>
+                </section>
+            </UpdateInputs>
         </Container>
     );
 };

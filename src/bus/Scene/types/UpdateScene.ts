@@ -33,6 +33,7 @@ export interface UpdateScene_updateScene {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: UpdateScene_updateScene_locations[];
   workdays: UpdateScene_updateScene_workdays[];
   requisites: UpdateScene_updateScene_requisites[];

@@ -27,7 +27,7 @@ import { ErrorBoundary, DateRangePicker, ScenesTable } from '../../components';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { ScenesContainer, Header } from './styles';
+import { Container, Header } from './styles';
 
 // Types
 type Params = { projectId: string };
@@ -102,7 +102,7 @@ const Scenes: FC = () => {
     };
 
     return (
-        <ScenesContainer>
+        <Container>
             <Route path = { '/:projectId/scenes/locations' }>
                 <LocationsModal
                     closeHandler = { () => void push(`/${projectId}/scenes`) }
@@ -110,28 +110,33 @@ const Scenes: FC = () => {
                 />
             </Route>
             <Header>
-                <DateRangePicker
-                    reset
-                    endDay = { endDay }
-                    firstPopperPlacement = 'top-start'
-                    projectEndDay = { projectEndDay }
-                    projectStartDay = { projectStartDay }
-                    setDateRange = { setScenesDateRangeRedux }
-                    startDay = { startDay }
-                />
-                <h2>Scenes</h2>
-                <Button
-                    title = 'Create scene'
-                    onClick = { () => void push(`/${projectId}/create-scene`) }>
-                    <FontAwesomeIcon
-                        color = '#000'
-                        icon = 'plus'
-                        style = {{
-                            width:  16,
-                            height: 16,
-                        }}
+                <nav>
+
+                    <DateRangePicker
+                        reset
+                        endDay = { endDay }
+                        firstPopperPlacement = 'top-start'
+                        projectEndDay = { projectEndDay }
+                        projectStartDay = { projectStartDay }
+                        setDateRange = { setScenesDateRangeRedux }
+                        startDay = { startDay }
                     />
-                </Button>
+                </nav>
+                <h2>Scenes</h2>
+                <nav>
+                    <Button
+                        title = 'Create scene'
+                        onClick = { () => void push(`/${projectId}/create-scene`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'plus'
+                            style = {{
+                                width:  16,
+                                height: 16,
+                            }}
+                        />
+                    </Button>
+                </nav>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
                 <ScenesTable
@@ -145,7 +150,7 @@ const Scenes: FC = () => {
                     setLocation = { (location: string) => setScenesLocationRedux(location) }
                 />
             </div>
-        </ScenesContainer>
+        </Container>
     );
 };
 

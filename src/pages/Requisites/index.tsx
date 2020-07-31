@@ -20,7 +20,7 @@ import { ErrorBoundary, RequisitesTable } from '../../components';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { RequisiteContainer, Header } from './styles';
+import { Container, Header } from './styles';
 
 // Types
 type Params = {
@@ -92,7 +92,7 @@ const Requisites: FC = () => {
     };
 
     return (
-        <RequisiteContainer>
+        <Container>
             <Route path = { '/:projectId/requisites/types' }>
                 <ReqTypesModal
                     closeHandler = { () => void push(`/${projectId}/requisites`) }
@@ -100,20 +100,22 @@ const Requisites: FC = () => {
                 />
             </Route>
             <Header>
-                <div />
+                <nav />
                 <h2>Requisites</h2>
-                <Button
-                    title = 'Create requisite'
-                    onClick = { () => void push(`/${projectId}/create-requisite`) }>
-                    <FontAwesomeIcon
-                        color = '#000'
-                        icon = 'plus'
-                        style = {{
-                            width:  16,
-                            height: 16,
-                        }}
-                    />
-                </Button>
+                <nav>
+                    <Button
+                        title = 'Create requisite'
+                        onClick = { () => void push(`/${projectId}/create-requisite`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'plus'
+                            style = {{
+                                width:  16,
+                                height: 16,
+                            }}
+                        />
+                    </Button>
+                </nav>
             </Header>
             <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
                 <RequisitesTable
@@ -129,7 +131,7 @@ const Requisites: FC = () => {
                     title = { requisitesInputs.title }
                 />
             </div>
-        </RequisiteContainer>
+        </Container>
     );
 };
 

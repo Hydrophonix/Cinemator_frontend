@@ -22,7 +22,7 @@ import { useInputsRedux } from '../../@init/redux/inputs';
 import { transformDateToISO8601 } from '../../utils';
 
 // Styles
-import { CreateWorkdayContainer, Header } from './styles';
+import { Container, Header, CreateInputs } from './styles';
 
 const innitialForm = {
     description: '',
@@ -69,10 +69,10 @@ const CreateWorkday: FC = () => {
     });
 
     return (
-        <CreateWorkdayContainer>
+        <Container>
             {createWorkdayLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = 'Back to calendar'
                         onClick = { () => push(`/${projectId}/calendar`) }>
@@ -82,11 +82,11 @@ const CreateWorkday: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>Create workday{ !isTableMode && ` ${date}`}</h2>
             </Header>
-            <main>
-                <nav>
+            <CreateInputs>
+                <section>
                     <h2>Workday date:</h2>
                     <DatePicker
                         date = { isTableMode ? defaultDate : new Date(date) }
@@ -106,9 +106,9 @@ const CreateWorkday: FC = () => {
                         onClick = { onSubmit }>
                         Create
                     </Button>
-                </nav>
-            </main>
-        </CreateWorkdayContainer>
+                </section>
+            </CreateInputs>
+        </Container>
     );
 };
 

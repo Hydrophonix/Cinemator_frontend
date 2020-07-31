@@ -31,6 +31,7 @@ export interface UpdateSceneLocations_updateSceneLocations_updatedScene {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: UpdateSceneLocations_updateSceneLocations_updatedScene_locations[];
   workdays: UpdateSceneLocations_updateSceneLocations_updatedScene_workdays[];
   requisites: UpdateSceneLocations_updateSceneLocations_updatedScene_requisites[];

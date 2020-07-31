@@ -10,7 +10,7 @@ import { ErrorBoundary } from '../../components';
 import { Button, Input, Spinner } from '../../elements';
 
 // Assets
-import { Container, Header } from './styles';
+import { Container, Header, CreateInputs } from './styles';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -39,7 +39,7 @@ const CreateProject: FC = () => {
         <Container>
             {createProjectLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = 'Back to projects'
                         onClick = { () => void push('/') }>
@@ -49,11 +49,11 @@ const CreateProject: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>Create project</h2>
             </Header>
-            <main>
-                <div>
+            <CreateInputs>
+                <section>
                     <h2>Project title:</h2>
                     <Input
                         name = 'title'
@@ -67,8 +67,8 @@ const CreateProject: FC = () => {
                         onChange = { setForm }
                     />
                     <Button onClick = { onSubmit }>Create</Button>
-                </div>
-            </main>
+                </section>
+            </CreateInputs>
         </Container>
     );
 };

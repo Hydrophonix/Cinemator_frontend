@@ -14,7 +14,7 @@ import { useForm } from '../../hooks';
 import { useCreateSceneMutation } from '../../bus/Scene';
 
 // Styles
-import { CreateSceneContainer, Header } from './styles';
+import { Container, Header, CreateInputs } from './styles';
 
 // Types
 import { SceneCreateInput } from '../../@types/graphql-global-types';
@@ -42,10 +42,10 @@ const CreateScene: FC = () => {
     };
 
     return (
-        <CreateSceneContainer>
+        <Container>
             {createSceneLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = 'Back to scenes'
                         onClick = { () => push(`/${projectId}/scenes`) }>
@@ -55,11 +55,11 @@ const CreateScene: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>Create scene</h2>
             </Header>
-            <main>
-                <div>
+            <CreateInputs>
+                <section>
                     <h2>Scene number:</h2>
                     <Input
                         name = 'number'
@@ -81,9 +81,9 @@ const CreateScene: FC = () => {
                         onChange = { setForm }
                     />
                     <Button onClick = { onSubmit }>Create</Button>
-                </div>
-            </main>
-        </CreateSceneContainer>
+                </section>
+            </CreateInputs>
+        </Container>
     );
 };
 

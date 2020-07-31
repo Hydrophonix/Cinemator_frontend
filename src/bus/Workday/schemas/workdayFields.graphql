@@ -5,6 +5,7 @@ fragment workdayFields on Workday {
     scenes {
       id
       number
+      isCompleted
       requisites {
         id
       }

@@ -16,7 +16,7 @@ import { useRequisitesQuery, useCreateRequisiteMutation } from '../../bus/Requis
 import { useForm } from '../../hooks';
 
 // Styles
-import { CreateRequisiteContainer, Header } from './styles';
+import { Container, Header, CreateInputs } from './styles';
 
 // Types
 import { RequisiteCreateInput } from '../../@types/graphql-global-types';
@@ -53,10 +53,10 @@ const CreateRequisite: FC = () => {
     };
 
     return (
-        <CreateRequisiteContainer>
+        <Container>
             {createRequisiteLoading && <Spinner absolute />}
             <Header>
-                <div>
+                <nav>
                     <Button
                         title = 'Back to requisites'
                         onClick = { () => push(`/${projectId}/requisites`) }>
@@ -66,11 +66,11 @@ const CreateRequisite: FC = () => {
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
-                </div>
+                </nav>
                 <h2>Create requisite</h2>
             </Header>
-            <main>
-                <div>
+            <CreateInputs>
+                <section>
                     <h2>Requisite number:</h2>
                     <Input
                         name = 'number'
@@ -97,9 +97,9 @@ const CreateRequisite: FC = () => {
                         onClick = { onSubmit }>
                         Create
                     </Button>
-                </div>
-            </main>
-        </CreateRequisiteContainer>
+                </section>
+            </CreateInputs>
+        </Container>
     );
 };
 

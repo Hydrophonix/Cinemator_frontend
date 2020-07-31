@@ -25,7 +25,7 @@ import { useInputsRedux } from '../../@init/redux/inputs';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { WorkdayContainer, WorkdayHeader, Description } from './styles';
+import { Container, Header, Info } from './styles';
 
 // Types
 type Params = {
@@ -83,7 +83,7 @@ const Workday: FC = () => {
     };
 
     return (
-        <WorkdayContainer>
+        <Container>
             {deleteWorkdayLoading && <Spinner absolute />}
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
                 <ScenesModal
@@ -97,7 +97,7 @@ const Workday: FC = () => {
                     sceneIds = { sceneIds }
                 />
             </Route>
-            <WorkdayHeader>
+            <Header>
                 <nav>
                     <Button
                         style = {{ width: 55 }}
@@ -148,19 +148,19 @@ const Workday: FC = () => {
                         />
                     </Button>
                 </nav>
-            </WorkdayHeader>
+            </Header>
             {
                 workday.description && (
-                    <Description>
-                        <p>{workday.description}</p>
-                    </Description>
+                    <Info>
+                        {workday.description && <div><p>{workday.description}</p></div>}
+                    </Info>
                 )
             }
             <ScenesTable
                 scenes = { workdayScenes }
                 workdayId = { workdayId }
             />
-        </WorkdayContainer>
+        </Container>
     );
 };
 

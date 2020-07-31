@@ -59,6 +59,7 @@ export interface SceneUpdateInput {
   number?: number | null;
   title?: string | null;
   description?: string | null;
+  isCompleted?: boolean | null;
 }
 
 export interface UserUpdateInput {

@@ -33,6 +33,7 @@ export interface CreateScene_createScene {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: CreateScene_createScene_locations[];
   workdays: CreateScene_createScene_workdays[];
   requisites: CreateScene_createScene_requisites[];

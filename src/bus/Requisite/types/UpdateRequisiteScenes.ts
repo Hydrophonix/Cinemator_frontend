@@ -53,6 +53,7 @@ export interface UpdateRequisiteScenes_updateRequisiteScenes_updatedScenes {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: UpdateRequisiteScenes_updateRequisiteScenes_updatedScenes_locations[];
   workdays: UpdateRequisiteScenes_updateRequisiteScenes_updatedScenes_workdays[];
   requisites: UpdateRequisiteScenes_updateRequisiteScenes_updatedScenes_requisites[];

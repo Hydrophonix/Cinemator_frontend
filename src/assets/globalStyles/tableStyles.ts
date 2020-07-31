@@ -50,7 +50,7 @@ export const TableStyles = styled.div`
     }
 
     .responsiveTable thead th {
-        padding: 5px;
+        padding: 5px 3px;
         text-align: left;
         font-weight: bold;
         font-family: sans-serif;
@@ -62,7 +62,7 @@ export const TableStyles = styled.div`
     }
 
     .responsiveTable tbody td {
-      padding: 5px;
+      padding: 5px 3px;
       text-align: left;
     }
 

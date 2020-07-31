@@ -63,6 +63,7 @@ export const RequisitesHead: FC<PropTypes> = ({
                                                 <FontAwesomeIcon
                                                     color = { theme.requisite.hoverSecondary }
                                                     icon = 'times-circle'
+                                                    style = {{ zIndex: 1 }}
                                                 />
                                             </span>
                                         )
@@ -94,6 +95,7 @@ export const RequisitesHead: FC<PropTypes> = ({
                                                 <FontAwesomeIcon
                                                     color = { theme.requisite.hoverSecondary }
                                                     icon = { reqType !== '' ? 'times-circle' : 'compass' }
+                                                    style = {{ zIndex: 1 }}
                                                 />
                                             </span>
                                         </nav>
@@ -120,6 +122,7 @@ export const RequisitesHead: FC<PropTypes> = ({
                                                 <FontAwesomeIcon
                                                     color = { theme.requisite.hoverSecondary }
                                                     icon = 'times-circle'
+                                                    style = {{ zIndex: 1 }}
                                                 />
                                             </span>
                                         )

@@ -18,6 +18,7 @@ export interface CreateWorkday_createWorkday_scenes {
   __typename: "Scene";
   id: string;
   number: number;
+  isCompleted: boolean;
   requisites: CreateWorkday_createWorkday_scenes_requisites[];
 }
 

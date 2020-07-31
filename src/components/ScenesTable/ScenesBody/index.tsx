@@ -56,12 +56,15 @@ export const ScenesBody: FC<Proptypes> = ({
                             <IndexContainer>
                                 <span>{`${scene.number}`}</span>
                                 {
-                                    false && (
-                                        <FontAwesomeIcon
-                                            color = '#fff'
-                                            icon = 'check'
-                                            style = {{ width: 14, height: 14 }}
-                                        />
+                                    scene.isCompleted && (
+                                        <>
+                                            :
+                                            <FontAwesomeIcon
+                                                color = '#fff'
+                                                icon = 'check'
+                                                style = {{ width: 14, height: 14 }}
+                                            />
+                                        </>
                                     )
                                 }
                             </IndexContainer>

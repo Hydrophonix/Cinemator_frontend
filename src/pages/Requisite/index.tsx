@@ -25,7 +25,7 @@ import { useArrayOfStringsForm } from '../../hooks';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { RequisiteContainer, RequisiteHeader, ScenesContainer, Section, ReqTypesContainer, Main } from './styles';
+import { Container, Header, Info, Relations } from './styles';
 
 // Types
 type Params = {
@@ -86,7 +86,7 @@ const Requisite: FC = () => {
     };
 
     return (
-        <RequisiteContainer>
+        <Container>
             {deleteRequisiteLoading && <Spinner absolute />}
             <Switch>
                 <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
@@ -111,7 +111,7 @@ const Requisite: FC = () => {
                     />
                 </Route>
             </Switch>
-            <RequisiteHeader>
+            <Header>
                 <nav>
                     <Button
                         style = {{ width: 55 }}
@@ -174,15 +174,15 @@ const Requisite: FC = () => {
                         />
                     </Button>
                 </nav>
-            </RequisiteHeader>
-            <Section>
+            </Header>
+            <Info>
                 <div><p>{requisite.title}</p></div>
                 {requisite.description && <div><p>{requisite.description}</p></div>}
-            </Section>
-            <Main>
+            </Info>
+            <Relations>
                 {
                     requisite.reqTypes.length !== 0 && (
-                        <ReqTypesContainer>
+                        <section style = {{ backgroundColor: theme.requisite.hoverSecondary }}>
                             {
                                 requisite.reqTypes.map((reqTypes) => (
                                     <Button
@@ -192,12 +192,12 @@ const Requisite: FC = () => {
                                     </Button>
                                 ))
                             }
-                        </ReqTypesContainer>
+                        </section>
                     )
                 }
                 {
                     requisite.scenes.length !== 0 && (
-                        <ScenesContainer>
+                        <section style = {{ backgroundColor: theme.scene.hoverSecondary }}>
                             {
                                 requisite.scenes.map((scene) => (
                                     <Button
@@ -208,11 +208,11 @@ const Requisite: FC = () => {
                                     </Button>
                                 ))
                             }
-                        </ScenesContainer>
+                        </section>
                     )
                 }
-            </Main>
-        </RequisiteContainer>
+            </Relations>
+        </Container>
     );
 };
 

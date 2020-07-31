@@ -16,6 +16,7 @@ export interface workdayFields_scenes {
   __typename: "Scene";
   id: string;
   number: number;
+  isCompleted: boolean;
   requisites: workdayFields_scenes_requisites[];
 }
 

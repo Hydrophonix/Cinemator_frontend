@@ -31,6 +31,7 @@ export interface Scenes_scenes {
   number: number;
   title: string | null;
   description: string | null;
+  isCompleted: boolean;
   locations: Scenes_scenes_locations[];
   workdays: Scenes_scenes_workdays[];
   requisites: Scenes_scenes_requisites[];
