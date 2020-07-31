@@ -29,7 +29,7 @@ import { useForm } from '../../hooks';
 import { ModalHeader, Button, Input } from '../../elements';
 
 // Styles
-import { Main, Footer, Nav, RedoContainer } from './styles';
+import { Main, Footer, IconsContainer, Icon } from './styles';
 
 // Types
 type Params = { projectId: string }
@@ -170,9 +170,9 @@ export const LocationsModal: FC<PropTypes> = ({
             closeHandler = { closeHandler }
             spinner = { isSpinnerActive }>
             <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Locations</ModalHeader>
-            <Nav>
+            <IconsContainer>
                 <section>
-                    <RedoContainer
+                    <Icon
                         isRotate = { isPlusRotate }
                         onClick = { addNewLocationHandler }>
                         <FontAwesomeIcon
@@ -181,8 +181,8 @@ export const LocationsModal: FC<PropTypes> = ({
                             style = {{ width: 20, height: 20 }}
                             title = { 'Add location' }
                         />
-                    </RedoContainer>
-                    <RedoContainer
+                    </Icon>
+                    <Icon
                         isRotate = { isTrashRotate }
                         onClick = { () => form.location !== '' && void resetFormHandler() }>
                         <FontAwesomeIcon
@@ -191,7 +191,7 @@ export const LocationsModal: FC<PropTypes> = ({
                             style = {{ width: 20, height: 20 }}
                             title = { 'Clear' }
                         />
-                    </RedoContainer>
+                    </Icon>
                 </section>
                 <Input
                     name = 'location'
@@ -199,7 +199,7 @@ export const LocationsModal: FC<PropTypes> = ({
                     value = { form.location }
                     onChange = { setForm }
                 />
-            </Nav>
+            </IconsContainer>
             <Main>
                 <LocationsTable
                     deleteLocationHandler = { deleteLocationHandler }

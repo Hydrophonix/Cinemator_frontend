@@ -29,7 +29,7 @@ import { useForm } from '../../hooks';
 import { ModalHeader, Button, Input } from '../../elements';
 
 // Styles
-import { Main, Footer, Nav, RedoContainer } from './styles';
+import { Main, Footer, IconsContainer, Icon } from './styles';
 
 // Types
 type Params = { projectId: string }
@@ -175,9 +175,9 @@ export const ReqTypesModal: FC<PropTypes> = ({
             closeHandler = { closeHandler }
             spinner = { isSpinnerActive }>
             <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Types</ModalHeader>
-            <Nav>
+            <IconsContainer>
                 <section>
-                    <RedoContainer
+                    <Icon
                         isRotate = { isPlusRotate }
                         onClick = { addNewReqTypeHandler }>
                         <FontAwesomeIcon
@@ -186,8 +186,8 @@ export const ReqTypesModal: FC<PropTypes> = ({
                             style = {{ width: 20, height: 20 }}
                             title = { 'Add location' }
                         />
-                    </RedoContainer>
-                    <RedoContainer
+                    </Icon>
+                    <Icon
                         isRotate = { isTrashRotate }
                         onClick = { () => form.reqType !== '' && void resetFormHandler() }>
                         <FontAwesomeIcon
@@ -196,7 +196,7 @@ export const ReqTypesModal: FC<PropTypes> = ({
                             style = {{ width: 20, height: 20 }}
                             title = { 'Clear' }
                         />
-                    </RedoContainer>
+                    </Icon>
                 </section>
                 <Input
                     name = 'reqType'
@@ -204,7 +204,7 @@ export const ReqTypesModal: FC<PropTypes> = ({
                     value = { form.reqType }
                     onChange = { setForm }
                 />
-            </Nav>
+            </IconsContainer>
             <Main>
                 <ReqTypesTable
                     deleteReqTypeHandler = { deleteReqTypeHandler }

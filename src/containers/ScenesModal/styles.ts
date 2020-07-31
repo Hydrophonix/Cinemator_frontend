@@ -1,16 +1,13 @@
 // Core
 import styled from 'styled-components';
 
-export const Main = styled.main`
-    max-height: 410px;
-    min-height: 410px;
-    overflow-y: scroll;
+// Styles
+import { ModalMain, ModalFooter } from '../styles';
+
+export const Main = styled(ModalMain)`
     background-color: ${({ theme }) => theme.scene.containerBg};
 `;
 
-export const Footer = styled.footer`
+export const Footer = styled(ModalFooter)`
     background-color: ${({ theme }) => theme.scene.primary};
-    padding: 10px;
-    display: flex;
-    justify-content: flex-end;
 `;

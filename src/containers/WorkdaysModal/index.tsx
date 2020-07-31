@@ -13,7 +13,7 @@ import { Modal, WorkdaysTable, DateRangePicker } from '../../components';
 import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Elements
-import { ModalHeader, Button, Spinner } from '../../elements';
+import { ModalHeader, Button } from '../../elements';
 
 import { transformDateToISO8601 } from '../../utils';
 
