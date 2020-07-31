@@ -42,7 +42,7 @@ export const WorkdaysModal: FC<PropTypes> = ({
     const theme = useContext(ThemeContext);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const workdaysDates = data?.workdays.map((workday) => new Date(workday.date));
-    const [ dateRange, seDateRange ] = useState<{ startDay?: Date, endDay?: Date}>({
+    const [ dateRange, setDateRange ] = useState<{ startDay?: Date, endDay?: Date}>({
         startDay: void 0,
         endDay:   void 0,
     });
@@ -83,7 +83,7 @@ export const WorkdaysModal: FC<PropTypes> = ({
                     endDay = { endDay }
                     projectEndDay = { projectEndDay }
                     projectStartDay = { projectStartDay }
-                    setDateRange = { (payload: DateRange) => seDateRange({ ...dateRange, ...payload }) }
+                    setDateRange = { (payload: DateRange) => void setDateRange({ ...dateRange, ...payload }) }
                     startDay = { startDay }
                 />
             </Section>

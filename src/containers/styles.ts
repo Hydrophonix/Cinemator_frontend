@@ -13,7 +13,6 @@ export const ModalFooter = styled.footer`
     justify-content: flex-end;
 `;
 
-
 export const ModalIconsContainer = styled.nav`
     position: relative;
     padding: 0px 5px 5px;
