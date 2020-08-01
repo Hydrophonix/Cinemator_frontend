@@ -1,18 +1,14 @@
 // Core
 import React, { FC } from 'react';
-import { Thead, Tr, Th } from 'react-super-responsive-table';
+import { Thead } from '../styles';
 
 export const ReqTypesHead: FC = () => {
     return (
         <Thead>
-            <Tr className = 'reqTypesTableHead'>
-                <Th style = {{ textAlign: 'center' }}>
-                    Type
-                </Th>
-                <Th style = {{ textAlign: 'center' }}>
-                    Actions
-                </Th>
-            </Tr>
+            <tr>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
         </Thead>
     );
 };

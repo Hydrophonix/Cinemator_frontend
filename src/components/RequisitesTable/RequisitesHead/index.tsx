@@ -1,10 +1,13 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { Thead, Tr, Th } from 'react-super-responsive-table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 
+// Styles
+import { Thead, NavCell } from '../styles';
+
+// Types
 type PropTypes = {
     index?: number
     setIndex?: (index: number) => void
@@ -45,12 +48,12 @@ export const RequisitesHead: FC<PropTypes> = ({
 
     return (
         <Thead>
-            <Tr className = 'requisitesTableHead'>
-                <Th style = {{ width: 35 }}>
+            <tr>
+                <th style = {{ width: 35 }}>
                     {
                         typeof index === 'number'
                             ? (
-                                <nav style = {{ width: 40 }}>
+                                <NavCell style = {{ width: 40 }}>
                                     <input
                                         style = {{ width: 40, textAlign: 'center' }}
                                         type = 'number'
@@ -68,18 +71,18 @@ export const RequisitesHead: FC<PropTypes> = ({
                                             </span>
                                         )
                                     }
-                                </nav>
+                                </NavCell>
                             )
-                            : <nav style = {{ width: 40, textAlign: 'center' }}>#</nav>
+                            : <NavCell style = {{ width: 40, textAlign: 'center' }}>#</NavCell>
                     }
-                </Th>
+                </th>
                 {
                     !lightVersion && (
-                        <Th>
+                        <th>
                             {
                                 typeof reqType === 'string'
                                     ? (
-                                        <nav style = {{ width: 100 }}>
+                                        <NavCell style = {{ width: 100 }}>
                                             <input
                                                 placeholder = 'All types'
                                                 style = {{ width: 100 }}
@@ -98,18 +101,18 @@ export const RequisitesHead: FC<PropTypes> = ({
                                                     style = {{ zIndex: 1 }}
                                                 />
                                             </span>
-                                        </nav>
+                                        </NavCell>
                                     )
                                     : 'Type'
                             }
-                        </Th>
+                        </th>
                     )
                 }
-                <Th>
+                <th>
                     {
                         typeof title === 'string'
                             ? (
-                                <nav style = {{ width: 100 }}>
+                                <NavCell style = {{ width: 100 }}>
                                     <input
                                         placeholder = 'Title search'
                                         style = {{ width: 100 }}
@@ -127,13 +130,13 @@ export const RequisitesHead: FC<PropTypes> = ({
                                             </span>
                                         )
                                     }
-                                </nav>
+                                </NavCell>
                             )
                             : 'Title'
                     }
-                </Th>
-                { !lightVersion && <Th>Scenes</Th> }
-            </Tr>
+                </th>
+                { !lightVersion && <th>Scenes</th> }
+            </tr>
         </Thead>
     );
 };

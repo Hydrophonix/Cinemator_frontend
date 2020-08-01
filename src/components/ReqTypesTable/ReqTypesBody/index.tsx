@@ -1,12 +1,12 @@
 // Core
 import React, { FC, useState } from 'react';
-import { Tbody, Tr, Td } from 'react-super-responsive-table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
 import { Button, Input } from '../../../elements';
 
 // Styles
+import { Tbody } from '../styles';
 import { UpdateContainer } from './styles';
 
 // Types
@@ -32,12 +32,11 @@ export const ReqTypesBody: FC<Proptypes> = ({
         <Tbody>
             {
                 reqTypes.map((reqType) => (
-                    <Tr
-                        className = 'reqTypesTableRow'
+                    <tr
                         key = { reqType.id }
                         style = { reqTypeIds?.includes(reqType.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => handler && void handler(reqType.id) }>
-                        <Td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
+                        <td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
                             {
                                 updateReqTypeId !== reqType.id
                                     ? reqType.name
@@ -52,8 +51,8 @@ export const ReqTypesBody: FC<Proptypes> = ({
                                         </UpdateContainer>
                                     )
                             }
-                        </Td>
-                        <Td style = {{ display: 'flex', justifyContent: 'center' }}>
+                        </td>
+                        <td style = {{ display: 'flex', justifyContent: 'center' }}>
                             {
                                 updateReqTypeId !== reqType.id
                                     ? (
@@ -122,8 +121,8 @@ export const ReqTypesBody: FC<Proptypes> = ({
                                         </>
                                     )
                             }
-                        </Td>
-                    </Tr>
+                        </td>
+                    </tr>
                 ))
             }
         </Tbody>

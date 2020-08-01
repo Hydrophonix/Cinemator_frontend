@@ -1,12 +1,12 @@
 // Core
 import React, { FC, useState } from 'react';
-import { Tbody, Tr, Td } from 'react-super-responsive-table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
 import { Button, Input } from '../../../elements';
 
 // Styles
+import { Tbody } from '../styles';
 import { UpdateLocationContainer } from './styles';
 
 // Types
@@ -31,12 +31,11 @@ export const LocationsBody: FC<Proptypes> = ({
         <Tbody>
             {
                 locations.map((location) => (
-                    <Tr
-                        className = 'locationsTableRow'
+                    <tr
                         key = { location.id }
                         style = { locationIds?.includes(location.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => handler && void handler(location.id) }>
-                        <Td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
+                        <td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
                             {
                                 updateLocationId !== location.id
                                     ? location.name
@@ -51,8 +50,8 @@ export const LocationsBody: FC<Proptypes> = ({
                                         </UpdateLocationContainer>
                                     )
                             }
-                        </Td>
-                        <Td style = {{ display: 'flex', justifyContent: 'center' }}>
+                        </td>
+                        <td style = {{ display: 'flex', justifyContent: 'center' }}>
                             {
                                 updateLocationId !== location.id
                                     ? (
@@ -121,8 +120,8 @@ export const LocationsBody: FC<Proptypes> = ({
                                         </>
                                     )
                             }
-                        </Td>
-                    </Tr>
+                        </td>
+                    </tr>
                 ))
             }
         </Tbody>

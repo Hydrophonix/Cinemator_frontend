@@ -1,13 +1,14 @@
 // Core
 import React, { FC } from 'react';
-import { Table } from 'react-super-responsive-table';
 
 // Components
 import { LocationsHead } from './LocationsHead';
 import { LocationsBody } from './LocationsBody';
 
 // Styles
-import { TableStyles } from '../../assets';
+import { Table } from './styles';
+
+// Types
 import { Locations_locations } from '../../bus/Location';
 
 type PropTypes = {
@@ -26,17 +27,15 @@ export const LocationsTable: FC<PropTypes> = ({
     handler,
 }) => {
     return (
-        <TableStyles>
-            <Table>
-                <LocationsHead />
-                <LocationsBody
-                    deleteLocationHandler = { deleteLocationHandler }
-                    handler = { handler }
-                    locationIds = { locationIds }
-                    locations = { locations }
-                    updateLocationHandler = { updateLocationHandler }
-                />
-            </Table>
-        </TableStyles>
+        <Table>
+            <LocationsHead />
+            <LocationsBody
+                deleteLocationHandler = { deleteLocationHandler }
+                handler = { handler }
+                locationIds = { locationIds }
+                locations = { locations }
+                updateLocationHandler = { updateLocationHandler }
+            />
+        </Table>
     );
 };

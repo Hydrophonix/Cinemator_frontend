@@ -1,6 +1,5 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { Tbody, Tr, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../../../elements';
 
 // Styles
+import { Tbody } from '../styles';
 import { IndexContainer } from './styles';
 
 // Types
@@ -47,12 +47,11 @@ export const ScenesBody: FC<Proptypes> = ({
         <Tbody>
             {
                 scenes.map((scene) => (
-                    <Tr
-                        className = 'scenesTableRow'
+                    <tr
                         key = { scene.id }
                         style = { sceneIds?.includes(scene.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => { handler ? void handler(scene.id) : void sceneRedirectHandler(scene.id); } }>
-                        <Td>
+                        <td>
                             <IndexContainer>
                                 <span>{`${scene.number}`}</span>
                                 {
@@ -68,8 +67,8 @@ export const ScenesBody: FC<Proptypes> = ({
                                     )
                                 }
                             </IndexContainer>
-                        </Td>
-                        <Td>
+                        </td>
+                        <td>
                             {
                                 scene.locations.map((location) => {
                                     return (
@@ -81,11 +80,11 @@ export const ScenesBody: FC<Proptypes> = ({
                                     );
                                 })
                             }
-                        </Td>
+                        </td>
                         {
                             !lightVersion && (
                                 <>
-                                    <Td>
+                                    <td>
                                         {
                                             scene.workdays.map((workday) => {
                                                 if (workdayId && workday.id === workdayId) {
@@ -107,8 +106,8 @@ export const ScenesBody: FC<Proptypes> = ({
                                                 );
                                             })
                                         }
-                                    </Td>
-                                    <Td>
+                                    </td>
+                                    <td>
                                         {
                                             scene.requisites.map((requisite, index) => (
                                                 <Button
@@ -124,11 +123,11 @@ export const ScenesBody: FC<Proptypes> = ({
                                                 </Button>
                                             ))
                                         }
-                                    </Td>
+                                    </td>
                                 </>
                             )
                         }
-                    </Tr>
+                    </tr>
                 ))
             }
         </Tbody>
