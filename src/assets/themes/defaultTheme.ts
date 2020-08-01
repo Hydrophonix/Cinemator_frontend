@@ -1,10 +1,5 @@
 export const defaultTheme = {
     name:   'defaultTheme',
-    // icon: {
-    //     primary:   '#BDBDBD',
-    //     secondary: '#FFEE58',
-    //     error:     'red',
-    // },
     button: {
         primary:   '#BDBDBD',
         secondary: '#FFEE58',

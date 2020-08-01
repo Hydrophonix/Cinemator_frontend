@@ -11,7 +11,7 @@ import { Button, Input, Spinner } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
-import { useRequisitesQuery, useUpdateRequisiteMutation } from '../../bus/Requisite';
+import { useRequisitesQuery, useUpdateRequisiteMutation, useDeleteRequisiteMutation } from '../../bus/Requisite';
 
 // Styles
 import { Container, Header, UpdateInputs } from './styles';
@@ -35,8 +35,12 @@ const UpdateRequisite: FC = () => {
     const { projectId, requisiteId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ updateRequisite, { loading: updateRequisiteLoading }] = useUpdateRequisiteMutation();
+    const [ deleteRequisite, { loading: deleteRequisiteLoading }] = useDeleteRequisiteMutation({
+        projectId, requisiteId,
+    });
     const [ form, setForm, setInitialForm ] = useForm<RequisiteUpdateInput>(initialForm);
     const requisite = data?.requisites.find((requisite) => requisite.id === requisiteId);
+    const isSpinnerActive = updateRequisiteLoading || deleteRequisiteLoading;
 
     useEffect(() => {
         requisite && void setInitialForm({
@@ -55,9 +59,20 @@ const UpdateRequisite: FC = () => {
         response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
     };
 
+    const deleteRequisiteHandler = async () => {
+        const isContinue = window.confirm(`Confirm delete requisite: ${requisite.number}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
+        const response = await deleteRequisite();
+        response && response.data && void push(`/${projectId}/requisites`);
+    };
+
     return (
         <Container>
-            {updateRequisiteLoading && <Spinner absolute />}
+            {isSpinnerActive && <Spinner absolute />}
             <Header>
                 <nav>
                     <Button
@@ -71,6 +86,17 @@ const UpdateRequisite: FC = () => {
                     </Button>
                 </nav>
                 <h2>Update R:{requisite.number}</h2>
+                <nav>
+                    <Button
+                        title = 'Delete'
+                        onClick = { deleteRequisiteHandler }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'trash-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
             </Header>
             <UpdateInputs>
                 <section>

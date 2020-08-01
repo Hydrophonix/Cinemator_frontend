@@ -13,7 +13,6 @@ import { ErrorBoundary } from '../../components';
 // Apollo hooks
 import {
     useRequisitesQuery,
-    useDeleteRequisiteMutation,
     useUpdateRequisiteScenesMutation,
     useUpdateRequisiteReqTypesMutation,
 } from '../../bus/Requisite';
@@ -40,9 +39,7 @@ const Requisite: FC = () => {
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ updateRequisiteScenes, { loading: updateRequisiteScenesLoading }] = useUpdateRequisiteScenesMutation();
     const [ updateRequisiteReqTypes, { loading: updateRequisiteReqTypesLoading }] = useUpdateRequisiteReqTypesMutation(); // eslint-disable-line max-len
-    const [ deleteRequisite, { loading: deleteRequisiteLoading }] = useDeleteRequisiteMutation({
-        projectId, requisiteId,
-    });
+
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
     const [ reqTypeIds, setReqTypeIdsArray, setInitialReqTypeIds ] = useArrayOfStringsForm([]);
 
@@ -74,20 +71,8 @@ const Requisite: FC = () => {
         response && response.data && void push(`/${projectId}/requisites/${requisiteId}`);
     };
 
-    const deleteRequisiteHandler = async () => {
-        const isContinue = window.confirm(`Confirm delete requisite: ${requisite.number}`); // eslint-disable-line no-alert
-
-        if (!isContinue) {
-            return;
-        }
-
-        const response = await deleteRequisite();
-        response && response.data && void push(`/${projectId}/requisites`);
-    };
-
     return (
         <Container>
-            {deleteRequisiteLoading && <Spinner absolute />}
             <Switch>
                 <Route path = { '/:projectId/requisites/:requisiteId/add-scenes' }>
                     <ScenesModal
@@ -161,15 +146,6 @@ const Requisite: FC = () => {
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
-                            style = {{ width: 16, height: 16 }}
-                        />
-                    </Button>
-                    <Button
-                        title = 'Delete'
-                        onClick = { deleteRequisiteHandler }>
-                        <FontAwesomeIcon
-                            color = '#000'
-                            icon = 'trash-alt'
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>

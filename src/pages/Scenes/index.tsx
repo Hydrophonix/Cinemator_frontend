@@ -27,7 +27,7 @@ import { ErrorBoundary, DateRangePicker, ScenesTable } from '../../components';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, ScrollList } from './styles';
 
 // Types
 type Params = { projectId: string };
@@ -111,7 +111,6 @@ const Scenes: FC = () => {
             </Route>
             <Header>
                 <nav>
-
                     <DateRangePicker
                         reset
                         endDay = { endDay }
@@ -138,7 +137,7 @@ const Scenes: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
+            <ScrollList>
                 <ScenesTable
                     index = { index }
                     location = { location }
@@ -149,7 +148,7 @@ const Scenes: FC = () => {
                     }) }
                     setLocation = { (location: string) => setScenesLocationRedux(location) }
                 />
-            </div>
+            </ScrollList>
         </Container>
     );
 };

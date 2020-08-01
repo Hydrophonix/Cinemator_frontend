@@ -10,7 +10,7 @@ import { ErrorBoundary, DatePicker } from '../../components';
 import { Button, Spinner } from '../../elements';
 
 // Apollo hooks
-import { useWorkdaysQuery, useUpdateWorkdayMutation } from '../../bus/Workday';
+import { useWorkdaysQuery, useUpdateWorkdayMutation, useDeleteWorkdayMutation } from '../../bus/Workday';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -41,9 +41,13 @@ const UpdateWorkday: FC = () => {
     const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({
         projectId, setGlobalDateRangeRedux,
     });
+    const [ deleteWorkday, { loading: deleteWorkdayLoading }] = useDeleteWorkdayMutation({
+        projectId, workdayId, setGlobalDateRangeRedux,
+    });
     const [ form, setForm, setInitialForm ] = useForm<typeof initialForm>(initialForm);
     const [ workdayDate, setWorkdayDate ] = useState<Date>(new Date());
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
+    const isSpinnerActive = updateWorkdayLoading || deleteWorkdayLoading;
 
     useEffect(() => {
         if (workday) {
@@ -72,9 +76,20 @@ const UpdateWorkday: FC = () => {
         response && response.data && void push(`/${projectId}/calendar/${workdayId}`);
     };
 
+    const deleteWorkdayHandler = async () => {
+        const isContinue = window.confirm(`Confirm delete workday: ${workday.date}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
+        const response = await deleteWorkday();
+        response && response.data && void push(`/${projectId}/calendar`);
+    };
+
     return (
         <Container>
-            {updateWorkdayLoading && <Spinner absolute />}
+            {isSpinnerActive && <Spinner absolute />}
             <Header>
                 <nav>
                     <Button
@@ -88,6 +103,17 @@ const UpdateWorkday: FC = () => {
                     </Button>
                 </nav>
                 <h2>Update W:{workday.date}</h2>
+                <nav>
+                    <Button
+                        title = 'Delete'
+                        onClick = { deleteWorkdayHandler }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'trash-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
             </Header>
             <UpdateInputs>
                 <section>

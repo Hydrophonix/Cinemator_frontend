@@ -20,7 +20,7 @@ import { transformDateToISO8601 } from '../../../utils';
 import { PropTypes, Params } from '../types';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, ScrollList } from './styles';
 
 export const Table: FC<PropTypes> = ({ data }) => {
     const { push } = useHistory();
@@ -77,9 +77,9 @@ export const Table: FC<PropTypes> = ({ data }) => {
                     </Button>
                 </nav>
             </Header>
-            <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
+            <ScrollList>
                 <WorkdaysTable workdays = { filterByDateRange() } />
-            </div>
+            </ScrollList>
         </Container>
     );
 };

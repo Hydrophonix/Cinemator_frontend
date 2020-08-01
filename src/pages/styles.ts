@@ -1,6 +1,12 @@
 // Core
 import styled from 'styled-components';
 
+export const EntitiesScrollList = styled.section`
+    overflow-x: hidden;
+    overflow-y: scroll; 
+    height: calc(100% - 35px);
+`;
+
 export const EntityContainer = styled.section`
     position: relative;
     width: 100%;

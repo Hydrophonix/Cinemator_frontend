@@ -20,7 +20,7 @@ import { ErrorBoundary, RequisitesTable } from '../../components';
 import { Button, Spinner } from '../../elements';
 
 // Styles
-import { Container, Header } from './styles';
+import { Container, Header, ScrollList } from './styles';
 
 // Types
 type Params = {
@@ -117,7 +117,7 @@ const Requisites: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <div style = {{ overflowX: 'hidden', overflowY: 'scroll' }}>
+            <ScrollList>
                 <RequisitesTable
                     index = { requisitesInputs.index }
                     reqType = { requisitesInputs.reqType }
@@ -130,7 +130,7 @@ const Requisites: FC = () => {
                     setTitle = { (newTitle: string) => void setRequisiteTitleRedux(newTitle) }
                     title = { requisitesInputs.title }
                 />
-            </div>
+            </ScrollList>
         </Container>
     );
 };
