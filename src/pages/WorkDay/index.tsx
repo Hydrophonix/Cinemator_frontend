@@ -11,15 +11,12 @@ import { ScenesModal } from '../../containers';
 import { ErrorBoundary, ScenesTable } from '../../components';
 
 // Apollo hooks
-import { useWorkdaysQuery, useDeleteWorkdayMutation } from '../../bus/Workday';
+import { useWorkdaysQuery } from '../../bus/Workday';
 import { useScenesQuery } from '../../bus/Scene';
 import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
 
 // Hooks
 import { useArrayOfStringsForm } from '../../hooks';
-
-// Redux
-import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Elements
 import { Button, Spinner } from '../../elements';
@@ -38,10 +35,7 @@ const Workday: FC = () => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const { setGlobalDateRangeRedux } = useInputsRedux();
-    const [ deleteWorkday, { loading: deleteWorkdayLoading }] = useDeleteWorkdayMutation({
-        projectId, workdayId, setGlobalDateRangeRedux,
-    });
+
     const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation({
         projectId,
     });
@@ -71,20 +65,8 @@ const Workday: FC = () => {
         response && response.data && void push(`/${projectId}/calendar/${workdayId}`);
     };
 
-    const deleteWorkdayHandler = async () => {
-        const isContinue = window.confirm(`Confirm delete workday: ${workday.date}`); // eslint-disable-line no-alert
-
-        if (!isContinue) {
-            return;
-        }
-
-        const response = await deleteWorkday();
-        response && response.data && void push(`/${projectId}/calendar`);
-    };
-
     return (
         <Container>
-            {deleteWorkdayLoading && <Spinner absolute />}
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
                 <ScenesModal
                     closeHandler = { () => {
@@ -135,15 +117,6 @@ const Workday: FC = () => {
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
-                            style = {{ width: 16, height: 16 }}
-                        />
-                    </Button>
-                    <Button
-                        title = 'Delete'
-                        onClick = { deleteWorkdayHandler }>
-                        <FontAwesomeIcon
-                            color = '#000'
-                            icon = 'trash-alt'
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>

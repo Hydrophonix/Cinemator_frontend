@@ -1,13 +1,12 @@
 // Core
 import React, { FC } from 'react';
-import { Table } from 'react-super-responsive-table';
 
 // Components
 import { WorkdaysHead } from './WorkdaysHead';
 import { WorkdaysBody } from './WorkdaysBody';
 
 // Styles
-import { TableStyles } from '../../assets';
+import { Table } from './styles';
 import { Workdays_workdays } from '../../bus/Workday';
 
 type PropTypes = {
@@ -18,15 +17,13 @@ type PropTypes = {
 
 export const WorkdaysTable: FC<PropTypes> = ({ workdays, workdayIds, handler }) => {
     return (
-        <TableStyles>
-            <Table>
-                <WorkdaysHead />
-                <WorkdaysBody
-                    handler = { handler }
-                    workdayIds = { workdayIds }
-                    workdays = { workdays }
-                />
-            </Table>
-        </TableStyles>
+        <Table>
+            <WorkdaysHead />
+            <WorkdaysBody
+                handler = { handler }
+                workdayIds = { workdayIds }
+                workdays = { workdays }
+            />
+        </Table>
     );
 };

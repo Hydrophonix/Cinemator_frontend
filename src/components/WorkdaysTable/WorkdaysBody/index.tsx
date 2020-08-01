@@ -1,12 +1,14 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { Tbody, Tr, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
 import { Button } from '../../../elements';
+
+// Styles
+import { Tbody } from '../styles';
 
 // Types
 import { Workdays_workdays } from '../../../bus/Workday';
@@ -36,14 +38,14 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays, workdayIds, handler }) =
         <Tbody>
             {
                 workdays.map((workday) => (
-                    <Tr
+                    <tr
                         className = 'workdaysTableRow'
                         key = { workday.id }
                         onClick = { () => handler
                             ? void handler(workday.id)
                             : void workdayRedirectHandler(workday.id)
                         }>
-                        <Td style = {{ fontSize: 20, textAlign: 'center', position: 'relative' }}>
+                        <td style = {{ fontSize: 20, textAlign: 'center', position: 'relative' }}>
                             {
                                 workdayIds?.includes(workday.id) && (
                                     <FontAwesomeIcon
@@ -54,8 +56,8 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays, workdayIds, handler }) =
                                 )
                             }
                             {workday.date}
-                        </Td>
-                        <Td>
+                        </td>
+                        <td>
                             {
                                 workday.scenes.map((scene, index) => {
                                     return (
@@ -68,9 +70,8 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays, workdayIds, handler }) =
                                     );
                                 })
                             }
-                        </Td>
-
-                    </Tr>
+                        </td>
+                    </tr>
                 ))
             }
         </Tbody>

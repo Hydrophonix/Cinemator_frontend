@@ -11,7 +11,7 @@ import { Button, Input, Spinner, Toggle } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
-import { useScenesQuery, useUpdateSceneMutation } from '../../bus/Scene';
+import { useScenesQuery, useUpdateSceneMutation, useDeleteSceneMutation } from '../../bus/Scene';
 
 // Styles
 import { Container, Header, UpdateInputs } from './styles';
@@ -35,9 +35,11 @@ const UpdateScene: FC = () => {
     const { projectId, sceneId } = useParams<Params>();
     const { data, loading } = useScenesQuery({ projectId });
     const [ updateScene, { loading: updateSceneLoading }] = useUpdateSceneMutation();
+    const [ deleteScene, { loading: deleteSceneLoading }] = useDeleteSceneMutation({ projectId, sceneId });
     const [ form, setForm, setInitialForm ] = useForm<SceneUpdateInput>(initialForm);
     const [ isCompleted, setIsCompleted ] = useState(false);
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
+    const isSpinnerActive = updateSceneLoading || deleteSceneLoading;
 
     useEffect(() => {
         if (scene) {
@@ -59,9 +61,20 @@ const UpdateScene: FC = () => {
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
     };
 
+    const deleteSceneHandler = async () => {
+        const isContinue = window.confirm(`Confirm delete scene: ${scene.number}`); // eslint-disable-line no-alert
+
+        if (!isContinue) {
+            return;
+        }
+
+        const response = await deleteScene();
+        response && response.data && void push(`/${projectId}/scenes`);
+    };
+
     return (
         <Container>
-            {updateSceneLoading && <Spinner absolute />}
+            {isSpinnerActive  && <Spinner absolute />}
             <Header>
                 <nav>
                     <Button
@@ -75,6 +88,17 @@ const UpdateScene: FC = () => {
                     </Button>
                 </nav>
                 <h2>Update S:{scene.number}</h2>
+                <nav>
+                    <Button
+                        title = 'Delete'
+                        onClick = { deleteSceneHandler }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'trash-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
             </Header>
             <UpdateInputs>
                 <section>

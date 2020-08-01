@@ -1,9 +1,11 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { Thead, Tr, Th } from 'react-super-responsive-table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
+
+// Styles
+import { Thead, NavCell } from '../styles';
 
 // Types
 type PropTypes = {
@@ -38,12 +40,12 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
 
     return (
         <Thead>
-            <Tr className = 'scenesTableHead'>
-                <Th>
+            <tr>
+                <th>
                     {
                         typeof index === 'number'
                             ? (
-                                <nav style = {{ width: 40 }}>
+                                <NavCell style = {{ width: 40 }}>
                                     <input
                                         style = {{ width: 40, textAlign: 'center' }}
                                         type = 'number'
@@ -60,7 +62,7 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
                                             </span>
                                         )
                                     }
-                                </nav>
+                                </NavCell>
                             )
                             : (
                                 <nav style = {{ width: 40, textAlign: 'center' }}>
@@ -68,12 +70,12 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
                                 </nav>
                             )
                     }
-                </Th>
-                <Th>
+                </th>
+                <th>
                     {
                         typeof location === 'string'
                             ? (
-                                <nav style = {{ width: 100 }}>
+                                <NavCell style = {{ width: 100 }}>
                                     <input
                                         placeholder = 'All locations'
                                         style = {{ width: 100 }}
@@ -90,20 +92,20 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
                                             icon = { location !== '' ? 'times-circle' : 'compass' }
                                         />
                                     </span>
-                                </nav>
+                                </NavCell>
                             )
                             : 'Locations'
                     }
-                </Th>
+                </th>
                 {
                     !lightVersion && (
                         <>
-                            <Th>Workdays</Th>
-                            <Th>Requisites</Th>
+                            <th>Workdays</th>
+                            <th>Requisites</th>
                         </>
                     )
                 }
-            </Tr>
+            </tr>
         </Thead>
     );
 };

@@ -1,13 +1,14 @@
 // Core
 import React, { FC } from 'react';
-import { Table } from 'react-super-responsive-table';
 
 // Components
 import { ScenesHead } from './ScenesHead';
 import { ScenesBody } from './ScenesBody';
 
 // Styles
-import { TableStyles } from '../../assets';
+import { Table } from './styles';
+
+// Types
 import { Scenes_scenes } from '../../bus/Scene';
 
 type PropTypes = {
@@ -30,23 +31,21 @@ export const ScenesTable: FC<PropTypes> = ({
     lightVersion,
 }) => {
     return (
-        <TableStyles>
-            <Table>
-                <ScenesHead
-                    index = { index }
-                    lightVersion = { lightVersion }
-                    location = { location }
-                    setIndex = { setIndex }
-                    setLocation = { setLocation }
-                />
-                <ScenesBody
-                    handler = { handler }
-                    lightVersion = { lightVersion }
-                    sceneIds = { sceneIds }
-                    scenes = { scenes }
-                    workdayId = { workdayId }
-                />
-            </Table>
-        </TableStyles>
+        <Table>
+            <ScenesHead
+                index = { index }
+                lightVersion = { lightVersion }
+                location = { location }
+                setIndex = { setIndex }
+                setLocation = { setLocation }
+            />
+            <ScenesBody
+                handler = { handler }
+                lightVersion = { lightVersion }
+                sceneIds = { sceneIds }
+                scenes = { scenes }
+                workdayId = { workdayId }
+            />
+        </Table>
     );
 };

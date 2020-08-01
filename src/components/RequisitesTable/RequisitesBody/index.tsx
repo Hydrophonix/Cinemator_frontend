@@ -1,11 +1,13 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { Tbody, Tr, Td } from 'react-super-responsive-table';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 
 // Elements
 import { Button } from '../../../elements';
+
+// Styles
+import { Tbody } from '../styles';
 
 // Types
 import { Requisites_requisites } from '../../../bus/Requisite';
@@ -37,8 +39,7 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
         <Tbody>
             {
                 requisites.map((requisite) => (
-                    <Tr
-                        className = 'requisitesTableRow'
+                    <tr
                         key = { requisite.id }
                         style = { requisiteIds?.includes(requisite.id) ? { backgroundColor: 'green' } : {} }
                         onClick = { () => {
@@ -46,14 +47,14 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                 ? void handler(requisite.id)
                                 : void requisiteRedirectHandler(requisite.id);
                         } }>
-                        <Td>
+                        <td>
                             <div style = {{ width: 40, textAlign: 'center', fontSize: 18 }}>
                                 {requisite.number}
                             </div>
-                        </Td>
+                        </td>
                         {
                             !lightVersion && (
-                                <Td>
+                                <td>
                                     {
                                         requisite.reqTypes.map((reqType) => (
                                             <Button
@@ -63,13 +64,13 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                             </Button>
                                         ))
                                     }
-                                </Td>
+                                </td>
                             )
                         }
-                        <Td>{requisite.title}</Td>
+                        <td>{requisite.title}</td>
                         {
                             !lightVersion && (
-                                <Td>
+                                <td>
                                     {
                                         requisite.scenes.map((scene) => {
                                             if (sceneId && scene.id === sceneId) {
@@ -88,10 +89,10 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                             );
                                         })
                                     }
-                                </Td>
+                                </td>
                             )
                         }
-                    </Tr>
+                    </tr>
                 ))
             }
         </Tbody>

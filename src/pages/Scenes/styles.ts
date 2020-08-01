@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 // Styles
-import { EntityContainer, EntityHeader } from '../styles';
+import { EntityContainer, EntityHeader, EntitiesScrollList } from '../styles';
 
 export const Container = styled(EntityContainer)`
     background-color: ${({ theme }) => theme.scene.containerBg};
@@ -20,3 +20,5 @@ export const Header = styled(EntityHeader)`
         }
     }
 `;
+
+export const ScrollList = styled(EntitiesScrollList)``;

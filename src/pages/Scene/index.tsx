@@ -14,7 +14,6 @@ import { ErrorBoundary, RequisitesTable } from '../../components';
 // Apollo hooks
 import {
     useScenesQuery,
-    useDeleteSceneMutation,
     useUpdateSceneWorkdaysMutation,
     useUpdateSceneRequisitesMutation,
     useUpdateSceneLocationsMutation,
@@ -44,7 +43,6 @@ const Scene: FC = () => {
     const [ updateSceneWorkdays, { loading: updateSceneWorkdaysLoading }] = useUpdateSceneWorkdaysMutation();
     const [ updateSceneRequisites, { loading: updateSceneRequisitesLoading }] = useUpdateSceneRequisitesMutation();
     const [ updateSceneLocations, { loading: updateSceneLocationsLoading }] = useUpdateSceneLocationsMutation();
-    const [ deleteScene, { loading: deleteSceneLoading }] = useDeleteSceneMutation({ projectId, sceneId });
 
     const [ workdayIds, setWorkdayIds, setInitialWorkdayIds ] = useArrayOfStringsForm([]);
     const [ requisiteIds, setRequisiteIds, setInitialRequisiteIds ] = useArrayOfStringsForm([]);
@@ -72,17 +70,6 @@ const Scene: FC = () => {
         requisiteData.requisites, requisiteIdsArray, (value, other) => value.id === other,
     );
 
-    const deleteSceneHandler = async () => {
-        const isContinue = window.confirm(`Confirm delete scene: ${scene.number}`); // eslint-disable-line no-alert
-
-        if (!isContinue) {
-            return;
-        }
-
-        const response = await deleteScene();
-        response && response.data && void push(`/${projectId}/scenes`);
-    };
-
     const updateSceneWorkdaysHandler = async () => {
         const response = await updateSceneWorkdays({ variables: { sceneId, workdayIds }});
         response && response.data && void push(`/${projectId}/scenes/${sceneId}`);
@@ -105,7 +92,6 @@ const Scene: FC = () => {
 
     return (
         <Container>
-            {deleteSceneLoading && <Spinner absolute />}
             <Switch>
                 <Route path = { '/:projectId/scenes/:sceneId/add-workdays' }>
                     <WorkdaysModal
@@ -217,15 +203,6 @@ const Scene: FC = () => {
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
-                            style = {{ width: 16, height: 16 }}
-                        />
-                    </Button>
-                    <Button
-                        title = 'Delete'
-                        onClick = { deleteSceneHandler }>
-                        <FontAwesomeIcon
-                            color = '#000'
-                            icon = 'trash-alt'
                             style = {{ width: 16, height: 16 }}
                         />
                     </Button>
