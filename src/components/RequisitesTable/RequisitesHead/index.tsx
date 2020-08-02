@@ -1,11 +1,13 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 
+// Elements
+import { TableInputWithIcon } from '../../../elements';
+
 // Styles
-import { Thead, NavCell } from '../styles';
+import { Thead } from '../styles';
 
 // Types
 type PropTypes = {
@@ -49,31 +51,23 @@ export const RequisitesHead: FC<PropTypes> = ({
     return (
         <Thead>
             <tr>
-                <th style = {{ width: 35 }}>
+                <th>
                     {
                         typeof index === 'number'
                             ? (
-                                <NavCell style = {{ width: 40 }}>
-                                    <input
-                                        style = {{ width: 40, textAlign: 'center' }}
-                                        type = 'number'
-                                        value = { index }
-                                        onChange = { onIndexChange }
-                                    />
-                                    {
-                                        index !== 0 && (
-                                            <span onClick = { resetIndex }>
-                                                <FontAwesomeIcon
-                                                    color = { theme.requisite.hoverSecondary }
-                                                    icon = 'times-circle'
-                                                    style = {{ zIndex: 1 }}
-                                                />
-                                            </span>
-                                        )
-                                    }
-                                </NavCell>
+                                <TableInputWithIcon
+                                    color = { theme.requisite.hoverSecondary }
+                                    icon = 'times-circle'
+                                    isIconVisible = { index !== 0 }
+                                    style = {{ textAlign: 'center' }}
+                                    type = 'number'
+                                    value = { index }
+                                    width = { 40 }
+                                    onChange = { onIndexChange }
+                                    onClick = { resetIndex }
+                                />
                             )
-                            : <NavCell style = {{ width: 40, textAlign: 'center' }}>#</NavCell>
+                            : <nav style = {{ width: 40, textAlign: 'center' }}>#</nav>
                     }
                 </th>
                 {
@@ -82,26 +76,20 @@ export const RequisitesHead: FC<PropTypes> = ({
                             {
                                 typeof reqType === 'string'
                                     ? (
-                                        <NavCell style = {{ width: 100 }}>
-                                            <input
-                                                placeholder = 'All types'
-                                                style = {{ width: 100 }}
-                                                value = { reqType }
-                                                onChange = { onTypeChange }
-                                            />
-                                            <span
-                                                onClick = {
-                                                    () => reqType !== ''
-                                                        ? void resetType()
-                                                        : void push(`/${projectId}/requisites/types`)
-                                                }>
-                                                <FontAwesomeIcon
-                                                    color = { theme.requisite.hoverSecondary }
-                                                    icon = { reqType !== '' ? 'times-circle' : 'compass' }
-                                                    style = {{ zIndex: 1 }}
-                                                />
-                                            </span>
-                                        </NavCell>
+                                        <TableInputWithIcon
+                                            isIconVisible
+                                            color = { theme.requisite.hoverSecondary }
+                                            icon = { reqType !== '' ? 'times-circle' : 'compass' }
+                                            placeholder = 'All types'
+                                            value = { reqType }
+                                            width = { 100 }
+                                            onChange = { onTypeChange }
+                                            onClick = {
+                                                () => reqType !== ''
+                                                    ? void resetType()
+                                                    : void push(`/${projectId}/requisites/types`)
+                                            }
+                                        />
                                     )
                                     : 'Type'
                             }
@@ -112,25 +100,16 @@ export const RequisitesHead: FC<PropTypes> = ({
                     {
                         typeof title === 'string'
                             ? (
-                                <NavCell style = {{ width: 100 }}>
-                                    <input
-                                        placeholder = 'Title search'
-                                        style = {{ width: 100 }}
-                                        value = { title }
-                                        onChange = { onTitleChange }
-                                    />
-                                    {
-                                        title !== '' && (
-                                            <span onClick = { resetTitle }>
-                                                <FontAwesomeIcon
-                                                    color = { theme.requisite.hoverSecondary }
-                                                    icon = 'times-circle'
-                                                    style = {{ zIndex: 1 }}
-                                                />
-                                            </span>
-                                        )
-                                    }
-                                </NavCell>
+                                <TableInputWithIcon
+                                    color = { theme.requisite.hoverSecondary }
+                                    icon = 'times-circle'
+                                    isIconVisible = { title !== '' }
+                                    placeholder = 'Title search'
+                                    value = { title }
+                                    width = { 100 }
+                                    onChange = { onTitleChange }
+                                    onClick = { resetTitle }
+                                />
                             )
                             : 'Title'
                     }

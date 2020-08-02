@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // Styles
-import { TableStyles, TheadStyles, TbodyStyles, NavCellStyles } from '../styles';
+import { TableStyles, TheadStyles, TbodyStyles } from '../styles';
 
 export const Table = styled(TableStyles)``;
 
@@ -20,24 +20,6 @@ export const Tbody = styled(TbodyStyles)`
 
         &:hover {
             background-color: ${({ theme }) => theme.requisite.hoverSecondary};
-        }
-    }
-`;
-
-export const NavCell = styled(NavCellStyles)`
-    span {
-        background-color: #fff;
-    }
-
-    &:hover {
-        span {
-            background-color: ${({ theme }) => theme.requisite.secondary};
-
-            svg {
-                path {
-                    fill: #fff;
-                }
-            }
         }
     }
 `;

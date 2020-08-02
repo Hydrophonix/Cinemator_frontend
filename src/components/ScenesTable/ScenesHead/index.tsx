@@ -1,11 +1,13 @@
 // Core
 import React, { FC, useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 
+// Elements
+import { TableInputWithIcon } from '../../../elements';
+
 // Styles
-import { Thead, NavCell } from '../styles';
+import { Thead } from '../styles';
 
 // Types
 type PropTypes = {
@@ -45,54 +47,39 @@ export const ScenesHead: FC<PropTypes> = ({ index, setIndex, location, setLocati
                     {
                         typeof index === 'number'
                             ? (
-                                <NavCell style = {{ width: 40 }}>
-                                    <input
-                                        style = {{ width: 40, textAlign: 'center' }}
-                                        type = 'number'
-                                        value = { index }
-                                        onChange = { onIndexChange }
-                                    />
-                                    {
-                                        index !== 0 && (
-                                            <span onClick = { resetIndex }>
-                                                <FontAwesomeIcon
-                                                    color = { theme.scene.hoverSecondary }
-                                                    icon = 'times-circle'
-                                                />
-                                            </span>
-                                        )
-                                    }
-                                </NavCell>
+                                <TableInputWithIcon
+                                    color = { theme.scene.hoverSecondary }
+                                    icon = 'times-circle'
+                                    isIconVisible = { index !== 0 }
+                                    style = {{ textAlign: 'center' }}
+                                    type = 'number'
+                                    value = { index }
+                                    width = { 40 }
+                                    onChange = { onIndexChange }
+                                    onClick = { resetIndex }
+                                />
                             )
-                            : (
-                                <nav style = {{ width: 40, textAlign: 'center' }}>
-                                    #
-                                </nav>
-                            )
+                            : <nav style = {{ width: 40, textAlign: 'center' }}>#</nav>
                     }
                 </th>
                 <th>
                     {
                         typeof location === 'string'
                             ? (
-                                <NavCell style = {{ width: 100 }}>
-                                    <input
-                                        placeholder = 'All locations'
-                                        style = {{ width: 100 }}
-                                        value = { location }
-                                        onChange = { onLocationChange }
-                                    />
-                                    <span onClick = {
+                                <TableInputWithIcon
+                                    isIconVisible
+                                    color = { theme.scene.hoverSecondary }
+                                    icon = { location !== '' ? 'times-circle' : 'compass' }
+                                    placeholder = 'All locations'
+                                    value = { location }
+                                    width = { 100 }
+                                    onChange = { onLocationChange }
+                                    onClick = {
                                         () => location !== ''
                                             ? void resetLocation()
                                             : void push(`/${projectId}/scenes/locations`)
-                                    }>
-                                        <FontAwesomeIcon
-                                            color = { theme.scene.hoverSecondary }
-                                            icon = { location !== '' ? 'times-circle' : 'compass' }
-                                        />
-                                    </span>
-                                </NavCell>
+                                    }
+                                />
                             )
                             : 'Locations'
                     }

@@ -47,10 +47,8 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                 ? void handler(requisite.id)
                                 : void requisiteRedirectHandler(requisite.id);
                         } }>
-                        <td>
-                            <div style = {{ width: 40, textAlign: 'center', fontSize: 18 }}>
-                                {requisite.number}
-                            </div>
+                        <td style = {{ width: 40, textAlign: 'center', fontSize: 18 }}>
+                            {requisite.number}
                         </td>
                         {
                             !lightVersion && (

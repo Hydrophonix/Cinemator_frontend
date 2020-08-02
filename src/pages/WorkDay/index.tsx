@@ -53,7 +53,9 @@ const Workday: FC = () => {
     }
 
     if (!workday || !sceneIdsArray) {
-        return <div>No workday exist</div>; // TODO: MAKE redirect component
+        push(`/${projectId}/calendar`);
+
+        return null;
     }
 
     const workdayScenes = _intersectionWith(
@@ -125,7 +127,7 @@ const Workday: FC = () => {
             {
                 workday.description && (
                     <Info>
-                        {workday.description && <div><p>{workday.description}</p></div>}
+                        {workday.description && <div><span>{workday.description}</span></div>}
                     </Info>
                 )
             }

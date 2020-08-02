@@ -5,6 +5,8 @@ import styled from 'styled-components';
 // Styles
 const StyledInput = styled.input<StyledInputProps>`
     padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
     font-size: 16px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.input.primary};
@@ -41,7 +43,7 @@ interface StyledInputProps {
     error?: string;
 }
 
-interface InputProps extends
+export interface InputProps extends
     StyledInputProps,
     DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 {
@@ -50,11 +52,10 @@ interface InputProps extends
     withError?: boolean;
 }
 
-export const Input: FC<InputProps> = ({ withError, error, width, height, style, ...otherProps }) => {
+export const Input: FC<InputProps> = ({ withError, error, style, ...otherProps }) => {
     if (withError) {
         return (
-            <InputContainer
-                style = {{ width, height, ...style }}>
+            <InputContainer style = { style }>
                 <StyledInput
                     error = { error }
                     { ...otherProps }
@@ -66,7 +67,7 @@ export const Input: FC<InputProps> = ({ withError, error, width, height, style, 
 
     return (
         <StyledInput
-            style = {{ width, height, ...style }}
+            style = { style }
             { ...otherProps }
         />
     );

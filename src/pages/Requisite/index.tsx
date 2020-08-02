@@ -56,7 +56,9 @@ const Requisite: FC = () => {
     }
 
     if (!requisite) {
-        return <div>No requisite exist</div>; // TODO: MAKE FALLBACK COMPONENT WITH REDIRECT
+        push(`/${projectId}/requisites`);
+
+        return null;
     }
 
     const sceneRedirectHandler = (sceneId: string) => void push(`/${projectId}/scenes/${sceneId}`);
@@ -153,7 +155,7 @@ const Requisite: FC = () => {
             </Header>
             <Info>
                 <div><p>{requisite.title}</p></div>
-                {requisite.description && <div><p>{requisite.description}</p></div>}
+                {requisite.description && <div><span>{requisite.description}</span></div>}
             </Info>
             <Relations>
                 {

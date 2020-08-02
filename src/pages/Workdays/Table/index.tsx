@@ -72,7 +72,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'plus'
-                            style = {{ width: 16, height: 16 }}
+                            style = {{ width: 50, height: 16 }}
                         />
                     </Button>
                 </nav>

@@ -54,9 +54,11 @@ export const EntityInfo = styled.section`
         display: flex;
         justify-content: center;
         padding-bottom: 5px;
+        font-family: sans-serif;
 
         p {
-            font-family: sans-serif;
+            font-size: 20px;
+            text-align: center;
         }
     }
 `;

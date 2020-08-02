@@ -3,3 +3,4 @@ export * from './Toggle';
 export * from './Input';
 export * from './Spinner';
 export * from './ModalHeader';
+export * from './TableInputWithIcon';

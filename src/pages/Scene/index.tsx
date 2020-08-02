@@ -63,7 +63,9 @@ const Scene: FC = () => {
     }
 
     if (!scene || !requisiteIdsArray) {
-        return <div>No scene exist</div>; // TODO: MAKE Component with redirect
+        push(`/${projectId}/scenes`);
+
+        return null;
     }
 
     const sceneRequisites = _intersectionWith(
@@ -212,7 +214,7 @@ const Scene: FC = () => {
                 (scene.title || scene.description) && (
                     <Info>
                         {scene.title && <div><p>{scene.title}</p></div>}
-                        {scene.description && <div><p>{scene.description}</p></div>}
+                        {scene.description && <div><span>{scene.description}</span></div>}
                     </Info>
                 )
             }

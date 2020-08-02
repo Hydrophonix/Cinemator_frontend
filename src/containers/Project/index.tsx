@@ -1,6 +1,6 @@
 // Core
 import React, { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 // Components
 import { Sidebar } from './Sidebar';
@@ -22,6 +22,7 @@ type Params = {
 }
 
 export const Project: FC = () => {
+    const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { data, loading } = useOwnedProjectsQuery();
 
@@ -32,7 +33,9 @@ export const Project: FC = () => {
     const project = data.ownedProjects.find((project) => project.id === projectId);
 
     if (!project) {
-        return <div>Project do not exist!</div>; // TODO: MAKE FALLBACK COMPONENT WITH REDIRECT!
+        push('/');
+
+        return null;
     }
 
     return (
