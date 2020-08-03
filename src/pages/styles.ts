@@ -80,21 +80,18 @@ export const EntityRelations = styled.main`
 
 export const EntityInputs = styled.main`
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 
     section {
-        display: flex;
-        flex-direction: column;
+        width: 100%;
+        max-width: 375px;
+        box-sizing: border-box;
+        padding: 5px;
 
         h2 {
             font-size: 20px;
             padding: 5px 0px;
             font-family: sans-serif;
-        }
-
-        button {
-            margin-top: 5px;
         }
     }
 `;

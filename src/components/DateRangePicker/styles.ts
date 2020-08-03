@@ -13,11 +13,16 @@ export const Container = styled.section`
     border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
+    z-index: 1;
 
     span {
         padding: 0px 2px;
         font-family: sans-serif;
         color: #000;
+    }
+    
+    .react-datepicker-popper {
+        z-index: 2;
     }
 `;
 

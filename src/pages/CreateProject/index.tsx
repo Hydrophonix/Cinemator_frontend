@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input, Spinner } from '../../elements';
+import { Button, Input, Spinner, Textarea } from '../../elements';
 
 // Assets
 import { Container, Header, CreateInputs } from './styles';
@@ -58,15 +58,21 @@ const CreateProject: FC = () => {
                     <Input
                         name = 'title'
                         placeholder = 'Type here...'
+                        value = { form.title || '' }
                         onChange = { setForm }
                     />
                     <h2>Project description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
                         placeholder = 'Type here...'
+                        value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Create</Button>
+                    <Button
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick = { onSubmit }>
+                        Create
+                    </Button>
                 </section>
             </CreateInputs>
         </Container>

@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
-import { Button, Input } from '../../../../elements';
+import { Button, Input, Textarea } from '../../../../elements';
 
 // Apollo hooks
 import { useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../bus/Project';
@@ -91,7 +91,7 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                     onChange = { setForm }
                 />
                 <h2>Description:</h2>
-                <textarea
+                <Textarea
                     name = 'description'
                     placeholder = 'Description'
                     value = { form.description || '' }

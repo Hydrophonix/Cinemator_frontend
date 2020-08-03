@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary, DatePicker } from '../../components';
 
 // Elements
-import { Button, Spinner } from '../../elements';
+import { Button, Spinner, Textarea } from '../../elements';
 
 // Apollo hooks
 import { useWorkdaysQuery, useUpdateWorkdayMutation, useDeleteWorkdayMutation } from '../../bus/Workday';
@@ -56,8 +56,14 @@ const UpdateWorkday: FC = () => {
         }
     }, [ workday ]);
 
-    if (loading || !data || !workday) {
+    if (loading || !data) {
         return <Spinner />;
+    }
+
+    if (!workday) {
+        push(`/${projectId}/calendar`);
+
+        return null;
     }
 
     const excludeDates = data.workdays.reduce<Date[]>((acc, mapWorkday) => {
@@ -124,13 +130,17 @@ const UpdateWorkday: FC = () => {
                         onChange = { setWorkdayDate }
                     />
                     <h2>Workday description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
-                        placeholder = 'Type here...'
+                        placeholder = 'Description...'
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Update</Button>
+                    <Button
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick = { onSubmit }>
+                        Update
+                    </Button>
                 </section>
             </UpdateInputs>
         </Container>

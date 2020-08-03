@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input, Spinner } from '../../elements';
+import { Button, Input, Spinner, Textarea } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -74,13 +74,17 @@ const CreateScene: FC = () => {
                         onChange = { setForm }
                     />
                     <h2>Scene description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
                         placeholder = 'Description'
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Create</Button>
+                    <Button
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick = { onSubmit }>
+                        Create
+                    </Button>
                 </section>
             </CreateInputs>
         </Container>

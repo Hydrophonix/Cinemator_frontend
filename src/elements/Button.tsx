@@ -23,6 +23,12 @@ const Styled = styled.button<ButtonProps>`
     &:hover {
         border-color: ${({ theme }) => theme.button.secondary};
     }
+
+    &:disabled {
+        border-color: gray;
+        color: gray;
+        cursor: not-allowed;
+    }
 `;
 
 export const Button: FC<ButtonProps> = ({ children, ...otherProps  }) => {

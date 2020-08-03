@@ -12,10 +12,4 @@ export const Header = styled(EntityHeader)`
     background-color: ${({ theme }) => theme.workday.anotherSecondary};
 `;
 
-export const UpdateInputs = styled(EntityInputs)`
-    section {
-        section {
-            width: 100%; /* Datepicker width */
-        }
-    }
-`;
+export const UpdateInputs = styled(EntityInputs)``;

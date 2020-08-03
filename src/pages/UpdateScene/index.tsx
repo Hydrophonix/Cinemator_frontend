@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input, Spinner, Toggle } from '../../elements';
+import { Button, Input, Spinner, Toggle, Textarea } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -52,8 +52,14 @@ const UpdateScene: FC = () => {
         }
     }, [ scene ]);
 
-    if (loading || !data || !scene) {
+    if (loading || !data) {
         return <Spinner />;
+    }
+
+    if (!scene) {
+        push(`/${projectId}/scenes`);
+
+        return null;
     }
 
     const onSubmit = async () => {
@@ -122,13 +128,17 @@ const UpdateScene: FC = () => {
                         onChange = { setForm }
                     />
                     <h2>Scene description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
                         placeholder = 'Description'
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Update</Button>
+                    <Button
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick = { onSubmit }>
+                        Update
+                    </Button>
                 </section>
             </UpdateInputs>
         </Container>

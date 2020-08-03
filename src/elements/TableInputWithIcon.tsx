@@ -7,10 +7,10 @@ import { FontAwesomeIcon, FontAwesomeIconProps  } from '@fortawesome/react-fonta
 import { Input, InputProps } from '.';
 
 // Constants
-const BUTTON_SIZE = 20;
+const BUTTON_SIZE = 18;
 
 // Styles
-const Container = styled.nav`
+const Container = styled.nav<{color?: string}>`
     position: relative;
 
     input {
@@ -35,9 +35,12 @@ const Container = styled.nav`
             cursor: pointer;
             width: ${BUTTON_SIZE}px;
             height: ${BUTTON_SIZE}px;
-
-            &:hover {
-                opacity: 0.8;
+        }
+        
+        &:hover {
+            background-color: ${({ color }) => color || '#000'};
+            svg > path {
+                fill: #fff;
             }
         }
     }
@@ -50,7 +53,9 @@ type PropTypes = {
 
 export const TableInputWithIcon: FC<PropTypes> = ({ width, icon, color, isIconVisible, onClick, ...inputProps }) => {
     return (
-        <Container style = { width ? { width } : {} }>
+        <Container
+            color = { color }
+            style = { width ? { width } : {} }>
             <Input { ...inputProps } />
             {
                 isIconVisible && (

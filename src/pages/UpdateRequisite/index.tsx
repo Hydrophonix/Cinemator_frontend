@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input, Spinner } from '../../elements';
+import { Button, Input, Spinner, Textarea } from '../../elements';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -50,8 +50,14 @@ const UpdateRequisite: FC = () => {
         });
     }, [ requisite ]);
 
-    if (loading || !data || !requisite) {
+    if (loading || !data) {
         return <Spinner />;
+    }
+
+    if (!requisite) {
+        push(`/${projectId}/requisites`);
+
+        return null;
     }
 
     const onSubmit = async () => {
@@ -116,13 +122,17 @@ const UpdateRequisite: FC = () => {
                         onChange = { setForm }
                     />
                     <h2>Requisite description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
                         placeholder = 'Description'
                         value = { form.description ?? '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Update</Button>
+                    <Button
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick = { onSubmit }>
+                        Update
+                    </Button>
                 </section>
             </UpdateInputs>
         </Container>

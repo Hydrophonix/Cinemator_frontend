@@ -32,7 +32,6 @@ export const tokenRefreshLink = new TokenRefreshLink({
             method:      'POST',
             credentials: 'include',
         });
-        console.log('"|_(ʘ_ʘ)_/" =>: result', result);
 
         return result;
     },

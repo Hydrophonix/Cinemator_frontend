@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { Button, Input, Spinner } from '../../elements';
+import { Button, Input, Spinner, Textarea } from '../../elements';
 
 // Apollo hooks
 import { useRequisitesQuery, useCreateRequisiteMutation } from '../../bus/Requisite';
@@ -74,7 +74,6 @@ const CreateRequisite: FC = () => {
                     <h2>Requisite number:</h2>
                     <Input
                         name = 'number'
-                        placeholder = 'Requisite number'
                         type = 'number'
                         value = { form.number ?? 0 }
                         onChange = { (event) => setForm(event, true) }
@@ -82,18 +81,20 @@ const CreateRequisite: FC = () => {
                     <h2>Requisite title:</h2>
                     <Input
                         name = 'title'
-                        placeholder = 'Requisite title'
+                        placeholder = 'Title'
                         value = { form.title }
                         onChange = { setForm }
                     />
                     <h2>Requisite description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
+                        placeholder = 'Description'
                         value = { form.description || '' }
                         onChange = { setForm }
                     />
                     <Button
                         disabled = { form.title === '' }
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Create
                     </Button>

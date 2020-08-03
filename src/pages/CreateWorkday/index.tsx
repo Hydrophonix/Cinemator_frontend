@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary, DatePicker } from '../../components';
 
 // Elements
-import { Button, Spinner } from '../../elements';
+import { Button, Spinner, Textarea } from '../../elements';
 
 // Apollo hooks
 import { useCreateWorkdayMutation, useWorkdaysQuery } from '../../bus/Workday';
@@ -39,7 +39,9 @@ const CreateWorkday: FC = () => {
     const { data, loading } = useWorkdaysQuery({ projectId });
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
     const { setGlobalDateRangeRedux } = useInputsRedux();
-    const [ createWorkday, { loading: createWorkdayLoading }] = useCreateWorkdayMutation({ projectId, setGlobalDateRangeRedux });
+    const [ createWorkday, { loading: createWorkdayLoading }] = useCreateWorkdayMutation({
+        projectId, setGlobalDateRangeRedux,
+    });
     const isTableMode = date === 'new-date';
     const [ defaultDate, setDefaultDate ] = useState<Date>(isTableMode ? new Date() : new Date(date));
 
@@ -60,7 +62,7 @@ const CreateWorkday: FC = () => {
             },
         });
 
-        response && response.data && void push(`/${projectId}/calendar`);
+        response && response.data && void push(`/${projectId}/calendar/${response.data.createWorkday.id}`);
     };
 
     const excludeDates = data.workdays.map((workday) => new Date(workday.date));
@@ -95,7 +97,7 @@ const CreateWorkday: FC = () => {
                         onChange = { setDefaultDate }
                     />
                     <h2>Workday description:</h2>
-                    <textarea
+                    <Textarea
                         name = 'description'
                         placeholder = 'Type here...'
                         value = { form.description }
@@ -103,6 +105,7 @@ const CreateWorkday: FC = () => {
                     />
                     <Button
                         disabled = { isTableMode ? isTodayWorkday : false }
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Create
                     </Button>

@@ -41,7 +41,7 @@ const ToggleButton = styled.div<ToggleButtonProps>`
     top: 5px;
     left: 5px;
     z-index: 2147000000;
-    ${({ active }) => active ? 'transform: translateX(90%);' : ''};
+    ${({ active }) => active ? 'transform: translateX(95%);' : ''};
     transition: .2s;
 
     color: #fff;
