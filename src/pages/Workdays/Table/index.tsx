@@ -77,7 +77,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
                     </Button>
                 </nav>
             </Header>
-            <ScrollList>
+            <ScrollList heightDiff = { 35 }>
                 <WorkdaysTable workdays = { filterByDateRange() } />
             </ScrollList>
         </Container>

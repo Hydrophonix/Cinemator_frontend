@@ -134,7 +134,7 @@ const Scenes: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <ScrollList>
+            <ScrollList heightDiff = { 35 }>
                 <ScenesTable
                     index = { index }
                     location = { location }

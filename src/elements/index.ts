@@ -5,3 +5,4 @@ export * from './Textarea';
 export * from './Spinner';
 export * from './ModalHeader';
 export * from './TableInputWithIcon';
+export * from './ScrollList';

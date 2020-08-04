@@ -1,10 +1,10 @@
 // Core
 import styled from 'styled-components';
 
-export const EntitiesScrollList = styled.section`
+export const EntitiesScrollList = styled.section<{ heightDiff: number }>`
     overflow-x: hidden;
-    overflow-y: scroll; 
-    height: calc(100% - 35px);
+    overflow-y: auto; 
+    height: ${({ heightDiff }) => `calc(100% - ${heightDiff}px)`};
 `;
 
 export const EntityContainer = styled.section`

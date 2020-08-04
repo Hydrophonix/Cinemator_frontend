@@ -114,7 +114,7 @@ const Requisites: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <ScrollList>
+            <ScrollList heightDiff = { 35 }>
                 <RequisitesTable
                     index = { requisitesInputs.index }
                     reqType = { requisitesInputs.reqType }
