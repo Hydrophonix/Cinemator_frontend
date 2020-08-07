@@ -19,7 +19,7 @@ import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
 import { useArrayOfStringsForm } from '../../hooks';
 
 // Elements
-import { Button, Spinner, ScrollList } from '../../elements';
+import { Button, Spinner, AdaptiveScroll } from '../../elements';
 
 // Styles
 import { Container, Header, Info } from './styles';
@@ -33,7 +33,7 @@ type Params = {
 const Workday: FC = () => {
     const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
-    const divRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLHeadElement>(null);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
 
@@ -82,50 +82,52 @@ const Workday: FC = () => {
                     sceneIds = { sceneIds }
                 />
             </Route>
-            <div ref = { divRef }>
-                <Header>
-                    <nav>
-                        <Button
-                            style = {{ width: 55 }}
-                            title = 'Back to calendar'
-                            onClick = { () => void push(`/${projectId}/calendar`) }>
+            <Header ref = { headerRef }>
+                <nav>
+                    <Button
+                        style = {{ width: 55 }}
+                        title = 'Back to calendar'
+                        onClick = { () => void push(`/${projectId}/calendar`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16, marginRight: 5 }}
+                        />
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'calendar-alt'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
+                <h2>W: {workday.date}</h2>
+                <nav>
+                    <Button
+                        title = 'Add scenes'
+                        onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>S:</span>
                             <FontAwesomeIcon
                                 color = '#000'
-                                icon = 'reply'
-                                style = {{ width: 16, height: 16, marginRight: 5 }}
-                            />
-                            <FontAwesomeIcon
-                                color = '#000'
-                                icon = 'calendar-alt'
+                                icon = 'plus'
                                 style = {{ width: 16, height: 16 }}
                             />
-                        </Button>
-                    </nav>
-                    <h2>W: {workday.date}</h2>
-                    <nav>
-                        <Button
-                            title = 'Add scenes'
-                            onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
-                            <div style = {{ display: 'flex', alignItems: 'center' }}>
-                                <span style = {{ fontSize: 16 }}>S:</span>
-                                <FontAwesomeIcon
-                                    color = '#000'
-                                    icon = 'plus'
-                                    style = {{ width: 16, height: 16 }}
-                                />
-                            </div>
-                        </Button>
-                        <Button
-                            title = 'Settings'
-                            onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
-                            <FontAwesomeIcon
-                                color = '#000'
-                                icon = 'wrench'
-                                style = {{ width: 16, height: 16 }}
-                            />
-                        </Button>
-                    </nav>
-                </Header>
+                        </div>
+                    </Button>
+                    <Button
+                        title = 'Settings'
+                        onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'wrench'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
+            </Header>
+            <AdaptiveScroll
+                disableOnMobile
+                refs = { [ headerRef ] }>
                 {
                     workday.description && (
                         <Info>
@@ -133,13 +135,11 @@ const Workday: FC = () => {
                         </Info>
                     )
                 }
-            </div>
-            <ScrollList divRef = { divRef }>
                 <ScenesTable
                     scenes = { workdayScenes }
                     workdayId = { workdayId }
                 />
-            </ScrollList>
+            </AdaptiveScroll>
         </Container>
     );
 };

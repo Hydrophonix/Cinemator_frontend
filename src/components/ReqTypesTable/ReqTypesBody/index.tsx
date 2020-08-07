@@ -35,7 +35,7 @@ export const ReqTypesBody: FC<Proptypes> = ({
                     <tr
                         key = { reqType.id }
                         style = { reqTypeIds?.includes(reqType.id) ? { backgroundColor: 'green' } : {} }
-                        onClick = { () => handler && void handler(reqType.id) }>
+                        onClick = { () => handler && updateReqTypeId === '' && void handler(reqType.id) }>
                         <td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
                             {
                                 updateReqTypeId !== reqType.id

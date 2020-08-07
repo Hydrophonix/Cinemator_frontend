@@ -1,6 +1,6 @@
 
 // Core
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
@@ -13,12 +13,12 @@ import { Modal, WorkdaysTable, DateRangePicker } from '../../components';
 import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Elements
-import { ModalHeader, Button } from '../../elements';
+import { AdaptiveScroll, Button } from '../../elements';
 
 import { transformDateToISO8601 } from '../../utils';
 
 // Styles
-import { Main, Footer, Section } from './styles';
+import { Header, Footer, Section } from './styles';
 
 // Types
 import { DateRange } from '../../@init/redux/inputs/types';
@@ -40,6 +40,10 @@ export const WorkdaysModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
+    const headerRef = useRef<HTMLHeadElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
+    const footerRef = useRef<HTMLElement>(null);
+
     const { data, loading } = useWorkdaysQuery({ projectId });
     const workdaysDates = data?.workdays.map((workday) => new Date(workday.date));
     const [ dateRange, setDateRange ] = useState<{ startDay?: Date, endDay?: Date}>({
@@ -76,8 +80,8 @@ export const WorkdaysModal: FC<PropTypes> = ({
         <Modal
             closeHandler = { closeHandler }
             spinner = { saveHandlerLoading }>
-            <ModalHeader style = {{ backgroundColor: theme.workday.secondary }}>Workdays</ModalHeader>
-            <Section>
+            <Header ref = { headerRef }><h2>Workdays</h2></Header>
+            <Section ref = { sectionRef }>
                 <DateRangePicker
                     reset
                     endDay = { endDay }
@@ -87,14 +91,17 @@ export const WorkdaysModal: FC<PropTypes> = ({
                     startDay = { startDay }
                 />
             </Section>
-            <Main>
+            <AdaptiveScroll
+                minHeight
+                backgroundColor = { theme.workday.containerBg }
+                refs = { [ headerRef, sectionRef, footerRef ] }>
                 <WorkdaysTable
                     handler = { handler }
                     workdayIds = { workdayIds }
                     workdays = { filterByDateRange() }
                 />
-            </Main>
-            <Footer>
+            </AdaptiveScroll>
+            <Footer ref = { footerRef }>
                 <Button
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>

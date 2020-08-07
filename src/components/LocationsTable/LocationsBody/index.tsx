@@ -34,7 +34,7 @@ export const LocationsBody: FC<Proptypes> = ({
                     <tr
                         key = { location.id }
                         style = { locationIds?.includes(location.id) ? { backgroundColor: 'green' } : {} }
-                        onClick = { () => handler && void handler(location.id) }>
+                        onClick = { () => handler && updateLocationId === '' && void handler(location.id) }>
                         <td style = {{ textAlign: 'center', maxWidth: 200, width: '100%' }}>
                             {
                                 updateLocationId !== location.id

@@ -9,7 +9,7 @@ interface SpinnerProps {
     absolute?: boolean
 }
 
-export const Container = styled.div<{ isActive: boolean, absolute: boolean }>`
+const Container = styled.div<{ isActive: boolean, absolute: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;

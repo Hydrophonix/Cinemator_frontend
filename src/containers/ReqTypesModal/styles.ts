@@ -2,10 +2,10 @@
 import styled from 'styled-components';
 
 // Styles
-import { ModalMain, ModalFooter, ModalIconsContainer, ModalIcon } from '../styles';
+import { ModalHeader, ModalFooter, ModalIconsContainer, ModalIcon } from '../styles';
 
-export const Main = styled(ModalMain)`
-    background-color: ${({ theme }) => theme.requisite.containerBg};
+export const Header = styled(ModalHeader)`
+    background-color: ${({ theme }) => theme.requisite.primary};
 `;
 
 export const Footer = styled(ModalFooter)`

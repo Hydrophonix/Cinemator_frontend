@@ -1,10 +1,10 @@
 
 // Core
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useState, useRef, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ThemeContext } from 'styled-components';
 import { useApolloClient } from '@apollo/react-hooks';
+import { ThemeContext } from 'styled-components';
 
 // Schemas
 import ReqTypesSchema from '../../bus/ReqType/schemas/reqTypes.graphql';
@@ -26,10 +26,10 @@ import { useRequisitesQuery } from '../../bus/Requisite';
 import { useForm } from '../../hooks';
 
 // Elements
-import { ModalHeader, Button, Input } from '../../elements';
+import { Button, Input, AdaptiveScroll } from '../../elements';
 
 // Styles
-import { Main, Footer, IconsContainer, Icon } from './styles';
+import { Header, Footer, IconsContainer, Icon } from './styles';
 
 // Types
 type Params = { projectId: string }
@@ -53,15 +53,21 @@ export const ReqTypesModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
+    const headerRef = useRef<HTMLHeadElement>(null);
+    const IconsContainerRef = useRef<HTMLElement>(null);
+    const footerRef = useRef<HTMLElement>(null);
+
     const client = useApolloClient();
     const { data, loading } = useReqTypesQuery({ projectId });
     const { data: requisitesData, loading: requisitesLoading } = useRequisitesQuery({ projectId });
     const [ createReqType, { loading: createReqTypeLoading }] = useCreateReqTypeMutation({ projectId });
     const [ updateReqType, { loading: updateReqTypeLoading }] = useUpdateReqTypeMutation();
     const [ deleteReqType, { loading: deleteReqTypeLoading }] = useDeleteReqTypeMutation();
+
     const [ form, setForm, _, resetForm ] = useForm<typeof initialForm>(initialForm); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ isPlusRotate, setPlusRotateState ] = useState(false);
     const [ isTrashRotate, setTrashRotateState ] = useState(false);
+
     const isSpinnerActive = saveHandlerLoading || createReqTypeLoading || updateReqTypeLoading || deleteReqTypeLoading;
 
     if (loading || !data || requisitesLoading || !requisitesData) {
@@ -174,8 +180,8 @@ export const ReqTypesModal: FC<PropTypes> = ({
         <Modal
             closeHandler = { closeHandler }
             spinner = { isSpinnerActive }>
-            <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Types</ModalHeader>
-            <IconsContainer>
+            <Header ref = { headerRef }><h2>Types</h2></Header>
+            <IconsContainer ref = { IconsContainerRef }>
                 <section>
                     <Icon
                         isRotate = { isPlusRotate }
@@ -205,7 +211,10 @@ export const ReqTypesModal: FC<PropTypes> = ({
                     onChange = { setForm }
                 />
             </IconsContainer>
-            <Main>
+            <AdaptiveScroll
+                minHeight
+                backgroundColor = { theme.requisite.containerBg }
+                refs = { [ headerRef, IconsContainerRef, footerRef ] }>
                 <ReqTypesTable
                     deleteReqTypeHandler = { deleteReqTypeHandler }
                     handler = { handler }
@@ -213,8 +222,8 @@ export const ReqTypesModal: FC<PropTypes> = ({
                     reqTypes = { filterHandler() }
                     updateReqTypeHandler = { updateReqTypeHandler }
                 />
-            </Main>
-            <Footer>
+            </AdaptiveScroll>
+            <Footer ref = { footerRef }>
                 <Button
                     title = { saveHandler ? 'Save' : 'Close' }
                     onClick = { () => saveHandler ? void saveHandler() : void closeHandler() }>

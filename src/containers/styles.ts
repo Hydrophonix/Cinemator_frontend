@@ -1,27 +1,39 @@
 // Core
 import styled, { keyframes, css } from 'styled-components';
 
-export const ModalMain = styled.main`
-    max-height: 410px;
-    min-height: 410px;
-    overflow-y: scroll;
+export const ModalHeader = styled.header`
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+
+    h2 {
+        padding-left: 15px;
+        font-family: sans-serif;
+        font-size: 24px;
+        color: #fff;
+    }
 `;
 
 export const ModalFooter = styled.footer`
-    padding: 10px;
+    height: 50px;
+    padding: 0px 10px;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+    box-sizing: border-box;
 `;
 
 export const ModalIconsContainer = styled.nav`
     position: relative;
-    padding: 0px 5px 5px;
+    padding: 5px;
 
     section {
         position: absolute;
         display: flex;
         right: 10px;
-        top: 4px;
+        top: 8px;
     }
 
     input {

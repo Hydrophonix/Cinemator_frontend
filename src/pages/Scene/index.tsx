@@ -21,7 +21,7 @@ import {
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Elements
-import { Button, Spinner, ScrollList } from '../../elements';
+import { Button, Spinner, AdaptiveScroll } from '../../elements';
 
 // Styles
 import { Container, Header, Info, Relations } from './styles';
@@ -35,7 +35,7 @@ type Params = {
 const Scene: FC = () => {
     const { push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
-    const divRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLHeadElement>(null);
     const theme = useContext(ThemeContext);
 
     const { data, loading } = useScenesQuery({ projectId });
@@ -130,88 +130,89 @@ const Scene: FC = () => {
                     />
                 </Route>
             </Switch>
-            <div ref = { divRef }>
-                <Header>
-                    <nav>
-                        <Button
-                            style = {{ width: 55 }}
-                            title = 'Back to scenes'
-                            onClick = { () => void push(`/${projectId}/scenes`) }>
+            <Header ref = { headerRef }>
+                <nav>
+                    <Button
+                        style = {{ width: 55 }}
+                        title = 'Back to scenes'
+                        onClick = { () => void push(`/${projectId}/scenes`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'reply'
+                            style = {{ width: 16, height: 16, marginRight: 5 }}
+                        />
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'mask'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
+                <h2>
+                    {`S:${scene.number}`}
+                    {
+                        scene.isCompleted && (
+                            <>
+                                :
+                                <FontAwesomeIcon
+                                    color = '#fff'
+                                    icon = 'check'
+                                    style = {{ width: 18, height: 18 }}
+                                />
+                            </>
+                        )
+                    }
+                </h2>
+                <nav>
+                    <Button
+                        title = 'Add workdays'
+                        onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-workdays`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>W:</span>
                             <FontAwesomeIcon
                                 color = '#000'
-                                icon = 'reply'
-                                style = {{ width: 16, height: 16, marginRight: 5 }}
-                            />
-                            <FontAwesomeIcon
-                                color = '#000'
-                                icon = 'mask'
+                                icon = 'plus'
                                 style = {{ width: 16, height: 16 }}
                             />
-                        </Button>
-                    </nav>
-                    <h2>
-                        {`S:${scene.number}`}
-                        {
-                            scene.isCompleted && (
-                                <>
-                                    :
-                                    <FontAwesomeIcon
-                                        color = '#fff'
-                                        icon = 'check'
-                                        style = {{ width: 18, height: 18 }}
-                                    />
-                                </>
-                            )
-                        }
-                    </h2>
-                    <nav>
-                        <Button
-                            title = 'Add workdays'
-                            onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-workdays`) }>
-                            <div style = {{ display: 'flex', alignItems: 'center' }}>
-                                <span style = {{ fontSize: 16 }}>W:</span>
-                                <FontAwesomeIcon
-                                    color = '#000'
-                                    icon = 'plus'
-                                    style = {{ width: 16, height: 16 }}
-                                />
-                            </div>
-                        </Button>
-                        <Button
-                            title = 'Add requisites'
-                            onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
-                            <div style = {{ display: 'flex', alignItems: 'center' }}>
-                                <span style = {{ fontSize: 16 }}>R:</span>
-                                <FontAwesomeIcon
-                                    color = '#000'
-                                    icon = 'plus'
-                                    style = {{ width: 16, height: 16 }}
-                                />
-                            </div>
-                        </Button>
-                        <Button
-                            title = 'Add locations'
-                            onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
-                            <div style = {{ display: 'flex', alignItems: 'center' }}>
-                                <span style = {{ fontSize: 16 }}>L:</span>
-                                <FontAwesomeIcon
-                                    color = '#000'
-                                    icon = 'plus'
-                                    style = {{ width: 16, height: 16 }}
-                                />
-                            </div>
-                        </Button>
-                        <Button
-                            title = 'Settings'
-                            onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
+                        </div>
+                    </Button>
+                    <Button
+                        title = 'Add requisites'
+                        onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>R:</span>
                             <FontAwesomeIcon
                                 color = '#000'
-                                icon = 'wrench'
+                                icon = 'plus'
                                 style = {{ width: 16, height: 16 }}
                             />
-                        </Button>
-                    </nav>
-                </Header>
+                        </div>
+                    </Button>
+                    <Button
+                        title = 'Add locations'
+                        onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
+                        <div style = {{ display: 'flex', alignItems: 'center' }}>
+                            <span style = {{ fontSize: 16 }}>L:</span>
+                            <FontAwesomeIcon
+                                color = '#000'
+                                icon = 'plus'
+                                style = {{ width: 16, height: 16 }}
+                            />
+                        </div>
+                    </Button>
+                    <Button
+                        title = 'Settings'
+                        onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'wrench'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </Button>
+                </nav>
+            </Header>
+            <AdaptiveScroll
+                refs = { [ headerRef ] }>
                 {
                     (scene.title || scene.description) && (
                         <Info>
@@ -253,13 +254,11 @@ const Scene: FC = () => {
                         )
                     }
                 </Relations>
-            </div>
-            <ScrollList divRef = { divRef }>
                 <RequisitesTable
                     requisites = { sceneRequisites }
                     sceneId = { sceneId }
                 />
-            </ScrollList>
+            </AdaptiveScroll>
         </Container>
     );
 };

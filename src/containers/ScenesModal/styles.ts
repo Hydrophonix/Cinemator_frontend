@@ -2,10 +2,10 @@
 import styled from 'styled-components';
 
 // Styles
-import { ModalMain, ModalFooter } from '../styles';
+import { ModalHeader, ModalFooter } from '../styles';
 
-export const Main = styled(ModalMain)`
-    background-color: ${({ theme }) => theme.scene.containerBg};
+export const Header = styled(ModalHeader)`
+    background-color: ${({ theme }) => theme.scene.secondary};
 `;
 
 export const Footer = styled(ModalFooter)`

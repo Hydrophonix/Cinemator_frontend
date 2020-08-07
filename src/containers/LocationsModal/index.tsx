@@ -1,6 +1,6 @@
 
 // Core
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
@@ -26,10 +26,10 @@ import { useScenesQuery } from '../../bus/Scene';
 import { useForm } from '../../hooks';
 
 // Elements
-import { ModalHeader, Button, Input } from '../../elements';
+import { AdaptiveScroll, Button, Input } from '../../elements';
 
 // Styles
-import { Main, Footer, IconsContainer, Icon } from './styles';
+import { Header, Footer, IconsContainer, Icon } from './styles';
 
 // Types
 type Params = { projectId: string }
@@ -53,15 +53,21 @@ export const LocationsModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
+    const headerRef = useRef<HTMLHeadElement>(null);
+    const IconsContainerRef = useRef<HTMLElement>(null);
+    const footerRef = useRef<HTMLElement>(null);
+
     const client = useApolloClient();
     const { data, loading } = useLocationsQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
     const [ createLocation, { loading: createLocationLoading }] = useCreateLocationMutation({ projectId });
     const [ updateLocation, { loading: updateLocationLoading }] = useUpdateLocationMutation();
     const [ deleteLocation, { loading: deleteLocationLoading }] = useDeleteLocationMutation();
+
     const [ form, setForm, _, resetForm ] = useForm<typeof initialForm>(initialForm); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ isPlusRotate, setPlusRotateState ] = useState(false);
     const [ isTrashRotate, setTrashRotateState ] = useState(false);
+
     const isSpinnerActive = saveHandlerLoading || createLocationLoading
         || updateLocationLoading || deleteLocationLoading;
 
@@ -169,8 +175,8 @@ export const LocationsModal: FC<PropTypes> = ({
         <Modal
             closeHandler = { closeHandler }
             spinner = { isSpinnerActive }>
-            <ModalHeader style = {{ backgroundColor: theme.scene.secondary }}>Locations</ModalHeader>
-            <IconsContainer>
+            <Header ref = { headerRef }><h2>Locations</h2></Header>
+            <IconsContainer ref = { IconsContainerRef }>
                 <section>
                     <Icon
                         isRotate = { isPlusRotate }
@@ -200,7 +206,10 @@ export const LocationsModal: FC<PropTypes> = ({
                     onChange = { setForm }
                 />
             </IconsContainer>
-            <Main>
+            <AdaptiveScroll
+                minHeight
+                backgroundColor = { theme.scene.containerBg }
+                refs = { [ headerRef, IconsContainerRef, footerRef ] }>
                 <LocationsTable
                     deleteLocationHandler = { deleteLocationHandler }
                     handler = { handler }
@@ -208,8 +217,8 @@ export const LocationsModal: FC<PropTypes> = ({
                     locations = { filterHandler() }
                     updateLocationHandler = { updateLocationHandler }
                 />
-            </Main>
-            <Footer>
+            </AdaptiveScroll>
+            <Footer ref = { footerRef }>
                 <Button
                     title = { saveHandler ? 'Save' : 'Close' }
                     onClick = { () => saveHandler ? void saveHandler() : void closeHandler() }>

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from '../../elements';
 
 // Styles
-import S from './styles';
+import { ModalWrapper, ModalContainer, Cross } from './styles';
 
 type PropTypes = {
     children: ReactElement[];
@@ -25,12 +25,12 @@ export const Modal: FC<PropTypes> = ({ children, closeHandler, spinner }) => {
     const hideModal = () => void goBack();
 
     return (
-        <S.ModalWrapper>
-            <S.ModalContainer onClick = { (event) => void stopPropagation(event) }>
+        <ModalWrapper>
+            <ModalContainer onClick = { (event) => void stopPropagation(event) }>
                 {spinner && <Spinner absolute />}
-                <S.Cross onClick = { closeHandler ? closeHandler : hideModal } />
+                <Cross onClick = { closeHandler ? closeHandler : hideModal } />
                 {children}
-            </S.ModalContainer>
-        </S.ModalWrapper>
+            </ModalContainer>
+        </ModalWrapper>
     );
 };

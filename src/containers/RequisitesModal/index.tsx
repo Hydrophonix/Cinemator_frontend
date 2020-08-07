@@ -1,6 +1,6 @@
 
 // Core
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
@@ -12,10 +12,10 @@ import { Modal, RequisitesTable } from '../../components';
 import { useRequisitesQuery } from '../../bus/Requisite';
 
 // Elements
-import { ModalHeader, Button } from '../../elements';
+import { AdaptiveScroll, Button } from '../../elements';
 
 // Styles
-import { Main, Footer } from './styles';
+import { Header, Footer } from './styles';
 
 // Types
 type PropTypes = {
@@ -34,6 +34,9 @@ export const RequisitesModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
+    const headerRef = useRef<HTMLHeadElement>(null);
+    const footerRef = useRef<HTMLElement>(null);
+
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
     const [ title, setTitleUseState ] = useState('');
@@ -72,8 +75,11 @@ export const RequisitesModal: FC<PropTypes> = ({
         <Modal
             closeHandler = { closeHandler }
             spinner = { saveHandlerLoading }>
-            <ModalHeader style = {{ backgroundColor: theme.requisite.secondary }}>Requisites</ModalHeader>
-            <Main>
+            <Header ref = { headerRef }><h2>Requisites</h2></Header>
+            <AdaptiveScroll
+                minHeight
+                backgroundColor = { theme.requisite.containerBg }
+                refs = { [ headerRef, footerRef ] }>
                 <RequisitesTable
                     lightVersion
                     handler = { handler }
@@ -84,8 +90,8 @@ export const RequisitesModal: FC<PropTypes> = ({
                     setTitle = { (newTitle: string) => void setTitleUseState(newTitle) }
                     title = { title }
                 />
-            </Main>
-            <Footer>
+            </AdaptiveScroll>
+            <Footer ref = { footerRef }>
                 <Button
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>

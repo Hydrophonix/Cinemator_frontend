@@ -3,6 +3,5 @@ export * from './Toggle';
 export * from './Input';
 export * from './Textarea';
 export * from './Spinner';
-export * from './ModalHeader';
 export * from './TableInputWithIcon';
-export * from './ScrollList';
+export * from './AdaptiveScroll';

@@ -17,7 +17,6 @@ export const EntityHeader = styled.header`
     box-sizing: border-box;
     grid-template-columns: 30% 40% 30%;
     padding: 5px;
-    min-height: 35px;
     box-sizing: border-box;
     
     h2 {
@@ -45,7 +44,6 @@ export const EntityInfo = styled.section`
     display: flex;
     flex-direction: column;
     width: 100%;
-    border-top: 0.5px solid #fff;
     color: #fff;
     box-sizing: border-box;
     padding: 5px 5px 0px;
