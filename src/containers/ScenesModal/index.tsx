@@ -35,7 +35,7 @@ export const ScenesModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
-    const headerRef = useRef<HTMLHeadElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
 
     const { data, loading } = useScenesQuery({ projectId });

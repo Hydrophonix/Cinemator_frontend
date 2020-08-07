@@ -40,7 +40,7 @@ export const WorkdaysModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
-    const headerRef = useRef<HTMLHeadElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
 

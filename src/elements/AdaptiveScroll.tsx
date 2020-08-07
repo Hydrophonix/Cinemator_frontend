@@ -31,10 +31,8 @@ const ScrollContainer = styled.section<{ heightDiff: number; disableOnMobile?: t
     }};
 `;
 
-type Ref = RefObject<HTMLDivElement | HTMLHeadElement | HTMLElement>
-
 type Proptypes = {
-    refs: Array<Ref>;
+    refs: Array<RefObject<HTMLElement>>;
     backgroundColor?: string;
     minHeight?: true;
     disableOnMobile?: true;

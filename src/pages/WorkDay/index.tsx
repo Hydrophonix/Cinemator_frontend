@@ -33,7 +33,7 @@ type Params = {
 const Workday: FC = () => {
     const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
-    const headerRef = useRef<HTMLHeadElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
 
@@ -125,13 +125,11 @@ const Workday: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <AdaptiveScroll
-                disableOnMobile
-                refs = { [ headerRef ] }>
+            <AdaptiveScroll refs = { [ headerRef ] }>
                 {
                     workday.description && (
                         <Info>
-                            {workday.description && <div><span>{workday.description}</span></div>}
+                            <div><span>{workday.description}</span></div>
                         </Info>
                     )
                 }

@@ -53,7 +53,7 @@ export const LocationsModal: FC<PropTypes> = ({
 }) => {
     const { projectId } = useParams<Params>();
     const theme = useContext(ThemeContext);
-    const headerRef = useRef<HTMLHeadElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
     const IconsContainerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
 

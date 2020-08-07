@@ -35,7 +35,7 @@ type Params = {
 const Requisite: FC = () => {
     const { push } = useHistory();
     const { projectId, requisiteId } = useParams<Params>();
-    const headerRef = useRef<HTMLHeadElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
 
     const { data, loading } = useRequisitesQuery({ projectId });
@@ -155,9 +155,7 @@ const Requisite: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <AdaptiveScroll
-                disableOnMobile
-                refs = { [ headerRef ] }>
+            <AdaptiveScroll refs = { [ headerRef ] }>
                 <Info>
                     <div><p>{requisite.title}</p></div>
                     {requisite.description && <div><span>{requisite.description}</span></div>}

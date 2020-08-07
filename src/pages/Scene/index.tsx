@@ -35,7 +35,7 @@ type Params = {
 const Scene: FC = () => {
     const { push } = useHistory();
     const { projectId, sceneId } = useParams<Params>();
-    const headerRef = useRef<HTMLHeadElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
 
     const { data, loading } = useScenesQuery({ projectId });
@@ -211,8 +211,7 @@ const Scene: FC = () => {
                     </Button>
                 </nav>
             </Header>
-            <AdaptiveScroll
-                refs = { [ headerRef ] }>
+            <AdaptiveScroll refs = { [ headerRef ] }>
                 {
                     (scene.title || scene.description) && (
                         <Info>
