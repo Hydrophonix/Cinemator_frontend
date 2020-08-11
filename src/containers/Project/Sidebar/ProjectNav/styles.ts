@@ -7,7 +7,7 @@ export const Ul = styled.ul`
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    padding: 20px 0px 0px 20px;
+    padding: 15px;
 `;
 
 export const Li = styled.li<{ isActive: boolean, color: string }>`
@@ -29,28 +29,21 @@ export const Li = styled.li<{ isActive: boolean, color: string }>`
     }
 `;
 
+export const Title = styled.h2`
+    font-family: sans-serif;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    padding: 10px 0px;
+`;
+
+export const Description = styled.p`
+    font-family: sans-serif;
+    color: #fff;
+    font-size: 14px;
+`;
+
 export const Footer = styled.footer`
-    div {
-        border-top: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-        font-family: sans-serif;
-        color: #fff;
-        margin-bottom: 10px;
-
-        h2 {
-            font-size: 22px;
-            font-family: sans-serif;
-            text-align: center;
-            color: #fff;
-            padding: 10px 0px;
-        }
-
-        p {
-            font-size: 14px;
-            padding-bottom: 10px;
-        }
-    }
-
     nav {
         display: flex;
         justify-content: flex-end;

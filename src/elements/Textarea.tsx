@@ -31,7 +31,7 @@ const StyledTextarea = styled.textarea<StyledTextareaProps>`
     box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
     outline: none;
     font-family: sans-serif;
-    overflow: hidden;
+    overflow: auto;
 
     &::placeholder {
         color: gray;
