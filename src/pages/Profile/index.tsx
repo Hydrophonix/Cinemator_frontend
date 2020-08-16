@@ -49,10 +49,6 @@ const Profile: FC = () => {
         });
     }, [ data ]);
 
-    if (loading || !data) {
-        return <Spinner />;
-    }
-
     const onSubmit = async () => void await updateMe({ variables: { input: form }});
     const onLogout = () => {
         logout();
@@ -81,33 +77,39 @@ const Profile: FC = () => {
             </Header>
             <UpdateInputs>
                 <section>
-                    <h2>User email:</h2>
-                    <Input
-                        name = 'email'
-                        placeholder = 'Email'
-                        value = { form.email || '' }
-                        onChange = { setForm }
-                    />
-                    <h2>User name:</h2>
-                    <Input
-                        name = 'name'
-                        placeholder = 'Name'
-                        value = { form.name || '' }
-                        onChange = { setForm }
-                    />
-                    <h2>User phone:</h2>
-                    <Input
-                        name = 'phone'
-                        placeholder = 'Phone'
-                        value = { form.phone || '' }
-                        onChange = { setForm }
-                    />
-                    <Button
-                        disabled = { !isOnline }
-                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
-                        onClick = { onSubmit }>
-                        Update
-                    </Button>
+                    {
+                        (!loading || data) && (
+                            <>
+                                <h2>User email:</h2>
+                                <Input
+                                    name = 'email'
+                                    placeholder = 'Email'
+                                    value = { form.email || '' }
+                                    onChange = { setForm }
+                                />
+                                <h2>User name:</h2>
+                                <Input
+                                    name = 'name'
+                                    placeholder = 'Name'
+                                    value = { form.name || '' }
+                                    onChange = { setForm }
+                                />
+                                <h2>User phone:</h2>
+                                <Input
+                                    name = 'phone'
+                                    placeholder = 'Phone'
+                                    value = { form.phone || '' }
+                                    onChange = { setForm }
+                                />
+                                <Button
+                                    disabled = { !isOnline }
+                                    style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                                    onClick = { onSubmit }>
+                                    Update
+                                </Button>
+                            </>
+                        )
+                    }
                     <Button
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick={ onLogout }>
