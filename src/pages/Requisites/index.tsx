@@ -9,6 +9,7 @@ import { useReqTypesQuery } from '../../bus/ReqType';
 
 // Redux
 import { useInputsRedux } from '../../@init/redux/inputs';
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Containers
 import { ReqTypesModal } from '../../containers';
@@ -32,6 +33,7 @@ const Requisites: FC = () => {
     const { projectId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const { data: reqTypesData, loading: reqTypesLoading } = useReqTypesQuery({ projectId });
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const {
         inputs: { requisitesInputs },
         setIndexRedux,
@@ -104,6 +106,7 @@ const Requisites: FC = () => {
                 <h2>Requisites</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Create requisite'
                         onClick = { () => void push(`/${projectId}/create-requisite`) }>
                         <FontAwesomeIcon

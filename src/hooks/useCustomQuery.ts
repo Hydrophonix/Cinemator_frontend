@@ -1,5 +1,5 @@
 // Core
-import * as ApolloReactHooks from '@apollo/react-hooks';
+import * as ApolloReactHooks from '@apollo/client';
 import { DocumentNode } from 'graphql';
 
 export const useCustomQuery = <TData, TVariables> (

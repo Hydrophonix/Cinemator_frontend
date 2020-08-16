@@ -15,6 +15,7 @@ import { useProjectDateRange } from '../../hooks';
 import { transformDateToISO8601 } from '../../utils';
 
 // Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
@@ -35,6 +36,7 @@ type Params = { projectId: string };
 const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const { data, loading } = useScenesQuery({ projectId });
     const { data: locationsData, loading: locationsLoading } = useLocationsQuery({ projectId });
     const { projectStartDay, projectEndDay } = useProjectDateRange();
@@ -124,6 +126,7 @@ const Scenes: FC = () => {
                 <h2>Scenes</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Create scene'
                         onClick = { () => void push(`/${projectId}/create-scene`) }>
                         <FontAwesomeIcon

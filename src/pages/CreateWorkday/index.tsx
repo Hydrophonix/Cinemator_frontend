@@ -9,7 +9,7 @@ import { ErrorBoundary, DatePicker } from '../../components';
 // Elements
 import { Button, Spinner, Textarea } from '../../elements';
 
-// Apollo hooks
+// Apollo
 import { useCreateWorkdayMutation, useWorkdaysQuery } from '../../bus/Workday';
 
 // Hooks
@@ -17,6 +17,7 @@ import { useForm } from '../../hooks';
 
 // Redux
 import { useInputsRedux } from '../../@init/redux/inputs';
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
@@ -39,6 +40,7 @@ const CreateWorkday: FC = () => {
     const { data, loading } = useWorkdaysQuery({ projectId });
     const [ form, setForm ] = useForm<typeof innitialForm>(innitialForm);
     const { setGlobalDateRangeRedux } = useInputsRedux();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const [ createWorkday, { loading: createWorkdayLoading }] = useCreateWorkdayMutation({
         projectId, setGlobalDateRangeRedux,
     });
@@ -104,7 +106,7 @@ const CreateWorkday: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
-                        disabled = { isTableMode ? isTodayWorkday : false }
+                        disabled = { !isOnline || (isTableMode ? isTodayWorkday : false) }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Create

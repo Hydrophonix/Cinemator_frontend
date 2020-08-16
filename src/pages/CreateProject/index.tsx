@@ -9,12 +9,17 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button, Input, Spinner, Textarea } from '../../elements';
 
-// Assets
-import { Container, Header, CreateInputs } from './styles';
+// Apollo
+import { useCreateProjectMutation } from '../../bus/Project';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useForm } from '../../hooks';
-import { useCreateProjectMutation } from '../../bus/Project';
+
+// Styles
+import { Container, Header, CreateInputs } from './styles';
 
 // Types
 import { ProjectCreateInput } from '../../@types/graphql-global-types';
@@ -28,6 +33,7 @@ const CreateProject: FC = () => {
     const { push } = useHistory();
     const [ createProject, { loading: createProjectLoading }] = useCreateProjectMutation();
     const [ form, setForm ] = useForm<ProjectCreateInput>(innitialForm);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
@@ -69,6 +75,7 @@ const CreateProject: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
+                        disabled = { !isOnline }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Create

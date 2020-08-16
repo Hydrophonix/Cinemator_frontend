@@ -4,12 +4,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: projectFields
+// GraphQL mutation operation: LogoutWeb
 // ====================================================
 
-export interface projectFields {
-  __typename: "Project";
-  id: string;
-  title: string;
-  description: string | null;
+export interface LogoutWeb {
+  logoutWeb: boolean;
 }

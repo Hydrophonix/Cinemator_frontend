@@ -11,6 +11,9 @@ import { Modal, ScenesTable } from '../../components';
 // Apollo hooks
 import { useScenesQuery } from '../../bus/Scene';
 
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
+
 // Elements
 import { AdaptiveScroll, Button } from '../../elements';
 
@@ -37,6 +40,7 @@ export const ScenesModal: FC<PropTypes> = ({
     const theme = useContext(ThemeContext);
     const headerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const { data, loading } = useScenesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
@@ -83,6 +87,7 @@ export const ScenesModal: FC<PropTypes> = ({
             </AdaptiveScroll>
             <Footer ref = { footerRef }>
                 <Button
+                    disabled = { !isOnline }
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon

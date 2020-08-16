@@ -1,5 +1,5 @@
 // Core
-import { ApolloLink, Observable } from 'apollo-link';
+import { ApolloLink, Observable } from '@apollo/client';
 
 // Instruments
 import { getAccessToken } from '../tokenStore';

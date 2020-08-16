@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 // Core
-import { QueryHookOptions } from '@apollo/react-hooks';
+import { QueryHookOptions } from '@apollo/client';
 
 // Hooks
 import { useCustomQuery } from '../../../hooks';

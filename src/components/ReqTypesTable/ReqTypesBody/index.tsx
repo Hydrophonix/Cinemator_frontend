@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Elements
 import { Button, Input } from '../../../elements';
 
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
+
 // Styles
 import { Tbody } from '../styles';
 import { UpdateContainer } from './styles';
@@ -25,6 +28,7 @@ export const ReqTypesBody: FC<Proptypes> = ({
     updateReqTypeHandler, deleteReqTypeHandler,
     reqTypeIds, handler,
 }) => {
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const [ updateReqTypeId, setUpdateReqTypeId ] = useState('');
     const [ tempReqTypeName, setTempReqTypeName ] = useState('');
 
@@ -58,6 +62,7 @@ export const ReqTypesBody: FC<Proptypes> = ({
                                     ? (
                                         <>
                                             <Button
+                                                disabled = { !isOnline }
                                                 title = 'Settings'
                                                 onClick = { (event) => {
                                                     event.stopPropagation();
@@ -71,6 +76,7 @@ export const ReqTypesBody: FC<Proptypes> = ({
                                                 />
                                             </Button>
                                             <Button
+                                                disabled = { !isOnline }
                                                 title = 'Delete'
                                                 onClick = { (event) => {
                                                     event.stopPropagation();
@@ -87,6 +93,7 @@ export const ReqTypesBody: FC<Proptypes> = ({
                                     : (
                                         <>
                                             <Button
+                                                disabled = { !isOnline }
                                                 title = 'Save'
                                                 onClick = { async (event) => {
                                                     event.stopPropagation();

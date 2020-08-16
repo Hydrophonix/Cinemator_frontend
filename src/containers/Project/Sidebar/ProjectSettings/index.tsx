@@ -6,14 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Elements
 import { Button, Input, Textarea } from '../../../../elements';
 
-// Apollo hooks
+// Apollo
 import { useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../bus/Project';
+
+// Redux
+import { useUiRedux } from '../../../../@init/redux/ui';
+import { useTogglersRedux } from '../../../../@init/redux/togglers';
 
 // Hooks
 import { useForm, useLocalStorage } from '../../../../hooks';
 
-// Redux
-import { useUiRedux } from '../../../../@init/redux/ui';
 
 // Styles
 import { Header, Main, Footer, WorkdaysSettings } from './styles';
@@ -43,6 +45,7 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
     const { projectId } = useParams<Params>();
     const { push } = useHistory();
     const { ui, setCalendarView } = useUiRedux();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const [ _, setToLocalStorage ] = useLocalStorage('isCalendarView', true); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [ updateProject ] = useUpdateProjectMutation();
     const [ deleteProject ] = useDeleteProjectMutation({ projectId, redirect: () => push('/') });
@@ -129,6 +132,7 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
             </Main>
             <Footer>
                 <Button
+                    disabled = { !isOnline }
                     title = 'Delete'
                     onClick = { onDelete }>
                     <FontAwesomeIcon
@@ -138,11 +142,14 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                     />
                 </Button>
                 <Button
-                    title = 'Save'
-                    onClick = { onSubmit }>
+                    title = { isOnline ? 'Save' : 'Cancel' }
+                    onClick = { isOnline
+                        ? () => void onSubmit()
+                        : () => void props.setFlipped()
+                    }>
                     <FontAwesomeIcon
                         color = '#000'
-                        icon = 'save'
+                        icon = { isOnline ? 'save' : 'times' }
                         style = {{ width: 26, height: 26 }}
                     />
                 </Button>

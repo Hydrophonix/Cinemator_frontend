@@ -17,6 +17,7 @@ import { useForm } from '../../hooks';
 
 // Redux
 import { useInputsRedux } from '../../@init/redux/inputs';
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
@@ -38,6 +39,7 @@ const UpdateWorkday: FC = () => {
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { setGlobalDateRangeRedux } = useInputsRedux();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({
         projectId, setGlobalDateRangeRedux,
     });
@@ -111,6 +113,7 @@ const UpdateWorkday: FC = () => {
                 <h2>Update W:{workday.date}</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Delete'
                         onClick = { deleteWorkdayHandler }>
                         <FontAwesomeIcon
@@ -137,6 +140,7 @@ const UpdateWorkday: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
+                        disabled = { !isOnline }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Update

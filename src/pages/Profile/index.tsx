@@ -2,12 +2,16 @@
 import React, { FC, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
+import { useApolloClient } from '@apollo/client';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Apollo hooks
-import { useMeQuery, useUpdateMeMutation } from '../../bus/Auth';
+// Apollo
+import { useMeQuery, useUpdateMeMutation, useLogoutMutation } from '../../bus/Auth';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -29,15 +33,19 @@ const innitialForm = {
 
 const Profile: FC = () => {
     const { push } = useHistory();
+    const { resetStore } = useApolloClient();
     const { data, loading } = useMeQuery();
     const [ updateMe, { loading: updateMeLoading }] = useUpdateMeMutation();
+    const [ logout ] = useLogoutMutation();
+    
+    const { togglersRedux: { isOnline }, setIsLoggedIn } = useTogglersRedux();
     const [ form, setForm, setInitialForm ] = useForm<UserUpdateInput>(innitialForm);
 
     useEffect(() => {
         data && void setInitialForm({
             email: data.me.email,
-            name:  data.me.name ?? '',
-            phone: data.me.phone ?? '',
+            name:  data.me.name || '',
+            phone: data.me.phone || '',
         });
     }, [ data ]);
 
@@ -46,6 +54,13 @@ const Profile: FC = () => {
     }
 
     const onSubmit = async () => void await updateMe({ variables: { input: form }});
+    const onLogout = () => {
+        logout();
+        setIsLoggedIn(false);
+        window.localStorage.clear();
+        resetStore();
+        // TODO: нужно очищать куки в оффлайн логауте
+    };
 
     return (
         <Container>
@@ -87,8 +102,17 @@ const Profile: FC = () => {
                         value = { form.phone || '' }
                         onChange = { setForm }
                     />
-                    <Button onClick = { onSubmit }>Update</Button>
-                    <Button>Logout</Button>
+                    <Button
+                        disabled = { !isOnline }
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick = { onSubmit }>
+                        Update
+                    </Button>
+                    <Button
+                        style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
+                        onClick={ onLogout }>
+                        Logout
+                    </Button>
                 </section>
             </UpdateInputs>
         </Container>

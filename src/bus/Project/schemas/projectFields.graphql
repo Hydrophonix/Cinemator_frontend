@@ -2,8 +2,4 @@ fragment projectFields on Project {
     id
     title
     description
-    locations {
-        id
-        name
-    }
 }

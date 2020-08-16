@@ -1,5 +1,5 @@
 // Core
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 // GraphQL
 import UpdateRequisiteReqTypesSchema from '../schemas/updateRequisiteReqTypes.graphql';

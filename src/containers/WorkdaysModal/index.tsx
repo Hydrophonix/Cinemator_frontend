@@ -9,12 +9,16 @@ import moment from 'moment';
 // Components
 import { Modal, WorkdaysTable, DateRangePicker } from '../../components';
 
-// Apollo hooks
+// Apollo
 import { useWorkdaysQuery } from '../../bus/Workday';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Elements
 import { AdaptiveScroll, Button } from '../../elements';
 
+// Utils
 import { transformDateToISO8601 } from '../../utils';
 
 // Styles
@@ -44,6 +48,7 @@ export const WorkdaysModal: FC<PropTypes> = ({
     const sectionRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
 
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const { data, loading } = useWorkdaysQuery({ projectId });
     const workdaysDates = data?.workdays.map((workday) => new Date(workday.date));
     const [ dateRange, setDateRange ] = useState<{ startDay?: Date, endDay?: Date}>({
@@ -103,6 +108,7 @@ export const WorkdaysModal: FC<PropTypes> = ({
             </AdaptiveScroll>
             <Footer ref = { footerRef }>
                 <Button
+                    disabled = { !isOnline }
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon

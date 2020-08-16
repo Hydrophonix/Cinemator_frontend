@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Elements
 import { Button, Input } from '../../../elements';
 
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
+
 // Styles
 import { Tbody } from '../styles';
 import { UpdateLocationContainer } from './styles';
@@ -24,6 +27,7 @@ type Proptypes = {
 export const LocationsBody: FC<Proptypes> = ({
     locations, updateLocationHandler, deleteLocationHandler, locationIds, handler,
 }) => {
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const [ updateLocationId, setUpdateLocationId ] = useState('');
     const [ tempLocationName, setTempLocationName ] = useState('');
 
@@ -57,6 +61,7 @@ export const LocationsBody: FC<Proptypes> = ({
                                     ? (
                                         <>
                                             <Button
+                                                disabled = { !isOnline }
                                                 title = 'Settings'
                                                 onClick = { (event) => {
                                                     event.stopPropagation();
@@ -70,6 +75,7 @@ export const LocationsBody: FC<Proptypes> = ({
                                                 />
                                             </Button>
                                             <Button
+                                                disabled = { !isOnline }
                                                 title = 'Delete'
                                                 onClick = { (event) => {
                                                     event.stopPropagation();
@@ -86,6 +92,7 @@ export const LocationsBody: FC<Proptypes> = ({
                                     : (
                                         <>
                                             <Button
+                                                disabled = { !isOnline }
                                                 title = 'Save'
                                                 onClick = { async (event) => {
                                                     event.stopPropagation();

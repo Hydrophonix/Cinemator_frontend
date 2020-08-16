@@ -3,7 +3,7 @@
 import React, { FC, useState, useRef, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 import { ThemeContext } from 'styled-components';
 
 // Schemas
@@ -13,7 +13,7 @@ import RequisitesSchema from '../../bus/Requisite/schemas/requisites.graphql';
 // Components
 import { Modal, ReqTypesTable } from '../../components';
 
-// Apollo hooks
+// Apollo
 import {
     useReqTypesQuery,
     useCreateReqTypeMutation,
@@ -21,6 +21,9 @@ import {
     useDeleteReqTypeMutation,
 } from '../../bus/ReqType';
 import { useRequisitesQuery } from '../../bus/Requisite';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -56,6 +59,7 @@ export const ReqTypesModal: FC<PropTypes> = ({
     const headerRef = useRef<HTMLElement>(null);
     const IconsContainerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const client = useApolloClient();
     const { data, loading } = useReqTypesQuery({ projectId });
@@ -189,7 +193,12 @@ export const ReqTypesModal: FC<PropTypes> = ({
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'plus'
-                            style = {{ width: 20, height: 20 }}
+                            style = { Object.assign(
+                                { width: 20, height: 20 },
+                                !isOnline || form.reqType === ''
+                                    ? { opacity: 0.5, cursor: 'not-allowed' }
+                                    : {},
+                            ) }
                             title = { 'Add location' }
                         />
                     </Icon>
@@ -225,6 +234,7 @@ export const ReqTypesModal: FC<PropTypes> = ({
             </AdaptiveScroll>
             <Footer ref = { footerRef }>
                 <Button
+                    disabled = { saveHandler ? !isOnline : false }
                     title = { saveHandler ? 'Save' : 'Close' }
                     onClick = { () => saveHandler ? void saveHandler() : void closeHandler() }>
                     <FontAwesomeIcon

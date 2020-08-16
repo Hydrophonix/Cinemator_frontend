@@ -96,7 +96,7 @@ export const ProjectNav: FC<PropTypes> = (props) => {
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'wrench'
-                            style = {{ width: 20, height: 20, margin: '0px 5px' }}
+                            style = {{ width: 26, height: 26 }}
                         />
                     </Button>
                 </nav>

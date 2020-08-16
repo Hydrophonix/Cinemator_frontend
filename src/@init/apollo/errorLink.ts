@@ -1,5 +1,5 @@
 // Core
-import { onError } from 'apollo-link-error';
+import { onError } from '@apollo/client/link/error';
 
 export const errorLink =  onError(({ graphQLErrors, networkError }) => {
     console.log('<<<ERRORLINK>>>: networkError', networkError);

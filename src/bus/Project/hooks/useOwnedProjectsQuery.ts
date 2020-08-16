@@ -1,5 +1,5 @@
 // Core
-import { QueryHookOptions } from '@apollo/react-hooks';
+import { QueryHookOptions } from '@apollo/client';
 
 // GraphQL
 import OwnedProjectsSchema from '../schemas/ownedProjects.graphql';

@@ -25,8 +25,7 @@ const Styled = styled.button<ButtonProps>`
     }
 
     &:disabled {
-        border-color: gray;
-        color: gray;
+        opacity: 0.5;
         cursor: not-allowed;
     }
 `;

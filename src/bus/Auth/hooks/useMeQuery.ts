@@ -8,5 +8,7 @@ import { useCustomQuery } from '../../../hooks';
 import { MeQuery } from '../types';
 
 export const useMeQuery = () => {
-    return useCustomQuery<MeQuery, {}>(MeSchema, {});
+    return useCustomQuery<MeQuery, {}>(MeSchema, {
+        fetchPolicy: 'no-cache'
+    });
 };
