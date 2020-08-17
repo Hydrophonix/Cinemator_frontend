@@ -8,6 +8,7 @@ import {
 import WebpackBar from 'webpackbar';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { GenerateSW } from 'workbox-webpack-plugin';
 import dotenv from 'dotenv';
 
 export const connectBuildProgressIndicator = (): Configuration => ({
@@ -32,11 +33,15 @@ export const connectBundleAnalyzer = (): Configuration => ({
     ],
 });
 
-export const defineEnvVariables = (isProd: boolean): Configuration => ({
+export const defineEnvVariables = (): Configuration => ({
     plugins: [
         new DefinePlugin({
             'process.env': JSON.stringify({
-                ...dotenv.config({ path: isProd ? 'prod.env' : '.env' }).parsed,
+                ...(
+                    process.env.NODE_ENV === 'development'
+                        ? dotenv.config({ path: '.env' }).parsed
+                        : dotenv.config({ path: '.production.env' }).parsed
+                )
             }),
         }),
     ],
@@ -50,13 +55,15 @@ export const provideGlobals = (): Configuration => ({
     ],
 });
 
-// export const setupStaticServing = () => ({
-//     plugins: [
-//         new CopyWebpackPlugin([
-//             {
-//                 from: `${STATIC}/CI/now.json`,
-//                 to:   `${BUILD}/now.json`,
-//             },
-//         ]),
-//     ],
-// });
+export const generateServiceWorker = (): Configuration => {
+    const workbox = new GenerateSW({
+        clientsClaim:     true,
+        skipWaiting:      true,
+        navigateFallback: '/index.html',
+        mode:             'production',
+    });
+
+    return {
+        plugins: [ workbox ],
+    };
+};

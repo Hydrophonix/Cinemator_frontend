@@ -1,8 +1,11 @@
+// Core
+import { useQuery } from '@apollo/client';
+
 // GraphQL
 import WorkdaysSchema from '../schemas/workdays.graphql';
 
-// Hooks
-import { useCustomQuery } from '../../../hooks';
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
 
 // Types
 import { Workdays, WorkdaysVariables } from '../types';
@@ -12,7 +15,10 @@ type OptionsType = {
 }
 
 export const useWorkdaysQuery = ({ projectId }: OptionsType) => {
-    return useCustomQuery<Workdays, WorkdaysVariables>(WorkdaysSchema, {
-        variables: { projectId },
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
+
+    return useQuery<Workdays, WorkdaysVariables>(WorkdaysSchema, {
+        variables:   { projectId },
+        fetchPolicy: isOnline ? 'cache-and-network' : 'cache-only',
     });
 };

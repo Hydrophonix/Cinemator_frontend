@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 // GraphQL
 import RegisterSchema from '../schemas/register.graphql';
@@ -7,6 +7,8 @@ import RegisterSchema from '../schemas/register.graphql';
 // Types
 import { Register, RegisterVariables } from '../types';
 
-export const useRegisterMutation = (baseOptions?: MutationHookOptions<Register, RegisterVariables>) => {
-    return useMutation<Register, RegisterVariables>(RegisterSchema, baseOptions);
+export const useRegisterMutation = () => {
+    return useMutation<Register, RegisterVariables>(RegisterSchema, {
+        fetchPolicy: 'no-cache',
+    });
 };

@@ -16,27 +16,32 @@ export const Routes: FC = () => {
     return (
         <Suspense fallback = { <Spinner /> }>
             <Switch>
-                {/* Update */}
-                <Route path = { '/:projectId/update-workday/:workdayId' }>
+                <Route
+                    path = { '/:projectId/update-workday/:workdayId' }>
                     <UpdateWorkday />
                 </Route>
-                <Route path = { '/:projectId/update-scene/:sceneId' }>
+                <Route
+                    path = { '/:projectId/update-scene/:sceneId' }>
                     <UpdateScene />
                 </Route>
-                <Route path = { '/:projectId/update-requisite/:requisiteId' }>
+                <Route
+                    path = { '/:projectId/update-requisite/:requisiteId' }>
                     <UpdateRequisite />
                 </Route>
-                {/* Create */}
-                <Route path = { '/:projectId/create-workday/:date' }>
+
+                <Route
+                    path = { '/:projectId/create-workday/:date' }>
                     <CreateWorkday />
                 </Route>
-                <Route path = { '/:projectId/create-scene' }>
+                <Route
+                    path = { '/:projectId/create-scene' }>
                     <CreateScene />
                 </Route>
-                <Route path = { '/:projectId/create-requisite' }>
+                <Route
+                    path = { '/:projectId/create-requisite' }>
                     <CreateRequisite />
                 </Route>
-                {/* Item */}
+
                 <Route path = { '/:projectId/calendar/:workdayId' }>
                     <Workday />
                 </Route>
@@ -60,7 +65,7 @@ export const Routes: FC = () => {
                         return <Requisites />;
                     } }
                 />
-                {/* List */}
+
                 <Route path = { '/:projectId/calendar' }>
                     <Calendar/>
                 </Route>

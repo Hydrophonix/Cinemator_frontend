@@ -2,25 +2,23 @@
 import React, { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
-
-// Hooks
-import { useCustomLocalQuery } from '../../../hooks';
+import { useTogglersRedux } from '../../../@init/redux/togglers';
 
 // Styles
 import { Container } from './styles';
 
 export const UserMenu: FC = () => {
     const { push } = useHistory();
-    const { data } = useCustomLocalQuery('isLoggedIn');
+    const { togglersRedux: { isLoggedIn } } = useTogglersRedux();
 
     return (
         <Container
-            isActive = { data!.isLoggedIn }
-            onClick = { () => data!.isLoggedIn && void push('/profile') }>
+            isActive = { isLoggedIn }
+            onClick = { () => isLoggedIn && void push('/profile') }>
             <FontAwesomeIcon
                 icon = 'user-astronaut'
                 style = {{ width: 40, height: 40 }}
-                title = { data!.isLoggedIn ? 'Enter profile' : 'Login before use profile.' }
+                title = { isLoggedIn ? 'Enter profile' : 'Login before use profile.' }
             />
         </Container>
     );

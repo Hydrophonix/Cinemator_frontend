@@ -9,9 +9,14 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button, Input, Spinner, Toggle, Textarea } from '../../elements';
 
+// Apollo
+import { useScenesQuery, useUpdateSceneMutation, useDeleteSceneMutation } from '../../bus/Scene';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
+
 // Hooks
 import { useForm } from '../../hooks';
-import { useScenesQuery, useUpdateSceneMutation, useDeleteSceneMutation } from '../../bus/Scene';
 
 // Styles
 import { Container, Header, UpdateInputs } from './styles';
@@ -36,6 +41,7 @@ const UpdateScene: FC = () => {
     const { data, loading } = useScenesQuery({ projectId });
     const [ updateScene, { loading: updateSceneLoading }] = useUpdateSceneMutation();
     const [ deleteScene, { loading: deleteSceneLoading }] = useDeleteSceneMutation({ projectId, sceneId });
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const [ form, setForm, setInitialForm ] = useForm<SceneUpdateInput>(initialForm);
     const [ isCompleted, setIsCompleted ] = useState(false);
     const scene = data?.scenes.find((scene) => scene.id === sceneId);
@@ -75,7 +81,11 @@ const UpdateScene: FC = () => {
         }
 
         const response = await deleteScene();
-        response && response.data && void push(`/${projectId}/scenes`);
+
+        if (response?.data?.deleteScene) {
+            push(`/${projectId}/scenes`);
+        }
+        // response && response.data && void
     };
 
     return (
@@ -96,6 +106,7 @@ const UpdateScene: FC = () => {
                 <h2>Update S:{scene.number}</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Delete'
                         onClick = { deleteSceneHandler }>
                         <FontAwesomeIcon
@@ -135,6 +146,7 @@ const UpdateScene: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
+                        disabled = { !isOnline }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Update

@@ -15,6 +15,7 @@ import { useProjectDateRange } from '../../hooks';
 import { transformDateToISO8601 } from '../../utils';
 
 // Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 import { useInputsRedux } from '../../@init/redux/inputs';
 
 // Components
@@ -35,8 +36,9 @@ type Params = { projectId: string };
 const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { data, loading } = useScenesQuery({ projectId });
-    const { data: locationsData, loading: locationsLoading } = useLocationsQuery({ projectId });
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
+    const { data } = useScenesQuery({ projectId });
+    const { data: locationsData } = useLocationsQuery({ projectId });
     const { projectStartDay, projectEndDay } = useProjectDateRange();
     const { inputs, setScenesDateRangeRedux, setIndexRedux, setScenesLocationRedux } = useInputsRedux();
     const { dateRange, index, location } = inputs.scenesInputs;
@@ -48,7 +50,7 @@ const Scenes: FC = () => {
     const momentProjectStartDay = moment(transformDateToISO8601(projectStartDay));
     const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
 
-    if (loading || !data || locationsLoading || !locationsData) {
+    if (!data || !locationsData) {
         return <Spinner />;
     }
 
@@ -124,6 +126,7 @@ const Scenes: FC = () => {
                 <h2>Scenes</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Create scene'
                         onClick = { () => void push(`/${projectId}/create-scene`) }>
                         <FontAwesomeIcon

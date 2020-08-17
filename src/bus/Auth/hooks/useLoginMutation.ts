@@ -1,5 +1,5 @@
 // Core
-import { MutationHookOptions, useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 // GraphQL
 import LoginSchema from '../schemas/login.graphql';
@@ -7,6 +7,8 @@ import LoginSchema from '../schemas/login.graphql';
 // Types
 import { Login, LoginVariables } from '../types';
 
-export const useLoginMutation = (baseOptions?: MutationHookOptions<Login, LoginVariables>) => {
-    return useMutation<Login, LoginVariables>(LoginSchema, baseOptions);
+export const useLoginMutation = () => {
+    return useMutation<Login, LoginVariables>(LoginSchema, {
+        fetchPolicy: 'no-cache',
+    });
 };

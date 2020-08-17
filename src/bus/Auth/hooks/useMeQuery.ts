@@ -1,12 +1,14 @@
+// Core
+import { useQuery } from '@apollo/client';
+
 // GraphQL
 import MeSchema from '../schemas/me.graphql';
-
-// Hooks
-import { useCustomQuery } from '../../../hooks';
 
 // Types
 import { MeQuery } from '../types';
 
 export const useMeQuery = () => {
-    return useCustomQuery<MeQuery, {}>(MeSchema, {});
+    return useQuery<MeQuery>(MeSchema, {
+        fetchPolicy: 'no-cache',
+    });
 };

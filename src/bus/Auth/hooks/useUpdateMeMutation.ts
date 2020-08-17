@@ -1,5 +1,5 @@
 // Core
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 // GraphQL
 import UpdateMeSchema from '../schemas/updateMe.graphql';
@@ -8,5 +8,7 @@ import UpdateMeSchema from '../schemas/updateMe.graphql';
 import { UpdateMe, UpdateMeVariables } from '../types';
 
 export const useUpdateMeMutation = () => {
-    return useMutation<UpdateMe, UpdateMeVariables>(UpdateMeSchema);
+    return useMutation<UpdateMe, UpdateMeVariables>(UpdateMeSchema, {
+        fetchPolicy: 'no-cache',
+    });
 };

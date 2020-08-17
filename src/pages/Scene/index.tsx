@@ -11,7 +11,7 @@ import { RequisitesModal, LocationsModal, WorkdaysModal } from '../../containers
 // Components
 import { ErrorBoundary, RequisitesTable } from '../../components';
 
-// Apollo hooks
+// Apollo
 import {
     useScenesQuery,
     useUpdateSceneWorkdaysMutation,
@@ -19,6 +19,9 @@ import {
     useUpdateSceneLocationsMutation,
 } from '../../bus/Scene';
 import { useRequisitesQuery } from '../../bus/Requisite';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Elements
 import { Button, Spinner, AdaptiveScroll } from '../../elements';
@@ -37,9 +40,10 @@ const Scene: FC = () => {
     const { projectId, sceneId } = useParams<Params>();
     const headerRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    const { data, loading } = useScenesQuery({ projectId });
-    const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
+    const { data } = useScenesQuery({ projectId });
+    const { data: requisiteData } = useRequisitesQuery({ projectId });
 
     const [ updateSceneWorkdays, { loading: updateSceneWorkdaysLoading }] = useUpdateSceneWorkdaysMutation();
     const [ updateSceneRequisites, { loading: updateSceneRequisitesLoading }] = useUpdateSceneRequisitesMutation();
@@ -59,7 +63,7 @@ const Scene: FC = () => {
         workdayIdsArray && void setInitialWorkdayIds(workdayIdsArray);
     }, [ scene ]);
 
-    if (loading || !data || requisiteLoading || !requisiteData) {
+    if (!data || !requisiteData) {
         return <Spinner />;
     }
 
@@ -165,6 +169,7 @@ const Scene: FC = () => {
                 </h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Add workdays'
                         onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-workdays`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
@@ -177,6 +182,7 @@ const Scene: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Add requisites'
                         onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
@@ -189,6 +195,7 @@ const Scene: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Add locations'
                         onClick = { () => void push(`/${projectId}/scenes/${sceneId}/locations`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
@@ -201,6 +208,7 @@ const Scene: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Settings'
                         onClick = { () => void push(`/${projectId}/update-scene/${sceneId}`) }>
                         <FontAwesomeIcon

@@ -1,13 +1,15 @@
 // Core
 import React, { FC, useState } from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Apollo hooks
-import { useRegisterMutation } from '../../bus';
+// Apollo
+import { useRegisterMutation } from '../../bus/Auth';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -30,11 +32,11 @@ const innitialForm = {
 };
 
 const Register: FC = () => {
-    const client = useApolloClient();
     const [ register, { loading: registerLoading }] = useRegisterMutation();
     const [ form, setForm ] = useForm<AuthInput>(innitialForm);
     const [ confirm, setConfirm ] = useState('');
     const [ isPasswordVisible, setPasswordVisible ] = useState(false);
+    const { togglersRedux: { isOnline }, setIsLoggedIn } = useTogglersRedux();
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,7 +44,7 @@ const Register: FC = () => {
 
         if (response && response.data) {
             setAccessToken(response.data.registerWeb.accessToken);
-            client.writeData({ data: { isLoggedIn: true }});
+            setIsLoggedIn(true);
         }
     };
 
@@ -94,7 +96,7 @@ const Register: FC = () => {
                     />
                 </RelativeContainer>
                 <Button
-                    disabled = { !isValid }
+                    disabled = { !isOnline || !isValid }
                     type = 'submit'>
                     Submit
                 </Button>

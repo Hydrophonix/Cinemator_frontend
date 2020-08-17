@@ -9,9 +9,14 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button, Input, Spinner, Textarea } from '../../elements';
 
+// Apollo
+import { useRequisitesQuery, useUpdateRequisiteMutation, useDeleteRequisiteMutation } from '../../bus/Requisite';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
+
 // Hooks
 import { useForm } from '../../hooks';
-import { useRequisitesQuery, useUpdateRequisiteMutation, useDeleteRequisiteMutation } from '../../bus/Requisite';
 
 // Styles
 import { Container, Header, UpdateInputs } from './styles';
@@ -39,6 +44,7 @@ const UpdateRequisite: FC = () => {
         projectId, requisiteId,
     });
     const [ form, setForm, setInitialForm ] = useForm<RequisiteUpdateInput>(initialForm);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
     const requisite = data?.requisites.find((requisite) => requisite.id === requisiteId);
     const isSpinnerActive = updateRequisiteLoading || deleteRequisiteLoading;
 
@@ -94,6 +100,7 @@ const UpdateRequisite: FC = () => {
                 <h2>Update R:{requisite.number}</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Delete'
                         onClick = { deleteRequisiteHandler }>
                         <FontAwesomeIcon
@@ -129,6 +136,7 @@ const UpdateRequisite: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
+                        disabled = { !isOnline }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Update

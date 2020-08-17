@@ -10,12 +10,15 @@ import { ScenesModal, ReqTypesModal } from '../../containers';
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Apollo hooks
+// Apollo
 import {
     useRequisitesQuery,
     useUpdateRequisiteScenesMutation,
     useUpdateRequisiteReqTypesMutation,
 } from '../../bus/Requisite';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useArrayOfStringsForm } from '../../hooks';
@@ -37,8 +40,9 @@ const Requisite: FC = () => {
     const { projectId, requisiteId } = useParams<Params>();
     const headerRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    const { data, loading } = useRequisitesQuery({ projectId });
+    const { data } = useRequisitesQuery({ projectId });
     const [ updateRequisiteScenes, { loading: updateRequisiteScenesLoading }] = useUpdateRequisiteScenesMutation();
     const [ updateRequisiteReqTypes, { loading: updateRequisiteReqTypesLoading }] = useUpdateRequisiteReqTypesMutation(); // eslint-disable-line max-len
 
@@ -53,7 +57,7 @@ const Requisite: FC = () => {
         requisite && void setInitialReqTypeIds(requisite.reqTypes.map((reqType) => reqType.id));
     }, [ requisite ]);
 
-    if (loading || !data) {
+    if (!data) {
         return <Spinner />;
     }
 
@@ -121,6 +125,7 @@ const Requisite: FC = () => {
                 <h2>R: {requisite.number}</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Add scenes'
                         onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/add-scenes`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
@@ -133,6 +138,7 @@ const Requisite: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Add types'
                         onClick = { () => void push(`/${projectId}/requisites/${requisiteId}/types`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
@@ -145,6 +151,7 @@ const Requisite: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Settings'
                         onClick = { () => void push(`/${projectId}/update-requisite/${requisiteId}`) }>
                         <FontAwesomeIcon

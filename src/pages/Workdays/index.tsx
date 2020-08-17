@@ -21,10 +21,10 @@ import { Params } from './types';
 
 const Workdays: FC = () => {
     const { projectId } = useParams<Params>();
-    const { data, loading } = useWorkdaysQuery({ projectId });
+    const { data } = useWorkdaysQuery({ projectId });
     const { ui } = useUiRedux();
 
-    if (loading || !data) {
+    if (!data) {
         return <Spinner />;
     }
 

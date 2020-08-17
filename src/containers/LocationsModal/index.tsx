@@ -4,7 +4,7 @@ import React, { FC, useContext, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 
 // Schemas
 import LocationsSchema from '../../bus/Location/schemas/locations.graphql';
@@ -13,7 +13,7 @@ import ScenesSchema from '../../bus/Scene/schemas/scenes.graphql';
 // Components
 import { Modal, LocationsTable } from '../../components';
 
-// Apollo hooks
+// Apollo
 import {
     useLocationsQuery,
     useCreateLocationMutation,
@@ -21,6 +21,9 @@ import {
     useUpdateLocationMutation,
 } from '../../bus/Location';
 import { useScenesQuery } from '../../bus/Scene';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -56,10 +59,11 @@ export const LocationsModal: FC<PropTypes> = ({
     const headerRef = useRef<HTMLElement>(null);
     const IconsContainerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const client = useApolloClient();
-    const { data, loading } = useLocationsQuery({ projectId });
-    const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
+    const { data } = useLocationsQuery({ projectId });
+    const { data: scenesData } = useScenesQuery({ projectId });
     const [ createLocation, { loading: createLocationLoading }] = useCreateLocationMutation({ projectId });
     const [ updateLocation, { loading: updateLocationLoading }] = useUpdateLocationMutation();
     const [ deleteLocation, { loading: deleteLocationLoading }] = useDeleteLocationMutation();
@@ -71,7 +75,7 @@ export const LocationsModal: FC<PropTypes> = ({
     const isSpinnerActive = saveHandlerLoading || createLocationLoading
         || updateLocationLoading || deleteLocationLoading;
 
-    if (loading || !data || scenesLoading || !scenesData) {
+    if (!data || !scenesData) {
         return null;
     }
 
@@ -184,7 +188,13 @@ export const LocationsModal: FC<PropTypes> = ({
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'plus'
-                            style = {{ width: 20, height: 20 }}
+                            style = {
+                                Object.assign(
+                                    { width: 20, height: 20 },
+                                    !isOnline || form.location === ''
+                                        ? { opacity: 0.5, cursor: 'not-allowed' }
+                                        : {},
+                                ) }
                             title = { 'Add location' }
                         />
                     </Icon>
@@ -220,6 +230,7 @@ export const LocationsModal: FC<PropTypes> = ({
             </AdaptiveScroll>
             <Footer ref = { footerRef }>
                 <Button
+                    disabled = { saveHandler ? !isOnline : false }
                     title = { saveHandler ? 'Save' : 'Close' }
                     onClick = { () => saveHandler ? void saveHandler() : void closeHandler() }>
                     <FontAwesomeIcon

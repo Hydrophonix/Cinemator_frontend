@@ -15,6 +15,9 @@ import { useWorkdaysQuery } from '../../bus/Workday';
 import { useScenesQuery } from '../../bus/Scene';
 import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
 
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
+
 // Hooks
 import { useArrayOfStringsForm } from '../../hooks';
 
@@ -34,13 +37,11 @@ const Workday: FC = () => {
     const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const headerRef = useRef<HTMLElement>(null);
-    const { data, loading } = useWorkdaysQuery({ projectId });
-    const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-
-    const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation({
-        projectId,
-    });
+    const { data } = useWorkdaysQuery({ projectId });
+    const { data: scenesData } = useScenesQuery({ projectId });
+    const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation();
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
     const sceneIdsArray = workday?.scenes.map((scene) => scene.id);
@@ -49,7 +50,7 @@ const Workday: FC = () => {
         sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
     }, [ workday ]);
 
-    if (loading || !data || scenesLoading || !scenesData) {
+    if (!data || !scenesData) {
         return <Spinner />;
     }
 
@@ -103,6 +104,7 @@ const Workday: FC = () => {
                 <h2>W: {workday.date}</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Add scenes'
                         onClick = { () => void push(`/${projectId}/calendar/${workdayId}/add-scenes`) }>
                         <div style = {{ display: 'flex', alignItems: 'center' }}>
@@ -115,6 +117,7 @@ const Workday: FC = () => {
                         </div>
                     </Button>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Settings'
                         onClick = { () => void push(`/${projectId}/update-workday/${workdayId}`) }>
                         <FontAwesomeIcon

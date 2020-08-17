@@ -1,13 +1,14 @@
 // Core
-// import * as ApolloReactHooks from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
-// // GraphQL
-// import LogoutSchema from '../schemas/logout.graphql';
+// GraphQL
+import LogoutSchema from '../schemas/logout.graphql';
 
-// // Types
-// import { Logout } from '../types';
+// Types
+import { LogoutWeb } from '../types';
 
-// export const useLogoutMutation = (baseOptions?: ApolloReactHooks.MutationHookOptions<Logout, {}>) => {
-//     return ApolloReactHooks.useMutation<Logout, {}>(LogoutSchema, baseOptions);
-// };
-export const zaglushka = 1;
+export const useLogoutMutation = () => {
+    return useMutation<LogoutWeb>(LogoutSchema, {
+        fetchPolicy: 'no-cache',
+    });
+};

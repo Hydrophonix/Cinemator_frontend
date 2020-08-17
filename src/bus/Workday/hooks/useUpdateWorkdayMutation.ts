@@ -1,21 +1,24 @@
 // Core
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import _sortBy from 'lodash/sortBy';
 
 // GraphQL
 import WorkdaysSchema from '../schemas/workdays.graphql';
 import UpdateWorkdaySchema from '../schemas/updateWorkday.graphql';
 
+// Redux
+import { useInputsRedux } from '../../../@init/redux/inputs';
+
 // Types
 import { UpdateWorkday, UpdateWorkdayVariables, Workdays } from '../types';
-import { DateRange } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
-    setGlobalDateRangeRedux: (payload: DateRange) => void
 }
 
-export const useUpdateWorkdayMutation = ({ projectId, setGlobalDateRangeRedux }: OptionsType) => {
+export const useUpdateWorkdayMutation = ({ projectId }: OptionsType) => {
+    const { setGlobalDateRangeRedux } = useInputsRedux();
+
     return useMutation<UpdateWorkday, UpdateWorkdayVariables>(UpdateWorkdaySchema, {
         update(cache, { data }) {
             const { workdays } = cache.readQuery<Workdays>({

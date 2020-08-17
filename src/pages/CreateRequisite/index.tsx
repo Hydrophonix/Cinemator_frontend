@@ -9,8 +9,11 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button, Input, Spinner, Textarea } from '../../elements';
 
-// Apollo hooks
+// Apollo
 import { useRequisitesQuery, useCreateRequisiteMutation } from '../../bus/Requisite';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Hooks
 import { useForm } from '../../hooks';
@@ -37,6 +40,7 @@ const CreateRequisite: FC = () => {
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ createRequisite, { loading: createRequisiteLoading }] = useCreateRequisiteMutation({ projectId });
     const [ form, setForm, setInitialForm ] = useForm<RequisiteCreateInput>(innitialForm);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     useEffect(() => {
         data && void setInitialForm({ title: '', description: '', number: 0 });
@@ -93,7 +97,7 @@ const CreateRequisite: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
-                        disabled = { form.title === '' }
+                        disabled = { !isOnline || form.title === '' }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Create

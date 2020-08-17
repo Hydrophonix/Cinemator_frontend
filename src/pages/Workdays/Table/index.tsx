@@ -6,6 +6,7 @@ import moment from 'moment';
 
 // Redux
 import { useInputsRedux } from '../../../@init/redux/inputs';
+import { useTogglersRedux } from '../../../@init/redux/togglers';
 
 // Components
 import { WorkdaysTable, DateRangePicker } from '../../../components';
@@ -26,6 +27,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { inputs: { workdaysInputs }, setWorkdaysDateRangeRedux } = useInputsRedux();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const workdaysDates = data.workdays.map((workday) => new Date(workday.date));
 
@@ -67,6 +69,7 @@ export const Table: FC<PropTypes> = ({ data }) => {
                 <h2>Workdays</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Create workday'
                         onClick = { () => void push(`/${projectId}/create-workday/new-date`) }>
                         <FontAwesomeIcon

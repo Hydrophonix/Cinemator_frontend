@@ -16,7 +16,7 @@ import { useWorkdaysQuery, useUpdateWorkdayMutation, useDeleteWorkdayMutation } 
 import { useForm } from '../../hooks';
 
 // Redux
-import { useInputsRedux } from '../../@init/redux/inputs';
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Utils
 import { transformDateToISO8601 } from '../../utils';
@@ -37,12 +37,10 @@ const UpdateWorkday: FC = () => {
     const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
-    const { setGlobalDateRangeRedux } = useInputsRedux();
-    const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({
-        projectId, setGlobalDateRangeRedux,
-    });
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
+    const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({ projectId });
     const [ deleteWorkday, { loading: deleteWorkdayLoading }] = useDeleteWorkdayMutation({
-        projectId, workdayId, setGlobalDateRangeRedux,
+        projectId, workdayId,
     });
     const [ form, setForm, setInitialForm ] = useForm<typeof initialForm>(initialForm);
     const [ workdayDate, setWorkdayDate ] = useState<Date>(new Date());
@@ -111,6 +109,7 @@ const UpdateWorkday: FC = () => {
                 <h2>Update W:{workday.date}</h2>
                 <nav>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Delete'
                         onClick = { deleteWorkdayHandler }>
                         <FontAwesomeIcon
@@ -137,6 +136,7 @@ const UpdateWorkday: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
+                        disabled = { !isOnline }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Update

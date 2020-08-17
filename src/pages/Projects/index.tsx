@@ -10,17 +10,21 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button, Spinner } from '../../elements';
 
-// Hooks
+// Apollo
 import { useOwnedProjectsQuery } from '../../bus/Project';
 
-// Assets
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
+
+// Styles
 import { Container, Header } from './styles';
 
 const Projects: FC = () => {
     const { push } = useHistory();
-    const { data, loading } = useOwnedProjectsQuery();
+    const { data } = useOwnedProjectsQuery();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    if (loading || !data) {
+    if (!data) {
         return <Spinner />;
     }
 
@@ -31,12 +35,13 @@ const Projects: FC = () => {
                 <h2>Projects</h2>
                 <div style = {{ alignContent: 'flex-end' }}>
                     <Button
+                        disabled = { !isOnline }
                         title = 'Create project'
                         onClick = { () => void push('/create-project') }>
                         <FontAwesomeIcon
                             color = '#000'
                             icon = 'plus'
-                            style = {{ width: 16, height: 16 }}
+                            style = {{ width: 50, height: 16 }}
                         />
                     </Button>
                 </div>

@@ -8,8 +8,11 @@ import { ThemeContext } from 'styled-components';
 // Components
 import { Modal, RequisitesTable } from '../../components';
 
-// Apollo hooks
+// Apollo
 import { useRequisitesQuery } from '../../bus/Requisite';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Elements
 import { AdaptiveScroll, Button } from '../../elements';
@@ -37,11 +40,12 @@ export const RequisitesModal: FC<PropTypes> = ({
     const headerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
 
-    const { data, loading } = useRequisitesQuery({ projectId });
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
+    const { data } = useRequisitesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
     const [ title, setTitleUseState ] = useState('');
 
-    if (loading || !data) {
+    if (!data) {
         return null;
     }
 
@@ -93,6 +97,7 @@ export const RequisitesModal: FC<PropTypes> = ({
             </AdaptiveScroll>
             <Footer ref = { footerRef }>
                 <Button
+                    disabled = { !isOnline }
                     title = 'Save'
                     onClick = { () => saveHandler && void saveHandler() }>
                     <FontAwesomeIcon

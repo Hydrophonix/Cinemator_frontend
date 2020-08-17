@@ -4,15 +4,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Me
+// GraphQL mutation operation: LogoutWeb
 // ====================================================
 
-export interface Me_me {
-  __typename: "User";
-  id: string;
-  email: string;
-}
-
-export interface Me {
-  me: Me_me;
+export interface LogoutWeb {
+  logoutWeb: boolean;
 }

@@ -1,5 +1,5 @@
 // Core
-import { QueryHookOptions } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
 // GraphQL
 import OwnedProjectsSchema from '../schemas/ownedProjects.graphql';
@@ -7,9 +7,13 @@ import OwnedProjectsSchema from '../schemas/ownedProjects.graphql';
 // Types
 import { OwnedProjects } from '../types';
 
-// Hooks
-import { useCustomQuery } from '../../../hooks';
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
 
-export const useOwnedProjectsQuery = (baseOptions?: QueryHookOptions<OwnedProjects>) => {
-    return useCustomQuery<OwnedProjects, {}>(OwnedProjectsSchema, baseOptions);
+export const useOwnedProjectsQuery = () => {
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
+
+    return useQuery<OwnedProjects>(OwnedProjectsSchema, {
+        fetchPolicy: isOnline ? 'cache-and-network' : 'cache-only',
+    });
 };

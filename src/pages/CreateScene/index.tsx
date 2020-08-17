@@ -9,9 +9,14 @@ import { ErrorBoundary } from '../../components';
 // Elements
 import { Button, Input, Spinner, Textarea } from '../../elements';
 
+// Apollo
+import { useCreateSceneMutation } from '../../bus/Scene';
+
+// Redux
+import { useTogglersRedux } from '../../@init/redux/togglers';
+
 // Hooks
 import { useForm } from '../../hooks';
-import { useCreateSceneMutation } from '../../bus/Scene';
 
 // Styles
 import { Container, Header, CreateInputs } from './styles';
@@ -34,6 +39,7 @@ const CreateScene: FC = () => {
     const { projectId } = useParams<Params>();
     const [ createScene, { loading: createSceneLoading }] = useCreateSceneMutation({ projectId });
     const [ form, setForm ] = useForm<SceneCreateInput>(innitialForm);
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const onSubmit = async (event: any) => {
         event.preventDefault();
@@ -81,6 +87,7 @@ const CreateScene: FC = () => {
                         onChange = { setForm }
                     />
                     <Button
+                        disabled = { !isOnline }
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
                         onClick = { onSubmit }>
                         Create

@@ -1,5 +1,5 @@
 // Core
-import { ApolloError } from 'apollo-client';
+import { ApolloError } from '@apollo/client';
 
 export const getInputType = (name: string, value: string | number) => {
     if (name === 'password') {

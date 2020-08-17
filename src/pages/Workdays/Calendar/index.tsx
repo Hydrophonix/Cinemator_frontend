@@ -7,6 +7,9 @@ import moment from 'moment';
 import { Calendar as ReactBigCalendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
+
 // Types
 import { PropTypes, Params, EventTypes } from '../types';
 
@@ -23,6 +26,7 @@ const localizer = momentLocalizer(moment);
 export const Calendar: FC<PropTypes> = ({ data }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const events = workdaysDataTransformer(data);
 
@@ -33,7 +37,7 @@ export const Calendar: FC<PropTypes> = ({ data }) => {
         if (event.action === 'click' || event.action === 'select') {
             workday
                 ? push(`/${projectId}/calendar/${workday.id}`)
-                : push(`/${projectId}/create-workday/${dateISO8601}`);
+                : isOnline && void push(`/${projectId}/create-workday/${dateISO8601}`);
         }
     };
 

@@ -5,19 +5,19 @@ import React, { FC, Suspense } from 'react';
 import { Public } from './Public';
 import { Private } from './Private';
 
-// Hooks
-import { useCustomLocalQuery } from '../../../hooks';
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
 
 // Elements
 import { Spinner } from '../../../elements';
 
 export const Routes: FC = () => {
-    const { data } = useCustomLocalQuery('isLoggedIn');
+    const { togglersRedux: { isLoggedIn }} = useTogglersRedux();
 
     return (
         <Suspense fallback = { <Spinner /> }>
             {
-                data!.isLoggedIn
+                isLoggedIn
                     ? <Private />
                     : <Public />
             }
