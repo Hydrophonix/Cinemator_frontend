@@ -7,7 +7,7 @@ import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
 // Instruments
 import { tokenRefreshLink } from './refreshTokenLink';
 import { GRAPHQL_URL } from '../constants';
-import { errorLink } from './errorLink';
+// import { errorLink } from './errorLink';
 import { requestLink } from './requestLink';
 import { cache } from './cache';
 export { getAccessToken } from './getAccessToken';
@@ -22,7 +22,7 @@ export const getApolloClient = async () => {
 
     return new ApolloClient({
         link: ApolloLink.from([
-            errorLink,
+            // errorLink,
             requestLink,
             tokenRefreshLink,
             new RetryLink({ attempts: { max: Infinity }}),
