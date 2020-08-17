@@ -9,6 +9,6 @@ import { UpdateMe, UpdateMeVariables } from '../types';
 
 export const useUpdateMeMutation = () => {
     return useMutation<UpdateMe, UpdateMeVariables>(UpdateMeSchema, {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
     });
 };

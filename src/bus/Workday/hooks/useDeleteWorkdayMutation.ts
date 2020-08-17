@@ -7,18 +7,21 @@ import DeleteWorkdaySchema from '../schemas/deleteWorkday.graphql';
 import WorkdaysSchema from '../schemas/workdays.graphql';
 import ScenesSchema from '../../Scene/schemas/scenes.graphql';
 
+// Redux
+import { useInputsRedux } from '../../../@init/redux/inputs';
+
 // Types
 import { DeleteWorkday, DeleteWorkdayVariables, Workdays } from '../types';
 import { Scenes } from '../../Scene';
-import { DateRange } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
     workdayId: string
-    setGlobalDateRangeRedux: (payload: DateRange) => void
 }
 
-export const useDeleteWorkdayMutation = ({ projectId, workdayId, setGlobalDateRangeRedux }: OptionsType) => {
+export const useDeleteWorkdayMutation = ({ projectId, workdayId }: OptionsType) => {
+    const { setGlobalDateRangeRedux } = useInputsRedux();
+
     return useMutation<DeleteWorkday, DeleteWorkdayVariables>(DeleteWorkdaySchema, {
         update(cache, { data }) {
             const { deleteWorkday } = data!;

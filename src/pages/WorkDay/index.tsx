@@ -39,9 +39,7 @@ const Workday: FC = () => {
     const headerRef = useRef<HTMLElement>(null);
     const { data, loading } = useWorkdaysQuery({ projectId });
     const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
-    const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation({
-        projectId,
-    });
+    const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation();
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 

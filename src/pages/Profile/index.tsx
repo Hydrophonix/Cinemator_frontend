@@ -37,7 +37,7 @@ const Profile: FC = () => {
     const { data, loading } = useMeQuery();
     const [ updateMe, { loading: updateMeLoading }] = useUpdateMeMutation();
     const [ logout ] = useLogoutMutation();
-    
+
     const { togglersRedux: { isOnline }, setIsLoggedIn } = useTogglersRedux();
     const [ form, setForm, setInitialForm ] = useForm<UserUpdateInput>(innitialForm);
 
@@ -112,7 +112,7 @@ const Profile: FC = () => {
                     }
                     <Button
                         style = {{ width: '100%', padding: 5, fontSize: 18, marginTop: 5 }}
-                        onClick={ onLogout }>
+                        onClick = { onLogout }>
                         Logout
                     </Button>
                 </section>

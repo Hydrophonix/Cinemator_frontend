@@ -9,7 +9,7 @@ import { ErrorBoundary } from '../../components';
 import { Button, Input, Spinner } from '../../elements';
 
 // Apollo
-import { useLoginMutation } from '../../bus';
+import { useLoginMutation } from '../../bus/Auth';
 
 // Redux
 import { useTogglersRedux } from '../../@init/redux/togglers';

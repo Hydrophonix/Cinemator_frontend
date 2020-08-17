@@ -9,6 +9,6 @@ import { Login, LoginVariables } from '../types';
 
 export const useLoginMutation = () => {
     return useMutation<Login, LoginVariables>(LoginSchema, {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
     });
 };

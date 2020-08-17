@@ -38,7 +38,7 @@ const Root = () => {
     }
 
     return (
-        <ApolloProvider client={ client }>
+        <ApolloProvider client = { client }>
             <ReduxProvider store = { reduxStore }>
                 <Router history = { routerHistory }>
                     <App />
@@ -50,6 +50,6 @@ const Root = () => {
 
 render(<Root />, document.getElementById('app'));
 
-if (process.env.NODE_ENV! === 'production' && 'serviceWorker' in navigator) {
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     serviceWorker.register();
 }

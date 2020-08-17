@@ -37,12 +37,11 @@ export const defineEnvVariables = (): Configuration => ({
     plugins: [
         new DefinePlugin({
             'process.env': JSON.stringify({
-                ...dotenv.config({
-                    path: '.env',
-                }).parsed,
-                ...dotenv.config({
-                    path: process.env.NODE_ENV ? `.${process.env.NODE_ENV}.env` : '.env',
-                }).parsed,
+                ...(
+                    process.env.NODE_ENV === 'development'
+                        ? dotenv.config({ path: '.env' }).parsed
+                        : dotenv.config({ path: '.production.env' }).parsed
+                )
             }),
         }),
     ],

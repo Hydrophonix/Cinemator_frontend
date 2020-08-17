@@ -6,16 +6,19 @@ import _sortBy from 'lodash/sortBy';
 import CreateWorkdaySchema from '../schemas/createWorkday.graphql';
 import WorkdaysSchema from '../schemas/workdays.graphql';
 
+// Redux
+import { useInputsRedux } from '../../../@init/redux/inputs';
+
 // Types
 import { CreateWorkday, CreateWorkdayVariables, Workdays } from '../types';
-import { DateRange } from '../../../@init/redux/inputs/types';
 
 type OptionsType = {
     projectId: string
-    setGlobalDateRangeRedux: (payload: DateRange) => void
 }
 
-export const useCreateWorkdayMutation = ({ projectId, setGlobalDateRangeRedux }: OptionsType) => {
+export const useCreateWorkdayMutation = ({ projectId }: OptionsType) => {
+    const { setGlobalDateRangeRedux } = useInputsRedux();
+
     return useMutation<CreateWorkday, CreateWorkdayVariables>(CreateWorkdaySchema, {
         update(cache, { data }) {
             if (!data) {

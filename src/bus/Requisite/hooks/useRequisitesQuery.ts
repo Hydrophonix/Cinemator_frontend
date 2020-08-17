@@ -4,6 +4,9 @@ import RequisitesSchema from '../schemas/requisites.graphql';
 // Hooks
 import { useCustomQuery } from '../../../hooks';
 
+// Redux
+import { useTogglersRedux } from '../../../@init/redux/togglers';
+
 // Types
 import { Requisites, RequisitesVariables } from '../types';
 
@@ -12,7 +15,10 @@ type OptionsType = {
 }
 
 export const useRequisitesQuery = ({ projectId }: OptionsType) => {
+    const { togglersRedux: { isOnline }} = useTogglersRedux();
+
     return useCustomQuery<Requisites, RequisitesVariables>(RequisitesSchema, {
-        variables: { projectId },
+        variables:   { projectId },
+        fetchPolicy: isOnline ? 'cache-and-network' : 'cache-only',
     });
 };

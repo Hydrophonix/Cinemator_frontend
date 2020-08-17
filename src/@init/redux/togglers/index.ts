@@ -2,12 +2,12 @@
 import { Reducer } from 'redux';
 import { useDispatch } from 'react-redux';
 import { useSelector } from '../../../hooks';
-import * as localStore from 'store';
+import localStore from 'store';
 
 const isLoggedIn = localStore.get('isLoggedIn');
 
 const initialState = {
-    isOnline: false,
+    isOnline:   false,
     isLoggedIn: typeof isLoggedIn === 'boolean' ? isLoggedIn : false,
 };
 
@@ -52,11 +52,10 @@ export const useTogglersRedux = () => {
     return {
         togglersRedux:    useSelector<TogglersState>(({ togglers }) => togglers),
         setTogglerAction: (options: Options) => void dispatch(togglerCreatorAction(options)),
-        setIsLoggedIn: async (value: boolean) => {
+        setIsLoggedIn:    async (value: boolean) => {
             await localStore.set('isLoggedIn', value);
-
             dispatch(togglerCreatorAction({ type: 'isLoggedIn', value }));
-        }
+        },
     };
 };
 

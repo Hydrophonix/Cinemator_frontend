@@ -9,6 +9,6 @@ import { Register, RegisterVariables } from '../types';
 
 export const useRegisterMutation = () => {
     return useMutation<Register, RegisterVariables>(RegisterSchema, {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
     });
 };

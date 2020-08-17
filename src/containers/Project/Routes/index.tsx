@@ -28,6 +28,7 @@ export const Routes: FC = () => {
                     path = { '/:projectId/update-requisite/:requisiteId' }>
                     <UpdateRequisite />
                 </Route>
+
                 <Route
                     path = { '/:projectId/create-workday/:date' }>
                     <CreateWorkday />
@@ -40,6 +41,7 @@ export const Routes: FC = () => {
                     path = { '/:projectId/create-requisite' }>
                     <CreateRequisite />
                 </Route>
+
                 <Route path = { '/:projectId/calendar/:workdayId' }>
                     <Workday />
                 </Route>

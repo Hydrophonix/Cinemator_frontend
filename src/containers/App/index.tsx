@@ -11,6 +11,9 @@ import { Routes } from './Routes';
 import { useLocalStorage } from '../../hooks';
 import { useTogglersRedux } from '../../@init/redux/togglers';
 
+// Utils
+import { ValidationError } from '../../utils';
+
 // Instruments
 import { setAccessToken } from '../../@init/tokenStore';
 import { TOKEN_URL } from '../../@init/constants';
@@ -21,37 +24,35 @@ import { AppContainer } from './styles';
 
 export const App: FC = () => {
     const { resetStore } = useApolloClient();
-    const { togglersRedux: { isOnline }, setTogglerAction, setIsLoggedIn } = useTogglersRedux();
+    const {
+        togglersRedux: { isOnline, isLoggedIn },
+        setTogglerAction, setIsLoggedIn,
+    } = useTogglersRedux();
     const [ isInitialized, setIsInitialized ] = useState(false);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
 
     const tokenRefreshHandler = async () => {
         try {
-            const response = await fetch(TOKEN_URL, {
-                credentials: 'include',
-                method: 'POST'
-            });
-            
+            const response = await fetch(TOKEN_URL, { credentials: 'include', method: 'POST' });
             const { accessToken } = await response.json();
 
             if (!accessToken) {
-                throw new Error("Initial error");
+                throw new ValidationError('', 401);
             }
 
             setAccessToken(accessToken);
-            setIsLoggedIn(true);
-        } catch (error) {
-            if (isInitialized && isOnline) {
-                // TODO: trigger when not authorized status
+            !isLoggedIn && void setIsLoggedIn(true);
+        } catch ({ statusCode }) {
+            if (statusCode === 401) {
                 setAccessToken('');
                 setIsLoggedIn(false);
                 window.localStorage.clear();
                 resetStore();
             }
         } finally {
-            !isInitialized && void setIsInitialized(true)
+            !isInitialized && void setIsInitialized(true);
         }
-    }
+    };
 
     const setOnlineStatusHanlder = () => void setTogglerAction({ type: 'isOnline', value: navigator.onLine });
 
@@ -62,7 +63,7 @@ export const App: FC = () => {
             setOnlineStatusHanlder();
             window.addEventListener('online', setOnlineStatusHanlder);
             window.addEventListener('offline', setOnlineStatusHanlder);
-            tokenRefreshHandler()
+            tokenRefreshHandler();
         }
     }, [ isOnline ]);
 

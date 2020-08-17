@@ -9,6 +9,6 @@ import { LogoutWeb } from '../types';
 
 export const useLogoutMutation = () => {
     return useMutation<LogoutWeb>(LogoutSchema, {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
     });
 };

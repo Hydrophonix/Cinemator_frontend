@@ -16,7 +16,6 @@ import { useWorkdaysQuery, useUpdateWorkdayMutation, useDeleteWorkdayMutation } 
 import { useForm } from '../../hooks';
 
 // Redux
-import { useInputsRedux } from '../../@init/redux/inputs';
 import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Utils
@@ -38,13 +37,10 @@ const UpdateWorkday: FC = () => {
     const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const { data, loading } = useWorkdaysQuery({ projectId });
-    const { setGlobalDateRangeRedux } = useInputsRedux();
     const { togglersRedux: { isOnline }} = useTogglersRedux();
-    const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({
-        projectId, setGlobalDateRangeRedux,
-    });
+    const [ updateWorkday, { loading: updateWorkdayLoading }] = useUpdateWorkdayMutation({ projectId });
     const [ deleteWorkday, { loading: deleteWorkdayLoading }] = useDeleteWorkdayMutation({
-        projectId, workdayId, setGlobalDateRangeRedux,
+        projectId, workdayId,
     });
     const [ form, setForm, setInitialForm ] = useForm<typeof initialForm>(initialForm);
     const [ workdayDate, setWorkdayDate ] = useState<Date>(new Date());

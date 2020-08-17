@@ -81,7 +81,11 @@ const UpdateScene: FC = () => {
         }
 
         const response = await deleteScene();
-        response && response.data && void push(`/${projectId}/scenes`);
+
+        if (response?.data?.deleteScene) {
+            push(`/${projectId}/scenes`);
+        }
+        // response && response.data && void
     };
 
     return (

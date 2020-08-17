@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from '../../components';
 
 // Apollo
-import { useRegisterMutation } from '../../bus';
+import { useRegisterMutation } from '../../bus/Auth';
 
 // Redux
 import { useTogglersRedux } from '../../@init/redux/togglers';
