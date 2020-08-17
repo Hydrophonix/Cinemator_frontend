@@ -62,8 +62,8 @@ export const ReqTypesModal: FC<PropTypes> = ({
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const client = useApolloClient();
-    const { data, loading } = useReqTypesQuery({ projectId });
-    const { data: requisitesData, loading: requisitesLoading } = useRequisitesQuery({ projectId });
+    const { data } = useReqTypesQuery({ projectId });
+    const { data: requisitesData } = useRequisitesQuery({ projectId });
     const [ createReqType, { loading: createReqTypeLoading }] = useCreateReqTypeMutation({ projectId });
     const [ updateReqType, { loading: updateReqTypeLoading }] = useUpdateReqTypeMutation();
     const [ deleteReqType, { loading: deleteReqTypeLoading }] = useDeleteReqTypeMutation();
@@ -74,7 +74,7 @@ export const ReqTypesModal: FC<PropTypes> = ({
 
     const isSpinnerActive = saveHandlerLoading || createReqTypeLoading || updateReqTypeLoading || deleteReqTypeLoading;
 
-    if (loading || !data || requisitesLoading || !requisitesData) {
+    if (!data || !requisitesData) {
         return null;
     }
 

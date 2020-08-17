@@ -42,10 +42,10 @@ export const ScenesModal: FC<PropTypes> = ({
     const footerRef = useRef<HTMLElement>(null);
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    const { data, loading } = useScenesQuery({ projectId });
+    const { data } = useScenesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
 
-    if (loading || !data) {
+    if (!data) {
         return null;
     }
 

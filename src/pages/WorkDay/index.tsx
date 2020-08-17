@@ -37,8 +37,8 @@ const Workday: FC = () => {
     const { push } = useHistory();
     const { projectId, workdayId } = useParams<Params>();
     const headerRef = useRef<HTMLElement>(null);
-    const { data, loading } = useWorkdaysQuery({ projectId });
-    const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
+    const { data } = useWorkdaysQuery({ projectId });
+    const { data: scenesData } = useScenesQuery({ projectId });
     const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation();
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
     const { togglersRedux: { isOnline }} = useTogglersRedux();
@@ -50,7 +50,7 @@ const Workday: FC = () => {
         sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
     }, [ workday ]);
 
-    if (loading || !data || scenesLoading || !scenesData) {
+    if (!data || !scenesData) {
         return <Spinner />;
     }
 

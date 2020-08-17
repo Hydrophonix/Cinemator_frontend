@@ -42,7 +42,7 @@ const Requisite: FC = () => {
     const theme = useContext(ThemeContext);
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    const { data, loading } = useRequisitesQuery({ projectId });
+    const { data } = useRequisitesQuery({ projectId });
     const [ updateRequisiteScenes, { loading: updateRequisiteScenesLoading }] = useUpdateRequisiteScenesMutation();
     const [ updateRequisiteReqTypes, { loading: updateRequisiteReqTypesLoading }] = useUpdateRequisiteReqTypesMutation(); // eslint-disable-line max-len
 
@@ -57,7 +57,7 @@ const Requisite: FC = () => {
         requisite && void setInitialReqTypeIds(requisite.reqTypes.map((reqType) => reqType.id));
     }, [ requisite ]);
 
-    if (loading || !data) {
+    if (!data) {
         return <Spinner />;
     }
 

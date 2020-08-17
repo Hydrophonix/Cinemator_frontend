@@ -31,8 +31,8 @@ type Params = {
 const Requisites: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { data, loading } = useRequisitesQuery({ projectId });
-    const { data: reqTypesData, loading: reqTypesLoading } = useReqTypesQuery({ projectId });
+    const { data } = useRequisitesQuery({ projectId });
+    const { data: reqTypesData } = useReqTypesQuery({ projectId });
     const { togglersRedux: { isOnline }} = useTogglersRedux();
     const {
         inputs: { requisitesInputs },
@@ -41,7 +41,7 @@ const Requisites: FC = () => {
         setRequisitesReqTypeRedux,
     } = useInputsRedux();
 
-    if (loading || !data || reqTypesLoading || !reqTypesData) {
+    if (!data || !reqTypesData) {
         return <Spinner />;
     }
 

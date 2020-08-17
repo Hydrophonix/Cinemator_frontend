@@ -1,8 +1,8 @@
+// Core
+import { useQuery } from '@apollo/client';
+
 // GraphQL
 import ScenesSchema from '../schemas/scenes.graphql';
-
-// Hooks
-import { useCustomQuery } from '../../../hooks';
 
 // Redux
 import { useTogglersRedux } from '../../../@init/redux/togglers';
@@ -17,7 +17,7 @@ type OptionsType = {
 export const useScenesQuery = ({ projectId }: OptionsType) => {
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    return useCustomQuery<Scenes, ScenesVariables>(ScenesSchema, {
+    return useQuery<Scenes, ScenesVariables>(ScenesSchema, {
         variables:   { projectId },
         fetchPolicy: isOnline ? 'cache-and-network' : 'cache-only',
     });

@@ -49,14 +49,14 @@ export const WorkdaysModal: FC<PropTypes> = ({
     const footerRef = useRef<HTMLElement>(null);
 
     const { togglersRedux: { isOnline }} = useTogglersRedux();
-    const { data, loading } = useWorkdaysQuery({ projectId });
+    const { data } = useWorkdaysQuery({ projectId });
     const workdaysDates = data?.workdays.map((workday) => new Date(workday.date));
     const [ dateRange, setDateRange ] = useState<{ startDay?: Date, endDay?: Date}>({
         startDay: void 0,
         endDay:   void 0,
     });
 
-    if (loading || !data || !workdaysDates) {
+    if (!data || !workdaysDates) {
         return null;
     }
 

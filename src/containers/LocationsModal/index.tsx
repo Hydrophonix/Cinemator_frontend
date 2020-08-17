@@ -62,8 +62,8 @@ export const LocationsModal: FC<PropTypes> = ({
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const client = useApolloClient();
-    const { data, loading } = useLocationsQuery({ projectId });
-    const { data: scenesData, loading: scenesLoading } = useScenesQuery({ projectId });
+    const { data } = useLocationsQuery({ projectId });
+    const { data: scenesData } = useScenesQuery({ projectId });
     const [ createLocation, { loading: createLocationLoading }] = useCreateLocationMutation({ projectId });
     const [ updateLocation, { loading: updateLocationLoading }] = useUpdateLocationMutation();
     const [ deleteLocation, { loading: deleteLocationLoading }] = useDeleteLocationMutation();
@@ -75,7 +75,7 @@ export const LocationsModal: FC<PropTypes> = ({
     const isSpinnerActive = saveHandlerLoading || createLocationLoading
         || updateLocationLoading || deleteLocationLoading;
 
-    if (loading || !data || scenesLoading || !scenesData) {
+    if (!data || !scenesData) {
         return null;
     }
 

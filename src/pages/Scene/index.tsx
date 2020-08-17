@@ -42,8 +42,8 @@ const Scene: FC = () => {
     const theme = useContext(ThemeContext);
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    const { data, loading } = useScenesQuery({ projectId });
-    const { data: requisiteData, loading: requisiteLoading } = useRequisitesQuery({ projectId });
+    const { data } = useScenesQuery({ projectId });
+    const { data: requisiteData } = useRequisitesQuery({ projectId });
 
     const [ updateSceneWorkdays, { loading: updateSceneWorkdaysLoading }] = useUpdateSceneWorkdaysMutation();
     const [ updateSceneRequisites, { loading: updateSceneRequisitesLoading }] = useUpdateSceneRequisitesMutation();
@@ -63,7 +63,7 @@ const Scene: FC = () => {
         workdayIdsArray && void setInitialWorkdayIds(workdayIdsArray);
     }, [ scene ]);
 
-    if (loading || !data || requisiteLoading || !requisiteData) {
+    if (!data || !requisiteData) {
         return <Spinner />;
     }
 

@@ -1,8 +1,8 @@
+// Core
+import { useQuery } from '@apollo/client';
+
 // GraphQL
 import LocationsSchema from '../schemas/locations.graphql';
-
-// Hooks
-import { useCustomQuery } from '../../../hooks';
 
 // Redux
 import { useTogglersRedux } from '../../../@init/redux/togglers';
@@ -17,7 +17,7 @@ type OptionsType = {
 export const useLocationsQuery = ({ projectId }: OptionsType) => {
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    return useCustomQuery<Locations, LocationsVariables>(LocationsSchema, {
+    return useQuery<Locations, LocationsVariables>(LocationsSchema, {
         variables:   { projectId },
         fetchPolicy: isOnline ? 'cache-and-network' : 'cache-only',
     });

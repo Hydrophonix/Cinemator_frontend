@@ -41,11 +41,11 @@ export const RequisitesModal: FC<PropTypes> = ({
     const footerRef = useRef<HTMLElement>(null);
 
     const { togglersRedux: { isOnline }} = useTogglersRedux();
-    const { data, loading } = useRequisitesQuery({ projectId });
+    const { data } = useRequisitesQuery({ projectId });
     const [ index, setIndexUseState ] = useState(0);
     const [ title, setTitleUseState ] = useState('');
 
-    if (loading || !data) {
+    if (!data) {
         return null;
     }
 

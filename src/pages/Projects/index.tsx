@@ -21,10 +21,10 @@ import { Container, Header } from './styles';
 
 const Projects: FC = () => {
     const { push } = useHistory();
-    const { data, loading } = useOwnedProjectsQuery();
+    const { data } = useOwnedProjectsQuery();
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
-    if (loading || !data) {
+    if (!data) {
         return <Spinner />;
     }
 

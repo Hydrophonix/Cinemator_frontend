@@ -11,61 +11,41 @@ import { Routes } from './Routes';
 import { useLocalStorage } from '../../hooks';
 import { useTogglersRedux } from '../../@init/redux/togglers';
 
-// Utils
-import { ValidationError } from '../../utils';
-
-// Instruments
-import { setAccessToken } from '../../@init/tokenStore';
-import { TOKEN_URL } from '../../@init/constants';
-
-// Assets
+// Assets and Styles
 import { GlobalStyles, defaultTheme } from '../../assets';
 import { AppContainer } from './styles';
 
+// Instruments
+import { getAccessToken } from '../../@init';
+
 export const App: FC = () => {
     const { resetStore } = useApolloClient();
-    const {
-        togglersRedux: { isOnline, isLoggedIn },
-        setTogglerAction, setIsLoggedIn,
-    } = useTogglersRedux();
+    const { setTogglerAction, setIsLoggedIn } = useTogglersRedux();
     const [ isInitialized, setIsInitialized ] = useState(false);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
 
-    const tokenRefreshHandler = async () => {
-        try {
-            const response = await fetch(TOKEN_URL, { credentials: 'include', method: 'POST' });
-            const { accessToken } = await response.json();
-
-            if (!accessToken) {
-                throw new ValidationError('', 401);
-            }
-
-            setAccessToken(accessToken);
-            !isLoggedIn && void setIsLoggedIn(true);
-        } catch ({ statusCode }) {
-            if (statusCode === 401) {
-                setAccessToken('');
-                setIsLoggedIn(false);
-                window.localStorage.clear();
-                resetStore();
-            }
-        } finally {
-            !isInitialized && void setIsInitialized(true);
-        }
-    };
-
-    const setOnlineStatusHanlder = () => void setTogglerAction({ type: 'isOnline', value: navigator.onLine });
-
     useEffect(() => {
-        isInitialized && isOnline && void tokenRefreshHandler();
+        const setOnlineStatusHanlder = () => void setTogglerAction({
+            type:  'isOnline',
+            value: navigator.onLine,
+        });
 
-        if (!isInitialized) {
-            setOnlineStatusHanlder();
-            window.addEventListener('online', setOnlineStatusHanlder);
-            window.addEventListener('offline', setOnlineStatusHanlder);
-            tokenRefreshHandler();
-        }
-    }, [ isOnline ]);
+        setOnlineStatusHanlder();
+        window.addEventListener('online', setOnlineStatusHanlder);
+        window.addEventListener('offline', setOnlineStatusHanlder);
+
+        getAccessToken({
+            trySideEffect:   () => void setIsLoggedIn(true),
+            catchSideEffect: (statusCode) => {
+                if (statusCode === 401) {
+                    setIsLoggedIn(false);
+                    window.localStorage.clear();
+                    resetStore();
+                }
+            },
+            finallySideEffect: () => void setIsInitialized(true),
+        });
+    }, []);
 
     if (!isInitialized) {
         return null;

@@ -10,6 +10,7 @@ import { GRAPHQL_URL } from '../constants';
 import { errorLink } from './errorLink';
 import { requestLink } from './requestLink';
 import { cache } from './cache';
+export { getAccessToken } from './getAccessToken';
 
 export const getApolloClient = async () => {
     await persistCache({

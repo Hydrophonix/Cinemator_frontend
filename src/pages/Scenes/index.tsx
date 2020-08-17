@@ -37,8 +37,8 @@ const Scenes: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
     const { togglersRedux: { isOnline }} = useTogglersRedux();
-    const { data, loading } = useScenesQuery({ projectId });
-    const { data: locationsData, loading: locationsLoading } = useLocationsQuery({ projectId });
+    const { data } = useScenesQuery({ projectId });
+    const { data: locationsData } = useLocationsQuery({ projectId });
     const { projectStartDay, projectEndDay } = useProjectDateRange();
     const { inputs, setScenesDateRangeRedux, setIndexRedux, setScenesLocationRedux } = useInputsRedux();
     const { dateRange, index, location } = inputs.scenesInputs;
@@ -50,7 +50,7 @@ const Scenes: FC = () => {
     const momentProjectStartDay = moment(transformDateToISO8601(projectStartDay));
     const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
 
-    if (loading || !data || locationsLoading || !locationsData) {
+    if (!data || !locationsData) {
         return <Spinner />;
     }
 

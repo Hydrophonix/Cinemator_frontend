@@ -24,9 +24,9 @@ type Params = {
 export const Project: FC = () => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { data, loading } = useOwnedProjectsQuery();
+    const { data } = useOwnedProjectsQuery();
 
-    if (loading || !data) {
+    if (!data) {
         return <Spinner />;
     }
 
