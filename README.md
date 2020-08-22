@@ -1,4 +1,7 @@
-Need to update
-TODO:
-add TypeScript ESlint rules (mardown)
-add Webpack to backend
+npm i
+
+npm run build
+
+docker build -t arziburst/cinemator-frontend .
+
+docker push arziburst/cinemator-frontend

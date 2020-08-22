@@ -1,6 +1,5 @@
 // Core
 import { onError } from '@apollo/client/link/error';
-import localStore from 'store';
 
 // Instruments
 import { store } from '../../@init';
