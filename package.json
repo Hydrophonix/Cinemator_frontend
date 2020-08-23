@@ -1,7 +1,8 @@
 {
-    "name": "cinemator",
-    "version": "0.5.0",
-    "author": "hydrophonixfx@gmail.com",
+    "name": "cinemator-frontend",
+    "version": "1.0.0",
+    "description": "Cinemator",
+    "author": "hydrophonixfx@gmail.com & arziburst@gmail.com",
     "private": true,
     "scripts": {
         "start": "cross-env-shell NODE_ENV=development ts-node -P \"./tsconfig.webpack.json\" \"./scripts/webpack/start\"",
