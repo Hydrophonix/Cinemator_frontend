@@ -10,12 +10,10 @@ import { Button, Input, Textarea } from '../../../../elements';
 import { useUpdateProjectMutation, useDeleteProjectMutation } from '../../../../bus/Project';
 
 // Redux
-import { useUiRedux } from '../../../../@init/redux/ui';
 import { useTogglersRedux } from '../../../../@init/redux/togglers';
 
 // Hooks
-import { useForm, useLocalStorage } from '../../../../hooks';
-
+import { useForm } from '../../../../hooks';
 
 // Styles
 import { Header, Main, Footer, WorkdaysSettings } from './styles';
@@ -44,9 +42,7 @@ const activeStyles = { backgroundColor: '#2d6a4f', color: '#fff' };
 export const ProjectSettings: FC<PropTypes> = (props) => {
     const { projectId } = useParams<Params>();
     const { push } = useHistory();
-    const { ui, setCalendarView } = useUiRedux();
-    const { togglersRedux: { isOnline }} = useTogglersRedux();
-    const [ _, setToLocalStorage ] = useLocalStorage('isCalendarView', true); // eslint-disable-line @typescript-eslint/no-unused-vars
+    const { togglersRedux: { isOnline, isCalendarView }, setIsCalendarView } = useTogglersRedux();
     const [ updateProject ] = useUpdateProjectMutation();
     const [ deleteProject ] = useDeleteProjectMutation({ projectId, redirect: () => push('/') });
 
@@ -103,27 +99,21 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
                 <h2>Calendar view:</h2>
                 <WorkdaysSettings>
                     <Button
-                        style = { ui.isCalendarView ? activeStyles : {} }
+                        style = { isCalendarView ? activeStyles : {} }
                         title = 'Calendar view'
-                        onClick = { () => {
-                            setCalendarView(true);
-                            setToLocalStorage(true);
-                        } }>
+                        onClick = { () => void setIsCalendarView(true) }>
                         <FontAwesomeIcon
-                            color = { !ui.isCalendarView ? '#000' : '#fff' }
+                            color = { !isCalendarView ? '#000' : '#fff' }
                             icon = 'calendar-alt'
                             style = {{ width: 26, height: 26 }}
                         />
                     </Button>
                     <Button
-                        style = { !ui.isCalendarView ? activeStyles : {} }
+                        style = { !isCalendarView ? activeStyles : {} }
                         title = 'Table view'
-                        onClick = { () => {
-                            setCalendarView(false);
-                            setToLocalStorage(false);
-                        } }>
+                        onClick = { () => void setIsCalendarView(false) }>
                         <FontAwesomeIcon
-                            color = { ui.isCalendarView ? '#000' : '#fff' }
+                            color = { isCalendarView ? '#000' : '#fff' }
                             icon = 'table'
                             style = {{ width: 26, height: 26 }}
                         />

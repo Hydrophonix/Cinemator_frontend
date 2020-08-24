@@ -30,3 +30,7 @@ export const setRequisitesReqTypeAction = (payload: string): types.SetRequisites
     type: types.SET_REQUISITES_REQTYPE,
     payload,
 });
+
+export const resetInputsToInitialAction = (): types.ResetInputsToInitialAction => ({
+    type: types.RESET_INPUTS_TO_INITIAL,
+});

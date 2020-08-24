@@ -38,9 +38,7 @@ export const App: FC = () => {
             trySideEffect:   () => void setIsLoggedIn(true),
             catchSideEffect: (statusCode) => {
                 if (statusCode === 401) {
-                    setIsLoggedIn(false);
                     window.localStorage.clear();
-                    resetStore();
                 }
             },
             finallySideEffect: () => void setIsInitialized(true),

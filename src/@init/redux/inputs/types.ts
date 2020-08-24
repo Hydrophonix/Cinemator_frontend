@@ -62,6 +62,11 @@ export type SetRequisitesReqTypeAction = {
     payload: string
 };
 
+export const RESET_INPUTS_TO_INITIAL = 'RESET_INPUTS_TO_INITIAL';
+export type ResetInputsToInitialAction = {
+    type: typeof RESET_INPUTS_TO_INITIAL
+};
+
 export type InputsActionTypes =
     | SetScenesDateRangeAction
     | SetIndexAction
@@ -69,3 +74,4 @@ export type InputsActionTypes =
     | SetRequisitesReqTypeAction
     | SetWorkdaysDateRangeAction
     | SetScenesLocationAction
+    | ResetInputsToInitialAction

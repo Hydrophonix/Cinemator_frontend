@@ -2,12 +2,12 @@
 import React, { FC, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
-import { useApolloClient } from '@apollo/client';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Apollo
+import { persistor } from '../../@init/apollo';
 import { useMeQuery, useUpdateMeMutation, useLogoutMutation } from '../../bus/Auth';
 
 // Redux
@@ -33,12 +33,11 @@ const innitialForm = {
 
 const Profile: FC = () => {
     const { push } = useHistory();
-    const { resetStore } = useApolloClient();
     const { data, loading } = useMeQuery();
     const [ updateMe, { loading: updateMeLoading }] = useUpdateMeMutation();
     const [ logout ] = useLogoutMutation();
 
-    const { togglersRedux: { isOnline }, setIsLoggedIn } = useTogglersRedux();
+    const { togglersRedux: { isOnline }, resetTogglersToInitial } = useTogglersRedux();
     const [ form, setForm, setInitialForm ] = useForm<UserUpdateInput>(innitialForm);
 
     useEffect(() => {
@@ -50,12 +49,13 @@ const Profile: FC = () => {
     }, [ data ]);
 
     const onSubmit = async () => void await updateMe({ variables: { input: form }});
-    const onLogout = () => {
-        logout();
-        setIsLoggedIn(false);
-        window.localStorage.clear();
-        resetStore();
-        // TODO: нужно очищать куки в оффлайн логауте
+    const onLogout = async () => {
+        const response = await logout();
+        if (response.data?.logoutWeb) {
+            resetTogglersToInitial();
+            await persistor.purge();
+            window.localStorage.clear();
+        }
     };
 
     return (

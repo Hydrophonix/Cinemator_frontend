@@ -87,6 +87,9 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
                 },
             };
 
+        case types.RESET_INPUTS_TO_INITIAL:
+            return initialState;
+
         default:
             return state;
     }

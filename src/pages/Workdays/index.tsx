@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useWorkdaysQuery } from '../../bus/Workday';
 
 // Redux
-import { useUiRedux } from '../../@init/redux/ui';
+import { useTogglersRedux } from '../../@init/redux/togglers';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -22,14 +22,14 @@ import { Params } from './types';
 const Workdays: FC = () => {
     const { projectId } = useParams<Params>();
     const { data } = useWorkdaysQuery({ projectId });
-    const { ui } = useUiRedux();
+    const { togglersRedux: { isCalendarView }} = useTogglersRedux();
 
     if (!data) {
         return <Spinner />;
     }
 
     return (
-        ui.isCalendarView
+        isCalendarView
             ? <Calendar data = { data } />
             : <Table data = { data } />
     );

@@ -12,6 +12,7 @@ import {
     setRequisitesTitleAction,
     setRequisitesReqTypeAction,
     setWorkdaysDateRangeAction,
+    resetInputsToInitialAction,
 } from './actions';
 
 // Types
@@ -32,5 +33,6 @@ export const useInputsRedux = () => {
             dispatch(setScenesDateRangeAction(payload));
             dispatch(setWorkdaysDateRangeAction(payload));
         },
+        resetInputsToInitial: () => void dispatch(resetInputsToInitialAction()),
     };
 };

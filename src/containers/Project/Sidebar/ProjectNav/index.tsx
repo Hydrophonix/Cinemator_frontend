@@ -7,6 +7,9 @@ import { ThemeContext } from 'styled-components';
 // Elements
 import { AdaptiveScroll, Button } from '../../../../elements';
 
+// Redux
+import { useInputsRedux } from '../../../../@init/redux/inputs';
+
 // Styles
 import { Header, Title, Description, Footer, Ul, Li } from './styles';
 import { Section } from '../styles';
@@ -36,6 +39,7 @@ export const ProjectNav: FC<PropTypes> = (props) => {
     const theme = useContext(ThemeContext);
     const navRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
+    const { resetInputsToInitial } = useInputsRedux();
 
     const customHoverColorHandler = (key: number) => {
         switch (key) {
@@ -54,7 +58,10 @@ export const ProjectNav: FC<PropTypes> = (props) => {
                     <nav>
                         <Button
                             title = 'Back to projects'
-                            onClick = { () => void push('/') }>
+                            onClick = { () => {
+                                push('/');
+                                resetInputsToInitial();
+                            } }>
                             <FontAwesomeIcon
                                 color = '#000'
                                 icon = 'reply'

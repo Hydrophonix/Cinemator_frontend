@@ -7,14 +7,24 @@ import { useTogglersRedux } from '../../../@init/redux/togglers';
 // Styles
 import { Container } from './styles';
 
-export const UserMenu: FC = () => {
+// Types
+type PropTypes = {
+    resetInputsToInitial: Function
+}
+
+export const UserMenu: FC<PropTypes> = ({ resetInputsToInitial }) => {
     const { push } = useHistory();
-    const { togglersRedux: { isLoggedIn } } = useTogglersRedux();
+    const { togglersRedux: { isLoggedIn }} = useTogglersRedux();
 
     return (
         <Container
             isActive = { isLoggedIn }
-            onClick = { () => isLoggedIn && void push('/profile') }>
+            onClick = { () => {
+                if (isLoggedIn) {
+                    push('/profile');
+                    resetInputsToInitial();
+                }
+            } }>
             <FontAwesomeIcon
                 icon = 'user-astronaut'
                 style = {{ width: 40, height: 40 }}
