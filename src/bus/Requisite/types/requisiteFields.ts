@@ -11,6 +11,7 @@ export interface requisiteFields_scenes {
   __typename: "Scene";
   id: string;
   number: number;
+  isCompleted: boolean;
 }
 
 export interface requisiteFields_reqTypes {

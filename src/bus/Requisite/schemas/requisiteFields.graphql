@@ -6,6 +6,7 @@ fragment requisiteFields on Requisite {
     scenes {
       id
       number
+      isCompleted
     }
     reqTypes {
       id

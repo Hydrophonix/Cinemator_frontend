@@ -13,6 +13,7 @@ export interface UpdateRequisite_updateRequisite_scenes {
   __typename: "Scene";
   id: string;
   number: number;
+  isCompleted: boolean;
 }
 
 export interface UpdateRequisite_updateRequisite_reqTypes {

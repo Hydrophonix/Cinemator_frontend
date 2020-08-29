@@ -2,6 +2,7 @@
 import React, { FC, useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Elements
 import { Button } from '../../../elements';
@@ -83,6 +84,18 @@ export const RequisitesBody: FC<Proptypes> = ({ requisites, sceneId, lightVersio
                                                         (event) => void sceneRedirectHandler(event, scene.id)
                                                     }>
                                                     S:{`${scene.number}`}
+                                                    {
+                                                        scene.isCompleted && (
+                                                            <>
+                                                                :
+                                                                <FontAwesomeIcon
+                                                                    color = '#fff'
+                                                                    icon = 'check'
+                                                                    style = {{ width: 13, height: 13 }}
+                                                                />
+                                                            </>
+                                                        )
+                                                    }
                                                 </Button>
                                             );
                                         })

@@ -65,7 +65,19 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays, workdayIds, handler }) =
                                             key = { index }
                                             style = {{ backgroundColor: theme.scene.secondary, color: '#fff' }}
                                             onClick = { (event) => void sceneRedirectHandler(event, scene.id) }>
-                                            {`S:${scene.number}`}
+                                            S:{scene.number}
+                                            {
+                                                scene.isCompleted && (
+                                                    <>
+                                                        :
+                                                        <FontAwesomeIcon
+                                                            color = '#fff'
+                                                            icon = 'check'
+                                                            style = {{ width: 13, height: 13 }}
+                                                        />
+                                                    </>
+                                                )
+                                            }
                                         </Button>
                                     );
                                 })
