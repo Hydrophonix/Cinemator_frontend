@@ -1,0 +1,7 @@
+#import "./sceneFields.graphql"
+
+mutation CompleteManyScenes($sceneIds: [String!]!) {
+    completeManyScenes(sceneIds: $sceneIds) {
+        ...sceneFields
+    }
+}

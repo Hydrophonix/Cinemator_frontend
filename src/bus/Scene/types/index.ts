@@ -5,3 +5,4 @@ export * from './UpdateScene';
 export * from './UpdateSceneWorkdays';
 export * from './UpdateSceneLocations';
 export * from './UpdateSceneRequisites';
+export * from './CompleteManyScenes';

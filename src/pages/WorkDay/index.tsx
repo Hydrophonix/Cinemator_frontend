@@ -12,7 +12,7 @@ import { ErrorBoundary, ScenesTable } from '../../components';
 
 // Apollo hooks
 import { useWorkdaysQuery } from '../../bus/Workday';
-import { useScenesQuery } from '../../bus/Scene';
+import { useScenesQuery, useCompleteManyScenesMutation } from '../../bus/Scene';
 import { useUpdateWorkdayScenesMutation } from '../../bus/Workday';
 
 // Redux
@@ -40,11 +40,13 @@ const Workday: FC = () => {
     const { data } = useWorkdaysQuery({ projectId });
     const { data: scenesData } = useScenesQuery({ projectId });
     const [ updateWorkdayScenes, { loading: updateWorkdayScenesLoading }] = useUpdateWorkdayScenesMutation();
+    const [ completeManyScenes, { loading: completeManyScenesLoading }] = useCompleteManyScenesMutation();
     const [ sceneIds, setSceneIds, setInitialSceneIds ] = useArrayOfStringsForm([]);
     const { togglersRedux: { isOnline }} = useTogglersRedux();
 
     const workday = data?.workdays.find((workday) => workday.id === workdayId);
     const sceneIdsArray = workday?.scenes.map((scene) => scene.id);
+    const isAllWorkdayScenesComplete = workday?.scenes.every((scene) => scene.isCompleted);
 
     useEffect(() => {
         sceneIdsArray && void setInitialSceneIds(sceneIdsArray);
@@ -69,8 +71,17 @@ const Workday: FC = () => {
         response && response.data && void push(`/${projectId}/calendar/${workdayId}`);
     };
 
+    const completeScenesHandler = async () => {
+        const isConfirmed = window.confirm('Complete all workday scenes?'); // eslint-disable-line no-alert
+
+        if (isConfirmed) {
+            await completeManyScenes({ variables: { sceneIds }});
+        }
+    };
+
     return (
         <Container>
+            {completeManyScenesLoading && <Spinner absolute />}
             <Route path = { '/:projectId/calendar/:workdayId/add-scenes' }>
                 <ScenesModal
                     closeHandler = { () => {
@@ -115,6 +126,17 @@ const Workday: FC = () => {
                                 style = {{ width: 16, height: 16 }}
                             />
                         </div>
+                    </Button>
+                    <Button
+                        disabled = { !isOnline || isAllWorkdayScenesComplete }
+                        style = {{ width: 35 }}
+                        title = 'Complete all scenes'
+                        onClick = { () => completeScenesHandler() }>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'check'
+                            style = {{ width: 16, height: 16 }}
+                        />
                     </Button>
                     <Button
                         disabled = { !isOnline }
