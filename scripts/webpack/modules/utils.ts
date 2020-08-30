@@ -9,7 +9,12 @@ import WebpackBar from 'webpackbar';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { GenerateSW } from 'workbox-webpack-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 import dotenv from 'dotenv';
+import { resolve } from 'path';
+
+// Constants
+import { SOURCE_DIRECTORY } from '../constants';
 
 export const connectBuildProgressIndicator = (): Configuration => ({
     plugins: [ new WebpackBar() ],
@@ -36,13 +41,11 @@ export const connectBundleAnalyzer = (): Configuration => ({
 export const defineEnvVariables = (): Configuration => ({
     plugins: [
         new DefinePlugin({
-            'process.env': JSON.stringify({
-                ...(
-                    process.env.NODE_ENV === 'development'
-                        ? dotenv.config({ path: '.env' }).parsed
-                        : dotenv.config({ path: '.production.env' }).parsed
-                )
-            }),
+            'process.env': JSON.stringify(
+                process.env.NODE_ENV === 'development'
+                    ? dotenv.config({ path: '.env' }).parsed
+                    : dotenv.config({ path: '.production.env' }).parsed,
+            ),
         }),
     ],
 });
@@ -65,5 +68,29 @@ export const generateServiceWorker = (): Configuration => {
 
     return {
         plugins: [ workbox ],
+    };
+};
+
+export const generateManifest = (): Configuration => {
+    const manifest = new WebpackPwaManifest({
+        name:             'Cinemator',
+        short_name:       'Cinemator',
+        description:      'Cinema production crm system',
+        background_color: '#ffffff',
+        crossorigin:      'use-credentials',
+        display:          'standalone',
+        inject:           true,
+        ios:              true,
+        icons:            [
+            {
+                src:   resolve(SOURCE_DIRECTORY, './assets/images/logo.png'),
+                sizes: [ 96, 128, 192, 256, 384, 512 ],
+                ios:   true,
+            },
+        ],
+    });
+
+    return {
+        plugins: [ manifest ],
     };
 };

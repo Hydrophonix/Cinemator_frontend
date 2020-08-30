@@ -23,5 +23,6 @@ export const getProdConfig = () => {
         modules.optimizeBuild(),
         modules.connectBundleAnalyzer(),
         modules.generateServiceWorker(),
+        modules.generateManifest(),
     );
 };

@@ -7,14 +7,12 @@ import { ApolloProvider } from '@apollo/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
-// Service worker
-import * as serviceWorker from './serviceWorker';
-
 // App initializaion
 import {
     getApolloClient,
     history as routerHistory,
     store as reduxStore,
+    registerServiceWorker,
 } from './@init';
 
 // App
@@ -51,5 +49,5 @@ const Root = () => {
 render(<Root />, document.getElementById('app'));
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    serviceWorker.register();
+    registerServiceWorker();
 }
