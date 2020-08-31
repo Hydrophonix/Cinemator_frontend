@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+
 // Core
 import React, { FC, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
@@ -67,9 +69,15 @@ export const ProjectSettings: FC<PropTypes> = (props) => {
     };
 
     const onDelete = async () => {
-        const isContinue = window.confirm(`Confirm delete project: ${props.title}`); // eslint-disable-line no-alert
+        const isContinue = window.confirm(`Confirm delete project: ${props.title}`);
 
         if (!isContinue) {
+            return;
+        }
+
+        const deleteProjectName = window.prompt(` To delete a project, enter its name: ${props.title}`);
+
+        if (deleteProjectName !== props.title) {
             return;
         }
 
