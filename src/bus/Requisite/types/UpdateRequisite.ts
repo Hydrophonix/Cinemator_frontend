@@ -9,11 +9,17 @@ import { RequisiteUpdateInput } from "./../../../@types/graphql-global-types";
 // GraphQL mutation operation: UpdateRequisite
 // ====================================================
 
+export interface UpdateRequisite_updateRequisite_scenes_workdays {
+  __typename: "Workday";
+  date: string;
+}
+
 export interface UpdateRequisite_updateRequisite_scenes {
   __typename: "Scene";
   id: string;
   number: number;
   isCompleted: boolean;
+  workdays: UpdateRequisite_updateRequisite_scenes_workdays[];
 }
 
 export interface UpdateRequisite_updateRequisite_reqTypes {

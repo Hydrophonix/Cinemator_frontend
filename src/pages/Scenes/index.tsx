@@ -2,7 +2,6 @@
 import React, { FC } from 'react';
 import { useHistory, useParams, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import moment from 'moment';
 
 // Apollo Hooks
 import { useScenesQuery } from '../../bus/Scene';
@@ -10,9 +9,6 @@ import { useLocationsQuery } from '../../bus/Location';
 
 // Hooks
 import { useProjectDateRange } from '../../hooks';
-
-// Utils
-import { transformDateToISO8601 } from '../../utils';
 
 // Redux
 import { useTogglersRedux } from '../../@init/redux/togglers';
@@ -39,16 +35,14 @@ const Scenes: FC = () => {
     const { togglersRedux: { isOnline }} = useTogglersRedux();
     const { data } = useScenesQuery({ projectId });
     const { data: locationsData } = useLocationsQuery({ projectId });
-    const { projectStartDay, projectEndDay } = useProjectDateRange();
-    const { inputs, setScenesDateRangeRedux, setIndexRedux, setScenesLocationRedux } = useInputsRedux();
-    const { dateRange, index, location } = inputs.scenesInputs;
-
-    const startDay = dateRange.startDay || projectStartDay;
-    const endDay = dateRange.endDay || projectEndDay;
-    const momentStartDay = moment(transformDateToISO8601(startDay));
-    const momentEndDay = moment(transformDateToISO8601(endDay));
-    const momentProjectStartDay = moment(transformDateToISO8601(projectStartDay));
-    const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
+    const {
+        inputs: { scenesInputs: { index, location, dateRange }},
+        setScenesDateRangeRedux, setIndexRedux, setScenesLocationRedux,
+    } = useInputsRedux();
+    const {
+        startDay, endDay, projectStartDay, projectEndDay,
+        isDefaultProjectDateRange, isDateIncludesDateRangeHandler,
+    } = useProjectDateRange({ dateRange });
 
     if (!data || !locationsData) {
         return <Spinner />;
@@ -81,11 +75,9 @@ const Scenes: FC = () => {
         );
     };
 
-    const filterByDateRange = () => data.scenes.filter((scene) => scene.workdays.some((workday) => {
-        const parcedWorkday = moment(workday.date);
-
-        return parcedWorkday.isSameOrAfter(momentStartDay) && parcedWorkday.isSameOrBefore(momentEndDay);
-    }));
+    const filterByDateRange = () => data.scenes.filter(
+        (scene) => scene.workdays.some((workday) => isDateIncludesDateRangeHandler(workday.date)),
+    );
 
     const filterHandler = () => {
         if (index !== 0) {
@@ -96,7 +88,7 @@ const Scenes: FC = () => {
             return findByLocation();
         }
 
-        if (momentProjectStartDay.isSame(momentStartDay) && momentProjectEndDay.isSame(momentEndDay)) {
+        if (isDefaultProjectDateRange) {
             return data.scenes;
         }
 

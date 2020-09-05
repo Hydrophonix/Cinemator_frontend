@@ -10,6 +10,7 @@ export type InputsState = {
         location: string
     }
     requisitesInputs: {
+        dateRange: DateRange
         index: number
         title: string
         reqType: string
@@ -26,21 +27,20 @@ export type IndexPayload = {
     inputType: InputsKeys
 }
 
-export const SET_SCENES_DATE_RANGE = 'SET_SCENES_DATE_RANGE';
-export type SetScenesDateRangeAction = {
-    type: typeof SET_SCENES_DATE_RANGE
-    payload: DateRange
+export type DateRangePayload = {
+    dateRange: DateRange
+    inputType: InputsKeys
+}
+
+export const SET_DATE_RANGE = 'SET_DATE_RANGE';
+export type SetDateRangeAction = {
+    type: typeof SET_DATE_RANGE
+    payload: DateRangePayload
 };
 
-export const SET_SCENES_LOCATION = 'SET_SCENES_LOCATION';
-export type SetScenesLocationAction = {
-    type: typeof SET_SCENES_LOCATION
-    payload: string
-};
-
-export const SET_WORKDAYS_DATE_RANGE = 'SET_WORKDAYS_DATE_RANGE';
-export type SetWorkdaysDateRangeAction = {
-    type: typeof SET_WORKDAYS_DATE_RANGE
+export const SET_GLOBAL_DATE_RANGE = 'SET_GLOBAL_DATE_RANGE';
+export type SetGlobalDateRangeAction = {
+    type: typeof SET_GLOBAL_DATE_RANGE
     payload: DateRange
 };
 
@@ -48,6 +48,12 @@ export const SET_INDEX = 'SET_INDEX';
 export type SetIndexAction = {
     type: typeof SET_INDEX
     payload: IndexPayload
+};
+
+export const SET_SCENES_LOCATION = 'SET_SCENES_LOCATION';
+export type SetScenesLocationAction = {
+    type: typeof SET_SCENES_LOCATION
+    payload: string
 };
 
 export const SET_REQUISITES_TITLE = 'SET_REQUISITES_TITLE';
@@ -68,10 +74,10 @@ export type ResetInputsToInitialAction = {
 };
 
 export type InputsActionTypes =
-    | SetScenesDateRangeAction
+    | SetDateRangeAction
+    | SetGlobalDateRangeAction
     | SetIndexAction
     | SetRequisitesTitleAction
     | SetRequisitesReqTypeAction
-    | SetWorkdaysDateRangeAction
     | SetScenesLocationAction
     | ResetInputsToInitialAction

@@ -7,11 +7,17 @@
 // GraphQL mutation operation: UpdateRequisiteReqTypes
 // ====================================================
 
+export interface UpdateRequisiteReqTypes_updateRequisiteReqTypes_updatedRequisite_scenes_workdays {
+  __typename: "Workday";
+  date: string;
+}
+
 export interface UpdateRequisiteReqTypes_updateRequisiteReqTypes_updatedRequisite_scenes {
   __typename: "Scene";
   id: string;
   number: number;
   isCompleted: boolean;
+  workdays: UpdateRequisiteReqTypes_updateRequisiteReqTypes_updatedRequisite_scenes_workdays[];
 }
 
 export interface UpdateRequisiteReqTypes_updateRequisiteReqTypes_updatedRequisite_reqTypes {

@@ -9,6 +9,9 @@ export const Container = styled(EntityContainer)`
 `;
 
 export const Header = styled(EntityHeader)`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: ${({ theme }) => theme.requisite.secondary};
 
     @media (max-width: 375px) {

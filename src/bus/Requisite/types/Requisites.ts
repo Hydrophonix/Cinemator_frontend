@@ -7,11 +7,17 @@
 // GraphQL query operation: Requisites
 // ====================================================
 
+export interface Requisites_requisites_scenes_workdays {
+  __typename: "Workday";
+  date: string;
+}
+
 export interface Requisites_requisites_scenes {
   __typename: "Scene";
   id: string;
   number: number;
   isCompleted: boolean;
+  workdays: Requisites_requisites_scenes_workdays[];
 }
 
 export interface Requisites_requisites_reqTypes {

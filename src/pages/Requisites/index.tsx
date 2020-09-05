@@ -11,11 +11,14 @@ import { useReqTypesQuery } from '../../bus/ReqType';
 import { useInputsRedux } from '../../@init/redux/inputs';
 import { useTogglersRedux } from '../../@init/redux/togglers';
 
+// Hooks
+import { useProjectDateRange } from '../../hooks';
+
 // Containers
 import { ReqTypesModal } from '../../containers';
 
 // Components
-import { ErrorBoundary, RequisitesTable } from '../../components';
+import { ErrorBoundary, RequisitesTable, DateRangePicker } from '../../components';
 
 // Elemets
 import { Button, Spinner } from '../../elements';
@@ -39,7 +42,12 @@ const Requisites: FC = () => {
         setIndexRedux,
         setRequisiteTitleRedux,
         setRequisitesReqTypeRedux,
+        setRequisitesDateRangeRedux,
     } = useInputsRedux();
+    const {
+        startDay, endDay, projectStartDay, projectEndDay,
+        isDefaultProjectDateRange, isDateIncludesDateRangeHandler,
+    } = useProjectDateRange({ dateRange: requisitesInputs.dateRange });
 
     if (!data || !reqTypesData) {
         return <Spinner />;
@@ -77,6 +85,14 @@ const Requisites: FC = () => {
         );
     };
 
+    const filterByDateRange = () => data.requisites.filter(
+        (requisite) => requisite.scenes.some(
+            (scene) => scene.workdays.some(
+                (workday) => isDateIncludesDateRangeHandler(workday.date),
+            ),
+        ),
+    );
+
     const filterHandler = () => {
         if (requisitesInputs.index !== 0) {
             return findByIndex();
@@ -90,7 +106,11 @@ const Requisites: FC = () => {
             return findByReqType();
         }
 
-        return data.requisites;
+        if (isDefaultProjectDateRange) {
+            return data.requisites;
+        }
+
+        return filterByDateRange();
     };
 
     return (
@@ -102,7 +122,17 @@ const Requisites: FC = () => {
                 />
             </Route>
             <Header>
-                <nav />
+                <nav>
+                    <DateRangePicker
+                        reset
+                        endDay = { endDay }
+                        firstPopperPlacement = 'top-start'
+                        projectEndDay = { projectEndDay }
+                        projectStartDay = { projectStartDay }
+                        setDateRange = { setRequisitesDateRangeRedux }
+                        startDay = { startDay }
+                    />
+                </nav>
                 <h2>Requisites</h2>
                 <nav>
                     <Button
