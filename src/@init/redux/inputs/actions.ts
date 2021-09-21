@@ -6,18 +6,18 @@ export const setIndexAction = (payload: types.IndexPayload): types.SetIndexActio
     payload,
 });
 
-export const setScenesDateRangeAction = (payload: types.DateRange): types.SetScenesDateRangeAction => ({
-    type: types.SET_SCENES_DATE_RANGE,
+export const setDateRangeAction = (payload: types.DateRangePayload): types.SetDateRangeAction => ({
+    type: types.SET_DATE_RANGE,
+    payload,
+});
+
+export const setGlobalDateRangeAction = (payload: types.DateRange): types.SetGlobalDateRangeAction => ({
+    type: types.SET_GLOBAL_DATE_RANGE,
     payload,
 });
 
 export const setScenesLocationAction = (payload: string): types.SetScenesLocationAction => ({
     type: types.SET_SCENES_LOCATION,
-    payload,
-});
-
-export const setWorkdaysDateRangeAction = (payload: types.DateRange): types.SetWorkdaysDateRangeAction => ({
-    type: types.SET_WORKDAYS_DATE_RANGE,
     payload,
 });
 

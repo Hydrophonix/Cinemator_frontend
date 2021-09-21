@@ -2,7 +2,6 @@
 import React, { FC } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import moment from 'moment';
 
 // Redux
 import { useInputsRedux } from '../../../@init/redux/inputs';
@@ -14,8 +13,8 @@ import { WorkdaysTable, DateRangePicker } from '../../../components';
 // Elements
 import { Button } from '../../../elements';
 
-// Utils
-import { transformDateToISO8601 } from '../../../utils';
+// Hooks
+import { useProjectDateRange } from '../../../hooks';
 
 // Types
 import { PropTypes, Params } from '../types';
@@ -26,30 +25,22 @@ import { Container, Header, ScrollList } from './styles';
 export const Table: FC<PropTypes> = ({ data }) => {
     const { push } = useHistory();
     const { projectId } = useParams<Params>();
-    const { inputs: { workdaysInputs }, setWorkdaysDateRangeRedux } = useInputsRedux();
     const { togglersRedux: { isOnline }} = useTogglersRedux();
-
-    const workdaysDates = data.workdays.map((workday) => new Date(workday.date));
-
-    const projectStartDay = workdaysDates[ 0 ] || new Date();
-    const projectEndDay = workdaysDates[ workdaysDates.length - 1 ] || new Date();
-    const startDay = workdaysInputs.dateRange.startDay || projectStartDay;
-    const endDay = workdaysInputs.dateRange.endDay || projectEndDay;
-    const momentStartDay = moment(transformDateToISO8601(startDay));
-    const momentEndDay = moment(transformDateToISO8601(endDay));
-    const momentProjectStartDay = moment(transformDateToISO8601(projectStartDay));
-    const momentProjectEndDay = moment(transformDateToISO8601(projectEndDay));
+    const {
+        inputs: { workdaysInputs: { dateRange }},
+        setWorkdaysDateRangeRedux,
+    } = useInputsRedux();
+    const {
+        startDay, endDay, projectStartDay, projectEndDay,
+        isDefaultProjectDateRange, isDateIncludesDateRangeHandler,
+    } = useProjectDateRange({ dateRange });
 
     const filterByDateRange = () => {
-        if (momentProjectStartDay.isSame(momentStartDay) && momentProjectEndDay.isSame(momentEndDay)) {
+        if (isDefaultProjectDateRange) {
             return data.workdays;
         }
 
-        return data.workdays.filter((workday) => {
-            const parcedWorkday = moment(workday.date);
-
-            return parcedWorkday.isSameOrAfter(momentStartDay) && parcedWorkday.isSameOrBefore(momentEndDay);
-        });
+        return data.workdays.filter((workday) => isDateIncludesDateRangeHandler(workday.date));
     };
 
     return (

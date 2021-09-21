@@ -1,7 +1,6 @@
 // Core
 import React, { FC, useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { useApolloClient } from '@apollo/client';
 
 // Containers
 import { TopBar } from '../TopBar';
@@ -19,7 +18,6 @@ import { AppContainer } from './styles';
 import { getAccessToken } from '../../@init';
 
 export const App: FC = () => {
-    const { resetStore } = useApolloClient();
     const { setTogglerAction, setIsLoggedIn } = useTogglersRedux();
     const [ isInitialized, setIsInitialized ] = useState(false);
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);

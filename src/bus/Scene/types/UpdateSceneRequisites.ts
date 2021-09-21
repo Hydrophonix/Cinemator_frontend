@@ -37,11 +37,17 @@ export interface UpdateSceneRequisites_updateSceneRequisites_updatedScene {
   requisites: UpdateSceneRequisites_updateSceneRequisites_updatedScene_requisites[];
 }
 
+export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes_workdays {
+  __typename: "Workday";
+  date: string;
+}
+
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes {
   __typename: "Scene";
   id: string;
   number: number;
   isCompleted: boolean;
+  workdays: UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_scenes_workdays[];
 }
 
 export interface UpdateSceneRequisites_updateSceneRequisites_updatedRequisites_reqTypes {

@@ -13,6 +13,10 @@ const initialState = {
         location: '',
     },
     requisitesInputs: {
+        dateRange: {
+            startDay: void 0,
+            endDay:   void 0,
+        },
         index:   0,
         title:   '',
         reqType: '',
@@ -25,17 +29,46 @@ const initialState = {
     },
 };
 
+const stateObjectKeys = Object.keys(initialState) as types.InputsKeys[];
+
 export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = initialState, action) => {
     switch (action.type) {
-        case types.SET_SCENES_DATE_RANGE:
+        case types.SET_DATE_RANGE:
             return {
                 ...state,
-                scenesInputs: {
-                    ...state.scenesInputs,
+                [ action.payload.inputType ]: {
+                    ...state[ action.payload.inputType ],
                     dateRange: {
-                        ...state.scenesInputs.dateRange,
-                        ...action.payload,
+                        ...state[ action.payload.inputType ].dateRange,
+                        ...action.payload.dateRange,
                     },
+                },
+            };
+
+        case types.SET_GLOBAL_DATE_RANGE:
+            let newState = state; // eslint-disable-line no-case-declarations
+
+            stateObjectKeys.forEach((key) => {
+                newState = {
+                    ...newState,
+                    [ key ]: {
+                        ...state[ key ],
+                        dateRange: {
+                            ...state[ key ].dateRange,
+                            ...action.payload,
+                        },
+                    },
+                };
+            });
+
+            return newState;
+
+        case types.SET_INDEX:
+            return {
+                ...state,
+                [ action.payload.inputType ]: {
+                    ...state[ action.payload.inputType ],
+                    index: action.payload.index,
                 },
             };
 
@@ -45,27 +78,6 @@ export const inputsReducer: Reducer<InputsState, InputsActionTypes> = (state = i
                 scenesInputs: {
                     ...state.scenesInputs,
                     location: action.payload,
-                },
-            };
-
-        case types.SET_WORKDAYS_DATE_RANGE:
-            return {
-                ...state,
-                workdaysInputs: {
-                    ...state.workdaysInputs,
-                    dateRange: {
-                        ...state.workdaysInputs.dateRange,
-                        ...action.payload,
-                    },
-                },
-            };
-
-        case types.SET_INDEX:
-            return {
-                ...state,
-                [ action.payload.inputType ]: {
-                    ...state[ action.payload.inputType ],
-                    index: action.payload.index,
                 },
             };
 

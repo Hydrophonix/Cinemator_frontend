@@ -14,9 +14,10 @@ export { getAccessToken } from './getAccessToken';
 
 export const persistor = new CachePersistor({
     cache,
-    storage: window.localStorage as PersistentStorage<PersistedData<NormalizedCacheObject>>,
-    maxSize: false,
-    debug:   process.env.NODE_ENV === 'development',
+    storage:  window.localStorage as PersistentStorage<PersistedData<NormalizedCacheObject>>,
+    maxSize:  false,
+    debounce: 3000,
+    debug:    process.env.NODE_ENV === 'development',
 });
 
 export const getApolloClient = async () => {

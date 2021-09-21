@@ -7,6 +7,9 @@ fragment requisiteFields on Requisite {
       id
       number
       isCompleted
+      workdays {
+        date
+      }
     }
     reqTypes {
       id

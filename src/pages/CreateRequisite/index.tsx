@@ -26,6 +26,7 @@ import { RequisiteCreateInput } from '../../@types/graphql-global-types';
 
 export type Params = {
     projectId: string
+    sceneId?: string
 }
 
 const innitialForm = {
@@ -36,7 +37,7 @@ const innitialForm = {
 
 const CreateRequisite: FC = () => {
     const { push } = useHistory();
-    const { projectId } = useParams<Params>();
+    const { projectId, sceneId } = useParams<Params>();
     const { data, loading } = useRequisitesQuery({ projectId });
     const [ createRequisite, { loading: createRequisiteLoading }] = useCreateRequisiteMutation({ projectId });
     const [ form, setForm, setInitialForm ] = useForm<RequisiteCreateInput>(innitialForm);
@@ -53,7 +54,11 @@ const CreateRequisite: FC = () => {
     const onSubmit = async (event: any) => {
         event.preventDefault();
         const response = await createRequisite({ variables: { input: form, projectId }});
-        response && response.data && void push(`/${projectId}/requisites/${response.data.createRequisite.id}`);
+        if (response && response.data) {
+            sceneId
+                ? push(`/${projectId}/scenes/${sceneId}/add-requisites`)
+                : push(`/${projectId}/requisites/${response.data.createRequisite.id}`);
+        }
     };
 
     return (

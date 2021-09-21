@@ -6,12 +6,12 @@ import { useSelector } from '../../../hooks';
 
 // Actions
 import {
-    setScenesDateRangeAction,
-    setScenesLocationAction,
     setIndexAction,
+    setDateRangeAction,
+    setGlobalDateRangeAction,
+    setScenesLocationAction,
     setRequisitesTitleAction,
     setRequisitesReqTypeAction,
-    setWorkdaysDateRangeAction,
     resetInputsToInitialAction,
 } from './actions';
 
@@ -22,17 +22,28 @@ export const useInputsRedux = () => {
     const dispatch = useDispatch();
 
     return {
-        inputs:                    useSelector(({ inputs }) => inputs),
-        setScenesDateRangeRedux:   (payload: types.DateRange) => void dispatch(setScenesDateRangeAction(payload)),
+        inputs:                  useSelector(({ inputs }) => inputs),
+        // Scenes
+        setScenesDateRangeRedux: (dateRange: types.DateRange) => void dispatch(setDateRangeAction({
+            inputType: 'scenesInputs',
+            dateRange,
+        })),
         setScenesLocationRedux:    (payload: string) => void dispatch(setScenesLocationAction(payload)),
-        setWorkdaysDateRangeRedux: (payload: types.DateRange) => void dispatch(setWorkdaysDateRangeAction(payload)),
+        // Workdays
+        setWorkdaysDateRangeRedux: (dateRange: types.DateRange) => void dispatch(setDateRangeAction({
+            inputType: 'workdaysInputs',
+            dateRange,
+        })),
+        // Requisite
+        setRequisitesDateRangeRedux: (dateRange: types.DateRange) => void dispatch(setDateRangeAction({
+            inputType: 'requisitesInputs',
+            dateRange,
+        })),
         setIndexRedux:             (payload: types.IndexPayload) => void dispatch(setIndexAction(payload)),
         setRequisiteTitleRedux:    (payload: string) => void dispatch(setRequisitesTitleAction(payload)),
         setRequisitesReqTypeRedux: (payload: string) => void dispatch(setRequisitesReqTypeAction(payload)),
-        setGlobalDateRangeRedux:   (payload: types.DateRange) => {
-            dispatch(setScenesDateRangeAction(payload));
-            dispatch(setWorkdaysDateRangeAction(payload));
-        },
-        resetInputsToInitial: () => void dispatch(resetInputsToInitialAction()),
+        // Global
+        setGlobalDateRangeRedux:   (payload: types.DateRange) => void dispatch(setGlobalDateRangeAction(payload)),
+        resetInputsToInitial:      () => void dispatch(resetInputsToInitialAction()),
     };
 };

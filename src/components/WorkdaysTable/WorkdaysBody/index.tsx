@@ -45,7 +45,13 @@ export const WorkdaysBody: FC<Proptypes> = ({ workdays, workdayIds, handler }) =
                             ? void handler(workday.id)
                             : void workdayRedirectHandler(workday.id)
                         }>
-                        <td style = {{ fontSize: 20, textAlign: 'center', position: 'relative' }}>
+                        <td style = {{
+                            fontSize:  20,
+                            textAlign: 'center',
+                            position:  'relative',
+                            boxSizing: 'border-box',
+                            width:     '200px',
+                        }}>
                             {
                                 workdayIds?.includes(workday.id) && (
                                     <FontAwesomeIcon

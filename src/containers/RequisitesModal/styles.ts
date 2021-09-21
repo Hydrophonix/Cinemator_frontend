@@ -9,5 +9,6 @@ export const Header = styled(ModalHeader)`
 `;
 
 export const Footer = styled(ModalFooter)`
+    justify-content: space-between;
     background-color: ${({ theme }) => theme.requisite.primary};
 `;
