@@ -1,7 +1,7 @@
 
 // Core
 import React, { FC, useContext, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ThemeContext } from 'styled-components';
 
@@ -30,12 +30,14 @@ type PropTypes = {
 }
 type Params = {
     projectId: string
+    sceneId: string
 }
 
 export const RequisitesModal: FC<PropTypes> = ({
     closeHandler, requisiteIds, handler, saveHandler, saveHandlerLoading,
 }) => {
-    const { projectId } = useParams<Params>();
+    const { projectId, sceneId } = useParams<Params>();
+    const { push } = useHistory();
     const theme = useContext(ThemeContext);
     const headerRef = useRef<HTMLElement>(null);
     const footerRef = useRef<HTMLElement>(null);
@@ -96,6 +98,20 @@ export const RequisitesModal: FC<PropTypes> = ({
                 />
             </AdaptiveScroll>
             <Footer ref = { footerRef }>
+                <Button
+                    disabled = { !isOnline }
+                    title = 'Create requisite'
+                    onClick = { () => void push(`/${projectId}/scenes/${sceneId}/add-requisites/create-requisite`) }>
+                    <div style = {{ display: 'flex', alignItems: 'center' }}>
+                        <span style = {{ fontSize: 16 }}>R:</span>
+                        <FontAwesomeIcon
+                            color = '#000'
+                            icon = 'plus'
+                            style = {{ width: 16, height: 16 }}
+                        />
+                    </div>
+                </Button>
+
                 <Button
                     disabled = { !isOnline }
                     title = 'Save'

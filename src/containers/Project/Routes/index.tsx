@@ -42,6 +42,11 @@ export const Routes: FC = () => {
                     <CreateRequisite />
                 </Route>
 
+                <Route
+                    path = { '/:projectId/scenes/:sceneId/add-requisites/create-requisite' }>
+                    <CreateRequisite />
+                </Route>
+
                 <Route path = { '/:projectId/calendar/:workdayId' }>
                     <Workday />
                 </Route>
